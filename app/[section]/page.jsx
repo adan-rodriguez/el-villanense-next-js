@@ -8,17 +8,20 @@ export default async function Section({ params }) {
 
   return (
     <div>
-      {articles.map((article) => (
-        <Link key={article.id} href={`/${article.section}/${article.id}`}>
-          <article>
-            <img src={article.image} alt={article.altImage} loading="lazy" />
-            <time dateTime={article.datetimeAttribute}>
-              {article.dateContent}
-            </time>
-            <p>{article.title}</p>
-          </article>
-        </Link>
-      ))}
+      <h1>{section}</h1>
+      <div>
+        {articles.map((article) => (
+          <Link key={article.id} href={`/${article.section}/${article.id}`}>
+            <article>
+              <img src={article.image} alt={article.altImage} loading="lazy" />
+              <time dateTime={article.datetimeAttribute}>
+                {article.dateContent}
+              </time>
+              <p>{article.title}</p>
+            </article>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
