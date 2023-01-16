@@ -6,10 +6,9 @@ export default async function Noticia({ params }) {
   const article = await getADoc(id);
 
   return (
-    <div>
-      <article>
-        <h1>{article.title}</h1>
-        {/* <div>
+    <article>
+      <h1>{article.title}</h1>
+      {/* <div>
           <a
             href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
             target="_blank"
@@ -35,13 +34,12 @@ export default async function Noticia({ params }) {
             <img width={30} height={30} src={whatsappIcon} alt="Whatsapp" />
           </a>
         </div> */}
-        <time dateTime={article.datetimeAttribute}>
-          {article.datetimeContent}
-        </time>
-        <p>{article.lead}</p>
-        <img src={article.image} alt={article.altImage} loading="lazy" />
-        <div dangerouslySetInnerHTML={{ __html: article.content }} />
-      </article>
-    </div>
+      <time dateTime={article.datetimeAttribute}>
+        {article.datetimeContent}
+      </time>
+      <p>{article.lead}</p>
+      <img src={article.image} alt={article.altImage} loading="lazy" />
+      <div dangerouslySetInnerHTML={{ __html: article.content }} />
+    </article>
   );
 }

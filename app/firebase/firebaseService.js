@@ -25,11 +25,8 @@ export const getSectionDocs = async (section) => {
     where("section", "==", section),
     orderBy("timestamp", "desc")
   );
-  console.log(q);
   const data = await getDocs(q);
-  console.log(data);
   const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
-  console.log(articles);
   return articles;
 };
 
