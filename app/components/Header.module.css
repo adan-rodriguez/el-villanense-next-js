@@ -1,0 +1,4 @@
+.navigation_list {
+  list-style-type: none;
+  display: flex;
+}
