@@ -1,10 +1,7 @@
 import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "./page.module.css";
 import getAllDocs from "./firebase/firebaseService";
 import Link from "next/link";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default async function Home() {
   const articles = await getAllDocs();
@@ -14,7 +11,12 @@ export default async function Home() {
       {articles.map((article) => (
         <Link key={article.id} href={`/${article.section}/${article.id}`}>
           <article>
-            <img src={article.image} alt={article.altImage} loading="lazy" />
+            <Image
+              src={article.image}
+              alt={article.altImage}
+              width={500}
+              height={300}
+            />
             <time dateTime={article.datetimeAttribute}>
               {article.dateContent}
             </time>

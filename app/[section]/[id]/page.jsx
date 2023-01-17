@@ -1,4 +1,5 @@
 import { getADoc } from "@/app/firebase/firebaseService";
+import Image from "next/image";
 
 export default async function Noticia({ params }) {
   const { id } = params;
@@ -38,7 +39,12 @@ export default async function Noticia({ params }) {
         {article.datetimeContent}
       </time>
       <p>{article.lead}</p>
-      <img src={article.image} alt={article.altImage} loading="lazy" />
+      <Image
+        src={article.image}
+        alt={article.altImage}
+        width={500}
+        height={300}
+      />
       <div dangerouslySetInnerHTML={{ __html: article.content }} />
     </article>
   );

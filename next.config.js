@@ -3,6 +3,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-}
+  images: {
+    domains: ["www.elvillanense.com.ar"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
