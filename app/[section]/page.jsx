@@ -19,6 +19,7 @@ export default async function Section({ params }) {
                 alt={article.altImage}
                 width={500}
                 height={300}
+                priority
               />
               <time dateTime={article.datetimeAttribute}>
                 {article.dateContent}

@@ -44,8 +44,9 @@ export default async function Noticia({ params }) {
         alt={article.altImage}
         width={500}
         height={300}
+        priority
       />
-      <div dangerouslySetInnerHTML={{ __html: article.content }} />
+      {/* <div dangerouslySetInnerHTML={{ __html: article.content }} /> */}
     </article>
   );
 }
