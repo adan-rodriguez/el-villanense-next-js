@@ -28,7 +28,7 @@ export default async function Article({ params }) {
           />
         </a>
         <a
-          href={`https://twitter.com/intent/tweet?text=${article.title}&url=${URL}`}
+          href={`https://twitter.com/intent/tweet?text=${art.title}&url=${URL}`}
           target="_blank"
           title="Compartir en Twitter"
           rel="noreferrer"
