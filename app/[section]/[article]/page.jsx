@@ -1,40 +1,59 @@
 import { getAnArticle } from "@/app/firebase/firebaseService";
 import Image from "next/image";
 
+const DOMAIN = "https://elvillanense.vercel.app/";
+
 export default async function Article({ params }) {
-  const { article } = params;
+  const { section, article } = params;
 
   const art = await getAnArticle(article);
+
+  const URL = `${DOMAIN}/${section}/${article}`;
 
   return (
     <article>
       <h1>{art.title}</h1>
-      {/* <div>
-          <a
-          href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
-            target="_blank"
-            title="Compartir en Facebook"
-            rel="noreferrer"
-          >
-            <img width={30} height={30} src={facebookIcon} alt="Facebook" />
-            </a>
-            <a
-            href={`https://twitter.com/intent/tweet?text=${news.title}&url=${window.location.href}`}
-            target="_blank"
-            title="Compartir en Twitter"
-            rel="noreferrer"
-          >
-            <img width={30} height={30} src={twitterIcon} alt="Twitter" />
-          </a>
-          <a
-            href={`https://api.whatsapp.com/send?text=${window.location.href}`}
-            target="_blank"
-            title="Compartir en Whatsapp"
-            rel="noreferrer"
-          >
-            <img width={30} height={30} src={whatsappIcon} alt="Whatsapp" />
-          </a>
-        </div> */}
+      <div>
+        <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${URL}`}
+          target="_blank"
+          title="Compartir en Facebook"
+          rel="noreferrer"
+        >
+          <img
+            width={30}
+            height={30}
+            src="/icons/social/facebook.png"
+            alt="Facebook"
+          />
+        </a>
+        <a
+          href={`https://twitter.com/intent/tweet?text=${article.title}&url=${URL}`}
+          target="_blank"
+          title="Compartir en Twitter"
+          rel="noreferrer"
+        >
+          <img
+            width={30}
+            height={30}
+            src="/icons/social/twitter.png"
+            alt="Twitter"
+          />
+        </a>
+        <a
+          href={`https://api.whatsapp.com/send?text=${URL}`}
+          target="_blank"
+          title="Compartir en Whatsapp"
+          rel="noreferrer"
+        >
+          <img
+            width={30}
+            height={30}
+            src="/icons/social/whatsapp.png"
+            alt="Whatsapp"
+          />
+        </a>
+      </div>
       <time dateTime={art.datetimeAttribute}>{art.datetimeContent}</time>
       <p>{art.lead}</p>
       <Image
@@ -44,7 +63,7 @@ export default async function Article({ params }) {
         height={300}
         priority
       />
-      <div dangerouslySetInnerHTML={{ __html: art.content }} />
+      {/* <div dangerouslySetInnerHTML={{ __html: art.content }} /> */}
       {/* <div>{`${art.content}`}</div> */}
     </article>
   );
