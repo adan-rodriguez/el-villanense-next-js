@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getSectionDocs } from "../firebase/firebaseService";
+import { getSectionArticles } from "@/app/firebase/firebaseService";
 
 export default async function Section({ params }) {
   const { section } = params;
 
-  const articles = await getSectionDocs(section);
+  const articles = await getSectionArticles(section);
 
   return (
     <div>
