@@ -1,7 +1,6 @@
 import { getAnArticle } from "@/app/firebase/firebaseService";
+import { DOMAIN } from "@/app/utils/constants/domain";
 import DefaultTags from "../../DefaultTags";
-
-const DOMAIN = "https://elvillanense.vercel.app";
 
 export default async function Head({ params }) {
   const { section, article } = params;

@@ -9,7 +9,7 @@ export default async function Section({ params }) {
 
   return (
     <div>
-      <h1>{section}</h1>
+      <h1>{`${section[0].toUpperCase()}${section.slice(1)}`}</h1>
       <div>
         {articles.map((article) => (
           <Link key={article.id} href={`/${article.section}/${article.id}`}>

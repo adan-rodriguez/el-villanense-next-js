@@ -1,7 +1,6 @@
 import { getAnArticle } from "@/app/firebase/firebaseService";
+import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
-
-const DOMAIN = "https://elvillanense.vercel.app";
 
 export default async function Article({ params }) {
   const { section, article } = params;
