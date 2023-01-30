@@ -10,32 +10,12 @@ export const handleLoginAuthFirebase = (
   password,
   setLoginErrorMessage
 ) => {
-  // signInWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //     const { user } = userCredential;
-  //     console.log(user);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-
   setPersistence(auth, browserSessionPersistence)
     .then(() => {
-      // Existing and future Auth states are now persisted in the current
-      // session only. Closing the window would clear any existing state even
-      // if a user forgets to sign out.
-      // ...
-      // New sign-in will be persisted with session persistence.
-      signInWithEmailAndPassword(auth, email, password)
-        // .then((userCredential) => {
-        //   const { user } = userCredential;
-        //   console.log(user);
-        // })
-        .catch((error) => {
-          console.log(error);
-          // showLoginErrorMessage();
-          setLoginErrorMessage(true);
-        });
+      signInWithEmailAndPassword(auth, email, password).catch((error) => {
+        console.log(error);
+        setLoginErrorMessage(true);
+      });
     })
     .catch((error) => {
       console.log(error);

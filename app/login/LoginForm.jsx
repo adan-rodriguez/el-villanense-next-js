@@ -3,14 +3,19 @@
 export default function LoginForm({
   email,
   password,
-  handleChangeEmail,
-  handleChangePassword,
-  handleSubmit,
+  setEmail,
+  setPassword,
+  login,
   loginErrorMessage,
 }) {
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          login();
+        }}
+      >
         <div>
           <label htmlFor="email">
             Email
@@ -19,7 +24,7 @@ export default function LoginForm({
               name="email"
               id="email"
               value={email}
-              onChange={handleChangeEmail}
+              onChange={setEmail}
               required
             />
           </label>
@@ -32,7 +37,7 @@ export default function LoginForm({
               name="password"
               id="password"
               value={password}
-              onChange={handleChangePassword}
+              onChange={setPassword}
               required
             />
           </label>
