@@ -62,7 +62,7 @@ export default async function Article({ params }) {
         height={300}
         priority
       />
-      {/* <div dangerouslySetInnerHTML={{ __html: art.content }} /> */}
+      <div dangerouslySetInnerHTML={{ __html: art.content }} />
       {/* <div>{`${art.content}`}</div> */}
     </article>
   );
