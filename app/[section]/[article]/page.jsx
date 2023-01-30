@@ -1,6 +1,7 @@
 import { getAnArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
+import ArticleContent from "./ArticleContent";
 
 export default async function Article({ params }) {
   const { section, article } = params;
@@ -62,8 +63,8 @@ export default async function Article({ params }) {
         height={300}
         priority
       />
-      <div dangerouslySetInnerHTML={{ __html: art.content }} />
-      {/* <div>{`${art.content}`}</div> */}
+      {/* <div dangerouslySetInnerHTML={{ __html: art.content }}></div> */}
+      <ArticleContent content={art.content} />
     </article>
   );
 }
