@@ -10,6 +10,8 @@ export const handleLoginAuthFirebase = (
   password,
   setLoginErrorMessage
 ) => {
+  console.log(email);
+  console.log(password);
   setPersistence(auth, browserSessionPersistence)
     .then(() => {
       signInWithEmailAndPassword(auth, email, password).catch((error) => {
