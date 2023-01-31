@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import { getSectionArticles } from "@/app/firebase/firebaseService";
 
@@ -14,12 +14,18 @@ export default async function Section({ params }) {
         {articles.map((article) => (
           <Link key={article.id} href={`/${article.section}/${article.id}`}>
             <article>
-              <Image
+              {/* <Image
                 src={article.image}
                 alt={article.altImage}
                 width={500}
                 height={300}
                 priority
+              /> */}
+              <img
+                src={article.image}
+                alt={article.altImage}
+                width={500}
+                height={300}
               />
               <time dateTime={article.datetimeAttribute}>
                 {article.dateContent}

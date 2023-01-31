@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["www.elvillanense.com.ar"],
+    domains: ["www.elvillanense.com.ar", "media.ambito.com"],
   },
 };
 

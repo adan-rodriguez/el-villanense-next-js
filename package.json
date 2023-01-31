@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-midu",
+  "name": "el-villanense",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "13.1.2",
+    "@tinymce/tinymce-react": "^4.3.0",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.2",
     "firebase": "^9.15.0",

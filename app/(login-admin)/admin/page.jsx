@@ -31,7 +31,7 @@ function AdminPage() {
         settersArticle={settersArticle}
         addArticle={async () => {
           await addArticleToFirestore(article);
-          router.push("/");
+          alert("Artículo subido con éxito");
         }}
       />
     </>

@@ -1,6 +1,6 @@
 import { getAnArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
-import Image from "next/image";
+// import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 
 export default async function Article({ params }) {
@@ -56,13 +56,14 @@ export default async function Article({ params }) {
       </div>
       <time dateTime={art.datetimeAttribute}>{art.datetimeContent}</time>
       <p>{art.lead}</p>
-      <Image
+      {/* <Image
         src={art.image}
         alt={art.altImage}
         width={500}
         height={300}
         priority
-      />
+      /> */}
+      <img src={art.image} alt={art.altImage} width={500} height={300} />
       {/* <div dangerouslySetInnerHTML={{ __html: art.content }}></div> */}
       <ArticleContent content={art.content} />
     </article>

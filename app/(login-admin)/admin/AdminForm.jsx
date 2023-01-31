@@ -1,6 +1,6 @@
 "use client";
 
-// import TinyMCE from "./TinyMCE";
+import TinyMCE from "./TinyMCE";
 
 export default function AdminForm({ article, settersArticle, addArticle }) {
   return (
@@ -86,7 +86,7 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
           </select>
         </label>
       </div>
-      {/* <TinyMCE getContentTiny={settersArticle.getContentTiny} /> */}
+      <TinyMCE getContentTiny={settersArticle.getContentTiny} />
       <button className="btn-upload-article" type="submit">
         Subir artículo
       </button>
