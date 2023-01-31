@@ -18,7 +18,12 @@ const links = [
 
 export default function Header() {
   const [isMenuopen, setIsMenuopen] = useState(false);
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerWidth, setInnerWidth] = useState(null);
+  console.log(innerWidth);
+
+  useEffect(() => {
+    setInnerWidth(window.innerWidth);
+  }, []);
 
   useEffect(() => {
     if (isMenuopen) {
@@ -39,11 +44,11 @@ export default function Header() {
     };
 
     if (isMenuopen) {
-      window.addEventListener("resize", handleResize);
+      addEventListener("resize", handleResize);
     }
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      removeEventListener("resize", handleResize);
     };
   }, [isMenuopen]);
 
@@ -52,7 +57,7 @@ export default function Header() {
       setInnerWidth(window.innerWidth);
     };
 
-    window.addEventListener("resize", handleResize);
+    addEventListener("resize", handleResize);
   }, []);
 
   return (
