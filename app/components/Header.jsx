@@ -19,7 +19,6 @@ const links = [
 export default function Header() {
   const [isMenuopen, setIsMenuopen] = useState(false);
   const [innerWidth, setInnerWidth] = useState(null);
-  console.log(innerWidth);
 
   useEffect(() => {
     setInnerWidth(window.innerWidth);
@@ -110,7 +109,7 @@ export default function Header() {
               })}
             </ul>
           </nav>
-          <SocialMedia />
+          <SocialMedia classname="links_social_container_header" />
         </div>
       </div>
     </header>

@@ -24,17 +24,14 @@ function AdminPage() {
   }, [isUserLogged]);
 
   return (
-    <>
-      <h1 className="title-new-article">Nuevo artículo</h1>
-      <AdminForm
-        article={article}
-        settersArticle={settersArticle}
-        addArticle={async () => {
-          await addArticleToFirestore(article);
-          alert("Artículo subido con éxito");
-        }}
-      />
-    </>
+    <AdminForm
+      article={article}
+      settersArticle={settersArticle}
+      addArticle={async () => {
+        await addArticleToFirestore(article);
+        alert("Artículo subido con éxito");
+      }}
+    />
   );
 }
 

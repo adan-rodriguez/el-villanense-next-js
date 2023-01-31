@@ -7,27 +7,29 @@ export default async function Home() {
   const articles = await getAllArticles();
 
   return (
-    <div>
+    <div className={styles.articles_links_container}>
       {articles.map((article) => (
-        <Link key={article.id} href={`/${article.section}/${article.id}`}>
+        <Link
+          className={styles.article_link}
+          key={article.id}
+          href={`/${article.section}/${article.id}`}
+        >
           <article>
             <Image
+              className={styles.article_link_img}
               src={article.image}
               alt={article.altImage}
               width={500}
               height={300}
               priority
             />
-            {/* <img
-              src={article.image}
-              alt={article.altImage}
-              width={500}
-              height={300}
-            /> */}
-            <time dateTime={article.datetimeAttribute}>
+            <time
+              className={styles.article_link_time}
+              dateTime={article.datetimeAttribute}
+            >
               {article.dateContent}
             </time>
-            <p>{article.title}</p>
+            <p className={styles.article_link_title}>{article.title}</p>
           </article>
         </Link>
       ))}

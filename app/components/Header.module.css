@@ -13,18 +13,20 @@
   color: white;
   max-width: 1440px;
   margin: 0 auto;
+  padding: 0 10px;
 }
 
 .openmenu_button,
 .closemenu_button {
   background-color: transparent;
   border: none;
+  height: 48px;
 }
 
 .closemenu_button {
   position: fixed;
   top: 0;
-  right: 0;
+  right: 10px;
 }
 
 .navbar {
@@ -82,7 +84,6 @@
   }
 
   .navbar_list {
-    margin-right: 10px;
     display: flex;
     column-gap: 10px;
   }

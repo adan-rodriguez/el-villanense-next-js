@@ -1,0 +1,41 @@
+.form {
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  max-width: 1000px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.form_label {
+  display: block;
+}
+
+.form_input,
+.form_textarea,
+.form_select {
+  width: 100%;
+  border: 1px solid black;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  padding: 5px 10px;
+}
+
+.form_input {
+  height: 2rem;
+}
+
+.form_textarea {
+  resize: none;
+}
+
+.form_btn {
+  align-self: center;
+  padding: 10px 40px;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1px;
+  font-size: 1rem;
+}

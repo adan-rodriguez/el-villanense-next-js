@@ -1,6 +1,6 @@
 import DefaultTags from "../../DefaultTags";
 
-export default function Head() {
+export default function HeadLogin() {
   return (
     <>
       <DefaultTags />

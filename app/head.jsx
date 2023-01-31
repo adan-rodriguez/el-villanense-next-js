@@ -1,7 +1,7 @@
 import DefaultTags from "./DefaultTags";
 import { DOMAIN } from "./utils/constants/domain";
 
-export default function Head() {
+export default function HeadHome() {
   return (
     <>
       <DefaultTags />
@@ -36,10 +36,7 @@ export default function Head() {
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={DOMAIN} />
-      <meta
-        property="og:image"
-        content={`${DOMAIN}/icons/logo/logo.png`}
-      />
+      <meta property="og:image" content={`${DOMAIN}/icons/logo/logo.png`} />
       <meta property="og:site_name" content="El Villanense" />
       <meta name="twitter:card" content="summary_large_image" />
       {/* <meta name="google-site-verification" content="hXIhjWYsPdwJV_q2u8HScKlAfFDKpIXuom958hxhjNE" /> */}

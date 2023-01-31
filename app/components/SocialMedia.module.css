@@ -1,12 +1,11 @@
 .links_social_container {
-  margin: 0 10px;
   display: flex;
-  column-gap: 10px;
+  column-gap: 15px;
 }
 
 /* // Dispositivos grandes (escritorios, 992px y más) */
 @media (min-width: 992px) {
-  .links_social_container {
+  .links_social_container_header {
     position: fixed;
     left: 0;
     top: calc(50vh - 65px);
@@ -16,6 +15,5 @@
     row-gap: 10px;
     border-radius: 0 10px 10px 0;
     padding: 10px 2px;
-    margin: 0;
   }
 }

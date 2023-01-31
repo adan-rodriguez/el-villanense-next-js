@@ -14,6 +14,10 @@
   font-size: 0.85rem;
 }
 
+.lead-article {
+  font-size: 1.15rem;
+}
+
 .article_link_title {
   font-weight: 700;
 }
@@ -21,6 +25,11 @@
 .article_link:hover .article_title {
   transition: 0.3s;
   color: #0289cb;
+}
+
+.section_page_title {
+  text-align: center;
+  font-size: 1.5em;
 }
 
 /* // Dispositivos pequeños (teléfonos horizontales, 576px y más) */

@@ -2,7 +2,7 @@ import { getAnArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import DefaultTags from "../../DefaultTags";
 
-export default async function Head({ params }) {
+export default async function HeadArticle({ params }) {
   const { section, article } = params;
 
   const art = await getAnArticle(article);

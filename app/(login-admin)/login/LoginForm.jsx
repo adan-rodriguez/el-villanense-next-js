@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "./LoginForm.module.css";
+
 export default function LoginForm({
   email,
   password,
@@ -11,15 +13,17 @@ export default function LoginForm({
   return (
     <>
       <form
+        className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
           login();
         }}
       >
         <div>
-          <label htmlFor="email">
+          <label className={styles.form_label} htmlFor="email">
             Email
             <input
+              className={styles.form_input}
               type="text"
               name="email"
               id="email"
@@ -30,9 +34,10 @@ export default function LoginForm({
           </label>
         </div>
         <div>
-          <label htmlFor="password">
+          <label className={styles.form_label} htmlFor="password">
             Contraseña
             <input
+              className={styles.form_input}
               type="password"
               name="password"
               id="password"
@@ -42,10 +47,14 @@ export default function LoginForm({
             />
           </label>
         </div>
-        <button type="submit">Ingresar</button>
+        <button className={styles.form_btn} type="submit">
+          Ingresar
+        </button>
       </form>
       {loginErrorMessage && (
-        <p role="alert">Los datos ingresados son incorrectos</p>
+        <p className={styles.form_login_error_message} role="alert">
+          Los datos ingresados son incorrectos
+        </p>
       )}
     </>
   );

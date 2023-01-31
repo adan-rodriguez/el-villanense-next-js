@@ -22,9 +22,9 @@ const socialLinks = [
   },
 ];
 
-export default function SocialMedia() {
+export default function SocialMedia({ classname }) {
   return (
-    <div className={styles.links_social_container}>
+    <div className={`${styles[classname]} ${styles.links_social_container}`}>
       {socialLinks.map(({ href, title, icon, alt }) => (
         <SocialMediaLink
           key={href}

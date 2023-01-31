@@ -1,20 +1,22 @@
 "use client";
 
 import TinyMCE from "./TinyMCE";
+import styles from "./AdminForm.module.css";
 
 export default function AdminForm({ article, settersArticle, addArticle }) {
   return (
     <form
-      className="form-add-article"
+      className={styles.form}
       onSubmit={(e) => {
         e.preventDefault();
         addArticle();
       }}
     >
       <div>
-        <label htmlFor="title">
+        <label className={styles.form_label} htmlFor="title">
           Título
           <input
+            className={styles.form_input}
             type="text"
             name="title"
             id="title"
@@ -26,9 +28,10 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
         </label>
       </div>
       <div>
-        <label htmlFor="image">
+        <label className={styles.form_label} htmlFor="image">
           Imagen
           <input
+            className={styles.form_input}
             type="text"
             name="image"
             id="image"
@@ -40,9 +43,10 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
         </label>
       </div>
       <div>
-        <label htmlFor="alt-image">
+        <label className={styles.form_label} htmlFor="alt-image">
           Texto alternativo de la imagen
           <input
+            className={styles.form_input}
             type="text"
             name="alt-image"
             id="alt-image"
@@ -54,9 +58,10 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
         </label>
       </div>
       <div>
-        <label htmlFor="lead">
+        <label className={styles.form_label} htmlFor="lead">
           Entrada
           <textarea
+            className={styles.form_textarea}
             type="text"
             name="lead"
             id="lead"
@@ -69,9 +74,10 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
         </label>
       </div>
       <div>
-        <label htmlFor="section">
+        <label className={styles.form_label} htmlFor="section">
           Sección
           <select
+            className={styles.form_select}
             name="section"
             id="section"
             required
@@ -87,7 +93,7 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
         </label>
       </div>
       <TinyMCE getContentTiny={settersArticle.getContentTiny} />
-      <button className="btn-upload-article" type="submit">
+      <button className={styles.form_btn} type="submit">
         Subir artículo
       </button>
     </form>

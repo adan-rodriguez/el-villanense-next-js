@@ -1,0 +1,22 @@
+.article_content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.article_content * {
+  max-width: 100%;
+}
+
+.article_content a {
+  color: #0289cb;
+}
+
+.article_content a:hover {
+  text-decoration: underline;
+}
+
+.article_content ul,
+.article_content ol {
+  padding-left: 40px;
+}

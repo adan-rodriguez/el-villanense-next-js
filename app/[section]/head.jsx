@@ -1,7 +1,7 @@
 import DefaultTags from "../DefaultTags";
 import { DOMAIN } from "../utils/constants/domain";
 
-export default function Head({ params }) {
+export default function HeadSection({ params }) {
   const section = `${params.section[0].toUpperCase()}${params.section.slice(
     1
   )}`;

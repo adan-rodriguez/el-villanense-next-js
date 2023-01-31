@@ -1,5 +1,12 @@
 "use client";
 
+import styles from "./ArticleContent.module.css";
+
 export default function ArticleContent({ content }) {
-  return <div dangerouslySetInnerHTML={{ __html: content }} />;
+  return (
+    <div
+      className={styles.article_content}
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
+  );
 }
