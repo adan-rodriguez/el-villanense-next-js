@@ -1,6 +1,6 @@
 import { getAnArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
-// import Image from "next/image";
+import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 
 export default async function Article({ params }) {
@@ -20,11 +20,11 @@ export default async function Article({ params }) {
           title="Compartir en Facebook"
           rel="noreferrer"
         >
-          <img
+          <Image
             width={30}
             height={30}
             src="/icons/social/facebook.png"
-            alt="Facebook"
+            alt="Logo de Facebook"
           />
         </a>
         <a
@@ -33,11 +33,11 @@ export default async function Article({ params }) {
           title="Compartir en Twitter"
           rel="noreferrer"
         >
-          <img
+          <Image
             width={30}
             height={30}
             src="/icons/social/twitter.png"
-            alt="Twitter"
+            alt="Logo de Twitter"
           />
         </a>
         <a
@@ -46,24 +46,24 @@ export default async function Article({ params }) {
           title="Compartir en Whatsapp"
           rel="noreferrer"
         >
-          <img
+          <Image
             width={30}
             height={30}
             src="/icons/social/whatsapp.png"
-            alt="Whatsapp"
+            alt="Logo de Whatsapp"
           />
         </a>
       </div>
       <time dateTime={art.datetimeAttribute}>{art.datetimeContent}</time>
       <p>{art.lead}</p>
-      {/* <Image
+      <Image
         src={art.image}
         alt={art.altImage}
         width={500}
         height={300}
         priority
-      /> */}
-      <img src={art.image} alt={art.altImage} width={500} height={300} />
+      />
+      {/* <img src={art.image} alt={art.altImage} width={500} height={300} /> */}
       {/* <div dangerouslySetInnerHTML={{ __html: art.content }}></div> */}
       <ArticleContent content={art.content} />
     </article>

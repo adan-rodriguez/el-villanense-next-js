@@ -1,4 +1,4 @@
-// import Image from "next/image";
+import Image from "next/image";
 import styles from "./page.module.css";
 import getAllArticles from "@/app/firebase/firebaseService";
 import Link from "next/link";
@@ -11,19 +11,19 @@ export default async function Home() {
       {articles.map((article) => (
         <Link key={article.id} href={`/${article.section}/${article.id}`}>
           <article>
-            {/* <Image
+            <Image
               src={article.image}
               alt={article.altImage}
               width={500}
               height={300}
               priority
-            /> */}
-            <img
+            />
+            {/* <img
               src={article.image}
               alt={article.altImage}
               width={500}
               height={300}
-            />
+            /> */}
             <time dateTime={article.datetimeAttribute}>
               {article.dateContent}
             </time>
