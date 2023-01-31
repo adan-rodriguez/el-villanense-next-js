@@ -1,0 +1,11 @@
+/* // Dispositivos grandes (escritorios, 992px y más) */
+@media (min-width: 992px) {
+  .link_social {
+    margin: 0;
+    height: 30px;
+  }
+
+  .link_social:hover {
+    transform: scale(1.05);
+  }
+}

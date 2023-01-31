@@ -1,0 +1,12 @@
+.logo {
+  font-size: 2rem;
+  font-weight: 900;
+  user-select: none;
+}
+
+/* // Dispositivos X-Large (escritorios grandes, 1200px y más) */
+@media (min-width: 1200px) {
+  .logo {
+    font-size: 3rem;
+  }
+}

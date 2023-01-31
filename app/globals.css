@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  padding-top: 48px;
+}
+
+main {
+  min-height: calc(100vh - 278px);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* // Dispositivos X-Small (teléfonos verticales, menos de 576px)
+// No hay media queries para `xs` ya que este es el valor predeterminado en Bootstrap */
+
+/* // Dispositivos pequeños (teléfonos horizontales, 576px y más) */
+@media (min-width: 576px) {
+}
+
+/* // Dispositivos medianos (tabletas, 768px y más) */
+@media (min-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
+/* // Dispositivos grandes (escritorios, 992px y más) */
+@media (min-width: 992px) {
+}
+
+/* // Dispositivos X-Large (escritorios grandes, 1200px y más) */
+@media (min-width: 1200px) {
+  body {
+    padding-top: 72px;
+  }
+}
+
+/* // Dispositivos XX-Large (escritorios más grandes, 1400px y más) */
+@media (min-width: 1400px) {
+}
