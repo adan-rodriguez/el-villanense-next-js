@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "./Section.module.css";
 
+export const revalidate = 600;
+
 export default async function Section({ params }) {
   const { section } = params;
 

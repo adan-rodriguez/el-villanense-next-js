@@ -4,6 +4,8 @@ import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 import styles from "./Article.module.css";
 
+export const revalidate = 0;
+
 export default async function Article({ params }) {
   const { section, article } = params;
 

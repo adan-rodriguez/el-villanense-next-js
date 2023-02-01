@@ -3,6 +3,8 @@ import styles from "./Home.module.css";
 import getAllArticles from "@/app/firebase/firebaseService";
 import Link from "next/link";
 
+export const revalidate = 600;
+
 export default async function Home() {
   const articles = await getAllArticles();
 
