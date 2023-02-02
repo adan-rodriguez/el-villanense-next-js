@@ -29,7 +29,6 @@ function AdminPage() {
       settersArticle={settersArticle}
       addArticle={async () => {
         await addArticleToFirestore(article);
-        alert("Artículo subido con éxito");
       }}
     />
   );
