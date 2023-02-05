@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import styles from "./Home.module.css";
 import getAllArticles from "@/app/firebase/firebaseService";
 import Link from "next/link";
@@ -17,13 +17,18 @@ export default async function Home() {
           href={`/${article.section}/${article.id}`}
         >
           <article>
-            <Image
+            {/* <Image
               className={styles.article_link_img}
               src={article.image}
               alt={article.altImage}
               width={500}
               height={300}
               priority
+            /> */}
+            <img
+              className={styles.article_link_img}
+              src={article.image}
+              alt={article.altImage}
             />
             <time
               className={styles.article_link_time}

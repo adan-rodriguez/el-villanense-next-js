@@ -1,6 +1,6 @@
 import { getAnArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
-import Image from "next/image";
+// import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 import styles from "./Article.module.css";
 
@@ -63,14 +63,15 @@ export default async function Article({ params }) {
         {art.datetimeContent}
       </time>
       <p className={styles.article_lead}>{art.lead}</p>
-      <Image
+      {/* <Image
         className={styles.article_img}
         src={art.image}
         alt={art.altImage}
         width={500}
         height={300}
         priority
-      />
+      /> */}
+      <img className={styles.article_img} src={art.image} alt={art.altImage} />
       <ArticleContent content={art.content} />
     </article>
   );
