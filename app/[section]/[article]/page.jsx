@@ -8,10 +8,8 @@ export const revalidate = 0;
 
 export default async function Article({ params }) {
   const { section, article } = params;
-  console.log(article);
 
   const art = await getAnArticle(article);
-  console.log(art);
 
   const URL = `${DOMAIN}/${section}/${article}`;
 
