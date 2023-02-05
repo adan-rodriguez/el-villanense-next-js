@@ -30,13 +30,13 @@ export const getSectionArticles = async (section) => {
   return articles;
 };
 
-export const getLastArticle = async () => {
-  const q = query(articlesCollection, orderBy("timestamp", "desc"), limit(1));
-  const data = await getDocs(q);
-  const articleData = data.docs[0];
-  const article = { id: articleData.id, ...articleData.data() };
-  return article;
-};
+// export const getLastArticle = async () => {
+//   const q = query(articlesCollection, orderBy("timestamp", "desc"), limit(1));
+//   const data = await getDocs(q);
+//   const articleData = data.docs[0];
+//   const article = { id: articleData.id, ...articleData.data() };
+//   return article;
+// };
 
 export const getAnArticle = async (id) => {
   const articleRef = doc(db, "articles", id);
