@@ -14,7 +14,7 @@ const prepareDataForFirebase = (article, timestamp) => {
   return dataForFirebase;
 };
 
-export const addArticleToFirestore = async (article) => {
+export const addArticle = async (article) => {
   const dataForFirebase = prepareDataForFirebase(article, Date.now());
 
   await setDoc(
