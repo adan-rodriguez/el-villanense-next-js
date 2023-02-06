@@ -1,16 +1,13 @@
 "use client";
 
+import { loginContext } from "@/app/layout";
 import { useRouter } from "next/navigation";
-// import { useEffect } from "react";
 import { useContext, useEffect } from "react";
-// import useIsLogin from "../../hooks/useIsLogin";
-import useLogin from "../../hooks/useLogin";
-import { handleLoginAuthFirebase } from "../../utils/handleLoginAuthFirebase";
-import { loginContext } from "../layout";
+import useLogin from "../hooks/useLogin";
+import { handleLoginAuthFirebase } from "../utils/handleLoginAuthFirebase";
 import LoginForm from "./LoginForm";
 
 export default function LoginPage() {
-  // const { isUserLogged } = useIsLogin();
   const isUserLogged = useContext(loginContext);
 
   const {

@@ -1,16 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import AdminForm from "./AdminForm";
-import useAdmin from "../../hooks/useAdmin";
-import { addArticleToFirestore } from "../../utils/addArticleToFirestore";
-// import useIsLogin from "../../hooks/useIsLogin";
-// import { useEffect } from "react";
+import useAdmin from "../hooks/useAdmin";
+import { addArticleToFirestore } from "../utils/addArticleToFirestore";
 import { useContext, useEffect } from "react";
-import { loginContext } from "../layout";
+import { loginContext } from "@/app/layout";
+import AdminForm from "../components/AdminForm";
+import { DOMAIN } from "../utils/constants/domain";
 
 function AdminPage() {
-  // const { isUserLogged } = useIsLogin();
   const isUserLogged = useContext(loginContext);
 
   const { article, settersArticle } = useAdmin();
@@ -29,6 +27,14 @@ function AdminPage() {
       settersArticle={settersArticle}
       addArticle={async () => {
         await addArticleToFirestore(article);
+
+        alert("Artículo subido con éxito");
+
+        await fetch(
+          // `http://localhost:3000/api/revalidate?secret=${process.env.MY_SECRET_TOKEN}`
+          `${DOMAIN}/api/revalidate?secret=h5h4j8912hg6df8d1s3h55k8op6k46f2d4s`,
+          { method: "POST", body: article.section }
+        );
       }}
     />
   );

@@ -3,8 +3,7 @@ import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 import styles from "./Article.module.css";
-
-export const revalidate = 0;
+import EditArticle from "./EditArticle";
 
 export default async function Article({ params }) {
   const { section, article } = params;
@@ -35,35 +34,37 @@ export default async function Article({ params }) {
   ];
 
   return (
-    <article className={styles.article_container}>
-      <h1 className={styles.article_title}>{art.title}</h1>
-      <div className={styles.share_social_container}>
-        {shareSocialLinks.map(({ href, title, src, alt }, index) => {
-          return (
-            <a
-              className={styles.share_social_link}
-              key={index}
-              href={href}
-              target="_blank"
-              title={title}
-              rel="noreferrer"
-            >
-              <Image
-                className={styles.share_social_img}
-                width={30}
-                height={30}
-                src={src}
-                alt={alt}
-              />
-            </a>
-          );
-        })}
-      </div>
-      <time className={styles.article_time} dateTime={art.datetimeAttribute}>
-        {art.datetimeContent}
-      </time>
-      <p className={styles.article_lead}>{art.lead}</p>
-      {/* <Image
+    <>
+      <article className={styles.article_container}>
+        <EditArticle articleId={article} />
+        <h1 className={styles.article_title}>{art.title}</h1>
+        <div className={styles.share_social_container}>
+          {shareSocialLinks.map(({ href, title, src, alt }, index) => {
+            return (
+              <a
+                className={styles.share_social_link}
+                key={index}
+                href={href}
+                target="_blank"
+                title={title}
+                rel="noreferrer"
+              >
+                <Image
+                  className={styles.share_social_img}
+                  width={30}
+                  height={30}
+                  src={src}
+                  alt={alt}
+                />
+              </a>
+            );
+          })}
+        </div>
+        <time className={styles.article_time} dateTime={art.datetimeAttribute}>
+          {art.datetimeContent}
+        </time>
+        <p className={styles.article_lead}>{art.lead}</p>
+        {/* <Image
         className={styles.article_img}
         src={art.image}
         alt={art.altImage}
@@ -71,8 +72,13 @@ export default async function Article({ params }) {
         height={300}
         priority
       /> */}
-      <img className={styles.article_img} src={art.image} alt={art.altImage} />
-      <ArticleContent content={art.content} />
-    </article>
+        <img
+          className={styles.article_img}
+          src={art.image}
+          alt={art.altImage}
+        />
+        <ArticleContent content={art.content} />
+      </article>
+    </>
   );
 }

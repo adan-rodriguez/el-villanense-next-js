@@ -92,7 +92,10 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
           </select>
         </label>
       </div>
-      <TinyMCE getContentTiny={settersArticle.getContentTiny} />
+      <TinyMCE
+        getContentTiny={settersArticle.getContentTiny}
+        initialValue={article.content}
+      />
       <button className={styles.form_btn} type="submit">
         Subir artículo
       </button>

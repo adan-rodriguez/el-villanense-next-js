@@ -1,7 +1,7 @@
 import { /* useRef */ useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
-export default function TinyMCE({ getContentTiny }) {
+export default function TinyMCE({ getContentTiny, initialValue }) {
   const [value, setValue] = useState("");
   //   const editorRef = useRef(null);
   //   const log = () => {
@@ -18,7 +18,7 @@ export default function TinyMCE({ getContentTiny }) {
     <Editor
       apiKey="shr4ebbg4q013zmsd1tvhpy2okxwa8frfpg8gi6llkx3m5x5"
       // onInit={(evt, editor) => (editorRef.current = editor)}
-      // initialValue="<p>This is the initial content of the editor.</p>"
+      initialValue={initialValue}
       value={value}
       onEditorChange={(newValue) => setValue(newValue)}
       init={{
