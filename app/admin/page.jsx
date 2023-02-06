@@ -25,7 +25,8 @@ function AdminPage() {
     <AdminForm
       article={article}
       settersArticle={settersArticle}
-      addArticle={async () => {
+      isEditing={false}
+      handleSubmit={async () => {
         await addArticleToFirestore(article);
 
         alert("Artículo subido con éxito");

@@ -3,13 +3,18 @@
 import TinyMCE from "./TinyMCE";
 import styles from "./AdminForm.module.css";
 
-export default function AdminForm({ article, settersArticle, addArticle }) {
+export default function AdminForm({
+  article,
+  settersArticle,
+  handleSubmit,
+  isEditing,
+}) {
   return (
     <form
       className={styles.form}
       onSubmit={(e) => {
         e.preventDefault();
-        addArticle();
+        handleSubmit();
       }}
     >
       <div>
@@ -97,7 +102,7 @@ export default function AdminForm({ article, settersArticle, addArticle }) {
         initialValue={article.content}
       />
       <button className={styles.form_btn} type="submit">
-        Subir artículo
+        {isEditing ? "Editar artículo" : "Subir artículo"}
       </button>
     </form>
   );

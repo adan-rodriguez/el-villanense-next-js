@@ -26,7 +26,8 @@ export default function EditArticle({ params }) {
     <AdminForm
       article={article}
       settersArticle={settersArticle}
-      addArticle={async () => {
+      isEditing
+      handleSubmit={async () => {
         await editArticle(article, articleToEdit);
 
         alert("Artículo editado con éxito");
