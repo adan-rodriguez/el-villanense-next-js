@@ -10,8 +10,10 @@ export default function DeleteButton({ articleId, section }) {
   return (
     <button
       onClick={async () => {
-        await deleteArticle(articleId, section);
-        router.push("/");
+        if (confirm("¿Estás seguro de borrar esta noticia?")) {
+          await deleteArticle(articleId, section);
+          router.push("/");
+        }
       }}
       title="Borrar noticia"
       style={{ backgroundColor: "transparent", border: "none", height: "30px" }}
