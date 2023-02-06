@@ -39,8 +39,6 @@ export default function EditArticle({ params }) {
         handleSubmit={async () => {
           await editArticle(articleToEdit, article);
 
-          alert("Artículo editado con éxito");
-
           await fetch(
             `${DOMAIN}/api/revalidate?secret=h5h4j8912hg6df8d1s3h55k8op6k46f2d4s`,
             {
@@ -48,6 +46,8 @@ export default function EditArticle({ params }) {
               body: `${article.section}/${articleToEdit}`,
             }
           );
+
+          alert("Artículo editado con éxito");
         }}
       />
     </>
