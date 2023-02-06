@@ -3,9 +3,20 @@ import Link from "next/link";
 import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "./Section.module.css";
 import EditAndDeleteButtonsContainer from "../components/EditAndDeleteButtonsContainer";
+import PageNotFound from "../components/PageNotFound";
 
 export default async function Section({ params }) {
   const { section } = params;
+
+  if (
+    section !== "locales" &&
+    section !== "regionales" &&
+    section !== "provinciales" &&
+    section !== "nacionales" &&
+    section !== "internacionales"
+  ) {
+    return <PageNotFound />;
+  }
 
   const articles = await getSectionArticles(section);
 

@@ -4,11 +4,26 @@ import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 import styles from "./Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
+import PageNotFound from "@/app/components/PageNotFound";
 
 export default async function Article({ params }) {
   const { section, article } = params;
 
+  if (
+    section !== "locales" &&
+    section !== "regionales" &&
+    section !== "provinciales" &&
+    section !== "nacionales" &&
+    section !== "internacionales"
+  ) {
+    return <PageNotFound />;
+  }
+
   const art = await getArticle(article);
+
+  if (Object.keys(art).length === 1) {
+    return <PageNotFound />;
+  }
 
   const URL = `${DOMAIN}/${section}/${article}`;
 

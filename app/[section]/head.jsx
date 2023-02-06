@@ -3,6 +3,22 @@ import { DOMAIN } from "../utils/constants/domain";
 
 export default function HeadSection({ params }) {
   const { section } = params;
+
+  if (
+    section !== "locales" &&
+    section !== "regionales" &&
+    section !== "provinciales" &&
+    section !== "nacionales" &&
+    section !== "internacionales"
+  ) {
+    return (
+      <>
+        <DefaultTags />
+        <title>Página no encontrada - El Villanense</title>
+      </>
+    );
+  }
+
   const uppercaseSection = `${section[0].toUpperCase()}${section.slice(1)}`;
 
   return (
