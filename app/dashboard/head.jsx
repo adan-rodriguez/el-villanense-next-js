@@ -1,10 +1,10 @@
 import DefaultTags from "../DefaultTags";
 
-export default function HeadAdmin() {
+export default function HeadDashboard() {
   return (
     <>
       <DefaultTags />
-      <title>Admin - El Villanense</title>
+      <title>Dashboard - El Villanense</title>
     </>
   );
 }

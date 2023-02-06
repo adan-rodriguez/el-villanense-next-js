@@ -1,9 +1,9 @@
 "use client";
 
 import TinyMCE from "./TinyMCE";
-import styles from "./AdminForm.module.css";
+import styles from "./DashboardForm.module.css";
 
-export default function AdminForm({
+export default function DashboardForm({
   article,
   settersArticle,
   handleSubmit,

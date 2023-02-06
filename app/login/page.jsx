@@ -23,7 +23,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isUserLogged) {
-      router.push("/admin");
+      router.push("/dashboard/nuevo-articulo");
     }
   }, [isUserLogged]);
 

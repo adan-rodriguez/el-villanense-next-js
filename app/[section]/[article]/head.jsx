@@ -1,11 +1,11 @@
-import { getAnArticle } from "@/app/firebase/firebaseService";
+import { getArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import DefaultTags from "../../DefaultTags";
 
 export default async function HeadArticle({ params }) {
   const { section, article } = params;
 
-  const art = await getAnArticle(article);
+  const art = await getArticle(article);
 
   const URL = `${DOMAIN}/${section}/${article}`;
 

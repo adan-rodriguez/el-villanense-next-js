@@ -12,7 +12,7 @@ import { db } from "./firebase";
 
 const articlesCollection = collection(db, "articles");
 
-const getAllArticles = async () => {
+export const getAllArticles = async () => {
   const q = query(articlesCollection, orderBy("timestamp", "desc"));
   const data = await getDocs(q);
   const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
@@ -38,11 +38,9 @@ export const getSectionArticles = async (section) => {
 //   return article;
 // };
 
-export const getAnArticle = async (id) => {
-  const articleRef = doc(db, "articles", id);
+export const getArticle = async (articleId) => {
+  const articleRef = doc(db, "articles", articleId);
   const data = await getDoc(articleRef);
   const article = { id: data.id, ...data.data() };
   return article;
 };
-
-export default getAllArticles;

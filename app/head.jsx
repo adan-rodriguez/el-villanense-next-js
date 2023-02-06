@@ -41,7 +41,7 @@ export default function HeadHome() {
       />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={DOMAIN} />
-      <meta property="og:image" content={`${DOMAIN}/icons/logo/logo.png`} />
+      <meta property="og:image" content={`${DOMAIN}/images/logo.png`} />
       <meta property="og:site_name" content="El Villanense" />
       <meta name="twitter:card" content="summary_large_image" />
       {/* <meta name="google-site-verification" content="hXIhjWYsPdwJV_q2u8HScKlAfFDKpIXuom958hxhjNE" /> */}

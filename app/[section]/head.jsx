@@ -2,21 +2,23 @@ import DefaultTags from "../DefaultTags";
 import { DOMAIN } from "../utils/constants/domain";
 
 export default function HeadSection({ params }) {
-  const section = `${params.section[0].toUpperCase()}${params.section.slice(
-    1
-  )}`;
+  const { section } = params;
+  const uppercaseSection = `${section[0].toUpperCase()}${section.slice(1)}`;
 
   return (
     <>
       <DefaultTags />
-      <title>{`${section} - El Villanense`}</title>
-      <meta property="og:title" content={`${section} - El Villanense`} />
+      <title>{`${uppercaseSection} - El Villanense`}</title>
+      <meta
+        property="og:title"
+        content={`${uppercaseSection} - El Villanense`}
+      />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={`${DOMAIN}/${params.section}`} />
-      <meta property="og:image" content={`${DOMAIN}/icons/logo/logo.png`} />
+      <meta property="og:url" content={`${DOMAIN}/${section}`} />
+      <meta property="og:image" content={`${DOMAIN}/images/logo.png`} />
       <meta property="og:site_name" content="El Villanense" />
       <meta name="twitter:card" content="summary_large_image" />
-      {section === "Locales" && (
+      {section === "locales" && (
         <>
           <meta
             name="description"
@@ -28,7 +30,7 @@ export default function HeadSection({ params }) {
           />
         </>
       )}
-      {section === "Regionales" && (
+      {section === "regionales" && (
         <>
           <meta
             name="description"
@@ -40,7 +42,7 @@ export default function HeadSection({ params }) {
           />
         </>
       )}
-      {section === "Provinciales" && (
+      {section === "provinciales" && (
         <>
           <meta
             name="description"
@@ -52,7 +54,7 @@ export default function HeadSection({ params }) {
           />
         </>
       )}
-      {section === "Nacionales" && (
+      {section === "nacionales" && (
         <>
           <meta
             name="description"
@@ -64,7 +66,7 @@ export default function HeadSection({ params }) {
           />
         </>
       )}
-      {section === "Internacionales" && (
+      {section === "internacionales" && (
         <>
           <meta
             name="description"

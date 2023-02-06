@@ -1,15 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function EditButton({ articleId }) {
   return (
     <Link
-      href={`/edit/${articleId}`}
+      href={`/dashboard/editar-articulo/${articleId}`}
       title="Editar noticia"
       style={{
         height: "30px",
       }}
     >
-      <img src="/icons/admin/edit.svg" alt="Editar" width={30} height={30} />
+      <Image
+        src="/icons/dashboard/edit.svg"
+        alt="Editar"
+        width={30}
+        height={30}
+      />
     </Link>
   );
 }

@@ -4,8 +4,6 @@ import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "./Section.module.css";
 import EditAndDeleteButtonsContainer from "../components/EditAndDeleteButtonsContainer";
 
-// export const revalidate = 600;
-
 export default async function Section({ params }) {
   const { section } = params;
 

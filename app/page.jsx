@@ -1,10 +1,8 @@
 // import Image from "next/image";
 import styles from "./Home.module.css";
-import getAllArticles from "@/app/firebase/firebaseService";
+import { getAllArticles } from "@/app/firebase/firebaseService";
 import Link from "next/link";
 import EditAndDeleteButtonsContainer from "./components/EditAndDeleteButtonsContainer";
-
-// export const revalidate = 600;
 
 export default async function Home() {
   const articles = await getAllArticles();
