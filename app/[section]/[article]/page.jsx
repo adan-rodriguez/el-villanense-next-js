@@ -3,7 +3,8 @@ import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 import styles from "./Article.module.css";
-import EditArticle from "./EditArticle";
+import EditArticle from "../../components/EditButton";
+import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
 
 export default async function Article({ params }) {
   const { section, article } = params;
@@ -36,7 +37,16 @@ export default async function Article({ params }) {
   return (
     <>
       <article className={styles.article_container}>
-        <EditArticle articleId={article} />
+        <EditAndDeleteButtonsContainer
+          articleId={art.id}
+          section={art.section}
+          style={{
+            display: "flex",
+            columnGap: "10px",
+            margin: "5px",
+            backgroundColor: "white",
+          }}
+        />
         <h1 className={styles.article_title}>{art.title}</h1>
         <div className={styles.share_social_container}>
           {shareSocialLinks.map(({ href, title, src, alt }, index) => {

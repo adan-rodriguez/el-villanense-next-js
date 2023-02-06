@@ -2,6 +2,7 @@
 import styles from "./Home.module.css";
 import getAllArticles from "@/app/firebase/firebaseService";
 import Link from "next/link";
+import EditAndDeleteButtonsContainer from "./components/EditAndDeleteButtonsContainer";
 
 // export const revalidate = 600;
 
@@ -25,6 +26,17 @@ export default async function Home() {
               height={300}
               priority
             /> */}
+            <EditAndDeleteButtonsContainer
+              articleId={article.id}
+              section={article.section}
+              style={{
+                position: "absolute",
+                display: "flex",
+                columnGap: "10px",
+                margin: "5px",
+                backgroundColor: "white",
+              }}
+            />
             <img
               className={styles.article_link_img}
               src={article.image}
