@@ -12,6 +12,7 @@ export default function DeleteButton({ articleId, section }) {
       onClick={async () => {
         if (confirm("¿Estás seguro de borrar esta noticia?")) {
           await deleteArticle(articleId, section);
+          alert("Noticia eliminada con éxito");
           router.push("/");
         }
       }}

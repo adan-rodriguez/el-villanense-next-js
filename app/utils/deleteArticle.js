@@ -11,5 +11,4 @@ export const deleteArticle = async (articleId, section) => {
       body: section,
     }
   );
-  alert("Noticia eliminada con éxito");
 };
