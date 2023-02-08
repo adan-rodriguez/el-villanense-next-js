@@ -8,7 +8,7 @@ import PageNotFound from "@/app/components/PageNotFound";
 import Script from "next/script";
 
 export default async function Article({ params }) {
-  const { section, article } = params;
+  const { section, article: articleId } = params;
 
   if (
     section !== "locales" &&
@@ -20,13 +20,13 @@ export default async function Article({ params }) {
     return <PageNotFound />;
   }
 
-  const art = await getArticle(article);
+  const article = await getArticle(articleId);
 
-  if (Object.keys(art).length === 1) {
+  if (Object.keys(article).length === 1) {
     return <PageNotFound />;
   }
 
-  const URL = `${DOMAIN}/${section}/${article}`;
+  const URL = `${DOMAIN}/${section}/${articleId}`;
 
   const shareSocialLinks = [
     {
@@ -36,7 +36,7 @@ export default async function Article({ params }) {
       alt: "Logo de Facebook",
     },
     {
-      href: `https://twitter.com/intent/tweet?text=${art.title}&url=${URL}`,
+      href: `https://twitter.com/intent/tweet?text=${article.title}&url=${URL}`,
       title: "Compartir en Twitter",
       src: "/icons/social/twitter.png",
       alt: "Logo de Twitter",
@@ -51,6 +51,15 @@ export default async function Article({ params }) {
 
   return (
     <>
+      <Script id="structured-data" type="application/ld+json">
+        {`{
+          "@context": "https://schema.org",
+          "@type": "NewsArticle",
+          "headline": "${article.title}",
+          "image": "${article.image}",
+          "datePublished": "${article.datetimeAttribute}"
+        }`}
+      </Script>
       {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
@@ -67,8 +76,8 @@ export default async function Article({ params }) {
       </Script>
       <article className={styles.article_container}>
         <EditAndDeleteButtonsContainer
-          articleId={art.id}
-          section={art.section}
+          articleId={article.id}
+          section={article.section}
           style={{
             display: "flex",
             columnGap: "10px",
@@ -76,7 +85,7 @@ export default async function Article({ params }) {
             backgroundColor: "white",
           }}
         />
-        <h1 className={styles.article_title}>{art.title}</h1>
+        <h1 className={styles.article_title}>{article.title}</h1>
         <div className={styles.share_social_container}>
           {shareSocialLinks.map(({ href, title, src, alt }, index) => {
             return (
@@ -99,10 +108,13 @@ export default async function Article({ params }) {
             );
           })}
         </div>
-        <time className={styles.article_time} dateTime={art.datetimeAttribute}>
-          {art.datetimeContent}
+        <time
+          className={styles.article_time}
+          dateTime={article.datetimeAttribute}
+        >
+          {article.datetimeContent}
         </time>
-        <p className={styles.article_lead}>{art.lead}</p>
+        <p className={styles.article_lead}>{article.lead}</p>
         {/* <Image
         className={styles.article_img}
         src={art.image}
@@ -113,11 +125,11 @@ export default async function Article({ params }) {
       /> */}
         <img
           className={styles.article_img}
-          src={art.image}
-          alt={art.altImage}
+          src={article.image}
+          alt={article.altImage}
           loading="lazy"
         />
-        <ArticleContent content={art.content} />
+        <ArticleContent content={article.content} />
       </article>
     </>
   );

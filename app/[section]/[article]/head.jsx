@@ -3,7 +3,7 @@ import { DOMAIN } from "@/app/utils/constants/domain";
 import DefaultTags from "../../DefaultTags";
 
 export default async function HeadArticle({ params }) {
-  const { section, article } = params;
+  const { section, article: articleId } = params;
 
   if (
     section !== "locales" &&
@@ -20,9 +20,9 @@ export default async function HeadArticle({ params }) {
     );
   }
 
-  const art = await getArticle(article);
+  const article = await getArticle(articleId);
 
-  if (Object.keys(art).length === 1) {
+  if (Object.keys(article).length === 1) {
     return (
       <>
         <DefaultTags />
@@ -31,18 +31,18 @@ export default async function HeadArticle({ params }) {
     );
   }
 
-  const URL = `${DOMAIN}/${section}/${article}`;
+  const URL = `${DOMAIN}/${section}/${articleId}`;
 
   return (
     <>
       <DefaultTags />
-      <title>{art.title}</title>
-      <meta name="description" content={art.lead} />
-      <meta property="og:title" content={art.title} />
-      <meta property="og:description" content={art.lead} />
+      <title>{article.title}</title>
+      <meta name="description" content={article.lead} />
+      <meta property="og:title" content={article.title} />
+      <meta property="og:description" content={article.lead} />
       <meta property="og:type" content="article" />
       <meta property="og:url" content={URL} />
-      <meta property="og:image" content={art.image} />
+      <meta property="og:image" content={article.image} />
       <meta property="og:site_name" content="El Villanense" />
       <meta name="twitter:card" content="summary_large_image" />
     </>
