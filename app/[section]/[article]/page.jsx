@@ -5,6 +5,7 @@ import ArticleContent from "./ArticleContent";
 import styles from "./Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
 import PageNotFound from "@/app/components/PageNotFound";
+import Script from "next/script";
 
 export default async function Article({ params }) {
   const { section, article } = params;
@@ -50,6 +51,20 @@ export default async function Article({ params }) {
 
   return (
     <>
+      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-V6RKJKGCX2');
+        `}
+      </Script>
       <article className={styles.article_container}>
         <EditAndDeleteButtonsContainer
           articleId={art.id}
@@ -100,6 +115,7 @@ export default async function Article({ params }) {
           className={styles.article_img}
           src={art.image}
           alt={art.altImage}
+          loading="lazy"
         />
         <ArticleContent content={art.content} />
       </article>

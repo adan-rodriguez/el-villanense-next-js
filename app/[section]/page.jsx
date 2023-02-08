@@ -4,6 +4,7 @@ import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "./Section.module.css";
 import EditAndDeleteButtonsContainer from "../components/EditAndDeleteButtonsContainer";
 import PageNotFound from "../components/PageNotFound";
+import Script from "next/script";
 
 export default async function Section({ params }) {
   const { section } = params;
@@ -22,6 +23,20 @@ export default async function Section({ params }) {
 
   return (
     <>
+      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-V6RKJKGCX2');
+        `}
+      </Script>
       <h1
         className={styles.section_page_title}
       >{`Noticias ${section[0].toUpperCase()}${section.slice(1)}`}</h1>
@@ -56,6 +71,7 @@ export default async function Section({ params }) {
                 className={styles.article_link_img}
                 src={article.image}
                 alt={article.altImage}
+                loading="lazy"
               />
               <time
                 className={styles.article_link_time}

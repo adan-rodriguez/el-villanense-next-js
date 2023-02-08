@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { DOMAIN } from "../utils/constants/domain";
 import { deleteArticle } from "../utils/deleteArticle";
 
 export default function DeleteButton({ articleId, section }) {
@@ -11,8 +12,22 @@ export default function DeleteButton({ articleId, section }) {
     <button
       onClick={async () => {
         if (confirm("¿Estás seguro de borrar esta noticia?")) {
-          await deleteArticle(articleId, section);
+          try {
+            await deleteArticle(articleId);
+          } catch {
+            return alert("No se ha podido eliminar la noticia");
+          }
+
+          await fetch(
+            `${DOMAIN}/api/revalidate?secret=h5h4j8912hg6df8d1s3h55k8op6k46f2d4s`,
+            {
+              method: "POST",
+              body: section,
+            }
+          );
+
           alert("Noticia eliminada con éxito");
+
           router.push("/");
         }
       }}

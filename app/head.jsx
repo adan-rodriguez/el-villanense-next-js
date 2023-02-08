@@ -44,17 +44,10 @@ export default function HeadHome() {
       <meta property="og:image" content={`${DOMAIN}/images/logo.png`} />
       <meta property="og:site_name" content="El Villanense" />
       <meta name="twitter:card" content="summary_large_image" />
-      {/* <meta name="google-site-verification" content="hXIhjWYsPdwJV_q2u8HScKlAfFDKpIXuom958hxhjNE" /> */}
-      {/* <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-V6RKJKGCX2');
-    </script> */}
+      <meta
+        name="google-site-verification"
+        content="hXIhjWYsPdwJV_q2u8HScKlAfFDKpIXuom958hxhjNE"
+      />
     </>
   );
 }
