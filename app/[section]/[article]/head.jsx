@@ -1,5 +1,6 @@
 import { getArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
+// import Script from "next/script";
 import DefaultTags from "../../DefaultTags";
 
 export default async function HeadArticle({ params }) {
@@ -45,6 +46,15 @@ export default async function HeadArticle({ params }) {
       <meta property="og:image" content={article.image} />
       <meta property="og:site_name" content="El Villanense" />
       <meta name="twitter:card" content="summary_large_image" />
+      {/* <Script id="structured-data" type="application/ld+json">
+        {`{
+          "@context": "https://schema.org",
+          "@type": "NewsArticle",
+          "headline": "${article.title}",
+          "image": "${article.image}",
+          "datePublished": "${article.datetimeAttribute}"
+        }`}
+      </Script> */}
     </>
   );
 }

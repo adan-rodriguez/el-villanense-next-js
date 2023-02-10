@@ -14,11 +14,13 @@ export default function TinyMCE({ getContentTiny, initialValue }) {
     getContentTiny(value);
   }, [value]);
 
+  useEffect(() => setValue(initialValue), [initialValue]);
+
   return (
     <Editor
       apiKey="shr4ebbg4q013zmsd1tvhpy2okxwa8frfpg8gi6llkx3m5x5"
       // onInit={(evt, editor) => (editorRef.current = editor)}
-      initialValue={initialValue}
+      // initialValue={initialValue}
       value={value}
       onEditorChange={(newValue) => setValue(newValue)}
       init={{

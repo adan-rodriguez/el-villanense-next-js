@@ -51,15 +51,6 @@ export default async function Article({ params }) {
 
   return (
     <>
-      <Script id="structured-data" type="application/ld+json">
-        {`{
-          "@context": "https://schema.org",
-          "@type": "NewsArticle",
-          "headline": "${article.title}",
-          "image": "${article.image}",
-          "datePublished": "${article.datetimeAttribute}"
-        }`}
-      </Script>
       {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
