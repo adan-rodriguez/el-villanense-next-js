@@ -22,7 +22,7 @@ export default function DeleteButton({ articleId, section }) {
             `${DOMAIN}/api/revalidateDelete?secret=h5h4j8912hg6df8d1s3h55k8op6k46f2d4s`,
             {
               method: "POST",
-              body: { articleId, section },
+              body: JSON.stringify({ articleId, section }),
             }
           );
 
