@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { DOMAIN } from "../utils/constants/domain";
 import { deleteArticle } from "../utils/deleteArticle";
 
 export default function DeleteButton({ articleId, section }) {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <button
@@ -28,7 +29,13 @@ export default function DeleteButton({ articleId, section }) {
 
           alert("Noticia eliminada con éxito");
 
-          router.push("/");
+          if (pathname === `/${section}/${articleId}`) {
+            router.push("/");
+          }
+
+          if (pathname === "/" || pathname === `/${section}`) {
+            router.refresh();
+          }
         }
       }}
       title="Borrar noticia"
