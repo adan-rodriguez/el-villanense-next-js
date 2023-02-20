@@ -11,7 +11,7 @@ import { auth } from "./firebase/firebase";
 // const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 // const poppins = Poppins({ weight: ["400", "900"], subsets: ["latin"] });
 
-export const loginContext = createContext();
+export const LoginContext = createContext();
 
 export default function RootLayout({ children }) {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -34,9 +34,9 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         <main>
-          <loginContext.Provider value={isUserLogged}>
+          <LoginContext.Provider value={isUserLogged}>
             {children}
-          </loginContext.Provider>
+          </LoginContext.Provider>
         </main>
         <Footer />
       </body>

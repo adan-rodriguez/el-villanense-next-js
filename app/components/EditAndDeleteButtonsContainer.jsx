@@ -1,6 +1,6 @@
 "use client";
 
-import { loginContext } from "@/app/layout";
+import { LoginContext } from "@/app/layout";
 import { useContext } from "react";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
@@ -10,7 +10,7 @@ export default function EditAndDeleteButtonsContainer({
   section,
   style,
 }) {
-  const isUserLogged = useContext(loginContext);
+  const isUserLogged = useContext(LoginContext);
 
   if (!isUserLogged) return null;
 

@@ -2,7 +2,7 @@
 
 import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
-import { loginContext } from "@/app/layout";
+import { LoginContext } from "@/app/layout";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import { editArticle } from "@/app/utils/editArticle";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ import { useContext, useEffect } from "react";
 export default function EditArticle({ params }) {
   const { articleToEdit } = params;
 
-  const isUserLogged = useContext(loginContext);
+  const isUserLogged = useContext(LoginContext);
 
   const { article, settersArticle } = useDashboardForm(articleToEdit);
 

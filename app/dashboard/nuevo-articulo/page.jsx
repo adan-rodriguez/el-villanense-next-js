@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import useDashboardForm from "../../hooks/useDashboardForm";
 import { addArticle } from "../../utils/addArticle";
 import { useContext, useEffect } from "react";
-import { loginContext } from "@/app/layout";
+import { LoginContext } from "@/app/layout";
 import DashboardForm from "../../components/DashboardForm";
 import { DOMAIN } from "@/app/utils/constants/domain";
 
 function NewArticle() {
-  const isUserLogged = useContext(loginContext);
+  const isUserLogged = useContext(LoginContext);
 
   const { article, settersArticle } = useDashboardForm();
 
