@@ -3,13 +3,13 @@
 import { useRouter } from "next/navigation";
 import useDashboardForm from "../../hooks/useDashboardForm";
 import { addArticle } from "../../utils/addArticle";
-import { useContext, useEffect } from "react";
-import { LoginContext } from "@/app/layout";
+import { useEffect } from "react";
 import DashboardForm from "../../components/DashboardForm";
 import { DOMAIN } from "@/app/utils/constants/domain";
+import useLogin from "@/app/hooks/useLogin";
 
 function NewArticle() {
-  const isUserLogged = useContext(LoginContext);
+  const { isUserLogged } = useLogin();
 
   const { article, settersArticle } = useDashboardForm();
 

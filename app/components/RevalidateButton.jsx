@@ -1,12 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useContext } from "react";
-import { loginContext } from "../layout";
+import useLogin from "../hooks/useLogin";
 import { DOMAIN } from "../utils/constants/domain";
 
 export default function RevalidateButton() {
-  const isUserLogged = useContext(loginContext);
+  const { isUserLogged } = useLogin();
 
   if (!isUserLogged) return null;
 

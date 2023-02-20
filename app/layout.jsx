@@ -1,29 +1,15 @@
 "use client";
 
+import { LoginProvider } from "@/app/context/login";
 // import { Poppins /*, Roboto */ } from "@next/font/google";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import "./globals.css";
-import { onAuthStateChanged } from "firebase/auth";
-import { createContext, useState } from "react";
-import { auth } from "./firebase/firebase";
 
 // const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 // const poppins = Poppins({ weight: ["400", "900"], subsets: ["latin"] });
 
-export const LoginContext = createContext();
-
 export default function RootLayout({ children }) {
-  const [isUserLogged, setIsUserLogged] = useState(false);
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setIsUserLogged(true);
-    } else {
-      setIsUserLogged(false);
-    }
-  });
-
   return (
     <html lang="es" /* className={poppins.className}*/>
       {/*
@@ -34,9 +20,7 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         <main>
-          <LoginContext.Provider value={isUserLogged}>
-            {children}
-          </LoginContext.Provider>
+          <LoginProvider>{children}</LoginProvider>
         </main>
         <Footer />
       </body>

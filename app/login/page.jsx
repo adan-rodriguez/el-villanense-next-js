@@ -1,15 +1,12 @@
 "use client";
 
-import { loginContext } from "@/app/layout";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import useLogin from "../hooks/useLogin";
 import { handleLoginAuthFirebase } from "../utils/handleLoginAuthFirebase";
 import LoginForm from "./LoginForm";
 
 export default function LoginPage() {
-  const isUserLogged = useContext(loginContext);
-
   const {
     email,
     password,
@@ -17,6 +14,7 @@ export default function LoginPage() {
     setEmail,
     setPassword,
     setLoginErrorMessage,
+    isUserLogged,
   } = useLogin();
 
   const router = useRouter();
