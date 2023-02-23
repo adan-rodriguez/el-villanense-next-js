@@ -26,6 +26,10 @@ export default async function Article({ params }) {
     return <PageNotFound />;
   }
 
+  if (section !== article.section) {
+    return <PageNotFound />;
+  }
+
   const URL = `${DOMAIN}/${section}/${articleId}`;
 
   const shareSocialLinks = [
