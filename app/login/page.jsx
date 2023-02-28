@@ -25,10 +25,6 @@ export default function LoginPage() {
     }
   }, [isUserLogged]);
 
-  if (isUserLogged) {
-    return <p>Redireccionando...</p>;
-  }
-
   return (
     <LoginForm
       email={email}
@@ -36,8 +32,8 @@ export default function LoginPage() {
       loginErrorMessage={loginErrorMessage}
       setEmail={setEmail}
       setPassword={setPassword}
-      login={() =>
-        handleLoginAuthFirebase(email, password, setLoginErrorMessage)
+      login={async () =>
+        await handleLoginAuthFirebase(email, password, setLoginErrorMessage)
       }
     />
   );

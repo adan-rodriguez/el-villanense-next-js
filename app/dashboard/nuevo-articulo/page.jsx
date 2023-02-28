@@ -21,10 +21,6 @@ function NewArticle() {
     }
   }, []);
 
-  if (!isUserLogged) {
-    return <p>Redireccionando...</p>;
-  }
-
   return (
     <>
       <h2
