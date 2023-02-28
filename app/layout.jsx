@@ -1,5 +1,3 @@
-"use client";
-
 import { LoginProvider } from "@/app/context/login";
 // import { Poppins /*, Roboto */ } from "@next/font/google";
 import Footer from "./components/Footer";
