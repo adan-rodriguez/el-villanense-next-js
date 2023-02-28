@@ -24,7 +24,7 @@ export default function LoginPage() {
     if (isUserLogged) {
       router.push("/dashboard/nuevo-articulo");
     }
-  }, []);
+  }, [isUserLogged]);
 
   return (
     <LoginForm

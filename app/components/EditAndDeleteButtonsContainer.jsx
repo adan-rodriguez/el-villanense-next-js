@@ -11,6 +11,8 @@ export default function EditAndDeleteButtonsContainer({
 }) {
   const { isUserLogged } = useLogin();
 
+  console.log(`home ${isUserLogged}`);
+
   if (!isUserLogged) return null;
 
   return (
