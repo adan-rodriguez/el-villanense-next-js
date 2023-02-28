@@ -16,6 +16,7 @@ function NewArticle() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(isUserLogged);
     if (!isUserLogged) {
       router.push("/login");
     }

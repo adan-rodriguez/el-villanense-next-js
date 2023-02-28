@@ -20,10 +20,11 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(isUserLogged);
     if (isUserLogged) {
       router.push("/dashboard/nuevo-articulo");
     }
-  }, [isUserLogged]);
+  }, []);
 
   return (
     <LoginForm
