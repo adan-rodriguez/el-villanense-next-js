@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+// import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
 import useLogin from "../hooks/useLogin";
 import { handleLoginAuthFirebase } from "../utils/handleLoginAuthFirebase";
 import LoginForm from "./LoginForm";
@@ -14,16 +14,16 @@ export default function LoginPage() {
     setEmail,
     setPassword,
     setLoginErrorMessage,
-    isUserLogged,
+    // isUserLogged,
   } = useLogin();
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (isUserLogged) {
-      router.push("/dashboard/nuevo-articulo");
-    }
-  }, [isUserLogged]);
+  // useEffect(() => {
+  //   if (isUserLogged) {
+  //     router.push("/dashboard/nuevo-articulo");
+  //   }
+  // }, [isUserLogged]);
 
   return (
     <LoginForm
