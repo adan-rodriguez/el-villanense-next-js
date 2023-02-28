@@ -1,26 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import useDashboardForm from "../../hooks/useDashboardForm";
 import { addArticle } from "../../utils/addArticle";
-import { useEffect } from "react";
 import DashboardForm from "../../components/DashboardForm";
 import { DOMAIN } from "@/app/utils/constants/domain";
-import useLogin from "@/app/hooks/useLogin";
 
 function NewArticle() {
-  const { isUserLogged } = useLogin();
-
   const { article, settersArticle } = useDashboardForm();
-
-  const router = useRouter();
-
-  useEffect(() => {
-    console.log(isUserLogged);
-    if (!isUserLogged) {
-      router.push("/login");
-    }
-  }, []);
 
   return (
     <>
