@@ -10,11 +10,15 @@ export function LoginProvider({ children }) {
   const [isUserLogged, setIsUserLogged] = useState(false);
 
   onAuthStateChanged(auth, (user) => {
+    console.log("a");
     if (user) {
+      console.log("b");
       setIsUserLogged(true);
-    } else {
-      setIsUserLogged(false);
     }
+    // else {
+    //   console.log("c");
+    //   setIsUserLogged(false);
+    // }
   });
 
   return (
