@@ -6,6 +6,12 @@ import EditAndDeleteButtonsContainer from "./components/EditAndDeleteButtonsCont
 import RevalidateButton from "./components/RevalidateButton";
 import Script from "next/script";
 
+export const metadata = {
+  title: "El Villanense - Portal de noticias",
+  description:
+    "Todas las noticias de Villa Ana y las noticias más importantes de la región, de la provincia de Santa Fe, de la Argentina y del mundo.",
+};
+
 export default async function Home() {
   const articles = await getAllArticles();
 

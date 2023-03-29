@@ -5,7 +5,6 @@ export default function HeadHome() {
   return (
     <>
       <DefaultTags />
-      <title>El Villanense - Portal de noticias</title>
       <meta
         name="description"
         content="Todas las noticias de Villa Ana y las noticias más importantes de la región, de la provincia de Santa Fe, de la Argentina y del mundo."
