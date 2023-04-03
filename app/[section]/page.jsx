@@ -22,7 +22,7 @@ export function generateMetadata({ params }) {
 
   let description;
 
-  if (section !== "locales") {
+  if (section === "locales") {
     description =
       "Todas las noticias de Villa Ana. Policiales, Política, Sociedad, Deportes, Cultura y todo lo demás.";
   } else if (section === "regionales") {
