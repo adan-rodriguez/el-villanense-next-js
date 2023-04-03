@@ -12,8 +12,8 @@ export default function Footer() {
         <ul className={styles.address_items_list}>
           <li className={styles.address_item}>
             Correo:{" "}
-            <a href="mailto:redaccion@elvillanense.com.ar" rel="noreferrer">
-              redaccion@elvillanense.com.ar
+            <a href="mailto:elvillanense@gmail.com" rel="noreferrer">
+              elvillanense@gmail.com
             </a>
           </li>
           <li className={styles.address_item}>
