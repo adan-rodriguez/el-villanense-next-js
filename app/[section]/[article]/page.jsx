@@ -7,6 +7,48 @@ import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtons
 import PageNotFound from "@/app/components/PageNotFound";
 import Script from "next/script";
 
+export async function generateMetadata({ params }) {
+  const { section, article: articleId } = params;
+
+  if (
+    section !== "locales" &&
+    section !== "regionales" &&
+    section !== "provinciales" &&
+    section !== "nacionales" &&
+    section !== "internacionales"
+  ) {
+    return { title: "Página no encontrada - El Villanense" };
+  }
+
+  const article = await getArticle(articleId);
+
+  if (Object.keys(article).length === 1) {
+    return { title: "Página no encontrada - El Villanense" };
+  }
+
+  if (section !== article.section) {
+    return { title: "Página no encontrada - El Villanense" };
+  }
+
+  const url = `${DOMAIN}/${section}/${articleId}`;
+
+  return {
+    title: article.title,
+    description: article.lead,
+    openGraph: {
+      title: article.title,
+      description: article.lead,
+      images: article.image,
+      url,
+      siteName: "El Villanense",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
+  };
+}
+
 export default async function Article({ params }) {
   const { section, article: articleId } = params;
 
@@ -30,28 +72,36 @@ export default async function Article({ params }) {
     return <PageNotFound />;
   }
 
-  const URL = `${DOMAIN}/${section}/${articleId}`;
+  const url = `${DOMAIN}/${section}/${articleId}`;
 
   const shareSocialLinks = [
     {
-      href: `https://www.facebook.com/sharer/sharer.php?u=${URL}`,
+      href: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
       title: "Compartir en Facebook",
       src: "/icons/social/facebook.png",
       alt: "Logo de Facebook",
     },
     {
-      href: `https://twitter.com/intent/tweet?text=${article.title}&url=${URL}`,
+      href: `https://twitter.com/intent/tweet?text=${article.title}&url=${url}`,
       title: "Compartir en Twitter",
       src: "/icons/social/twitter.png",
       alt: "Logo de Twitter",
     },
     {
-      href: `https://api.whatsapp.com/send?text=${URL}`,
+      href: `https://api.whatsapp.com/send?text=${url}`,
       title: "Compartir en Whatsapp",
       src: "/icons/social/whatsapp.png",
       alt: "Logo de Whatsapp",
     },
   ];
+
+  // const jsonLd = {
+  //   "@context": "https://schema.org",
+  //   "@type": "NewsArticle",
+  //   headline: article.title,
+  //   image: article.image,
+  //   datePublished: article.datetimeAttribute,
+  // };
 
   return (
     <>
@@ -69,6 +119,11 @@ export default async function Article({ params }) {
           gtag('config', 'G-V6RKJKGCX2');
         `}
       </Script>
+      {/* <Script
+        id="structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      /> */}
       <article className={styles.article_container}>
         <EditAndDeleteButtonsContainer
           articleId={article.id}
