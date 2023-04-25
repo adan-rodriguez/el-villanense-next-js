@@ -3,6 +3,7 @@
 import TinyMCE from "./TinyMCE";
 import styles from "./DashboardForm.module.css";
 import { users } from "../utils/constants/users";
+import { useEffect } from "react";
 
 export default function DashboardForm({
   article,
@@ -11,6 +12,10 @@ export default function DashboardForm({
   isEditing,
   user,
 }) {
+  useEffect(() => {
+    settersArticle.setAuthor(user);
+  }, []);
+
   return (
     <form
       className={styles.form}
@@ -46,9 +51,9 @@ export default function DashboardForm({
             id="anonymous"
           />
           <p>
-            {!article.author
-              ? "Desmarque ésta casilla si prefieres que la noticia tenga un autor"
-              : "Marque ésta casilla si prefieres que la noticia no tenga un autor"}
+            {article.author
+              ? "Marcá la casilla si preferís que la noticia no tenga autor"
+              : "Desmarcá la casilla si preferís que la noticia tenga autor"}
           </p>
         </div>
       </div>
