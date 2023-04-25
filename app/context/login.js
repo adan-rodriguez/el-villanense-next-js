@@ -7,17 +7,13 @@ import { createContext, useState } from "react";
 export const LoginContext = createContext();
 
 export function LoginProvider({ children }) {
-  const [isUserLogged, setIsUserLogged] = useState(false);
+  const [user, setUser] = useState(null);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      setIsUserLogged(true);
+      setUser(user.email);
     }
   });
 
-  return (
-    <LoginContext.Provider value={isUserLogged}>
-      {children}
-    </LoginContext.Provider>
-  );
+  return <LoginContext.Provider value={user}>{children}</LoginContext.Provider>;
 }

@@ -4,9 +4,11 @@ import useDashboardForm from "../../hooks/useDashboardForm";
 import { addArticle } from "../../utils/addArticle";
 import DashboardForm from "../../components/DashboardForm";
 import { DOMAIN } from "@/app/utils/constants/domain";
+import useLogin from "@/app/hooks/useLogin";
 
 function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
+  const { user } = useLogin();
 
   return (
     <>
@@ -18,6 +20,7 @@ function NewArticle() {
         Nuevo artículo
       </h2>
       <DashboardForm
+        user={user}
         article={article}
         settersArticle={settersArticle}
         isEditing={false}

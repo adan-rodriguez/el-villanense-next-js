@@ -11,6 +11,7 @@ export default function useDashboardForm(articleId) {
   const [lead, setLead] = useState("");
   const [section, setSection] = useState("locales");
   const [content, setContent] = useState("");
+  const [author, setAuthor] = useState(null);
 
   const article = {
     title,
@@ -19,6 +20,7 @@ export default function useDashboardForm(articleId) {
     lead,
     section,
     content,
+    author,
   };
 
   const settersArticle = {
@@ -30,6 +32,7 @@ export default function useDashboardForm(articleId) {
     async getContentTiny(contentTiny) {
       setContent(contentTiny);
     },
+    setAuthor,
   };
 
   const getArticleToEdit = async () => {

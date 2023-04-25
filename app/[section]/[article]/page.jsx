@@ -6,6 +6,7 @@ import styles from "./Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
 import PageNotFound from "@/app/components/PageNotFound";
 import Script from "next/script";
+import { users } from "@/app/utils/constants/users";
 
 export async function generateMetadata({ params }) {
   const { section, article: articleId } = params;
@@ -165,6 +166,22 @@ export default async function Article({ params }) {
           {article.datetimeContent}
         </time>
         <p className={styles.article_lead}>{article.lead}</p>
+        {article.author && (
+          <div
+            style={{ display: "flex", columnGap: "10px", alignItems: "center" }}
+          >
+            <img
+              src={users[article.author].image}
+              alt={users[article.author].name}
+              width={36}
+              height={36}
+              style={{ borderRadius: "100%", objectFit: "cover" }}
+            />
+            <p style={{ fontSize: "12px" }}>
+              Por <strong>{users[article.author]?.name}</strong>
+            </p>
+          </div>
+        )}
         {/* <Image
         className={styles.article_img}
         src={art.image}
@@ -178,6 +195,7 @@ export default async function Article({ params }) {
           src={article.image}
           alt={article.altImage}
           loading="lazy"
+          style={{ marginTop: "5px" }}
         />
         <ArticleContent content={article.content} />
       </article>

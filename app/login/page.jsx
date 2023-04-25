@@ -14,16 +14,16 @@ export default function LoginPage() {
     setEmail,
     setPassword,
     setLoginErrorMessage,
-    isUserLogged,
+    user,
   } = useLogin();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (isUserLogged) {
+    if (user) {
       router.push("/dashboard/nuevo-articulo");
     }
-  }, [isUserLogged]);
+  }, [user]);
 
   return (
     <LoginForm

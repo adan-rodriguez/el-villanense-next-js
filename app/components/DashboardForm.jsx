@@ -2,12 +2,14 @@
 
 import TinyMCE from "./TinyMCE";
 import styles from "./DashboardForm.module.css";
+import { users } from "../utils/constants/users";
 
 export default function DashboardForm({
   article,
   settersArticle,
   handleSubmit,
   isEditing,
+  user,
 }) {
   return (
     <form
@@ -17,6 +19,39 @@ export default function DashboardForm({
         handleSubmit();
       }}
     >
+      <div>
+        {article.author && (
+          <div
+            style={{ display: "flex", columnGap: "10px", alignItems: "center" }}
+          >
+            <p>Autor:</p>
+            <img
+              src={users[user]?.image}
+              alt={users[user]?.name}
+              width={36}
+              height={36}
+              style={{ borderRadius: "100%", objectFit: "cover" }}
+            />
+            <p>{users[user]?.name}</p>
+          </div>
+        )}
+        <div>
+          <label htmlFor="anonymous">Anónimo</label>
+          <input
+            onChange={(e) =>
+              settersArticle.setAuthor(e.target.checked ? null : user)
+            }
+            type="checkbox"
+            name="anonymous"
+            id="anonymous"
+          />
+          <p>
+            {!article.author
+              ? "Desmarque ésta casilla si prefieres que la noticia tenga un autor"
+              : "Marque ésta casilla si prefieres que la noticia no tenga un autor"}
+          </p>
+        </div>
+      </div>
       <div>
         <label className={styles.form_label} htmlFor="title">
           Título
