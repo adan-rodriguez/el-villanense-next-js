@@ -24,39 +24,45 @@ export default function DashboardForm({
         handleSubmit();
       }}
     >
-      <div>
-        {article.author && (
-          <div
-            style={{ display: "flex", columnGap: "10px", alignItems: "center" }}
-          >
-            <p>Autor:</p>
-            <img
-              src={users[user]?.image}
-              alt={users[user]?.name}
-              width={36}
-              height={36}
-              style={{ borderRadius: "100%", objectFit: "cover" }}
-            />
-            <p>{users[user]?.name}</p>
-          </div>
-        )}
+      {!isEditing && (
         <div>
-          <label htmlFor="anonymous">Anónimo</label>
-          <input
-            onChange={(e) =>
-              settersArticle.setAuthor(e.target.checked ? null : user)
-            }
-            type="checkbox"
-            name="anonymous"
-            id="anonymous"
-          />
-          <p>
-            {article.author
-              ? "Marcá la casilla si preferís que la noticia no tenga autor"
-              : "Desmarcá la casilla si preferís que la noticia tenga autor"}
-          </p>
+          {article.author && (
+            <div
+              style={{
+                display: "flex",
+                columnGap: "10px",
+                alignItems: "center",
+              }}
+            >
+              <p>Autor:</p>
+              <img
+                src={users[user]?.image}
+                alt={users[user]?.name}
+                width={36}
+                height={36}
+                style={{ borderRadius: "100%", objectFit: "cover" }}
+              />
+              <p>{users[user]?.name}</p>
+            </div>
+          )}
+          <div>
+            <label htmlFor="anonymous">Anónimo</label>
+            <input
+              onChange={(e) =>
+                settersArticle.setAuthor(e.target.checked ? null : user)
+              }
+              type="checkbox"
+              name="anonymous"
+              id="anonymous"
+            />
+            <p>
+              {article.author
+                ? "Marcá la casilla si preferís que la noticia no tenga autor"
+                : "Desmarcá la casilla si preferís que la noticia tenga autor"}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
       <div>
         <label className={styles.form_label} htmlFor="title">
           Título

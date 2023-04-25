@@ -11,17 +11,17 @@ import { useEffect } from "react";
 export default function EditArticle({ params }) {
   const { articleToEdit } = params;
 
-  const { isUserLogged } = useLogin();
+  const { user } = useLogin();
 
   const { article, settersArticle } = useDashboardForm(articleToEdit);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!isUserLogged) {
+    if (!user) {
       router.push("/login");
     }
-  }, [isUserLogged]);
+  }, [user]);
 
   return (
     <>
