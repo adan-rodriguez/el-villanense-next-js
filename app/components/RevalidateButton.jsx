@@ -5,9 +5,9 @@ import useLogin from "../hooks/useLogin";
 import { DOMAIN } from "../utils/constants/domain";
 
 export default function RevalidateButton() {
-  const { isUserLogged } = useLogin();
+  const { user } = useLogin();
 
-  if (!isUserLogged) return null;
+  if (!user) return null;
 
   return (
     <button

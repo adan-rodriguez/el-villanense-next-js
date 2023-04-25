@@ -9,9 +9,9 @@ export default function EditAndDeleteButtonsContainer({
   section,
   style,
 }) {
-  const { isUserLogged } = useLogin();
+  const { user } = useLogin();
 
-  if (!isUserLogged) return null;
+  if (!user) return null;
 
   return (
     <div style={style}>

@@ -1,5 +1,5 @@
 import { LoginProvider } from "@/app/context/login";
-import { Poppins } from "next/font/google";
+// import { Poppins } from "next/font/google";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import "./globals.css";
