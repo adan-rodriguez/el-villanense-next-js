@@ -1,12 +1,9 @@
 // import Image from "next/image";
-import styles from "./Home.module.css";
 import { getAllArticles } from "@/app/firebase/firebaseService";
-import Link from "next/link";
-import EditAndDeleteButtonsContainer from "./components/EditAndDeleteButtonsContainer";
 import RevalidateButton from "./components/RevalidateButton";
 import Script from "next/script";
 import { DOMAIN } from "./utils/constants/domain";
-import { users } from "./utils/constants/users";
+import Articles from "./components/Articles";
 
 export const metadata = {
   title: "El Villanense - Portal de noticias",
@@ -71,55 +68,7 @@ export default async function Home() {
         `}
       </Script>
       <RevalidateButton />
-      <div className={styles.articles_links_container}>
-        {articles.map((article) => (
-          <Link
-            className={styles.article_link}
-            key={article.id}
-            href={`/${article.section}/${article.id}`}
-          >
-            <article>
-              {/* <Image
-              className={styles.article_link_img}
-              src={article.image}
-              alt={article.altImage}
-              width={500}
-              height={300}
-              priority
-            /> */}
-              <EditAndDeleteButtonsContainer
-                articleId={article.id}
-                section={article.section}
-                style={{
-                  position: "absolute",
-                  display: "flex",
-                  columnGap: "10px",
-                  margin: "5px",
-                  backgroundColor: "white",
-                }}
-              />
-              <img
-                className={styles.article_link_img}
-                src={article.image}
-                alt={article.altImage}
-                loading="lazy"
-              />
-              <time
-                className={styles.article_link_time}
-                dateTime={article.datetimeAttribute}
-              >
-                {article.dateContent}
-              </time>
-              <p className={styles.article_link_title}>{article.title}</p>
-              {article.author && (
-                <p style={{ fontSize: "11px", opacity: "0.7" }}>
-                  Por <strong>{users[article.author]?.name}</strong>
-                </p>
-              )}
-            </article>
-          </Link>
-        ))}
-      </div>
+      <Articles articles={articles} />
     </>
   );
 }
