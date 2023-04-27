@@ -7,6 +7,7 @@ import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtons
 import PageNotFound from "@/app/components/PageNotFound";
 import Script from "next/script";
 import { users } from "@/app/utils/constants/users";
+import Link from "next/link";
 
 export async function generateMetadata({ params }) {
   const { section, article: articleId } = params;
@@ -172,13 +173,16 @@ export default async function Article({ params }) {
           >
             <img
               src={users[article.author].image}
-              alt={users[article.author].name}
+              alt={`Foto de ${users[article.author].name}`}
               width={36}
               height={36}
               style={{ borderRadius: "100%", objectFit: "cover" }}
             />
             <p style={{ fontSize: "12px" }}>
-              Por <strong>{users[article.author]?.name}</strong>
+              Por{" "}
+              <Link href={`/autor/${users[article.author].nick}`}>
+                {users[article.author].name}
+              </Link>
             </p>
           </div>
         )}

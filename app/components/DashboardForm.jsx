@@ -39,7 +39,7 @@ export default function DashboardForm({
             <p>Autor:</p>
             <img
               src={users[user]?.image}
-              alt={users[user]?.name}
+              alt={`Foto de ${users[user]?.name}`}
               width={36}
               height={36}
               style={{ borderRadius: "100%", objectFit: "cover" }}

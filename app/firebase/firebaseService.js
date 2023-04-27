@@ -30,6 +30,17 @@ export const getSectionArticles = async (section) => {
   return articles;
 };
 
+export const getArticlesByAuthor = async (author) => {
+  const q = query(
+    articlesCollection,
+    where("author", "==", author),
+    orderBy("timestamp", "desc")
+  );
+  const data = await getDocs(q);
+  const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
+  return articles;
+};
+
 // export const getLastArticle = async () => {
 //   const q = query(articlesCollection, orderBy("timestamp", "desc"), limit(1));
 //   const data = await getDocs(q);
@@ -44,3 +55,10 @@ export const getArticle = async (articleId) => {
   const article = { id: data.id, ...data.data() };
   return article;
 };
+
+// export const getEditor = async (editorId) => {
+//   const editorRef = doc(db, "redactores", editorId);
+//   const data = await getDoc(editorRef);
+//   const editor = { id: data.id, ...data.data() };
+//   return editor;
+// };
