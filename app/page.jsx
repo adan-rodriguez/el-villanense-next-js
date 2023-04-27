@@ -6,6 +6,7 @@ import EditAndDeleteButtonsContainer from "./components/EditAndDeleteButtonsCont
 import RevalidateButton from "./components/RevalidateButton";
 import Script from "next/script";
 import { DOMAIN } from "./utils/constants/domain";
+import { users } from "./utils/constants/users";
 
 export const metadata = {
   title: "El Villanense - Portal de noticias",
@@ -110,6 +111,11 @@ export default async function Home() {
                 {article.dateContent}
               </time>
               <p className={styles.article_link_title}>{article.title}</p>
+              {article.author && (
+                <p style={{ fontSize: "11px", opacity: "0.7" }}>
+                  Por <strong>{users[article.author]?.name}</strong>
+                </p>
+              )}
             </article>
           </Link>
         ))}

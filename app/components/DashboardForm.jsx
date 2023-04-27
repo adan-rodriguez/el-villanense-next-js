@@ -25,28 +25,28 @@ export default function DashboardForm({
       }}
     >
       {!isEditing && (
-        <div>
-          {article.author && (
-            <div
-              style={{
-                display: "flex",
-                columnGap: "10px",
-                alignItems: "center",
-              }}
-            >
-              <p>Autor:</p>
-              <img
-                src={users[user]?.image}
-                alt={users[user]?.name}
-                width={36}
-                height={36}
-                style={{ borderRadius: "100%", objectFit: "cover" }}
-              />
-              <p>{users[user]?.name}</p>
-            </div>
-          )}
-          <div>
-            <label htmlFor="anonymous">Anónimo</label>
+        <div
+          style={{ display: "flex", alignItems: "center", columnGap: "20px" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              columnGap: "10px",
+              alignItems: "center",
+              opacity: !article.author && "0.2",
+            }}
+          >
+            <p>Autor:</p>
+            <img
+              src={users[user]?.image}
+              alt={users[user]?.name}
+              width={36}
+              height={36}
+              style={{ borderRadius: "100%", objectFit: "cover" }}
+            />
+            <p>{users[user]?.name}</p>
+          </div>
+          <div style={{ display: "flex", columnGap: "5px" }}>
             <input
               onChange={(e) =>
                 settersArticle.setAuthor(e.target.checked ? null : user)
@@ -55,7 +55,12 @@ export default function DashboardForm({
               name="anonymous"
               id="anonymous"
             />
-            <p>
+            <p
+              style={{
+                fontSize: "12px",
+                opacity: "0.8",
+              }}
+            >
               {article.author
                 ? "Marcá la casilla si preferís que la noticia no tenga autor"
                 : "Desmarcá la casilla si preferís que la noticia tenga autor"}

@@ -6,6 +6,7 @@ import EditAndDeleteButtonsContainer from "../components/EditAndDeleteButtonsCon
 import PageNotFound from "../components/PageNotFound";
 import Script from "next/script";
 import { DOMAIN } from "../utils/constants/domain";
+import { users } from "../utils/constants/users";
 
 export function generateMetadata({ params }) {
   const { section } = params;
@@ -129,6 +130,11 @@ export default async function Section({ params }) {
                 {article.dateContent}
               </time>
               <p className={styles.article_link_title}>{article.title}</p>
+              {article.author && (
+                <p style={{ fontSize: "11px", opacity: "0.7" }}>
+                  Por <strong>{users[article.author]?.name}</strong>
+                </p>
+              )}
             </article>
           </Link>
         ))}
