@@ -55,7 +55,6 @@ import { users } from "../../utils/constants/users";
 
 export default async function ArticlesByAuthor({ params }) {
   const { author } = params;
-  console.log(author);
 
   let editor = "";
 
@@ -65,8 +64,6 @@ export default async function ArticlesByAuthor({ params }) {
       break;
     }
   }
-
-  console.log(editor);
 
   //   if (
   //     section !== "locales" &&
@@ -79,7 +76,6 @@ export default async function ArticlesByAuthor({ params }) {
   //   }
 
   const articles = await getArticlesByAuthor(editor);
-  console.log(articles);
 
   return (
     <>
