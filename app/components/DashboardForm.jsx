@@ -1,5 +1,3 @@
-"use client";
-
 import TinyMCE from "./TinyMCE";
 import styles from "./DashboardForm.module.css";
 import { users } from "../utils/constants/users";

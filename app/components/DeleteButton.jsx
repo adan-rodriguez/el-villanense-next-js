@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { DOMAIN } from "../utils/constants/domain";

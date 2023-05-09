@@ -1,5 +1,7 @@
 "use client";
 
+// Este componente se puede refactorizar para hacerlo de servidor y sólo lo que se necesite sea de cliente
+
 import Link from "next/link";
 import styles from "./Header.module.css";
 import Logo from "./Logo";
