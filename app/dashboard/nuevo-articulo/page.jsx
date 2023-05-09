@@ -6,7 +6,7 @@ import DashboardForm from "../../components/DashboardForm";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import useLogin from "@/app/hooks/useLogin";
 
-function NewArticle() {
+export default function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
   const { user } = useLogin();
 
@@ -42,5 +42,3 @@ function NewArticle() {
     </>
   );
 }
-
-export default NewArticle;
