@@ -14,8 +14,19 @@ export default function ArticleLink({
   section,
 }) {
   return (
-    <Link className={styles.article_link} key={id} href={`/${section}/${id}`}>
-      <article>
+    <article className={styles.article}>
+      <EditAndDeleteButtonsContainer
+        articleId={id}
+        section={section}
+        style={{
+          position: "absolute",
+          display: "flex",
+          columnGap: "10px",
+          margin: "5px",
+          backgroundColor: "white",
+        }}
+      />
+      <Link key={id} href={`/${section}/${id}`}>
         {/* <Image
               className={styles.article_link_img}
               src={image}
@@ -24,17 +35,6 @@ export default function ArticleLink({
               height={300}
               priority
             /> */}
-        <EditAndDeleteButtonsContainer
-          articleId={id}
-          section={section}
-          style={{
-            position: "absolute",
-            display: "flex",
-            columnGap: "10px",
-            margin: "5px",
-            backgroundColor: "white",
-          }}
-        />
         <img
           className={styles.article_link_img}
           src={image}
@@ -50,7 +50,7 @@ export default function ArticleLink({
             Por <strong>{users[author]?.name}</strong>
           </p>
         )}
-      </article>
-    </Link>
+      </Link>
+    </article>
   );
 }

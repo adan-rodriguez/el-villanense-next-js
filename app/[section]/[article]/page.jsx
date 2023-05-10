@@ -4,23 +4,13 @@ import Image from "next/image";
 import ArticleContent from "./ArticleContent";
 import styles from "./Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
-import PageNotFound from "@/app/components/PageNotFound";
 import Script from "next/script";
 import { users } from "@/app/utils/constants/users";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
   const { section, article: articleId } = params;
-
-  if (
-    section !== "locales" &&
-    section !== "regionales" &&
-    section !== "provinciales" &&
-    section !== "nacionales" &&
-    section !== "internacionales"
-  ) {
-    return { title: "Página no encontrada - El Villanense" };
-  }
 
   const article = await getArticle(articleId);
 
@@ -54,24 +44,14 @@ export async function generateMetadata({ params }) {
 export default async function Article({ params }) {
   const { section, article: articleId } = params;
 
-  if (
-    section !== "locales" &&
-    section !== "regionales" &&
-    section !== "provinciales" &&
-    section !== "nacionales" &&
-    section !== "internacionales"
-  ) {
-    return <PageNotFound />;
-  }
-
   const article = await getArticle(articleId);
 
   if (Object.keys(article).length === 1) {
-    return <PageNotFound />;
+    notFound();
   }
 
   if (section !== article.section) {
-    return <PageNotFound />;
+    notFound();
   }
 
   const url = `${DOMAIN}/${section}/${articleId}`;

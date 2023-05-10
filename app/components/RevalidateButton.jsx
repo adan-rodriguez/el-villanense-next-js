@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import useLogin from "../hooks/useLogin";
 import { DOMAIN } from "../utils/constants/domain";
 
-export default function RevalidateButton() {
+export default function RevalidateButton({ children }) {
   const { user } = useLogin();
 
   if (!user) return null;
@@ -22,12 +21,7 @@ export default function RevalidateButton() {
       }}
       title="Revalidar página"
     >
-      <Image
-        src="/icons/dashboard/refresh.svg"
-        alt="Actualizar"
-        width={30}
-        height={30}
-      />
+      {children}
     </button>
   );
 }

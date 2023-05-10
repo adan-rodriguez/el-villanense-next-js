@@ -1,10 +1,10 @@
 // import Image from "next/image";
 import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "./Section.module.css";
-import PageNotFound from "../components/PageNotFound";
 import Script from "next/script";
 import { DOMAIN } from "../utils/constants/domain";
 import Articles from "../components/Articles";
+import { notFound } from "next/navigation";
 
 export function generateMetadata({ params }) {
   const { section } = params;
@@ -64,7 +64,7 @@ export default async function Section({ params }) {
     section !== "nacionales" &&
     section !== "internacionales"
   ) {
-    return <PageNotFound />;
+    notFound();
   }
 
   const articles = await getSectionArticles(section);

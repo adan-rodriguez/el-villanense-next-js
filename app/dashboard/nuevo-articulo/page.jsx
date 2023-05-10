@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 export default function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
   const { user } = useLogin();
-  console.log(user);
 
   const router = useRouter();
 
