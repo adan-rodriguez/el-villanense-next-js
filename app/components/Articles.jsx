@@ -1,5 +1,5 @@
 import ArticleLink from "./ArticleLink";
-import styles from "./Articles.module.css";
+import styles from "../styles/Articles.module.css";
 
 export default function Articles({ articles }) {
   return (

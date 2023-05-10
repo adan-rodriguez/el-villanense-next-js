@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import useLogin from "../hooks/useLogin";
 import { handleLoginAuthFirebase } from "../utils/handleLoginAuthFirebase";
-import LoginForm from "./LoginForm";
+import LoginForm from "../components/LoginForm";
 
 export default function LoginPage() {
   const {

@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./ArticleContent.module.css";
+import styles from "../styles/ArticleContent.module.css";
 
 export default function ArticleContent({ content }) {
   return (

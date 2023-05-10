@@ -1,5 +1,5 @@
 import SocialMediaLink from "./SocialMediaLink";
-import styles from "./SocialMedia.module.css";
+import styles from "../styles/SocialMedia.module.css";
 
 const socialLinks = [
   {

@@ -1,5 +1,5 @@
 import TinyMCE from "./TinyMCE";
-import styles from "./DashboardForm.module.css";
+import styles from "../styles/DashboardForm.module.css";
 import { users } from "../utils/constants/users";
 import { useEffect, useRef, useState } from "react";
 

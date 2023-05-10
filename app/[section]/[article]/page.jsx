@@ -1,8 +1,8 @@
 import { getArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
-import ArticleContent from "./ArticleContent";
-import styles from "./Article.module.css";
+import ArticleContent from "../../components/ArticleContent";
+import styles from "@/app/styles/Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
 import Script from "next/script";
 import { users } from "@/app/utils/constants/users";

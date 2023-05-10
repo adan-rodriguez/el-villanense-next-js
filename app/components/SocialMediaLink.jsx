@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./SocialMediaLink.module.css";
+import styles from "../styles/SocialMediaLink.module.css";
 
 export default function SocialMediaLink({ href, title, icon, alt }) {
   return (

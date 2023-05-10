@@ -1,7 +1,7 @@
 import Link from "next/link";
 import EditAndDeleteButtonsContainer from "./EditAndDeleteButtonsContainer";
 import { users } from "../utils/constants/users";
-import styles from "./ArticleLink.module.css";
+import styles from "../styles/ArticleLink.module.css";
 
 export default function ArticleLink({
   id,

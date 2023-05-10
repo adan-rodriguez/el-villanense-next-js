@@ -1,6 +1,6 @@
 // import Image from "next/image";
 import { getSectionArticles } from "@/app/firebase/firebaseService";
-import styles from "./Section.module.css";
+import styles from "../styles/Section.module.css";
 import Script from "next/script";
 import { DOMAIN } from "../utils/constants/domain";
 import Articles from "../components/Articles";

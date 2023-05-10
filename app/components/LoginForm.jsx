@@ -1,4 +1,4 @@
-import styles from "./LoginForm.module.css";
+import styles from "../styles/LoginForm.module.css";
 
 export default function LoginForm({
   email,
