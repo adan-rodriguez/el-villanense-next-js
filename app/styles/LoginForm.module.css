@@ -16,18 +16,12 @@
 .form_input {
   width: 100%;
   border: 1px solid black;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 1px;
-  font-size: 1rem;
   padding: 5px 10px;
 }
 
 .form_btn {
   align-self: center;
   padding: 5px 30px;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 1px;
-  font-size: 1rem;
 }
 
 .form_login_error_message {

@@ -1,9 +1,9 @@
 "use client";
 
+import styles from "../styles/EditAndDeleteButtonsContainer.module.css";
 import useLogin from "../hooks/useLogin";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
-import styles from "../styles/EditAndDeleteButtonsContainer.module.css";
 import Image from "next/image";
 
 export default function EditAndDeleteButtonsContainer({

@@ -18,14 +18,7 @@
 .form_select {
   width: 100%;
   border: 1px solid black;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 1px;
-  font-size: 1rem;
   padding: 5px 10px;
-}
-
-.form_input {
-  height: 2rem;
 }
 
 .form_textarea {
@@ -35,7 +28,4 @@
 .form_btn {
   align-self: center;
   padding: 10px 40px;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 1px;
-  font-size: 1rem;
 }

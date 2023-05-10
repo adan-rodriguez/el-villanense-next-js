@@ -8,6 +8,7 @@ import Logo from "./Logo";
 import Image from "next/image";
 import SocialMedia from "./SocialMedia";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const links = [
   { label: "Inicio", route: "/" },
@@ -21,6 +22,8 @@ const links = [
 export default function Header() {
   const [isMenuopen, setIsMenuopen] = useState(false);
   const [innerWidth, setInnerWidth] = useState(null);
+
+  const pathname = usePathname();
 
   useEffect(() => {
     setInnerWidth(window.innerWidth);
@@ -103,6 +106,9 @@ export default function Header() {
                       {...(innerWidth < 992 && {
                         onClick: () => setIsMenuopen(!isMenuopen),
                       })}
+                      style={{
+                        fontWeight: pathname === route && "bold",
+                      }}
                     >
                       {label}
                     </Link>

@@ -29,6 +29,14 @@ button {
   cursor: pointer;
 }
 
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
 /* // Dispositivos X-Small (teléfonos verticales, menos de 576px)
 // No hay media queries para `xs` ya que este es el valor predeterminado en Bootstrap */
 
