@@ -1,0 +1,12 @@
+.container {
+  display: "flex";
+  column-gap: "10px";
+  margin: "5px";
+  background-color: "white";
+}
+
+.button {
+  background-color: "transparent";
+  border: "none";
+  height: "30px";
+}

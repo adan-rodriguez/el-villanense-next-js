@@ -7,6 +7,7 @@ import { DOMAIN } from "@/app/utils/constants/domain";
 import useLogin from "@/app/hooks/useLogin";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import styles from "@/app/styles/NewArticle.module.css";
 
 export default function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
@@ -22,13 +23,7 @@ export default function NewArticle() {
 
   return (
     <>
-      <h2
-        style={{
-          textAlign: "center",
-        }}
-      >
-        Nuevo artículo
-      </h2>
+      <h2 className={styles.title}>Nuevo artículo</h2>
       <DashboardForm
         user={user}
         article={article}

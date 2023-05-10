@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { DOMAIN } from "../utils/constants/domain";
 import { deleteArticle } from "../utils/deleteArticle";
+import styles from "../styles/EditAndDeleteButtonsContainer.module.css";
 
-export default function DeleteButton({ articleId, section }) {
+export default function DeleteButton({ children, articleId, section }) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -37,14 +37,10 @@ export default function DeleteButton({ articleId, section }) {
         }
       }}
       title="Borrar noticia"
-      style={{ backgroundColor: "transparent", border: "none", height: "30px" }}
+      aria-label="Borrar noticia"
+      className={styles.button}
     >
-      <Image
-        src="/icons/dashboard/delete.svg"
-        alt="Borrar"
-        width={30}
-        height={30}
-      />
+      {children}
     </button>
   );
 }

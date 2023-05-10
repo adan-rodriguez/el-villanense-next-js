@@ -7,6 +7,7 @@ import { DOMAIN } from "@/app/utils/constants/domain";
 import { editArticle } from "@/app/utils/editArticle";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import styles from "@/app/styles/EditArticle.module.css";
 
 export default function EditArticle({ params }) {
   const { articleToEdit } = params;
@@ -25,13 +26,7 @@ export default function EditArticle({ params }) {
 
   return (
     <>
-      <h2
-        style={{
-          textAlign: "center",
-        }}
-      >
-        Editar artículo
-      </h2>
+      <h2 className={styles.title}>Editar artículo</h2>
       <DashboardForm
         article={article}
         settersArticle={settersArticle}

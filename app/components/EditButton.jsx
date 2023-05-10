@@ -1,21 +1,16 @@
-import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import styles from "../styles/EditAndDeleteButtonsContainer.module.css";
 
-export default function EditButton({ articleId }) {
+export default function EditButton({ children, articleId }) {
+  const router = useRouter();
   return (
-    <Link
-      href={`/dashboard/editar-articulo/${articleId}`}
+    <button
+      onClick={() => router.push(`/dashboard/editar-articulo/${articleId}`)}
       title="Editar noticia"
-      style={{
-        height: "30px",
-      }}
+      aria-label="Editar noticia"
+      className={styles.button}
     >
-      <Image
-        src="/icons/dashboard/edit.svg"
-        alt="Editar"
-        width={30}
-        height={30}
-      />
-    </Link>
+      {children}
+    </button>
   );
 }

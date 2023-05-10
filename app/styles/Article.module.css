@@ -2,10 +2,15 @@
   padding: 10px;
 }
 
+.article_title {
+  font-weight: 700;
+}
+
 .article_img {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  margin-top: 5px;
 }
 
 .share_social_container {
@@ -32,8 +37,17 @@
   font-size: 1.15rem;
 }
 
-.article_title {
-  font-weight: 700;
+.article_author_container {
+  display: "flex";
+  column-gap: "10px";
+  align-items: "center";
+}
+.article_author_img {
+  border-radius: "100%";
+  object-fit: "cover";
+}
+.article_author_name {
+  font-size: "12px";
 }
 
 /* // Dispositivos medianos (tabletas, 768px y más) */

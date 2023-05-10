@@ -20,10 +20,6 @@ export default function ArticleLink({
         section={section}
         style={{
           position: "absolute",
-          display: "flex",
-          columnGap: "10px",
-          margin: "5px",
-          backgroundColor: "white",
         }}
       />
       <Link key={id} href={`/${section}/${id}`}>
@@ -46,7 +42,7 @@ export default function ArticleLink({
         </time>
         <p className={styles.article_link_title}>{title}</p>
         {author && (
-          <p style={{ fontSize: "11px", opacity: "0.7" }}>
+          <p className={styles.article_link_author_name}>
             Por <strong>{users[author]?.name}</strong>
           </p>
         )}

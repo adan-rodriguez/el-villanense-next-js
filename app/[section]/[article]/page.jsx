@@ -110,12 +110,6 @@ export default async function Article({ params }) {
         <EditAndDeleteButtonsContainer
           articleId={article.id}
           section={article.section}
-          style={{
-            display: "flex",
-            columnGap: "10px",
-            margin: "5px",
-            backgroundColor: "white",
-          }}
         />
         <h1 className={styles.article_title}>{article.title}</h1>
         <div className={styles.share_social_container}>
@@ -148,17 +142,15 @@ export default async function Article({ params }) {
         </time>
         <p className={styles.article_lead}>{article.lead}</p>
         {article.author && (
-          <div
-            style={{ display: "flex", columnGap: "10px", alignItems: "center" }}
-          >
+          <div className={styles.article_author_container}>
             <img
               src={users[article.author].image}
               alt={`Foto de ${users[article.author].name}`}
               width={36}
               height={36}
-              style={{ borderRadius: "100%", objectFit: "cover" }}
+              className={styles.article_author_img}
             />
-            <p style={{ fontSize: "12px" }}>
+            <p className={styles.article_author_name}>
               Por{" "}
               <Link href={`/autor/${users[article.author].nick}`}>
                 {users[article.author].name}
@@ -179,7 +171,6 @@ export default async function Article({ params }) {
           src={article.image}
           alt={article.altImage}
           loading="lazy"
-          style={{ marginTop: "5px" }}
         />
         <ArticleContent content={article.content} />
       </article>
