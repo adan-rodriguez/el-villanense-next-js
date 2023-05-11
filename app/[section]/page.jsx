@@ -4,20 +4,23 @@ import styles from "../styles/Section.module.css";
 import Script from "next/script";
 import { DOMAIN } from "../utils/constants/domain";
 import Articles from "../components/Articles";
-import { notFound } from "next/navigation";
+
+export const dynamicParams = false;
+// true (default): Dynamic segments not included in generateStaticParams are generated on demand.
+// false: Dynamic segments not included in generateStaticParams will return a 404.
+
+export function generateStaticParams() {
+  return [
+    { section: "locales" },
+    { section: "regionales" },
+    { section: "provinciales" },
+    { section: "nacionales" },
+    { section: "internacionales" },
+  ];
+}
 
 export function generateMetadata({ params }) {
   const { section } = params;
-
-  if (
-    section !== "locales" &&
-    section !== "regionales" &&
-    section !== "provinciales" &&
-    section !== "nacionales" &&
-    section !== "internacionales"
-  ) {
-    return { title: "Página no encontrada - El Villanense" };
-  }
 
   let description;
 
@@ -56,16 +59,6 @@ export function generateMetadata({ params }) {
 
 export default async function Section({ params }) {
   const { section } = params;
-
-  if (
-    section !== "locales" &&
-    section !== "regionales" &&
-    section !== "provinciales" &&
-    section !== "nacionales" &&
-    section !== "internacionales"
-  ) {
-    notFound();
-  }
 
   const articles = await getSectionArticles(section);
 

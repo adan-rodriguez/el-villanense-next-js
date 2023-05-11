@@ -5,6 +5,8 @@ import { DOMAIN } from "./utils/constants/domain";
 import Articles from "./components/Articles";
 import Image from "next/image";
 
+export const dynamic = "force-static";
+
 export const metadata = {
   title: "El Villanense - Portal de noticias",
   description:
