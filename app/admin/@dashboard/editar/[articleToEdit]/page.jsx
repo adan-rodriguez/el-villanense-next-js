@@ -2,27 +2,13 @@
 
 import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
-import useLogin from "@/app/hooks/useLogin";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import { editArticle } from "@/app/utils/editArticle";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import styles from "@/app/styles/EditArticle.module.css";
 
 export default function EditArticle({ params }) {
   const { articleToEdit } = params;
-
-  const { user } = useLogin();
-
   const { article, settersArticle } = useDashboardForm(articleToEdit);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    }
-  }, [user]);
 
   return (
     <>
