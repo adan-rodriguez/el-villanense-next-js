@@ -6,7 +6,5 @@
 }
 
 .button {
-  background-color: "transparent";
-  border: "none";
-  height: "30px";
+  display: inline-flex;
 }

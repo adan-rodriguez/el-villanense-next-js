@@ -10,5 +10,6 @@ export async function GET(request) {
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
+    revalidatedPath: path,
   });
 }

@@ -1,9 +1,7 @@
 import { getAllArticles } from "@/app/firebase/firebaseService";
-import RevalidateButton from "./components/RevalidateButton";
 import Script from "next/script";
 import { DOMAIN } from "./utils/constants/domain";
 import Articles from "./components/Articles";
-import Image from "next/image";
 
 export const dynamic = "force-static";
 

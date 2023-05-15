@@ -3,6 +3,7 @@
 import { useSelectedLayoutSegments } from "next/navigation";
 import useLogin from "../hooks/useLogin";
 import { DOMAIN } from "../utils/constants/domain";
+import styles from "@/app/styles/RevalidateButton.module.css";
 
 export default function RevalidateButton({ children }) {
   const { user } = useLogin();
@@ -13,14 +14,12 @@ export default function RevalidateButton({ children }) {
 
   return (
     <button
-      style={{ position: "absolute" }}
+      className={styles.button}
       onClick={async () => {
         if (confirm("¿Estás seguro que deseas revalidar ésta página?")) {
-          // await fetch(
-          //   `${DOMAIN}/api/revalidateHome?secret=h5h4j8912hg6df8d1s3h55k8op6k46f2d4s`
-          // );
           const res = await fetch(`${DOMAIN}/api/revalidate`);
-          console.log(res);
+          const data = await res.json();
+          console.log(data);
 
           alert("Página actualizada. Refresque para ver los cambios");
         }
