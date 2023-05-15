@@ -100,6 +100,7 @@ export default function DashboardForm({
             width={256}
           />
           <button
+            type="button"
             style={{
               padding: "5px 20px",
               fontFamily: "Poppins, sans-serif",
@@ -155,6 +156,7 @@ export default function DashboardForm({
                 width={256}
               />
               <button
+                type="button"
                 style={{
                   border: "1px black solid",
                   width: "128px",
@@ -184,6 +186,7 @@ export default function DashboardForm({
                 Elegir imagen
               </button>
               <button
+                type="button"
                 style={{
                   border: "1px black solid",
                   width: "128px",

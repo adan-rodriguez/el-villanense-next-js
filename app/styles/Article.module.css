@@ -38,16 +38,16 @@
 }
 
 .article_author_container {
-  display: "flex";
-  column-gap: "10px";
-  align-items: "center";
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
 }
 .article_author_img {
-  border-radius: "100%";
-  object-fit: "cover";
+  border-radius: 100%;
+  object-fit: cover;
 }
 .article_author_name {
-  font-size: "12px";
+  font-size: 12px;
 }
 
 /* // Dispositivos medianos (tabletas, 768px y más) */

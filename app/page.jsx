@@ -3,7 +3,7 @@ import Script from "next/script";
 import { DOMAIN } from "./utils/constants/domain";
 import Articles from "./components/Articles";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "El Villanense - Portal de noticias",
