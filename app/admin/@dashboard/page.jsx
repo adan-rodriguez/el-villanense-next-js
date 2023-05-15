@@ -10,7 +10,7 @@ export default function Dashboard() {
         flexDirection: "column",
         alignItems: "center",
         rowGap: "20px",
-        paddingTop: "20px",
+        padding: "20px",
       }}
     >
       <Link

@@ -69,14 +69,6 @@ export default async function Home() {
           gtag('config', 'G-V6RKJKGCX2');
         `}
       </Script>
-      <RevalidateButton>
-        <Image
-          src="/icons/dashboard/refresh.svg"
-          alt="Actualizar"
-          width={30}
-          height={30}
-        />
-      </RevalidateButton>
       <Articles articles={articles} />
     </>
   );

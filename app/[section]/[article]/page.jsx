@@ -158,14 +158,6 @@ export default async function Article({ params }) {
             </p>
           </div>
         )}
-        {/* <Image
-        className={styles.article_img}
-        src={art.image}
-        alt={art.altImage}
-        width={500}
-        height={300}
-        priority
-      /> */}
         <img
           className={styles.article_img}
           src={article.image}
