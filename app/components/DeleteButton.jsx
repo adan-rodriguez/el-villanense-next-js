@@ -1,7 +1,6 @@
 import { usePathname, useRouter } from "next/navigation";
 import { DOMAIN } from "../utils/constants/domain";
 import { deleteArticle } from "../utils/deleteArticle";
-import styles from "../styles/EditAndDeleteButtonsContainer.module.css";
 
 export default function DeleteButton({ children, articleId, section }) {
   const router = useRouter();
@@ -32,7 +31,6 @@ export default function DeleteButton({ children, articleId, section }) {
       }}
       title="Borrar noticia"
       aria-label="Borrar noticia"
-      className={styles.button}
     >
       {children}
     </button>

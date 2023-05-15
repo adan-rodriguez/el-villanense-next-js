@@ -17,8 +17,8 @@
 }
 
 .article_link_author_name {
-  font-size: "11px";
-  opacity: "0.7";
+  font-size: 11px;
+  opacity: 0.7;
 }
 
 .article:hover .article_link_title {
