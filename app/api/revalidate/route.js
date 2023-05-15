@@ -1,15 +1,16 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
-export async function GET(request) {
-  const path = request.nextUrl.searchParams.get("path") || "/";
-  revalidatePath(path);
+export async function GET() {
+  revalidatePath("/");
   return NextResponse.json({
     revalidated: true,
     now: Date.now(),
     headers: {
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": [
+        "https://www.elvillanense.com.ar",
+        "http://localhost:3000",
+      ],
     },
-    revalidatedPath: path,
   });
 }
