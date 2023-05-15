@@ -1,5 +1,7 @@
 .container {
   display: flex;
-  column-gap: 10px;
-  background-color: white;
+}
+
+.container button {
+  display: flex;
 }
