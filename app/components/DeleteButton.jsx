@@ -1,9 +1,8 @@
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { deleteArticle } from "../utils/deleteArticle";
 
-export default function DeleteButton({ children, articleId, section }) {
+export default function DeleteButton({ children, articleId }) {
   const router = useRouter();
-  const pathname = usePathname();
 
   return (
     <button

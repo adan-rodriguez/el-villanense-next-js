@@ -6,11 +6,7 @@ import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import Image from "next/image";
 
-export default function EditAndDeleteButtonsContainer({
-  articleId,
-  section,
-  style,
-}) {
+export default function EditAndDeleteButtonsContainer({ articleId, style }) {
   const { user } = useLogin();
 
   if (!user) return null;
@@ -25,7 +21,7 @@ export default function EditAndDeleteButtonsContainer({
           height={30}
         />
       </EditButton>
-      <DeleteButton articleId={articleId} section={section}>
+      <DeleteButton articleId={articleId}>
         <Image
           src="/icons/dashboard/delete.svg"
           alt="Borrar"

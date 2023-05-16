@@ -1,0 +1,25 @@
+.container {
+  padding: 10px;
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding-left: 40px;
+  }
+}
+
+.container > div {
+  margin: 20px 0;
+  display: flex;
+  column-gap: 10px;
+}
+
+.container > div > img {
+  width: 20%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+}
+
+.container h2 {
+  font-size: 1rem;
+}
