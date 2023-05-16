@@ -16,6 +16,7 @@ export const getAllArticles = async () => {
   const q = query(articlesCollection, orderBy("timestamp", "desc"));
   const data = await getDocs(q);
   const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
+  console.log("getAllArticles");
   return articles;
 };
 
@@ -27,6 +28,7 @@ export const getSectionArticles = async (section) => {
   );
   const data = await getDocs(q);
   const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
+  console.log("getSectionArticles");
   return articles;
 };
 
@@ -53,6 +55,7 @@ export const getArticle = async (articleId) => {
   const articleRef = doc(db, "articles", articleId);
   const data = await getDoc(articleRef);
   const article = { id: data.id, ...data.data() };
+  console.log("getArticle");
   return article;
 };
 

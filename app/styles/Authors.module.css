@@ -1,0 +1,29 @@
+.container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 10px;
+}
+
+.container a {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 1rem;
+}
+
+.container img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding-left: 40px;
+  }
+}

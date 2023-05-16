@@ -1,5 +1,4 @@
 import { usePathname, useRouter } from "next/navigation";
-import { DOMAIN } from "../utils/constants/domain";
 import { deleteArticle } from "../utils/deleteArticle";
 
 export default function DeleteButton({ children, articleId, section }) {
@@ -26,7 +25,7 @@ export default function DeleteButton({ children, articleId, section }) {
 
           alert("Noticia eliminada con éxito");
 
-          articleId ? router.push("/") : router.refresh();
+          router.refresh();
         }
       }}
       title="Borrar noticia"

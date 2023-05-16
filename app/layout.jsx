@@ -3,8 +3,6 @@ import { Poppins } from "next/font/google";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import "./globals.css";
-import RevalidateButton from "./components/RevalidateButton";
-import Image from "next/image";
 
 const poppins = Poppins({ weight: ["400", "700", "900"], subsets: ["latin"] });
 
@@ -21,14 +19,14 @@ export default function RootLayout({ children }) {
         <Header />
         <main>
           <LoginProvider>
-            <RevalidateButton>
+            {/* <RevalidateButton>
               <Image
                 src="/icons/dashboard/refresh.svg"
                 alt="Actualizar"
                 width={30}
                 height={30}
               />
-            </RevalidateButton>
+            </RevalidateButton> */}
             {children}
           </LoginProvider>
         </main>

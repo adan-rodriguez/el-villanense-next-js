@@ -3,8 +3,9 @@ import Script from "next/script";
 import { DOMAIN } from "../../utils/constants/domain";
 import Articles from "../../components/Articles";
 import { users } from "../../utils/constants/users";
+import { notFound } from "next/navigation";
 
-export const dynamicParams = false;
+// export const dynamicParams = false;
 
 let authors = [];
 
@@ -12,14 +13,18 @@ for (let user in users) {
   authors.push(users[user].nick);
 }
 
-export function generateStaticParams() {
-  return authors.map((author) => ({
-    author,
-  }));
-}
+// export function generateStaticParams() {
+//   return authors.map((author) => ({
+//     author,
+//   }));
+// }
 
 export function generateMetadata({ params }) {
   const { author } = params;
+
+  if (!authors.includes(author)) {
+    return { title: "Página no encontrada - El Villanense" };
+  }
 
   let name = "";
 
@@ -49,6 +54,10 @@ export function generateMetadata({ params }) {
 
 export default async function ArticlesByAuthor({ params }) {
   const { author } = params;
+
+  if (!authors.includes(author)) {
+    notFound();
+  }
 
   let editor = "";
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { DOMAIN } from "@/app/utils/constants/domain";
 import useLogin from "@/app/hooks/useLogin";
 import styles from "@/app/styles/NewArticle.module.css";
 import DashboardForm from "@/app/components/DashboardForm";
