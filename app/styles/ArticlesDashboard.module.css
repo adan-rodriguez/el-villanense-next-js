@@ -16,6 +16,7 @@
 
 .container > div > img {
   width: 20%;
+  height: auto;
   aspect-ratio: 3/2;
   object-fit: cover;
 }
