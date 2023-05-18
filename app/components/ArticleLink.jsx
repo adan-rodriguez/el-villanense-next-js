@@ -2,6 +2,7 @@ import Link from "next/link";
 import EditAndDeleteButtonsContainer from "./EditAndDeleteButtonsContainer";
 import { users } from "../utils/constants/users";
 import styles from "../styles/ArticleLink.module.css";
+import Image from "next/image";
 
 export default function ArticleLink({
   id,
@@ -31,11 +32,12 @@ export default function ArticleLink({
               height={300}
               priority
             /> */}
-        <img
+        <Image
           className={styles.article_link_img}
           src={image}
           alt={altImage}
-          loading="lazy"
+          width={519}
+          height={346}
         />
         <time className={styles.article_link_time} dateTime={datetimeAttribute}>
           {dateContent}

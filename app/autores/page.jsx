@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { users } from "../utils/constants/users";
 import styles from "@/app/styles/Authors.module.css";
+import Image from "next/image";
 
 const authors = Object.entries(users);
 export default function Authors() {
@@ -8,7 +9,7 @@ export default function Authors() {
     <div className={styles.container}>
       {authors.map((author) => (
         <Link href={`/autores/${author[1].nick}`} key={author[0]}>
-          <img
+          <Image
             src={author[1].image}
             alt={`Foto de ${author[1].name}`}
             width={36}

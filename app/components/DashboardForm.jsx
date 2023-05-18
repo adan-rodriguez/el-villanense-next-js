@@ -2,6 +2,7 @@ import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
 import { users } from "../utils/constants/users";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export default function DashboardForm({
   article,
@@ -39,7 +40,7 @@ export default function DashboardForm({
             }}
           >
             <p>Autor:</p>
-            <img
+            <Image
               src={users[user]?.image}
               alt={`Foto de ${users[user]?.name}`}
               width={36}
@@ -87,17 +88,17 @@ export default function DashboardForm({
       </div>
       {article.image ? (
         <div>
-          <img
+          <Image
             src={imageFile ? URL.createObjectURL(imageFile) : article.image}
             alt={article.altImage}
             style={{
-              aspectRatio: "3/2",
               objectFit: "cover",
               position: "relative",
               verticalAlign: "bottom",
               marginRight: "10px",
             }}
             width={256}
+            height={170}
           />
           <button
             type="button"
@@ -145,15 +146,15 @@ export default function DashboardForm({
                 justifyContent: "start",
               }}
             >
-              <img
+              <Image
                 style={{
-                  aspectRatio: "3/2",
                   objectFit: "cover",
                   gridArea: "image",
                 }}
                 src={URL.createObjectURL(imageFile)}
                 alt={article.altImage}
                 width={256}
+                height={170}
               />
               <button
                 type="button"

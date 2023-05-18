@@ -143,7 +143,7 @@ export default async function Article({ params }) {
         <p className={styles.article_lead}>{article.lead}</p>
         {article.author && (
           <div className={styles.article_author_container}>
-            <img
+            <Image
               src={users[article.author].image}
               alt={`Foto de ${users[article.author].name}`}
               width={36}
@@ -158,11 +158,13 @@ export default async function Article({ params }) {
             </p>
           </div>
         )}
-        <img
+        <Image
           className={styles.article_img}
           src={article.image}
           alt={article.altImage}
-          loading="lazy"
+          width={500}
+          height={300}
+          priority
         />
         <ArticleContent content={article.content} />
       </article>
