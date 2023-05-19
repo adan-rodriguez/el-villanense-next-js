@@ -17,7 +17,7 @@ export default function RevalidateButton({ children }) {
       className={styles.button}
       onClick={async () => {
         if (confirm("¿Estás seguro que deseas revalidar ésta página?")) {
-          await fetch(`${DOMAIN}/api/revalidate`);
+          await fetch(`${DOMAIN}/prueba/revalidate`);
           alert("Página actualizada. Refresque para ver los cambios");
         }
       }}
