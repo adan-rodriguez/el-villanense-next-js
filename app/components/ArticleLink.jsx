@@ -24,14 +24,6 @@ export default function ArticleLink({
         }}
       />
       <Link key={id} href={`/${section}/${id}`}>
-        {/* <Image
-              className={styles.article_link_img}
-              src={image}
-              alt={altImage}
-              width={500}
-              height={300}
-              priority
-            /> */}
         <Image
           className={styles.article_link_img}
           src={image}
