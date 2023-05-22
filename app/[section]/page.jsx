@@ -1,12 +1,10 @@
-// import Image from "next/image";
 import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "../styles/Section.module.css";
-import Script from "next/script";
 import { DOMAIN } from "../utils/constants/domain";
 import Articles from "../components/Articles";
 import { notFound } from "next/navigation";
 
-export const dynamicParams = false;
+// export const dynamicParams = false;
 // true (default): Dynamic segments not included in generateStaticParams are generated on demand.
 // false: Dynamic segments not included in generateStaticParams will return a 404.
 
@@ -85,20 +83,6 @@ export default async function Section({ params }) {
 
   return (
     <>
-      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-V6RKJKGCX2');
-        `}
-      </Script>
       <h1
         className={styles.section_page_title}
       >{`Noticias ${section[0].toUpperCase()}${section.slice(1)}`}</h1>

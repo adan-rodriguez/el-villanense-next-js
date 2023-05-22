@@ -1,5 +1,4 @@
 import { getAllArticles } from "@/app/firebase/firebaseService";
-import Script from "next/script";
 import { DOMAIN } from "./utils/constants/domain";
 import Articles from "./components/Articles";
 
@@ -51,23 +50,5 @@ export const metadata = {
 export default async function Home() {
   const articles = await getAllArticles();
 
-  return (
-    <>
-      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-V6RKJKGCX2');
-        `}
-      </Script>
-      <Articles articles={articles} />
-    </>
-  );
+  return <Articles articles={articles} />;
 }

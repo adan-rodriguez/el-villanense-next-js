@@ -4,7 +4,6 @@ import Image from "next/image";
 import ArticleContent from "../../components/ArticleContent";
 import styles from "@/app/styles/Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
-import Script from "next/script";
 import { users } from "@/app/utils/constants/users";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -87,22 +86,7 @@ export default async function Article({ params }) {
 
   return (
     <>
-      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-V6RKJKGCX2');
-        `}
-      </Script>
-      {/* <Script
-        id="structured-data"
+      {/* <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       /> */}
