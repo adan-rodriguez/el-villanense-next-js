@@ -51,7 +51,7 @@ export default function LoginForm({
       </form>
       {loginErrorMessage && (
         <p className={styles.form_login_error_message} role="alert">
-          Los datos ingresados son incorrectos
+          {loginErrorMessage}
         </p>
       )}
     </>

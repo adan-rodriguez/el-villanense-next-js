@@ -21,9 +21,10 @@ export default function LoginPage() {
       loginErrorMessage={loginErrorMessage}
       setEmail={setEmail}
       setPassword={setPassword}
-      login={() =>
-        handleLoginAuthFirebase(email, password, setLoginErrorMessage)
-      }
+      login={() => {
+        setLoginErrorMessage(null);
+        handleLoginAuthFirebase(email, password, setLoginErrorMessage);
+      }}
     />
   );
 }

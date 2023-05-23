@@ -13,11 +13,17 @@ export const handleLoginAuthFirebase = (
   setPersistence(auth, browserSessionPersistence)
     .then(() => {
       signInWithEmailAndPassword(auth, email, password).catch((error) => {
-        console.log(error);
-        setLoginErrorMessage(true);
+        if (
+          error.message.includes("user-not-found") ||
+          error.message.includes("wrong-password")
+        ) {
+          setLoginErrorMessage("El email y/o contraseña son incorrectos");
+        } else {
+          setLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
+        }
       });
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
+      setLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
     });
 };
