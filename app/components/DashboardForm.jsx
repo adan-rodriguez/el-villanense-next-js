@@ -24,6 +24,10 @@ export default function DashboardForm({
       className={styles.form}
       onSubmit={async (e) => {
         e.preventDefault();
+        if (!article.image) {
+          alert("No has cargado la imagen de la noticia. Artículo no subido");
+          return;
+        }
         handleSubmit();
       }}
     >
@@ -171,17 +175,20 @@ export default function DashboardForm({
                   let formData = new FormData();
                   formData.append("file", imageFile);
                   formData.append("upload_preset", "elvillanense");
-                  const res = await fetch(
-                    "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
-                    {
-                      method: "POST",
-                      body: formData,
-                    }
-                  );
-                  const data = await res.json();
-                  // settersArticle.setImage((image) => image + data.secure_url);
-                  settersArticle.setImage(data.secure_url);
-                  alert("Imagen subida a la base de datos con éxito");
+                  try {
+                    const res = await fetch(
+                      "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
+                      {
+                        method: "POST",
+                        body: formData,
+                      }
+                    );
+                    const data = await res.json();
+                    settersArticle.setImage(data.secure_url);
+                    alert("Imagen subida a la base de datos con éxito");
+                  } catch (error) {
+                    alert("Ocurrió un error. Inténtalo nuevamente");
+                  }
                 }}
               >
                 Elegir imagen
