@@ -1,8 +1,8 @@
-import { getAllArticles } from "@/app/firebase/firebaseService";
+// import { getAllArticles } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "./utils/constants/domain";
 import Articles from "./components/Articles";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "El Villanense - Portal de noticias",
@@ -48,7 +48,9 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const articles = await getAllArticles();
+  // const articles = await getAllArticles();
+  const response = await fetch("https://www.elvillanense.com.ar/api/articles");
+  const articles = await response.json();
 
   return <Articles articles={articles} />;
 }

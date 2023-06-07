@@ -1,4 +1,4 @@
-import { getArticle } from "@/app/firebase/firebaseService";
+// import { getArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
 import ArticleContent from "../../components/ArticleContent";
@@ -11,7 +11,11 @@ import { notFound } from "next/navigation";
 export async function generateMetadata({ params }) {
   const { section, article: articleId } = params;
 
-  const article = await getArticle(articleId);
+  // const article = await getArticle(articleId);
+  const response = await fetch(
+    `https://www.elvillanense.com.ar/api/article/${articleId}`
+  );
+  const article = await response.json();
 
   if (Object.keys(article).length === 1) {
     return { title: "Página no encontrada - El Villanense" };
@@ -43,7 +47,11 @@ export async function generateMetadata({ params }) {
 export default async function Article({ params }) {
   const { section, article: articleId } = params;
 
-  const article = await getArticle(articleId);
+  // const article = await getArticle(articleId);
+  const response = await fetch(
+    `https://www.elvillanense.com.ar/api/article/${articleId}`
+  );
+  const article = await response.json();
 
   if (Object.keys(article).length === 1) {
     notFound();

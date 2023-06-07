@@ -1,4 +1,4 @@
-import { getSectionArticles } from "@/app/firebase/firebaseService";
+// import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "../styles/Section.module.css";
 import { DOMAIN } from "../utils/constants/domain";
 import Articles from "../components/Articles";
@@ -79,7 +79,11 @@ export default async function Section({ params }) {
     notFound();
   }
 
-  const articles = await getSectionArticles(section);
+  // const articles = await getSectionArticles(section);
+  const response = await fetch(
+    `https://www.elvillanense.com.ar/api/articles/${section}`
+  );
+  const articles = await response.json();
 
   return (
     <>

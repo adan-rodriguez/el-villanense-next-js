@@ -1,4 +1,4 @@
-import { getArticlesByAuthor } from "@/app/firebase/firebaseService";
+// import { getArticlesByAuthor } from "@/app/firebase/firebaseService";
 import Script from "next/script";
 import { DOMAIN } from "../../utils/constants/domain";
 import Articles from "../../components/Articles";
@@ -59,16 +59,20 @@ export default async function ArticlesByAuthor({ params }) {
     notFound();
   }
 
-  let editor = "";
+  // let editor = "";
 
-  for (let user in users) {
-    if (users[user].nick === author) {
-      editor = user;
-      break;
-    }
-  }
+  // for (let user in users) {
+  //   if (users[user].nick === author) {
+  //     editor = user;
+  //     break;
+  //   }
+  // }
 
-  const articles = await getArticlesByAuthor(editor);
+  // const articles = await getArticlesByAuthor(editor);
+  const response = await fetch(
+    `https://www.elvillanense.com.ar/api/articles/autor/${author}`
+  );
+  const articles = await response.json();
 
   return (
     <>
