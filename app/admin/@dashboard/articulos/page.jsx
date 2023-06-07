@@ -1,26 +1,67 @@
+"use client";
+
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
 import { getAllArticles } from "@/app/firebase/firebaseService";
 import styles from "@/app/styles/ArticlesDashboard.module.css";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-export default async function ArticlesDashboard() {
-  const articles = await getAllArticles();
+export default function ArticlesDashboard() {
+  const [articles, setArticles] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const obtainAllArticles = async () => {
+      const allArticles = await getAllArticles();
+      setArticles(allArticles);
+    };
+    obtainAllArticles();
+  }, []);
+
   return (
     <div className={styles.container}>
-      {articles.map((article) => (
-        <div key={article.id}>
-          <Image
-            src={article.image}
-            alt={article.altImage}
-            width={257}
-            height={171}
-          />
-          <div>
-            <h2>{article.title}</h2>
-            <EditAndDeleteButtonsContainer articleId={article.id} />
-          </div>
-        </div>
-      ))}
+      <input
+        value={search}
+        onChange={(e) =>
+          !e.target.value.startsWith(" ") && setSearch(e.target.value)
+        }
+        placeholder="Buscar noticia"
+      />
+      <select onChange={() => setArticles(articles.toReversed())}>
+        <option selected>Mas recientes</option>
+        <option>Mas antiguos</option>
+      </select>
+      {search
+        ? articles
+            .filter((article) => article.title.toLowerCase().includes(search))
+            .map((article) => (
+              <div key={article.id}>
+                <Image
+                  src={article.image}
+                  alt={article.altImage}
+                  width={257}
+                  height={171}
+                />
+                <div>
+                  <h2>{article.title}</h2>
+                  <EditAndDeleteButtonsContainer articleId={article.id} />
+                </div>
+              </div>
+            ))
+        : articles.map((article) => (
+            <div key={article.id}>
+              <Image
+                src={article.image}
+                alt={article.altImage}
+                width={257}
+                height={171}
+              />
+              <div>
+                <h2>{article.title}</h2>
+                <EditAndDeleteButtonsContainer articleId={article.id} />
+              </div>
+            </div>
+          ))}
     </div>
   );
 }
