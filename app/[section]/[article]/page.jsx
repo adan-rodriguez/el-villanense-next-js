@@ -160,6 +160,14 @@ export default async function Article({ params }) {
         />
         <ArticleContent content={article.content} />
       </article>
+      <aside style={{ paddingLeft: "40px" }}>
+        <Image
+          src="https://res.cloudinary.com/dh4eh6jen/image/upload/v1688650149/sebastian-aguirre-senador_yatqx6.webp"
+          alt="Sebastían Aguirre. Precandidato a senador provincial por el dpto. General Obligado"
+          width={225}
+          height={400}
+        />
+      </aside>
     </>
   );
 }
