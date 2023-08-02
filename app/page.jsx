@@ -1,6 +1,6 @@
-// import { getAllArticles } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "./utils/constants/domain";
 import Articles from "./components/Articles";
+import { getAllArticles } from "./services/articles";
 
 // export const dynamic = "force-dynamic";
 
@@ -48,9 +48,7 @@ export const metadata = {
 };
 
 export default async function Home() {
-  // const articles = await getAllArticles();
-  const response = await fetch("https://www.elvillanense.com.ar/api/articles");
-  const articles = await response.json();
+  const articles = await getAllArticles();
 
   return <Articles articles={articles} />;
 }

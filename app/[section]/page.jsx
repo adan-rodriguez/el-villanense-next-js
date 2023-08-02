@@ -1,8 +1,8 @@
-// import { getSectionArticles } from "@/app/firebase/firebaseService";
 import styles from "../styles/Section.module.css";
 import { DOMAIN } from "../utils/constants/domain";
 import Articles from "../components/Articles";
 import { notFound } from "next/navigation";
+import { getSectionArticles } from "../services/articles";
 
 // export const dynamicParams = false;
 // true (default): Dynamic segments not included in generateStaticParams are generated on demand.
@@ -79,11 +79,7 @@ export default async function Section({ params }) {
     notFound();
   }
 
-  // const articles = await getSectionArticles(section);
-  const response = await fetch(
-    `https://www.elvillanense.com.ar/api/articles/${section}`
-  );
-  const articles = await response.json();
+  const articles = await getSectionArticles({ section });
 
   return (
     <>

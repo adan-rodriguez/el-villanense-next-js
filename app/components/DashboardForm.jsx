@@ -15,8 +15,10 @@ export default function DashboardForm({
 
   const inputFileRef = useRef();
 
+  const editor = users.find((_user) => _user.email === user);
+
   useEffect(() => {
-    settersArticle.setAuthor(user);
+    settersArticle.setAuthor(editor.name);
   }, []);
 
   return (
@@ -45,18 +47,18 @@ export default function DashboardForm({
           >
             <p>Autor:</p>
             <Image
-              src={users[user]?.image}
-              alt={`Foto de ${users[user]?.name}`}
+              src={editor.image}
+              alt={`Foto de ${editor.name}`}
               width={36}
               height={36}
               style={{ borderRadius: "100%", objectFit: "cover" }}
             />
-            <p>{users[user]?.name}</p>
+            <p>{editor.name}</p>
           </div>
           <div style={{ display: "flex", columnGap: "5px" }}>
             <input
               onChange={(e) =>
-                settersArticle.setAuthor(e.target.checked ? null : user)
+                settersArticle.setAuthor(e.target.checked ? null : editor.name)
               }
               type="checkbox"
               name="anonymous"

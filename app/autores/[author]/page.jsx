@@ -1,46 +1,33 @@
-// import { getArticlesByAuthor } from "@/app/firebase/firebaseService";
 import Script from "next/script";
 import { DOMAIN } from "../../utils/constants/domain";
 import Articles from "../../components/Articles";
 import { users } from "../../utils/constants/users";
 import { notFound } from "next/navigation";
+import { getArticlesByAuthor } from "@/app/services/articles";
 
 // export const dynamicParams = false;
 
-let authors = [];
-
-for (let user in users) {
-  authors.push(users[user].nick);
-}
-
 // export function generateStaticParams() {
-//   return authors.map((author) => ({
-//     author,
+//   return users.map((user) => ({
+//     author: user.nick,
 //   }));
 // }
 
 export function generateMetadata({ params }) {
   const { author } = params;
 
-  if (!authors.includes(author)) {
+  const user = users.find((user) => user.nick === author);
+
+  if (!user) {
     return { title: "Página no encontrada - El Villanense" };
   }
 
-  let name = "";
-
-  for (let user in users) {
-    if (users[user].nick === author) {
-      name = users[user].name;
-      break;
-    }
-  }
-
   return {
-    title: `${name} - El Villanense`,
-    description: `Todas las noticias publicadas por ${name}`,
+    title: `${user.name} - El Villanense`,
+    description: `Todas las noticias publicadas por ${user.name}`,
     openGraph: {
-      title: `${name} - El Villanense`,
-      description: `Todas las noticias publicadas por ${name}`,
+      title: `${user.name} - El Villanense`,
+      description: `Todas las noticias publicadas por ${user.name}`,
       images: `${DOMAIN}/images/logo.png`,
       url: `${DOMAIN}/autor/${author}`,
       siteName: "El Villanense",
@@ -55,24 +42,16 @@ export function generateMetadata({ params }) {
 export default async function ArticlesByAuthor({ params }) {
   const { author } = params;
 
-  if (!authors.includes(author)) {
+  const user = users.find((user) => user.nick === author);
+
+  if (!user) {
     notFound();
   }
 
-  // let editor = "";
-
-  // for (let user in users) {
-  //   if (users[user].nick === author) {
-  //     editor = user;
-  //     break;
-  //   }
-  // }
-
-  // const articles = await getArticlesByAuthor(editor);
-  const response = await fetch(
-    `https://www.elvillanense.com.ar/api/articles/autor/${author}`
-  );
-  const articles = await response.json();
+  const articles = await getArticlesByAuthor({
+    name: user.name,
+    nick: user.nick,
+  });
 
   return (
     <>

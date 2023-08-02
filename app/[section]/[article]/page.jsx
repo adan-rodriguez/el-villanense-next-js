@@ -1,4 +1,3 @@
-// import { getArticle } from "@/app/firebase/firebaseService";
 import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
 import ArticleContent from "../../components/ArticleContent";
@@ -7,15 +6,12 @@ import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtons
 import { users } from "@/app/utils/constants/users";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getArticle } from "@/app/services/articles";
 
 export async function generateMetadata({ params }) {
   const { section, article: articleId } = params;
 
-  // const article = await getArticle(articleId);
-  const response = await fetch(
-    `https://www.elvillanense.com.ar/api/article/${articleId}`
-  );
-  const article = await response.json();
+  const article = await getArticle({ articleId });
 
   if (Object.keys(article).length === 1) {
     return { title: "Página no encontrada - El Villanense" };
@@ -47,11 +43,7 @@ export async function generateMetadata({ params }) {
 export default async function Article({ params }) {
   const { section, article: articleId } = params;
 
-  // const article = await getArticle(articleId);
-  const response = await fetch(
-    `https://www.elvillanense.com.ar/api/article/${articleId}`
-  );
-  const article = await response.json();
+  const article = await getArticle({ articleId });
 
   if (Object.keys(article).length === 1) {
     notFound();
@@ -91,6 +83,8 @@ export default async function Article({ params }) {
   //   image: article.image,
   //   datePublished: article.datetimeAttribute,
   // };
+
+  const user = users.find((user) => user.name === article.author);
 
   return (
     <>
@@ -136,17 +130,14 @@ export default async function Article({ params }) {
         {article.author && (
           <div className={styles.article_author_container}>
             <Image
-              src={users[article.author].image}
-              alt={`Foto de ${users[article.author].name}`}
+              src={user.image}
+              alt={`Foto de ${user.name}`}
               width={36}
               height={36}
               className={styles.article_author_img}
             />
             <p className={styles.article_author_name}>
-              Por{" "}
-              <Link href={`/autores/${users[article.author].nick}`}>
-                {users[article.author].name}
-              </Link>
+              Por <Link href={`/autores/${user.nick}`}>{article.author}</Link>
             </p>
           </div>
         )}
@@ -160,14 +151,6 @@ export default async function Article({ params }) {
         />
         <ArticleContent content={article.content} />
       </article>
-      <aside style={{ paddingLeft: "40px" }}>
-        <Image
-          src="https://res.cloudinary.com/dh4eh6jen/image/upload/v1688650149/sebastian-aguirre-senador_yatqx6.webp"
-          alt="Sebastían Aguirre. Precandidato a senador provincial por el dpto. General Obligado"
-          width={225}
-          height={400}
-        />
-      </aside>
     </>
   );
 }

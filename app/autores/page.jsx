@@ -3,19 +3,18 @@ import { users } from "../utils/constants/users";
 import styles from "@/app/styles/Authors.module.css";
 import Image from "next/image";
 
-const authors = Object.entries(users);
 export default function Authors() {
   return (
     <div className={styles.container}>
-      {authors.map((author) => (
-        <Link href={`/autores/${author[1].nick}`} key={author[0]}>
+      {users.map((user) => (
+        <Link href={`/autores/${user.nick}`} key={user.email}>
           <Image
-            src={author[1].image}
-            alt={`Foto de ${author[1].name}`}
+            src={user.image}
+            alt={`Foto de ${user.name}`}
             width={36}
             height={36}
           />
-          <p>{author[1].name}</p>
+          <p>{user.name}</p>
         </Link>
       ))}
     </div>

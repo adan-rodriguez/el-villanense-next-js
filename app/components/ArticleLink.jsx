@@ -37,7 +37,7 @@ export default function ArticleLink({
         <p className={styles.article_link_title}>{title}</p>
         {author && (
           <p className={styles.article_link_author_name}>
-            Por <strong>{users[author]?.name}</strong>
+            Por <strong>{author}</strong>
           </p>
         )}
       </Link>
