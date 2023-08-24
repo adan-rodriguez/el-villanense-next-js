@@ -19,9 +19,7 @@ export async function getArticle({ articleId }) {
     article = mock_articles.find((article) => article.id === articleId);
   } else {
     // article = await getArticle(articleId);
-    const response = await fetch(
-      `https://www.elvillanense.com.ar/api/article/${articleId}`
-    );
+    const response = await fetch(`${DOMAIN}/api/article/${articleId}`);
     article = await response.json();
   }
   return article;
@@ -45,7 +43,7 @@ export async function getArticlesByAuthor({ name, nick }) {
     articles = mock_articles.filter((article) => article.author === name);
   } else {
     // articles = await getArticlesByAuthor(editor);
-    const response = await fetch(`${DOMAIN}/api/articles/${nick}`);
+    const response = await fetch(`${DOMAIN}/api/articles/author/${nick}`);
     articles = await response.json();
   }
   return articles;

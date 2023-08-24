@@ -3,17 +3,11 @@ import { users } from "@/app/utils/constants/users";
 import { NextResponse } from "next/server";
 
 export async function GET(request, { params }) {
-  const { autor } = params;
+  const { author } = params;
 
-  let editor = "";
+  const user = users.find((user) => user.nick === author);
 
-  for (let user in users) {
-    if (users[user].nick === autor) {
-      editor = user;
-      break;
-    }
-  }
-  const articles = await getArticlesByAuthor(editor);
+  const articles = await getArticlesByAuthor(user.name);
 
   return NextResponse.json(articles);
 }
