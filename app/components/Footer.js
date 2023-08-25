@@ -6,7 +6,20 @@ import styles from "../styles/Footer.module.css";
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <SocialMedia />
+      <div>
+        <SocialMedia />
+        <span
+          style={{
+            position: "absolute",
+            fontSize: "10px",
+            textTransform: "uppercase",
+            marginTop: "0px",
+            translate: "-12px 0",
+          }}
+        >
+          Seguinos en nuestras redes
+        </span>
+      </div>
       <Logo />
       <address className={styles.address}>
         <ul className={styles.address_items_list}>
