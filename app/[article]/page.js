@@ -1,15 +1,16 @@
 import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
-import ArticleContent from "../../components/ArticleContent";
+import ArticleContent from "../components/ArticleContent";
 import styles from "@/app/styles/Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
 import { users } from "@/app/utils/constants/users";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle } from "@/app/services/articles";
+import ShareSocial from "./components/ShareSocial";
 
 export async function generateMetadata({ params }) {
-  const { section, article: articleId } = params;
+  const { article: articleId } = params;
 
   const article = await getArticle({ articleId });
 
@@ -17,11 +18,7 @@ export async function generateMetadata({ params }) {
     return { title: "Página no encontrada - El Villanense" };
   }
 
-  if (section !== article.section) {
-    return { title: "Página no encontrada - El Villanense" };
-  }
-
-  const url = `${DOMAIN}/${section}/${articleId}`;
+  const url = `${DOMAIN}/${articleId}`;
 
   return {
     title: article.title,
@@ -41,7 +38,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Article({ params }) {
-  const { section, article: articleId } = params;
+  const { article: articleId } = params;
 
   const article = await getArticle({ articleId });
 
@@ -49,13 +46,9 @@ export default async function Article({ params }) {
     notFound();
   }
 
-  if (section !== article.section) {
-    notFound();
-  }
+  const url = `${DOMAIN}/${articleId}`;
 
-  const url = `${DOMAIN}/${section}/${articleId}`;
-
-  const shareSocialLinks = [
+  const shareSocialData = [
     {
       href: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
       title: "Compartir en Facebook",
@@ -93,40 +86,19 @@ export default async function Article({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       /> */}
       <article className={styles.article_container}>
-        <EditAndDeleteButtonsContainer
-          articleId={article.id}
-          section={article.section}
-        />
+        <EditAndDeleteButtonsContainer articleId={article.id} />
         <h1 className={styles.article_title}>{article.title}</h1>
-        <div className={styles.share_social_container}>
-          {shareSocialLinks.map(({ href, title, src, alt }, index) => {
-            return (
-              <a
-                className={styles.share_social_link}
-                key={index}
-                href={href}
-                target="_blank"
-                title={title}
-                rel="noreferrer"
-              >
-                <Image
-                  className={styles.share_social_img}
-                  width={30}
-                  height={30}
-                  src={src}
-                  alt={alt}
-                />
-              </a>
-            );
-          })}
-        </div>
+        <ShareSocial data={shareSocialData} />
         <time
+          style={{ opacity: ".8" }}
           className={styles.article_time}
           dateTime={article.datetimeAttribute}
         >
           {article.datetimeContent}
         </time>
-        <p className={styles.article_lead}>{article.lead}</p>
+        <p style={{ marginTop: "5px" }} className={styles.article_lead}>
+          {article.lead}
+        </p>
         {article.author && (
           <div className={styles.article_author_container}>
             <Image
@@ -136,8 +108,14 @@ export default async function Article({ params }) {
               height={36}
               className={styles.article_author_img}
             />
-            <p className={styles.article_author_name}>
-              Por <Link href={`/autores/${user.nick}`}>{article.author}</Link>
+            <p style={{ opacity: ".8" }} className={styles.article_author_name}>
+              Por{" "}
+              <Link
+                style={{ color: "#0289cb", fontWeight: "bold" }}
+                href={`/autores/${user.nick}`}
+              >
+                {article.author}
+              </Link>
             </p>
           </div>
         )}
@@ -150,6 +128,17 @@ export default async function Article({ params }) {
           priority
         />
         <ArticleContent content={article.content} />
+        <div
+          style={{
+            padding: "10px 0 20px 0",
+            display: "flex",
+            justifyContent: "center",
+            borderTop: "1px solid gray",
+            borderBottom: "1px solid gray",
+          }}
+        >
+          <ShareSocial data={shareSocialData} />
+        </div>
       </article>
     </>
   );

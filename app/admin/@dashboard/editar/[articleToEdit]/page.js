@@ -27,7 +27,7 @@ export default function EditArticle({ params }) {
           //   `${DOMAIN}/api/revalidateUploadAndEdit?secret=h5h4j8912hg6df8d1s3h55k8op6k46f2d4s`,
           //   {
           //     method: "POST",
-          //     body: `${article.section}/${articleToEdit}`,
+          //     body: `/${articleToEdit}`,
           //   }
           // );
 

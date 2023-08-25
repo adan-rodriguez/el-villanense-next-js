@@ -14,7 +14,6 @@ export default function Articles({ articles }) {
           datetimeAttribute={article.datetimeAttribute}
           dateContent={article.dateContent}
           author={article.author}
-          section={article.section}
         />
       ))}
     </div>

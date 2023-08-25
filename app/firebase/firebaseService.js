@@ -3,7 +3,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  limit,
   orderBy,
   query,
   where,
@@ -19,16 +18,16 @@ export const getAllArticles = async () => {
   return articles;
 };
 
-export const getSectionArticles = async (section) => {
-  const q = query(
-    articlesCollection,
-    where("section", "==", section),
-    orderBy("timestamp", "desc")
-  );
-  const data = await getDocs(q);
-  const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
-  return articles;
-};
+// export const getSectionArticles = async (section) => {
+//   const q = query(
+//     articlesCollection,
+//     where("section", "==", section),
+//     orderBy("timestamp", "desc")
+//   );
+//   const data = await getDocs(q);
+//   const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
+//   return articles;
+// };
 
 export const getArticlesByAuthor = async (author) => {
   const q = query(
@@ -55,10 +54,3 @@ export const getArticle = async (articleId) => {
   const article = { id: data.id, ...data.data() };
   return article;
 };
-
-// export const getEditor = async (editorId) => {
-//   const editorRef = doc(db, "redactores", editorId);
-//   const data = await getDoc(editorRef);
-//   const editor = { id: data.id, ...data.data() };
-//   return editor;
-// };

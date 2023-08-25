@@ -16,25 +16,15 @@ export async function getAllArticles() {
 export async function getArticle({ articleId }) {
   let article;
   if (process.env.NODE_ENV === "development") {
-    article = mock_articles.find((article) => article.id === articleId);
+    article = mock_articles.find((article) => article.id === articleId) ?? {
+      id: articleId,
+    };
   } else {
     // article = await getArticle(articleId);
     const response = await fetch(`${DOMAIN}/api/article/${articleId}`);
     article = await response.json();
   }
   return article;
-}
-
-export async function getSectionArticles({ section }) {
-  let articles;
-  if (process.env.NODE_ENV === "development") {
-    articles = mock_articles.filter((article) => article.section === section);
-  } else {
-    // articles = await getSectionArticles(section);
-    const response = await fetch(`${DOMAIN}/api/articles/${section}`);
-    articles = await response.json();
-  }
-  return articles;
 }
 
 export async function getArticlesByAuthor({ name, nick }) {

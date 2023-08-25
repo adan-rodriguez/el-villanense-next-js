@@ -2,28 +2,27 @@
 
 // Este componente se puede refactorizar para hacerlo de servidor y sólo lo que se necesite sea de cliente
 
-import Link from "next/link";
 import styles from "../styles/Header.module.css";
 import Logo from "./Logo";
 import Image from "next/image";
 import SocialMedia from "./SocialMedia";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
-const links = [
-  { label: "Inicio", route: "/" },
-  { label: "Locales", route: "/locales" },
-  { label: "Regionales", route: "/regionales" },
-  { label: "Provinciales", route: "/provinciales" },
-  { label: "Nacionales", route: "/nacionales" },
-  { label: "Internacionales", route: "/internacionales" },
-];
+// const links = [
+//   { label: "Inicio", route: "/" },
+//   { label: "Locales", route: "/locales" },
+//   { label: "Regionales", route: "/regionales" },
+//   { label: "Provinciales", route: "/provinciales" },
+//   { label: "Nacionales", route: "/nacionales" },
+//   { label: "Internacionales", route: "/internacionales" },
+// ];
 
 export default function Header() {
   const [isMenuopen, setIsMenuopen] = useState(false);
   const [innerWidth, setInnerWidth] = useState(null);
 
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   useEffect(() => {
     setInnerWidth(window.innerWidth);
@@ -95,7 +94,7 @@ export default function Header() {
               height={48}
             />
           </button>
-          <nav>
+          {/* <nav>
             <ul className={styles.navbar_list}>
               {links.map(({ label, route }) => {
                 return (
@@ -116,7 +115,7 @@ export default function Header() {
                 );
               })}
             </ul>
-          </nav>
+          </nav> */}
           <SocialMedia classname="links_social_container_header" />
         </div>
       </div>

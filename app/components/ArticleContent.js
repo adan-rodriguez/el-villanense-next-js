@@ -7,7 +7,7 @@ export default function ArticleContent({ content }) {
     <div
       className={styles.article_content}
       dangerouslySetInnerHTML={{ __html: content }}
-      style={{ borderBottom: "1px solid black", paddingBottom: "20px" }}
+      style={{ paddingBottom: "20px" }}
     />
   );
 }

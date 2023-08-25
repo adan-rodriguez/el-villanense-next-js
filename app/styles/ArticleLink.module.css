@@ -10,7 +10,8 @@
 }
 
 .article_link_time {
-  font-size: 0.85rem;
+  opacity: 0.8;
+  font-size: 0.75rem;
 }
 
 .article_link_title {
