@@ -69,6 +69,10 @@
 
 /* // Dispositivos grandes (escritorios, 992px y más) */
 @media (min-width: 992px) {
+  .header_container {
+    padding-left: 40px;
+  }
+
   .openmenu_button,
   .closemenu_button {
     display: none;
