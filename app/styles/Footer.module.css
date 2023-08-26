@@ -18,6 +18,10 @@
   list-style-type: none;
 }
 
+.address_item {
+  white-space: nowrap;
+}
+
 .address_item a {
   text-decoration: underline;
 }
