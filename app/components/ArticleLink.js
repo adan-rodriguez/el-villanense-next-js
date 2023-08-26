@@ -2,6 +2,7 @@ import Link from "next/link";
 import EditAndDeleteButtonsContainer from "./EditAndDeleteButtonsContainer";
 import styles from "../styles/ArticleLink.module.css";
 import Image from "next/image";
+import { users } from "../utils/constants/users";
 
 export default function ArticleLink({
   id,
@@ -20,7 +21,7 @@ export default function ArticleLink({
           position: "absolute",
         }}
       />
-      <Link key={id} href={`/${id}`}>
+      <Link className={styles.article_link} key={id} href={`/${id}`}>
         <Image
           className={styles.article_link_img}
           src={image}
@@ -32,12 +33,18 @@ export default function ArticleLink({
           {dateContent}
         </time>
         <p className={styles.article_link_title}>{title}</p>
-        {author && (
-          <p className={styles.article_link_author_name}>
-            Por <strong>{author}</strong>
-          </p>
-        )}
       </Link>
+      {author && (
+        <p className={styles.article_link_author_name}>
+          Por{" "}
+          <Link
+            style={{ fontWeight: "bold" }}
+            href={`/autores/${users.find((user) => user.name === author).nick}`}
+          >
+            {author}
+          </Link>
+        </p>
+      )}
     </article>
   );
 }

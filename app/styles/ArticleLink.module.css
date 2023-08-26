@@ -1,5 +1,12 @@
 .article {
   max-width: 519px;
+  border-bottom: 1px solid silver;
+  padding-bottom: 14px;
+}
+
+.article_link {
+  display: flex;
+  flex-direction: column;
 }
 
 .article_link_img {
@@ -7,11 +14,13 @@
   height: auto;
   aspect-ratio: 3/2;
   object-fit: cover;
+  border-radius: 4px;
 }
 
 .article_link_time {
   opacity: 0.8;
   font-size: 0.75rem;
+  margin-top: 6px;
 }
 
 .article_link_title {
@@ -23,7 +32,7 @@
   opacity: 0.7;
 }
 
-.article:hover .article_link_title {
+.article_link:hover .article_link_title {
   transition: 0.3s;
   color: #0289cb;
 }
