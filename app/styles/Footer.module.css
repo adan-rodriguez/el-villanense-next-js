@@ -11,12 +11,13 @@
 .address,
 .copyright {
   text-align: center;
+  font-size: 0.8em;
 }
 
 .address_items_list {
   list-style-type: none;
 }
 
-.address_item {
+.address_item a {
   text-decoration: underline;
 }
