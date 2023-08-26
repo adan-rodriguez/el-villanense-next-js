@@ -15,6 +15,7 @@ export default function Footer() {
             textTransform: "uppercase",
             marginTop: "0px",
             translate: "-12px 0",
+            opacity: "0.9",
           }}
         >
           Seguinos en nuestras redes

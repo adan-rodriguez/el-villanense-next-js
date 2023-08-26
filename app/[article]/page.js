@@ -90,7 +90,6 @@ export default async function Article({ params }) {
         <h1 className={styles.article_title}>{article.title}</h1>
         <ShareSocial data={shareSocialData} />
         <time
-          style={{ opacity: ".8" }}
           className={styles.article_time}
           dateTime={article.datetimeAttribute}
         >
@@ -108,7 +107,7 @@ export default async function Article({ params }) {
               height={36}
               className={styles.article_author_img}
             />
-            <p style={{ opacity: ".8" }} className={styles.article_author_name}>
+            <p style={{ color: "grey" }} className={styles.article_author_name}>
               Por{" "}
               <Link
                 style={{ color: "#0289cb", fontWeight: "bold" }}
@@ -133,8 +132,8 @@ export default async function Article({ params }) {
             padding: "10px 0 20px 0",
             display: "flex",
             justifyContent: "center",
-            borderTop: "1px solid gray",
-            borderBottom: "1px solid gray",
+            borderTop: "1px solid silver",
+            borderBottom: "1px solid silver",
           }}
         >
           <ShareSocial data={shareSocialData} />

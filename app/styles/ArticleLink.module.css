@@ -18,7 +18,7 @@
 }
 
 .article_link_time {
-  opacity: 0.8;
+  color: grey;
   font-size: 0.75rem;
   margin-top: 6px;
 }

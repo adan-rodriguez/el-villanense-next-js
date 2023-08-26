@@ -31,7 +31,7 @@ export default function ShareSocial({ data }) {
           textTransform: "uppercase",
           marginTop: "29px",
           marginLeft: "1px",
-          opacity: ".8",
+          color: "grey",
         }}
       >
         Comparte la noticia

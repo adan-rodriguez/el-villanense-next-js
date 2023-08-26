@@ -4,6 +4,7 @@ import Articles from "../../components/Articles";
 import { users } from "../../utils/constants/users";
 import { notFound } from "next/navigation";
 import { getArticlesByAuthor } from "@/app/services/articles";
+import styles from "./styles/AuthorPage.module.css";
 
 // export const dynamicParams = false;
 
@@ -69,6 +70,9 @@ export default async function ArticlesByAuthor({ params }) {
           gtag('config', 'G-V6RKJKGCX2');
         `}
       </Script>
+      <h1 className={styles.title}>
+        Noticias de <span className={styles.author}>{user.name}</span>
+      </h1>
       <Articles articles={articles} />
     </>
   );

@@ -29,8 +29,9 @@
 .article_time {
   font-size: 0.8rem;
   line-height: 30px;
-  vertical-align: top;
+  vertical-align: text-bottom;
   margin-left: 15px;
+  color: grey;
 }
 
 .article_lead {
