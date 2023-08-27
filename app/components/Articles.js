@@ -2,6 +2,7 @@ import ArticleLink from "./ArticleLink";
 import styles from "../styles/Articles.module.css";
 
 export default function Articles({ articles }) {
+  if (articles.length === 0) return null;
   return (
     <div className={styles.articles_links_container}>
       {articles.map((article) => (

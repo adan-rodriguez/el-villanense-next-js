@@ -12,12 +12,21 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
   min-width: 320px;
   padding-top: 48px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+body > * {
+  width: 100%;
 }
 
 main {
-  min-height: calc(100vh - 278px);
+  /* min-height: calc(100vh - 278px); */
   max-width: 1440px;
-  margin: auto;
+  margin: 0 auto;
+  flex-grow: 1;
 }
 
 a {
