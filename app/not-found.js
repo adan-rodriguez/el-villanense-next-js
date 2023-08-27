@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function PageNotFound() {
+export default function GlobalNotFound() {
   return (
     <div style={{ textAlign: "center", marginTop: "20px" }}>
       <h2>Página no encontrada</h2>

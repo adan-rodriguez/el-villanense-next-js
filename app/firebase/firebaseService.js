@@ -14,7 +14,7 @@ const articlesCollection = collection(db, "articles");
 export const getAllArticles = async () => {
   const q = query(articlesCollection, orderBy("timestamp", "desc"));
   const data = await getDocs(q);
-  const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
+  const articles = data.docs.map((art) => ({ id: art.id, ...art.data() }));
   return articles;
 };
 
@@ -36,7 +36,7 @@ export const getArticlesByAuthor = async (author) => {
     orderBy("timestamp", "desc")
   );
   const data = await getDocs(q);
-  const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
+  const articles = data.docs.map((art) => ({ id: art.id, ...art.data() }));
   return articles;
 };
 
@@ -54,3 +54,10 @@ export const getArticle = async (articleId) => {
   const article = { id: data.id, ...data.data() };
   return article;
 };
+
+// if (data.exists()) {
+//   return { id: data.id, ...data.data() };
+// } else {
+//   // data.data() will be undefined in this case
+//   return undefined
+// }

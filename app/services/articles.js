@@ -22,6 +22,9 @@ export async function getArticle({ articleId }) {
   } else {
     // article = await getArticle(articleId);
     const response = await fetch(`${DOMAIN}/api/article/${articleId}`);
+    if (response.status === 404) {
+      throw new Error(`El artículo con id '${articleId}' no existe`);
+    }
     article = await response.json();
   }
   return article;

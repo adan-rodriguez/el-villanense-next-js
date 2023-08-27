@@ -12,11 +12,19 @@ import ShareSocial from "./components/ShareSocial";
 export async function generateMetadata({ params }) {
   const { article: articleId } = params;
 
-  const article = await getArticle({ articleId });
+  let article;
 
-  if (Object.keys(article).length === 1) {
+  try {
+    article = await getArticle({ articleId });
+  } catch {
     return { title: "Página no encontrada - El Villanense" };
   }
+
+  // const article = await getArticle({ articleId });
+
+  // if (Object.keys(article).length === 1) {
+  //   return { title: "Página no encontrada - El Villanense" };
+  // }
 
   const url = `${DOMAIN}/${articleId}`;
 
@@ -40,11 +48,19 @@ export async function generateMetadata({ params }) {
 export default async function Article({ params }) {
   const { article: articleId } = params;
 
-  const article = await getArticle({ articleId });
+  let article;
 
-  if (Object.keys(article).length === 1) {
+  try {
+    article = await getArticle({ articleId });
+  } catch {
     notFound();
   }
+
+  // const article = await getArticle({ articleId });
+
+  // if (Object.keys(article).length === 1) {
+  //   notFound();
+  // }
 
   const url = `${DOMAIN}/${articleId}`;
 
