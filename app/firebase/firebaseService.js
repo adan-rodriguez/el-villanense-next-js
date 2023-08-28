@@ -51,8 +51,9 @@ export const getArticlesByAuthor = async (author) => {
 export const getArticle = async (articleId) => {
   const articleRef = doc(db, "articles", articleId);
   const data = await getDoc(articleRef);
-  const article = { id: data.id, ...data.data() };
-  return article;
+  if (data.exists()) {
+    return { id: data.id, ...data.data() };
+  }
 };
 
 // if (data.exists()) {

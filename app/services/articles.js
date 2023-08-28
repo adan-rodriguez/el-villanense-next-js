@@ -16,9 +16,9 @@ export async function getAllArticles() {
 export async function getArticle({ articleId }) {
   let article;
   if (process.env.NODE_ENV === "development") {
-    article = mock_articles.find((article) => article.id === articleId) ?? {
-      id: articleId,
-    };
+    article = mock_articles.find((article) => article.id === articleId);
+    if (!article)
+      throw new Error(`El artículo con id '${articleId}' no existe`);
   } else {
     // article = await getArticle(articleId);
     const response = await fetch(`${DOMAIN}/api/article/${articleId}`);
