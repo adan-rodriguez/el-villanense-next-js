@@ -5,7 +5,6 @@ import styles from "@/app/styles/NewArticle.module.css";
 import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
 import { addArticle } from "@/app/utils/addArticle";
-import { DOMAIN } from "@/app/utils/constants/domain";
 
 export default function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
@@ -25,9 +24,6 @@ export default function NewArticle() {
           } catch {
             return alert("No se ha podido subir la noticia");
           }
-
-          await fetch(`${DOMAIN}/api/revalidate`);
-
           alert("Artículo subido con éxito");
         }}
       />
