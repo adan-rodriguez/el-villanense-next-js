@@ -2,8 +2,6 @@ import { DOMAIN } from "./utils/constants/domain";
 import Articles from "./components/Articles";
 import { getAllArticles } from "./services/articles";
 
-// export const dynamic = "force-dynamic";
-
 export const metadata = {
   title: "El Villanense - Portal de noticias",
   description:

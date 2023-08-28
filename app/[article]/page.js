@@ -20,12 +20,6 @@ export async function generateMetadata({ params }) {
     return { title: "Página no encontrada - El Villanense" };
   }
 
-  // const article = await getArticle({ articleId });
-
-  // if (Object.keys(article).length === 1) {
-  //   return { title: "Página no encontrada - El Villanense" };
-  // }
-
   const url = `${DOMAIN}/${articleId}`;
 
   return {
@@ -55,12 +49,6 @@ export default async function Article({ params }) {
   } catch {
     notFound();
   }
-
-  // const article = await getArticle({ articleId });
-
-  // if (Object.keys(article).length === 1) {
-  //   notFound();
-  // }
 
   const url = `${DOMAIN}/${articleId}`;
 

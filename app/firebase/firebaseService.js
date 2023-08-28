@@ -11,7 +11,7 @@ import { db } from "./firebase";
 
 const articlesCollection = collection(db, "articles");
 
-export const getAllArticles = async () => {
+export const getAllArticlesFirebase = async () => {
   const q = query(articlesCollection, orderBy("timestamp", "desc"));
   const data = await getDocs(q);
   const articles = data.docs.map((art) => ({ id: art.id, ...art.data() }));
@@ -29,7 +29,7 @@ export const getAllArticles = async () => {
 //   return articles;
 // };
 
-export const getArticlesByAuthor = async (author) => {
+export const getArticlesByAuthorFirebase = async (author) => {
   const q = query(
     articlesCollection,
     where("author", "==", author),
@@ -48,7 +48,7 @@ export const getArticlesByAuthor = async (author) => {
 //   return article;
 // };
 
-export const getArticle = async (articleId) => {
+export const getArticleFirebase = async (articleId) => {
   const articleRef = doc(db, "articles", articleId);
   const data = await getDoc(articleRef);
   if (data.exists()) {

@@ -6,14 +6,6 @@ import { notFound } from "next/navigation";
 import { getArticlesByAuthor } from "@/app/services/articles";
 import styles from "./styles/AuthorPage.module.css";
 
-// export const dynamicParams = false;
-
-// export function generateStaticParams() {
-//   return users.map((user) => ({
-//     author: user.nick,
-//   }));
-// }
-
 export function generateMetadata({ params }) {
   const { author } = params;
 
@@ -51,7 +43,6 @@ export default async function ArticlesByAuthor({ params }) {
 
   const articles = await getArticlesByAuthor({
     name: user.name,
-    nick: user.nick,
   });
 
   return (
