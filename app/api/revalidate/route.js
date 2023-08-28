@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request) {
   revalidatePath("/");
   revalidatePath("/autores/[author]");
   return NextResponse.json({ revalidated: true, now: Date.now() });
