@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getArticle } from "../firebase/firebaseService";
+import { getArticleFirebase } from "../firebase/firebaseService";
 
 // los nombres de los custom hooks no deben ser p.e. useFetchArticles xq en el futuro se podrìa usar otra cosa que no sea fetch pora obrener los articles. El custom hook debe ser una caja negra. Este cusum creo q debería tener un nombre como useUploadArticle aunque en un futuro puede que lo utilice tmb para editar el artículo
 export default function useDashboardForm(articleId) {
@@ -34,7 +34,7 @@ export default function useDashboardForm(articleId) {
   };
 
   const getArticleToEdit = async () => {
-    const art = await getArticle(articleId);
+    const art = await getArticleFirebase(articleId);
     setTitle(art.title);
     setImage(art.image);
     setAltImage(art.altImage);

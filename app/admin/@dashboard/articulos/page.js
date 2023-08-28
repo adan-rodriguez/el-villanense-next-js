@@ -1,7 +1,7 @@
 "use client";
 
 import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
-import { getAllArticles } from "@/app/firebase/firebaseService";
+import { getAllArticlesFirebase } from "@/app/firebase/firebaseService";
 import styles from "@/app/styles/ArticlesDashboard.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ export default function ArticlesDashboard() {
 
   useEffect(() => {
     const obtainAllArticles = async () => {
-      const allArticles = await getAllArticles();
+      const allArticles = await getAllArticlesFirebase();
       setArticles(allArticles);
     };
     obtainAllArticles();
