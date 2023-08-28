@@ -15,10 +15,12 @@ export default function DashboardForm({
 
   const inputFileRef = useRef();
 
-  const editor = users.find((_user) => _user.email === user);
+  let editor;
+
+  if (user) editor = users.find((_user) => _user.email === user);
 
   useEffect(() => {
-    settersArticle.setAuthor(editor.name);
+    if (editor) settersArticle.setAuthor(editor.name);
   }, []);
 
   return (
