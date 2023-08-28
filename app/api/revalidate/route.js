@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   revalidatePath("/");
-  revalidatePath("/api/articles");
+  revalidatePath("/autores/[author]");
   return NextResponse.json({ revalidated: true, now: Date.now() });
 }
 
