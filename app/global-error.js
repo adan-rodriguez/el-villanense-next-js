@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 export default function GlobalError({ error, reset }) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+  // useEffect(() => {
+  //   console.error(error);
+  // }, [error]);
 
   return (
     <html>
       <body>
-        <h2>Something went wrong!</h2>
-        <button onClick={() => reset()}>Try again</button>
+        <h2>Error</h2>
+        <button onClick={() => reset()}>Recargar página</button>
       </body>
     </html>
   );

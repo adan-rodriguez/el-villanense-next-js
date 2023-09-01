@@ -1,38 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import styles from "./styles/DashboardHome.module.css";
 
 export default function Dashboard() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        rowGap: "20px",
-        padding: "20px",
-      }}
-    >
-      <Link
-        style={{
-          border: "1px solid black",
-          width: "200px",
-          textAlign: "center",
-          padding: "10px 0",
-        }}
-        href="/admin/nuevo"
-      >
+    <div className={styles.container}>
+      <Link className={styles.links} href="/admin/nuevo">
         Nuevo artículo
       </Link>
-      <Link
-        style={{
-          border: "1px solid black",
-          width: "200px",
-          textAlign: "center",
-          padding: "10px 0",
-        }}
-        href="/admin/articulos"
-      >
+      <Link className={styles.links} href="/admin/articulos">
         Editar/Borrar
       </Link>
     </div>

@@ -2,6 +2,6 @@
   height: 30px;
 }
 
-.link_social:hover {
+.link_social:is(:hover, :focus) {
   transform: scale(1.05);
 }

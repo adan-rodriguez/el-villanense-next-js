@@ -19,10 +19,10 @@
 }
 
 .share_social_link {
-  height: 30px;
 }
 
-.share_social_img:hover {
+.share_social_link:is(:hover, :focus) {
+  height: 30px;
   transform: scale(1.05);
 }
 
