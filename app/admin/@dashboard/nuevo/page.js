@@ -4,9 +4,8 @@ import useLogin from "@/app/hooks/useLogin";
 import styles from "@/app/styles/NewArticle.module.css";
 import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
-import { addArticle } from "@/app/utils/addArticle";
-import { notFound, redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+// import { addArticle } from "@/app/utils/addArticle";
+import handleSubmit from "./handleSubmit";
 
 export default function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
@@ -28,16 +27,7 @@ export default function NewArticle() {
         //   }
         //   alert("Artículo subido con éxito");
         // }}
-        handleSubmit={async () => {
-          "use server";
-          try {
-            await addArticle(article);
-          } catch {
-            notFound();
-          }
-          revalidatePath("/");
-          redirect("/");
-        }}
+        handleSubmit={async () => await handleSubmit(article)}
       />
     </>
   );
