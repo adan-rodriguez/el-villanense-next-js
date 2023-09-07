@@ -5,6 +5,8 @@ import styles from "@/app/styles/NewArticle.module.css";
 import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
 import { addArticle } from "@/app/utils/addArticle";
+import { notFound, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export default function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
@@ -18,13 +20,23 @@ export default function NewArticle() {
         article={article}
         settersArticle={settersArticle}
         isEditing={false}
+        // handleSubmit={async () => {
+        //   try {
+        //     await addArticle(article);
+        //   } catch {
+        //     return alert("No se ha podido subir la noticia");
+        //   }
+        //   alert("Artículo subido con éxito");
+        // }}
         handleSubmit={async () => {
+          "use server";
           try {
             await addArticle(article);
           } catch {
-            return alert("No se ha podido subir la noticia");
+            notFound();
           }
-          alert("Artículo subido con éxito");
+          revalidatePath("/");
+          redirect("/");
         }}
       />
     </>
