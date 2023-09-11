@@ -34,20 +34,20 @@ export default function DashboardForm({
           alert("No has cargado la imagen de la noticia. Artículo no subido");
           return;
         }
-        handleSubmit();
+        if (process.env.NEXT_PUBLIC_ENV === "development") {
+          alert("No se puede subir una noticia en modo desarrollo.");
+        } else {
+          e.target.inert = "true";
+          handleSubmit();
+          e.target.inert = "";
+        }
       }}
     >
       {!isEditing && (
-        <div
-          style={{ display: "flex", alignItems: "center", columnGap: "20px" }}
-        >
+        <div className={styles.form.author}>
           <div
-            style={{
-              display: "flex",
-              columnGap: "10px",
-              alignItems: "center",
-              opacity: !article.author && "0.2",
-            }}
+            className={styles.author_img_name_container}
+            style={{ opacity: !article.author && "0.2" }}
           >
             <p>Autor:</p>
             <Image
@@ -55,25 +55,18 @@ export default function DashboardForm({
               alt={`Foto de ${editor.name}`}
               width={36}
               height={36}
-              style={{ borderRadius: "100%", objectFit: "cover" }}
+              className={styles.author_img}
             />
             <p>{editor.name}</p>
           </div>
-          <div style={{ display: "flex", columnGap: "5px" }}>
+          <div className={styles.author_checkbox_container}>
             <input
               onChange={(e) =>
                 settersArticle.setAuthor(e.target.checked ? null : editor.name)
               }
               type="checkbox"
-              name="anonymous"
-              id="anonymous"
             />
-            <p
-              style={{
-                fontSize: "12px",
-                opacity: "0.8",
-              }}
-            >
+            <p className={styles.author_label_checkbox}>
               {article.author
                 ? "Marcá la casilla si preferís que la noticia no tenga autor"
                 : "Desmarcá la casilla si preferís que la noticia tenga autor"}
@@ -291,7 +284,11 @@ export default function DashboardForm({
         getContentTiny={settersArticle.getContentTiny}
         initialValue={article.content}
       />
-      <button className={styles.form_btn} type="submit">
+      <button
+        className={styles.form_btn}
+        type="submit"
+        onClick={() => console.log("click")}
+      >
         {isEditing ? "Editar artículo" : "Subir artículo"}
       </button>
     </form>

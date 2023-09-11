@@ -29,3 +29,34 @@
   align-self: center;
   padding: 10px 40px;
 }
+
+.form_author {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.author_img_name_container {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.author_img {
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.author_checkbox_container {
+  display: flex;
+  column-gap: 5px;
+}
+
+.author_label_checkbox {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.form[inert] {
+  opacity: 0.3;
+}
