@@ -4,7 +4,7 @@ import Articles from "../../components/Articles";
 import { users } from "../../utils/constants/users";
 import { notFound } from "next/navigation";
 import { getArticlesByAuthor } from "@/app/services/articles";
-import styles from "./styles/AuthorPage.module.css";
+import styles from "@/app/styles/AuthorPage.module.css";
 
 export function generateMetadata({ params }) {
   const { author } = params;

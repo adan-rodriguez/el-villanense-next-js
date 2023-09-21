@@ -32,6 +32,10 @@
   opacity: 0.7;
 }
 
+.article_link_author_name_link {
+  font-weight: bold;
+}
+
 .article_link:is(:hover, :focus) .article_link_title {
   transition: 0.3s;
   color: #0289cb;

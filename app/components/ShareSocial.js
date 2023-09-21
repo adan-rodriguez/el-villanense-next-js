@@ -24,18 +24,7 @@ export default function ShareSocial({ data }) {
           </a>
         );
       })}
-      <span
-        style={{
-          position: "absolute",
-          fontSize: "10px",
-          textTransform: "uppercase",
-          marginTop: "29px",
-          marginLeft: "1px",
-          color: "grey",
-        }}
-      >
-        Comparte la noticia
-      </span>
+      <span className={styles.share_text}>Comparte la noticia</span>
     </div>
   );
 }

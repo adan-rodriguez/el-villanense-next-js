@@ -23,6 +23,15 @@
   transform: scale(1.05);
 }
 
+.share_text {
+  position: absolute;
+  font-size: 10px;
+  text-transform: uppercase;
+  margin-top: 29px;
+  margin-left: 1px;
+  color: grey;
+}
+
 .article_time {
   font-size: 0.8rem;
   line-height: 30px;
@@ -33,6 +42,7 @@
 
 .article_lead {
   font-size: 1.15rem;
+  margin-top: 5px;
 }
 
 .article_author_container {
@@ -46,6 +56,20 @@
 }
 .article_author_name {
   font-size: 12px;
+  color: gray;
+}
+
+.article_author_name_link {
+  color: #0289cb;
+  font-weight: bold;
+}
+
+.share_social_container_bottom {
+  padding: 10px 0 20px 0;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
 }
 
 /* // Dispositivos medianos (tabletas, 768px y más) */

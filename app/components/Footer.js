@@ -8,18 +8,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div>
         <SocialMedia />
-        <span
-          style={{
-            position: "absolute",
-            fontSize: "10px",
-            textTransform: "uppercase",
-            marginTop: "0px",
-            translate: "-12px 0",
-            opacity: "0.9",
-          }}
-        >
-          Seguinos en nuestras redes
-        </span>
+        <span className={styles.follow_text}>Seguinos en nuestras redes</span>
       </div>
       <Logo />
       <address className={styles.address}>

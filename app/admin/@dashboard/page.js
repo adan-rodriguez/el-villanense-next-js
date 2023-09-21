@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import styles from "./styles/DashboardHome.module.css";
+import styles from "@/app/styles/DashboardHome.module.css";
 
 export default function Dashboard() {
   return (

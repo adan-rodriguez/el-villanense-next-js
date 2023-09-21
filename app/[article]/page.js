@@ -7,7 +7,7 @@ import { users } from "@/app/utils/constants/users";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle } from "@/app/services/articles";
-import ShareSocial from "./components/ShareSocial";
+import ShareSocial from "../components/ShareSocial";
 
 export async function generateMetadata({ params }) {
   const { article: articleId } = params;
@@ -99,9 +99,7 @@ export default async function Article({ params }) {
         >
           {article.datetimeContent}
         </time>
-        <p style={{ marginTop: "5px" }} className={styles.article_lead}>
-          {article.lead}
-        </p>
+        <p className={styles.article_lead}>{article.lead}</p>
         {article.author && (
           <div className={styles.article_author_container}>
             <Image
@@ -111,10 +109,10 @@ export default async function Article({ params }) {
               height={36}
               className={styles.article_author_img}
             />
-            <p style={{ color: "grey" }} className={styles.article_author_name}>
+            <p className={styles.article_author_name}>
               Por{" "}
               <Link
-                style={{ color: "#0289cb", fontWeight: "bold" }}
+                className={styles.article_author_name_link}
                 href={`/autores/${user.nick}`}
               >
                 {article.author}
@@ -131,15 +129,7 @@ export default async function Article({ params }) {
           priority
         />
         <ArticleContent content={article.content} />
-        <div
-          style={{
-            padding: "10px 0 20px 0",
-            display: "flex",
-            justifyContent: "center",
-            borderTop: "1px solid silver",
-            borderBottom: "1px solid silver",
-          }}
-        >
+        <div className={styles.share_social_bottom_container}>
           <ShareSocial data={shareSocialData} />
         </div>
       </article>

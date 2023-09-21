@@ -1,18 +1,11 @@
 import Link from "next/link";
+import styles from "@/app/styles/NotFoundPage.module.css";
 
 export default function GlobalNotFound() {
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <div className={styles.container}>
       <h2>Página no encontrada</h2>
-      <Link
-        style={{
-          textTransform: "uppercase",
-          fontSize: "12px",
-          color: "#0289cb",
-          textDecorationLine: "underline",
-        }}
-        href="/"
-      >
+      <Link className={styles.link_home} href="/">
         Ir al inicio
       </Link>
     </div>

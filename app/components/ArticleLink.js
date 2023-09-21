@@ -38,7 +38,7 @@ export default function ArticleLink({
         <p className={styles.article_link_author_name}>
           Por{" "}
           <Link
-            style={{ fontWeight: "bold" }}
+            className={styles.article_link_author_name_link}
             href={`/autores/${users.find((user) => user.name === author).nick}`}
           >
             {author}
