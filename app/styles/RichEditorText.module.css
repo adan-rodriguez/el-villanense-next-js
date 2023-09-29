@@ -1,0 +1,55 @@
+.container {
+  border: 1px solid black;
+  margin: 20px;
+}
+
+.buttons_container {
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+.rich_text_editor {
+  padding: 20px;
+  height: 500px;
+  overflow: auto;
+}
+
+#rich-editor-text img {
+  max-width: 300px;
+}
+
+.buttons_container button {
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.buttons_container button:hover {
+  background-color: aliceblue;
+}
+
+.buttons_container select {
+  position: absolute;
+  transform: translate(-39px, 40px);
+  overflow: auto;
+  min-width: 34px;
+}
+
+.buttons_container option {
+  padding: 5px;
+}
+
+.buttons_container option:hover {
+  background-color: aliceblue;
+}
+
+#rich-editor-text:focus {
+  outline: none;
+}
+
+#rich-editor-text ul,
+#rich-editor-text ol {
+  padding-left: 40px;
+}

@@ -5,6 +5,7 @@ import styles from "../styles/DashboardForm.module.css";
 import { users } from "../utils/constants/users";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+// import RichEditorText from "./RichEditorText";
 
 export default function DashboardForm({
   article,
@@ -284,6 +285,7 @@ export default function DashboardForm({
         getContentTiny={settersArticle.getContentTiny}
         initialValue={article.content}
       />
+      {/* <RichEditorText /> */}
       <button
         className={styles.form_btn}
         type="submit"
