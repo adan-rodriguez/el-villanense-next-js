@@ -1,6 +1,5 @@
 .container {
   border: 1px solid black;
-  margin: 20px;
 }
 
 .buttons_container {
@@ -14,8 +13,21 @@
   overflow: auto;
 }
 
-#rich-editor-text img {
-  max-width: 300px;
+.rich_text_editor * {
+  max-width: 100%;
+}
+
+.rich_text_editor a {
+  color: #0289cb;
+}
+
+.rich_text_editor a:hover {
+  text-decoration: underline;
+}
+
+.rich_text_editor img {
+  width: 100%;
+  max-height: 600px;
 }
 
 .buttons_container button {
@@ -45,11 +57,19 @@
   background-color: aliceblue;
 }
 
-#rich-editor-text:focus {
+.rich_text_editor:focus {
   outline: none;
 }
 
-#rich-editor-text ul,
-#rich-editor-text ol {
+.rich_text_editor ul,
+.rich_text_editor ol {
   padding-left: 40px;
+}
+
+/* // Dispositivos grandes (escritorios, 992px y más) */
+@media (min-width: 992px) {
+  .container {
+    width: 60%;
+    margin: 0 auto;
+  }
 }
