@@ -1,7 +1,7 @@
+"use client";
+
 import styles from "@/app/styles/RichEditorText.module.css";
 import { useEffect, useRef } from "react";
-
-document.execCommand("styleWithCSS");
 
 const commands = [
   {
@@ -216,11 +216,13 @@ const commands = [
   // },
 ];
 
-function execCommand(cmd, val) {
-  document.execCommand(cmd, false, val || null);
-}
-
 export default function RichEditorText({ content, setContent }) {
+  document.execCommand("styleWithCSS");
+
+  function execCommand(cmd, val) {
+    document.execCommand(cmd, false, val || null);
+  }
+
   const richTextEditorRef = useRef();
   const buttonsContainerRef = useRef();
 
