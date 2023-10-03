@@ -4,7 +4,6 @@ import useLogin from "@/app/hooks/useLogin";
 import styles from "@/app/styles/NewArticle.module.css";
 import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
-import { addArticle } from "@/app/utils/addArticle";
 
 export default function NewArticle() {
   const { article, settersArticle } = useDashboardForm();
@@ -17,15 +16,6 @@ export default function NewArticle() {
         user={user}
         article={article}
         settersArticle={settersArticle}
-        isEditing={false}
-        handleSubmit={async () => {
-          try {
-            await addArticle(article);
-          } catch {
-            return alert("No se ha podido subir la noticia");
-          }
-          alert("Artículo subido con éxito");
-        }}
       />
     </>
   );

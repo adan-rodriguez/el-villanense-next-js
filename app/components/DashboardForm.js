@@ -6,13 +6,14 @@ import { users } from "../utils/constants/users";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RichEditorText from "./RichEditorText";
+import { addArticle } from "../utils/addArticle";
+import { editArticle } from "../utils/editArticle";
 
 export default function DashboardForm({
   article,
   settersArticle,
-  handleSubmit,
-  isEditing,
   user,
+  articleToEdit,
 }) {
   const [imageFile, setImageFile] = useState(null);
 
@@ -31,24 +32,49 @@ export default function DashboardForm({
       className={styles.form}
       onSubmit={async (e) => {
         e.preventDefault();
-        if (!article.image) {
-          alert("No has cargado la imagen de la noticia. Artículo no subido");
-          return;
-        }
         if (process.env.NEXT_PUBLIC_ENV === "development") {
           alert("No se puede subir una noticia en modo desarrollo.");
-        } else {
-          e.target.inert = "true";
-          handleSubmit();
-          e.target.inert = "";
+          return;
         }
+
+        e.target.inert = "true";
+        let image = article.image;
+
+        try {
+          if (imageFile) {
+            let formData = new FormData();
+            formData.append("file", imageFile);
+            formData.append("upload_preset", "elvillanense");
+            const res = await fetch(
+              "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
+              {
+                method: "POST",
+                body: formData,
+              }
+            );
+            const { secure_url } = await res.json();
+            image = secure_url;
+          }
+
+          if (!articleToEdit) {
+            addArticle(article, image);
+            alert("Artículo subido con éxito");
+          } else {
+            editArticle(articleToEdit, article, image);
+            alert("Artículo editado con éxito");
+          }
+        } catch {
+          alert("Ocurrió un error. Inténtelo nuevamente");
+        }
+
+        e.target.inert = "";
       }}
     >
-      {!isEditing && (
-        <div className={styles.form.author}>
+      {!articleToEdit && (
+        <div className={styles.form_author}>
           <div
             className={styles.author_img_name_container}
-            style={{ opacity: !article.author && "0.2" }}
+            style={!article.author && { opacity: "0.2", userSelect: "none" }}
           >
             <p>Autor:</p>
             <Image
@@ -92,8 +118,9 @@ export default function DashboardForm({
       </div>
       {article.image ? (
         <div>
+          <span style={{ display: "block" }}>Imagen</span>
           <Image
-            src={imageFile ? URL.createObjectURL(imageFile) : article.image}
+            src={article.image}
             alt={article.altImage}
             style={{
               objectFit: "cover",
@@ -113,107 +140,48 @@ export default function DashboardForm({
               fontSize: "1rem",
             }}
             onClick={() => {
-              settersArticle.setImage(""),
-                settersArticle.setAltImage(""),
-                setImageFile(null);
+              settersArticle.setImage("");
+              settersArticle.setAltImage("");
             }}
           >
             Cambiar imagen
           </button>
         </div>
       ) : (
-        <div>
-          <label className={styles.form_label} htmlFor="image">
-            Imagen
-            <input
-              style={{
-                display: `${imageFile ? "none" : "block"}`,
-                width: "100%",
-                fontFamily: "Poppins, sans-serif",
-                letterSpacing: "1px",
-                fontSize: "1rem",
-                padding: "5px 0",
-              }}
-              type="file"
-              name="image"
-              id="image"
-              required
-              onChange={(e) => setImageFile(e.target.files[0])}
-              ref={inputFileRef}
-            />
-          </label>
-          {imageFile ? (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateAreas: `"image image" "button1 button2"`,
-                justifyContent: "start",
-              }}
-            >
-              <Image
+        <>
+          <div>
+            <label className={styles.form_label} htmlFor="image">
+              Imagen
+              <input
                 style={{
-                  objectFit: "cover",
-                  gridArea: "image",
+                  width: "100%",
+                  fontFamily: "Poppins, sans-serif",
+                  letterSpacing: "1px",
+                  fontSize: "1rem",
+                  padding: "5px 0",
                 }}
-                src={URL.createObjectURL(imageFile)}
-                alt={article.altImage}
-                width={256}
-                height={170}
+                type="file"
+                name="image"
+                id="image"
+                required
+                onChange={(e) => setImageFile(e.target.files[0])}
+                ref={inputFileRef}
               />
-              <button
-                type="button"
-                style={{
-                  border: "1px black solid",
-                  width: "128px",
-                  backgroundColor: "green",
-                  gridArea: "button1",
-                  padding: "5px 0",
-                  fontFamily: "Poppins, sans-serif",
-                  letterSpacing: "1px",
-                }}
-                onClick={async () => {
-                  let formData = new FormData();
-                  formData.append("file", imageFile);
-                  formData.append("upload_preset", "elvillanense");
-                  try {
-                    const res = await fetch(
-                      "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
-                      {
-                        method: "POST",
-                        body: formData,
-                      }
-                    );
-                    const data = await res.json();
-                    settersArticle.setImage(data.secure_url);
-                    alert("Imagen subida a la base de datos con éxito");
-                  } catch (error) {
-                    alert("Ocurrió un error. Inténtalo nuevamente");
-                  }
-                }}
-              >
-                Elegir imagen
-              </button>
-              <button
-                type="button"
-                style={{
-                  border: "1px black solid",
-                  width: "128px",
-                  backgroundColor: "red",
-                  gridArea: "button2",
-                  padding: "5px 0",
-                  fontFamily: "Poppins, sans-serif",
-                  letterSpacing: "1px",
-                }}
-                onClick={() => {
-                  (inputFileRef.current.value = ""), setImageFile(null);
-                }}
-              >
-                Cancelar
-              </button>
-            </div>
+            </label>
+          </div>
+          {imageFile ? (
+            <Image
+              style={{
+                objectFit: "cover",
+                gridArea: "image",
+              }}
+              src={URL.createObjectURL(imageFile)}
+              alt={article.altImage}
+              width={256}
+              height={170}
+            />
           ) : (
             <div
-              className="w-64 h-64 flex justify-center items-center border"
               style={{
                 width: "256px",
                 aspectRatio: "3/2",
@@ -229,7 +197,7 @@ export default function DashboardForm({
               Previsualización de imagen
             </div>
           )}
-        </div>
+        </>
       )}
       <div>
         <label className={styles.form_label} htmlFor="alt-image">
@@ -290,7 +258,7 @@ export default function DashboardForm({
         setContent={settersArticle.setContent}
       />
       <button className={styles.form_btn} type="submit">
-        {isEditing ? "Editar artículo" : "Subir artículo"}
+        {articleToEdit ? "Editar artículo" : "Subir artículo"}
       </button>
     </form>
   );

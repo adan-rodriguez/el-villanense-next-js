@@ -3,7 +3,8 @@ import { db } from "../firebase/firebase";
 
 export const editArticle = async (
   articleId,
-  { title, image, altImage, lead, section, content }
+  { title, altImage, lead, section, content },
+  image
 ) => {
   await setDoc(
     doc(db, "articles", articleId),
