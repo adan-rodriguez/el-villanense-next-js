@@ -118,27 +118,17 @@ export default function DashboardForm({
       </div>
       {article.image ? (
         <div>
-          <span style={{ display: "block" }}>Imagen</span>
+          <p>Imagen</p>
           <Image
             src={article.image}
             alt={article.altImage}
-            style={{
-              objectFit: "cover",
-              position: "relative",
-              verticalAlign: "bottom",
-              marginRight: "10px",
-            }}
             width={256}
             height={170}
+            className={styles.img_bbdd}
           />
           <button
             type="button"
-            style={{
-              padding: "5px 20px",
-              fontFamily: "Poppins, sans-serif",
-              letterSpacing: "1px",
-              fontSize: "1rem",
-            }}
+            className={styles.btn_change_img}
             onClick={() => {
               settersArticle.setImage("");
               settersArticle.setAltImage("");
@@ -153,49 +143,26 @@ export default function DashboardForm({
             <label className={styles.form_label} htmlFor="image">
               Imagen
               <input
-                style={{
-                  width: "100%",
-                  fontFamily: "Poppins, sans-serif",
-                  letterSpacing: "1px",
-                  fontSize: "1rem",
-                  padding: "5px 0",
-                }}
                 type="file"
                 name="image"
                 id="image"
                 required
                 onChange={(e) => setImageFile(e.target.files[0])}
                 ref={inputFileRef}
+                className={styles.input_img}
               />
             </label>
           </div>
           {imageFile ? (
             <Image
-              style={{
-                objectFit: "cover",
-                gridArea: "image",
-              }}
               src={URL.createObjectURL(imageFile)}
               alt={article.altImage}
               width={256}
               height={170}
+              className={styles.img_blob}
             />
           ) : (
-            <div
-              style={{
-                width: "256px",
-                aspectRatio: "3/2",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: "1px solid black",
-                fontSize: "10px",
-                textAlign: "center",
-                padding: "10px",
-              }}
-            >
-              Previsualización de imagen
-            </div>
+            <div>Previsualización de imagen</div>
           )}
         </>
       )}

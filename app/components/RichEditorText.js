@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/app/styles/RichEditorText.module.css";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 const commands = [
   {
@@ -216,7 +216,7 @@ const commands = [
   // },
 ];
 
-export default function RichEditorText({ content, setContent }) {
+export default function RichEditorText({ setContent }) {
   document.execCommand("styleWithCSS");
 
   function execCommand(cmd, val) {
@@ -275,24 +275,6 @@ export default function RichEditorText({ content, setContent }) {
     execCommand(cmd, val);
   };
 
-  const moveCursorToEnd = () => {
-    const richTextEditor = richTextEditorRef.current;
-    const range = document.createRange();
-    const selection = window.getSelection();
-    range.selectNodeContents(richTextEditor);
-    range.collapse(false); // Coloca el cursor al final
-    selection.removeAllRanges();
-    selection.addRange(range);
-    richTextEditor.focus();
-  };
-
-  useEffect(() => {
-    if (content === "") {
-      setContent("<p><br /></p>");
-    }
-    moveCursorToEnd();
-  }, [content]);
-
   return (
     <div
       className={styles.container}
@@ -323,13 +305,19 @@ export default function RichEditorText({ content, setContent }) {
         id="rich-text-editor"
         contentEditable="true"
         ref={richTextEditorRef}
-        dangerouslySetInnerHTML={{
-          __html: content ? content : "<p><br /></p>",
-        }}
         onInput={(e) => {
           setContent(e.target.innerHTML);
         }}
-      />
+        onKeyDown={(e) => {
+          if (e.key === "Backspace" && e.target.innerHTML === "<p><br></p>") {
+            e.preventDefault();
+          }
+        }}
+      >
+        <p>
+          <br />
+        </p>
+      </div>
     </div>
   );
 }
