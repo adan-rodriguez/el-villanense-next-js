@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/app/styles/RichEditorText.module.css";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const commands = [
   {
@@ -121,16 +121,16 @@ const commands = [
     icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-indent-decrease" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M20 6l-7 0"></path><path d="M20 12l-9 0"></path><path d="M20 18l-7 0"></path><path d="M8 8l-4 4l4 4"></path></svg>',
     tooltip: "Disminuir sangría",
   },
-  {
-    cmd: "undo",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 14l-4 -4l4 -4"></path><path d="M5 10h11a4 4 0 1 1 0 8h-1"></path></svg>',
-    tooltip: "Deshacer",
-  },
-  {
-    cmd: "redo",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-forward-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 14l4 -4l-4 -4"></path><path d="M19 10h-11a4 4 0 1 0 0 8h1"></path></svg>',
-    tooltip: "Rehacer",
-  },
+  // {
+  //   cmd: "undo",
+  //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 14l-4 -4l4 -4"></path><path d="M5 10h11a4 4 0 1 1 0 8h-1"></path></svg>',
+  //   tooltip: "Deshacer",
+  // },
+  // {
+  //   cmd: "redo",
+  //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-forward-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 14l4 -4l-4 -4"></path><path d="M19 10h-11a4 4 0 1 0 0 8h1"></path></svg>',
+  //   tooltip: "Rehacer",
+  // },
   {
     cmd: "insertHorizontalRule",
     icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-separator" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12l0 .01"></path><path d="M7 12l10 0"></path><path d="M21 12l0 .01"></path></svg>',
@@ -216,15 +216,18 @@ const commands = [
   // },
 ];
 
-export default function RichEditorText({ setContent }) {
-  document.execCommand("styleWithCSS");
+document.execCommand("styleWithCSS");
 
-  function execCommand(cmd, val) {
-    document.execCommand(cmd, false, val || null);
-  }
+function execCommand(cmd, val) {
+  document.execCommand(cmd, false, val || null);
+}
 
-  const richTextEditorRef = useRef();
+export default function RichEditorText({ content, setContent }) {
+  const [undoStack, setUndoStack] = useState([]);
+  const [redoStack, setRedoStack] = useState([]);
+
   const buttonsContainerRef = useRef();
+  const richEditorTextRef = useRef();
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -275,6 +278,21 @@ export default function RichEditorText({ setContent }) {
     execCommand(cmd, val);
   };
 
+  const moveCursorToEnd = () => {
+    const { current: richEditorText } = richEditorTextRef;
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNodeContents(richEditorText);
+    range.collapse(false);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    richEditorText.focus();
+  };
+
+  useEffect(() => {
+    moveCursorToEnd();
+  }, [content]);
+
   return (
     <div
       className={styles.container}
@@ -300,24 +318,93 @@ export default function RichEditorText({ setContent }) {
           />
         ))}
       </div>
+      <button
+        type="button"
+        title="Deshacer"
+        disabled={!(undoStack.length > 1)}
+        onClick={() => {
+          if (undoStack.length > 1) {
+            const undoStackCopy = [...undoStack];
+            const elem = undoStackCopy.pop();
+            setUndoStack(undoStackCopy);
+            setRedoStack((prevRedoStack) => [...prevRedoStack, elem]);
+            setContent(undoStack[undoStack.length - 2]);
+          }
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="icon icon-tabler icon-tabler-arrow-back-up"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          strokeWidth="2"
+          stroke="currentColor"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M9 14l-4 -4l4 -4"></path>
+          <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        title="Rehacer"
+        disabled={!(redoStack.length > 0)}
+        onClick={() => {
+          if (redoStack.length > 0) {
+            const redoStackCopy = [...redoStack];
+            const elem = redoStackCopy.pop();
+            setRedoStack(redoStackCopy);
+            setUndoStack((prevUndoStack) => [...prevUndoStack, elem]);
+            setContent(redoStack[redoStack.length - 1]);
+          }
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="icon icon-tabler icon-tabler-arrow-forward-up"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          strokeWidth="2"
+          stroke="currentColor"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M15 14l4 -4l-4 -4"></path>
+          <path d="M19 10h-11a4 4 0 1 0 0 8h1"></path>
+        </svg>
+      </button>
       <div
         className={styles.rich_text_editor}
-        id="rich-text-editor"
         contentEditable="true"
-        ref={richTextEditorRef}
+        ref={richEditorTextRef}
+        dangerouslySetInnerHTML={{ __html: content || "<p><br></p>" }}
         onInput={(e) => {
-          setContent(e.target.innerHTML);
+          const { innerHTML } = e.target;
+          if (undoStack.length === 0) {
+            setUndoStack((prevUndoStack) => [
+              ...prevUndoStack,
+              content || "<p><br></p>",
+              innerHTML,
+            ]);
+          } else {
+            setUndoStack((prevUndoStack) => [...prevUndoStack, innerHTML]);
+          }
+          setRedoStack([]);
+          setContent(innerHTML);
         }}
         onKeyDown={(e) => {
           if (e.key === "Backspace" && e.target.innerHTML === "<p><br></p>") {
             e.preventDefault();
           }
         }}
-      >
-        <p>
-          <br />
-        </p>
-      </div>
+      />
     </div>
   );
 }

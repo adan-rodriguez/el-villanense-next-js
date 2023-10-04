@@ -162,7 +162,7 @@ export default function DashboardForm({
               className={styles.img_blob}
             />
           ) : (
-            <div>Previsualización de imagen</div>
+            <div className={styles.img_preview}>Previsualización de imagen</div>
           )}
         </>
       )}
