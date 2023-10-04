@@ -216,15 +216,14 @@ const commands = [
   // },
 ];
 
-document.execCommand("styleWithCSS");
-
-function execCommand(cmd, val) {
-  document.execCommand(cmd, false, val || null);
-}
-
 export default function RichEditorText({ content, setContent }) {
+  document.execCommand("styleWithCSS");
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
+
+  function execCommand(cmd, val) {
+    document.execCommand(cmd, false, val || null);
+  }
 
   const buttonsContainerRef = useRef();
   const richEditorTextRef = useRef();
