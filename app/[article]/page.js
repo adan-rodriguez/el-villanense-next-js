@@ -129,7 +129,7 @@ export default async function Article({ params }) {
           priority
         />
         <ArticleContent content={article.content} />
-        <div className={styles.share_social_bottom_container}>
+        <div className={styles.share_social_container_bottom}>
           <ShareSocial data={shareSocialData} />
         </div>
       </article>
