@@ -36,6 +36,7 @@
   cursor: pointer;
   border: none;
   background-color: transparent;
+  display: inline-flex;
 }
 
 .buttons_container button:hover {
@@ -55,6 +56,28 @@
 
 .buttons_container option:hover {
   background-color: aliceblue;
+}
+
+.buttons_undo_redo_container {
+  text-align: center;
+}
+
+.buttons_undo_redo_container button {
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  display: inline-flex;
+}
+
+.buttons_undo_redo_container button:hover {
+  background-color: aliceblue;
+}
+
+.buttons_undo_redo_container button[disabled] {
+  cursor: not-allowed;
+  background-color: transparent;
 }
 
 .rich_text_editor:focus {

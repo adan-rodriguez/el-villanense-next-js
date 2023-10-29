@@ -317,68 +317,70 @@ export default function RichEditorText({ content, setContent }) {
           />
         ))}
       </div>
-      <button
-        type="button"
-        title="Deshacer"
-        disabled={!(undoStack.length > 1)}
-        onClick={() => {
-          if (undoStack.length > 1) {
-            const undoStackCopy = [...undoStack];
-            const elem = undoStackCopy.pop();
-            setUndoStack(undoStackCopy);
-            setRedoStack((prevRedoStack) => [...prevRedoStack, elem]);
-            setContent(undoStack[undoStack.length - 2]);
-          }
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="icon icon-tabler icon-tabler-arrow-back-up"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      <div className={styles.buttons_undo_redo_container}>
+        <button
+          type="button"
+          {...(undoStack.length > 1 && { title: "Deshacer" })}
+          disabled={!(undoStack.length > 1)}
+          onClick={() => {
+            if (undoStack.length > 1) {
+              const undoStackCopy = [...undoStack];
+              const elem = undoStackCopy.pop();
+              setUndoStack(undoStackCopy);
+              setRedoStack((prevRedoStack) => [...prevRedoStack, elem]);
+              setContent(undoStack[undoStack.length - 2]);
+            }
+          }}
         >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M9 14l-4 -4l4 -4"></path>
-          <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
-        </svg>
-      </button>
-      <button
-        type="button"
-        title="Rehacer"
-        disabled={!(redoStack.length > 0)}
-        onClick={() => {
-          if (redoStack.length > 0) {
-            const redoStackCopy = [...redoStack];
-            const elem = redoStackCopy.pop();
-            setRedoStack(redoStackCopy);
-            setUndoStack((prevUndoStack) => [...prevUndoStack, elem]);
-            setContent(redoStack[redoStack.length - 1]);
-          }
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="icon icon-tabler icon-tabler-arrow-forward-up"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-          stroke="currentColor"
-          fill="none"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="icon icon-tabler icon-tabler-arrow-back-up"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M9 14l-4 -4l4 -4"></path>
+            <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
+          </svg>
+        </button>
+        <button
+          type="button"
+          {...(redoStack.length > 0 && { title: "Rehacer" })}
+          disabled={!(redoStack.length > 0)}
+          onClick={() => {
+            if (redoStack.length > 0) {
+              const redoStackCopy = [...redoStack];
+              const elem = redoStackCopy.pop();
+              setRedoStack(redoStackCopy);
+              setUndoStack((prevUndoStack) => [...prevUndoStack, elem]);
+              setContent(redoStack[redoStack.length - 1]);
+            }
+          }}
         >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M15 14l4 -4l-4 -4"></path>
-          <path d="M19 10h-11a4 4 0 1 0 0 8h1"></path>
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="icon icon-tabler icon-tabler-arrow-forward-up"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            strokeWidth="2"
+            stroke="currentColor"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M15 14l4 -4l-4 -4"></path>
+            <path d="M19 10h-11a4 4 0 1 0 0 8h1"></path>
+          </svg>
+        </button>
+      </div>
       <div
         className={styles.rich_text_editor}
         contentEditable="true"
