@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/app/styles/RichEditorText.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const commands = [
   {
@@ -234,11 +234,8 @@ export default function RichEditorText({ content, setContent }) {
     const button = e.target.closest("button[data-command]");
     const cmd = button.dataset.command;
 
-    if (
-      buttonsContainerRef.current.querySelector("select") &&
-      (cmd === "fontSize" || cmd === "formatBlock")
-    ) {
-      buttonsContainerRef.current.querySelector("select").remove();
+    if (buttonsContainerRef.current.querySelector(`#select-${cmd}`)) {
+      buttonsContainerRef.current.querySelector(`#select-${cmd}`).remove();
       return;
     }
 
@@ -254,6 +251,7 @@ export default function RichEditorText({ content, setContent }) {
     } else if (cmd === "fontSize" || cmd === "formatBlock") {
       if (!buttonsContainerRef.current.querySelector("select")) {
         const select = document.createElement("select");
+        select.id = `select-${cmd}`;
         const optionToRemove = document.createElement("option");
         select.append(optionToRemove);
         const values = commands.find((command) => command.cmd === cmd).values;
@@ -267,8 +265,7 @@ export default function RichEditorText({ content, setContent }) {
         optionToRemove.remove();
         button.after(select);
         select.addEventListener("change", () => {
-          val = select.value;
-          execCommand(cmd, val);
+          execCommand(cmd, select.value);
         });
       }
       return;
@@ -277,25 +274,11 @@ export default function RichEditorText({ content, setContent }) {
     execCommand(cmd, val);
   };
 
-  const moveCursorToEnd = () => {
-    const { current: richEditorText } = richEditorTextRef;
-    const range = document.createRange();
-    const selection = window.getSelection();
-    range.selectNodeContents(richEditorText);
-    range.collapse(false);
-    selection.removeAllRanges();
-    selection.addRange(range);
-    richEditorText.focus();
-  };
-
-  useEffect(() => {
-    moveCursorToEnd();
-  }, [content]);
-
   return (
     <div
       className={styles.container}
-      onClick={() => {
+      onClick={(e) => {
+        if (e.target.tagName === "OPTION") return;
         if (buttonsContainerRef.current.querySelector("select")) {
           buttonsContainerRef.current.querySelector("select").remove();
         }
