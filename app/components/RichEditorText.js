@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/app/styles/RichEditorText.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const commands = [
   {
@@ -111,16 +111,16 @@ const commands = [
     icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-align-justified" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6l16 0"></path><path d="M4 12l16 0"></path><path d="M4 18l12 0"></path></svg>',
     tooltip: "Justificar",
   },
-  {
-    cmd: "indent",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-indent-increase" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M20 6l-11 0"></path><path d="M20 12l-7 0"></path><path d="M20 18l-11 0"></path><path d="M4 8l4 4l-4 4"></path></svg>',
-    tooltip: "Aumentar sangría",
-  },
-  {
-    cmd: "outdent",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-indent-decrease" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M20 6l-7 0"></path><path d="M20 12l-9 0"></path><path d="M20 18l-7 0"></path><path d="M8 8l-4 4l4 4"></path></svg>',
-    tooltip: "Disminuir sangría",
-  },
+  // {
+  //   cmd: "indent",
+  //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-indent-increase" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M20 6l-11 0"></path><path d="M20 12l-7 0"></path><path d="M20 18l-11 0"></path><path d="M4 8l4 4l-4 4"></path></svg>',
+  //   tooltip: "Aumentar sangría",
+  // },
+  // {
+  //   cmd: "outdent",
+  //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-indent-decrease" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M20 6l-7 0"></path><path d="M20 12l-9 0"></path><path d="M20 18l-7 0"></path><path d="M8 8l-4 4l4 4"></path></svg>',
+  //   tooltip: "Disminuir sangría",
+  // },
   // {
   //   cmd: "undo",
   //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 14l-4 -4l4 -4"></path><path d="M5 10h11a4 4 0 1 1 0 8h-1"></path></svg>',
@@ -131,16 +131,16 @@ const commands = [
   //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-forward-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 14l4 -4l-4 -4"></path><path d="M19 10h-11a4 4 0 1 0 0 8h1"></path></svg>',
   //   tooltip: "Rehacer",
   // },
-  {
-    cmd: "insertHorizontalRule",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-separator" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12l0 .01"></path><path d="M7 12l10 0"></path><path d="M21 12l0 .01"></path></svg>',
-    tooltip: "Insertar separador horizontal",
-  },
-  {
-    cmd: "selectAll",
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-select-all" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 8m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z"></path><path d="M12 20v.01"></path><path d="M16 20v.01"></path><path d="M8 20v.01"></path><path d="M4 20v.01"></path><path d="M4 16v.01"></path><path d="M4 12v.01"></path><path d="M4 8v.01"></path><path d="M4 4v.01"></path><path d="M8 4v.01"></path><path d="M12 4v.01"></path><path d="M16 4v.01"></path><path d="M20 4v.01"></path><path d="M20 8v.01"></path><path d="M20 12v.01"></path><path d="M20 16v.01"></path><path d="M20 20v.01"></path></svg>',
-    tooltip: "Seleccionar todo",
-  },
+  // {
+  //   cmd: "insertHorizontalRule",
+  //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-separator" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12l0 .01"></path><path d="M7 12l10 0"></path><path d="M21 12l0 .01"></path></svg>',
+  //   tooltip: "Insertar separador horizontal",
+  // },
+  // {
+  //   cmd: "selectAll",
+  //   icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-select-all" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 8m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z"></path><path d="M12 20v.01"></path><path d="M16 20v.01"></path><path d="M8 20v.01"></path><path d="M4 20v.01"></path><path d="M4 16v.01"></path><path d="M4 12v.01"></path><path d="M4 8v.01"></path><path d="M4 4v.01"></path><path d="M8 4v.01"></path><path d="M12 4v.01"></path><path d="M16 4v.01"></path><path d="M20 4v.01"></path><path d="M20 8v.01"></path><path d="M20 12v.01"></path><path d="M20 16v.01"></path><path d="M20 20v.01"></path></svg>',
+  //   tooltip: "Seleccionar todo",
+  // },
   {
     cmd: "removeFormat",
     icon: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clear-formatting" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M17 15l4 4m0 -4l-4 4"></path><path d="M7 6v-1h11v1"></path><path d="M7 19l4 0"></path><path d="M13 5l-4 14"></path></svg>',
@@ -220,6 +220,7 @@ export default function RichEditorText({ content, setContent }) {
   document.execCommand("styleWithCSS");
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
+  const [cursorPosition, setCursorPosition] = useState({});
 
   function execCommand(cmd, val) {
     document.execCommand(cmd, false, val || null);
@@ -274,6 +275,23 @@ export default function RichEditorText({ content, setContent }) {
     execCommand(cmd, val);
   };
 
+  useEffect(() => {
+    // richEditorTextRef.current.innerHTML = content || "<p><br></p>";
+    let node = richEditorTextRef.current;
+    let { cursorPositionNode = [], cursorPositionOffset } = cursorPosition;
+    for (let i = 0; i < cursorPositionNode.length; i++) {
+      const n = node.childNodes[cursorPositionNode[i]];
+      if (n) {
+        node = n;
+      } else {
+        break;
+      }
+    }
+    if (cursorPositionNode.length > 0) {
+      window.getSelection().setPosition(node, cursorPositionOffset);
+    }
+  }, [content]);
+
   return (
     <div
       className={styles.container}
@@ -311,7 +329,13 @@ export default function RichEditorText({ content, setContent }) {
               const elem = undoStackCopy.pop();
               setUndoStack(undoStackCopy);
               setRedoStack((prevRedoStack) => [...prevRedoStack, elem]);
-              setContent(undoStack[undoStack.length - 2]);
+              const { content, cursorPositionNode, cursorPositionOffset } =
+                undoStack[undoStack.length - 2];
+              setContent(content);
+              setCursorPosition({
+                cursorPositionNode,
+                cursorPositionOffset,
+              });
             }
           }}
         >
@@ -342,7 +366,13 @@ export default function RichEditorText({ content, setContent }) {
               const elem = redoStackCopy.pop();
               setRedoStack(redoStackCopy);
               setUndoStack((prevUndoStack) => [...prevUndoStack, elem]);
-              setContent(redoStack[redoStack.length - 1]);
+              const { content, cursorPositionNode, cursorPositionOffset } =
+                redoStack[redoStack.length - 1];
+              setContent(content);
+              setCursorPosition({
+                cursorPositionNode,
+                cursorPositionOffset,
+              });
             }
           }}
         >
@@ -370,15 +400,45 @@ export default function RichEditorText({ content, setContent }) {
         ref={richEditorTextRef}
         dangerouslySetInnerHTML={{ __html: content || "<p><br></p>" }}
         onInput={(e) => {
+          const { focusNode, focusOffset } = window.getSelection();
+          let positionsNodes = [];
+          let node = focusNode;
+          while (node !== richEditorTextRef.current) {
+            let i = 0;
+            const { childNodes } = node.parentElement;
+            for (i; i < childNodes.length; i++) {
+              if (childNodes[i] === node) break;
+            }
+            positionsNodes.unshift(i);
+            node = node.parentElement;
+          }
+          setCursorPosition({
+            cursorPositionNode: positionsNodes,
+            cursorPositionOffset: focusOffset,
+          });
           const { innerHTML } = e.target;
           if (undoStack.length === 0) {
-            setUndoStack((prevUndoStack) => [
-              ...prevUndoStack,
-              content || "<p><br></p>",
-              innerHTML,
+            setUndoStack([
+              {
+                content: content || "<p><br></p>",
+                cursorPositionNode: positionsNodes,
+                cursorPositionOffset: content ? focusOffset - 1 : 0,
+              },
+              {
+                content: innerHTML,
+                cursorPositionNode: positionsNodes,
+                cursorPositionOffset: focusOffset,
+              },
             ]);
           } else {
-            setUndoStack((prevUndoStack) => [...prevUndoStack, innerHTML]);
+            setUndoStack((prevUndoStack) => [
+              ...prevUndoStack,
+              {
+                content: innerHTML,
+                cursorPositionNode: positionsNodes,
+                cursorPositionOffset: focusOffset,
+              },
+            ]);
           }
           setRedoStack([]);
           setContent(innerHTML);
