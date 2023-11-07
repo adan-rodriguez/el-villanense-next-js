@@ -1,11 +1,11 @@
 "use client";
 
-// import TinyMCE from "./TinyMCE";
+import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
 import { users } from "../utils/constants/users";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import RichEditorText from "./RichEditorText";
+// import RichTextEditor from "./RichTextEditor";
 import { addArticle } from "../utils/addArticle";
 import { editArticle } from "../utils/editArticle";
 
@@ -216,14 +216,14 @@ export default function DashboardForm({
           </select>
         </label>
       </div>
-      {/* <TinyMCE
+      <TinyMCE
         getContentTiny={settersArticle.getContentTiny}
         initialValue={article.content}
-      /> */}
-      <RichEditorText
+      />
+      {/* <RichTextEditor
         content={article.content}
         setContent={settersArticle.setContent}
-      />
+      /> */}
       <button className={styles.form_btn} type="submit">
         {articleToEdit ? "Editar artículo" : "Subir artículo"}
       </button>
