@@ -73,22 +73,22 @@ export default async function Article({ params }) {
     },
   ];
 
-  // const jsonLd = {
-  //   "@context": "https://schema.org",
-  //   "@type": "NewsArticle",
-  //   headline: article.title,
-  //   image: article.image,
-  //   datePublished: article.datetimeAttribute,
-  // };
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: article.title,
+    image: article.image,
+    datePublished: article.datetimeAttribute,
+  };
 
   const user = users.find((user) => user.name === article.author);
 
   return (
     <>
-      {/* <script
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      /> */}
+      />
       <article className={styles.article_container}>
         <EditAndDeleteButtonsContainer articleId={article.id} />
         <h1 className={styles.article_title}>{article.title}</h1>
