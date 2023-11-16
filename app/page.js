@@ -21,7 +21,6 @@ export const metadata = {
       color: "#000000",
     },
   },
-  manifest: "/site.webmanifest",
   applicationName: "El Villanense",
   openGraph: {
     title: "El Villanense",

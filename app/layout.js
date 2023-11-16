@@ -9,6 +9,7 @@ const poppins = Poppins({ weight: ["400", "700", "900"], subsets: ["latin"] });
 
 export const metadata = {
   title: "El Villanense - Portal de noticias",
+  manifest: "/site.webmanifest",
 };
 
 export const viewport = {
