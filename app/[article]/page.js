@@ -28,13 +28,16 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: article.title,
       description: article.lead,
-      images: article.image,
+      images: [{ url: article.image, alt: article.altImage }],
       url,
       siteName: "El Villanense",
       type: "article",
+      publishedTime: article.datetimeAttribute,
+      ...(article.author && { authors: article.author }),
     },
     twitter: {
       card: "summary_large_image",
+      // site: "@elvillanense",
     },
   };
 }

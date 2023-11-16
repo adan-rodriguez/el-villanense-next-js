@@ -3,7 +3,6 @@ import Articles from "./components/Articles";
 import { getAllArticles } from "./services/articles";
 
 export const metadata = {
-  title: "El Villanense - Portal de noticias",
   description:
     "Todas las noticias de Villa Ana y las noticias más importantes de la región, de la provincia de Santa Fe, de la Argentina y del mundo.",
   icons: {
@@ -23,7 +22,6 @@ export const metadata = {
     },
   },
   manifest: "/site.webmanifest",
-  themeColor: "#131313",
   applicationName: "El Villanense",
   openGraph: {
     title: "El Villanense",
@@ -36,6 +34,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    // site: "@elvillanense",
   },
   verification: {
     google: "hXIhjWYsPdwJV_q2u8HScKlAfFDKpIXuom958hxhjNE",

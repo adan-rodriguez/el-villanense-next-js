@@ -8,9 +8,11 @@ import Script from "next/script";
 const poppins = Poppins({ weight: ["400", "700", "900"], subsets: ["latin"] });
 
 export const metadata = {
-  title: {
-    default: "El Villanense - Portal de noticias",
-  },
+  title: "El Villanense - Portal de noticias",
+};
+
+export const viewport = {
+  themeColor: "#131313",
 };
 
 export default function RootLayout({ children }) {
