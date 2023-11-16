@@ -20,14 +20,26 @@
   "display": "standalone",
   "screenshots": [
     {
-      "src": "/images/screenshots/screenshot-home-elvillanense-wide.webp",
+      "src": "/images/screenshots/screenshot-elvillanense-wide-1.webp",
       "sizes": "1350x649",
       "type": "image/webp",
       "form_factor": "wide"
     },
     {
-      "src": "/images/screenshots/screenshot-home-elvillanense-narrow.webp",
-      "sizes": "720x1280",
+      "src": "/images/screenshots/screenshot-elvillanense-wide-2.webp",
+      "sizes": "1350x649",
+      "type": "image/webp",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/images/screenshots/screenshot-elvillanense-narrow-1.webp",
+      "sizes": "960x540",
+      "type": "image/webp",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/images/screenshots/screenshot-elvillanense-narrow-2.webp",
+      "sizes": "960x540",
       "type": "image/webp",
       "form_factor": "narrow"
     }
