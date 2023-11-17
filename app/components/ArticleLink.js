@@ -26,6 +26,7 @@ export default function ArticleLink({
           className={styles.article_link_img}
           src={image}
           alt={altImage}
+          loading="lazy"
           // width={519}
           // height={346}
         />
