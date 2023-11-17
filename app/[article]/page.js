@@ -123,13 +123,12 @@ export default async function Article({ params }) {
             </p>
           </div>
         )}
-        <Image
+        <img
           className={styles.article_img}
           src={article.image}
           alt={article.altImage}
-          width={500}
-          height={300}
-          priority
+          // width={500}
+          // height={300}
         />
         <ArticleContent content={article.content} />
         <div className={styles.share_social_container_bottom}>

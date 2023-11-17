@@ -77,7 +77,7 @@ export default function DashboardForm({
             style={!article.author && { opacity: "0.2", userSelect: "none" }}
           >
             <p>Autor:</p>
-            <Image
+            <img
               src={editor.image}
               alt={`Foto de ${editor.name}`}
               width={36}
@@ -119,7 +119,7 @@ export default function DashboardForm({
       {article.image ? (
         <div>
           <p>Imagen</p>
-          <Image
+          <img
             src={article.image}
             alt={article.altImage}
             width={256}
@@ -154,7 +154,7 @@ export default function DashboardForm({
             </label>
           </div>
           {imageFile ? (
-            <Image
+            <img
               src={URL.createObjectURL(imageFile)}
               alt={article.altImage}
               width={256}

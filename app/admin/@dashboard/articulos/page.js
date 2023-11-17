@@ -36,11 +36,11 @@ export default function ArticlesDashboard() {
             .filter((article) => article.title.toLowerCase().includes(search))
             .map((article) => (
               <div key={article.id}>
-                <Image
+                <img
                   src={article.image}
                   alt={article.altImage}
-                  width={257}
-                  height={171}
+                  // width={257}
+                  // height={171}
                 />
                 <div>
                   <h2>{article.title}</h2>
@@ -50,11 +50,11 @@ export default function ArticlesDashboard() {
             ))
         : articles.map((article) => (
             <div key={article.id}>
-              <Image
+              <img
                 src={article.image}
                 alt={article.altImage}
-                width={257}
-                height={171}
+                // width={257}
+                // height={171}
               />
               <div>
                 <h2>{article.title}</h2>

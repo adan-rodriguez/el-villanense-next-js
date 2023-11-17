@@ -22,12 +22,12 @@ export default function ArticleLink({
         }}
       />
       <Link className={styles.article_link} key={id} href={`/${id}`}>
-        <Image
+        <img
           className={styles.article_link_img}
           src={image}
           alt={altImage}
-          width={519}
-          height={346}
+          // width={519}
+          // height={346}
         />
         <time className={styles.article_link_time} dateTime={datetimeAttribute}>
           {dateContent}
