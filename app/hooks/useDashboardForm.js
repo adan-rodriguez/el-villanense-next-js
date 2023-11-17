@@ -27,10 +27,10 @@ export default function useDashboardForm(articleId) {
     setAltImage,
     setLead,
     setSection,
-    // async getContentTiny(contentTiny) {
-    //   setContent(contentTiny);
-    // },
-    setContent,
+    async getContentTiny(contentTiny) {
+      setContent(contentTiny);
+    },
+    // setContent,
     setAuthor,
   };
 

@@ -74,7 +74,9 @@ export default function DashboardForm({
         <div className={styles.form_author}>
           <div
             className={styles.author_img_name_container}
-            style={!article.author && { opacity: "0.2", userSelect: "none" }}
+            style={
+              !article.author ? { opacity: "0.2", userSelect: "none" } : {}
+            }
           >
             <p>Autor:</p>
             <img

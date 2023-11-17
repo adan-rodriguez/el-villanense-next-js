@@ -3,6 +3,7 @@
 import LoginForm from "@/app/components/LoginForm";
 import useLogin from "@/app/hooks/useLogin";
 import { handleLoginAuthFirebase } from "@/app/utils/handleLoginAuthFirebase";
+import { redirect } from "next/navigation";
 
 export default function LoginPage() {
   const {
@@ -12,7 +13,10 @@ export default function LoginPage() {
     setEmail,
     setPassword,
     setLoginErrorMessage,
+    user,
   } = useLogin();
+
+  if (user) redirect("/dashboard");
 
   return (
     <LoginForm

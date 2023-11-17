@@ -8,7 +8,7 @@ import styles from "@/app/styles/RevalidateButton.module.css";
 export default function RevalidateButton({ children }) {
   const { user } = useLogin();
   const segments = useSelectedLayoutSegments();
-  const isInAdmin = segments[0] === "admin";
+  const isInAdmin = segments[0] === "dashboard" || segments[0] === "login";
 
   if (!user || isInAdmin) return null;
 
