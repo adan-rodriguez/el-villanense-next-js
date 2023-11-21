@@ -5,12 +5,6 @@ import useLogin from "@/app/hooks/useLogin";
 import { handleLoginAuthFirebase } from "@/app/utils/handleLoginAuthFirebase";
 import { redirect } from "next/navigation";
 
-export const metadata = {
-  robots: {
-    index: false,
-  },
-};
-
 export default function LoginPage() {
   const {
     email,
