@@ -1,30 +1,11 @@
-"use client";
-
-import { /* useRef */ useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
-export default function TinyMCE({ getContentTiny, initialValue }) {
-  const [value, setValue] = useState("");
-  //   const editorRef = useRef(null);
-  //   const log = () => {
-  //     if (editorRef.current) {
-  //       console.log(editorRef.current.getContent());
-  //     }
-  //   };
-
-  useEffect(() => {
-    getContentTiny(value);
-  }, [value]);
-
-  useEffect(() => setValue(initialValue), [initialValue]);
-
+export default function TinyMCE({ setContent, content }) {
   return (
     <Editor
       apiKey="shr4ebbg4q013zmsd1tvhpy2okxwa8frfpg8gi6llkx3m5x5"
-      // onInit={(evt, editor) => (editorRef.current = editor)}
-      // initialValue={initialValue}
-      value={value}
-      onEditorChange={(newValue) => setValue(newValue)}
+      value={content}
+      onEditorChange={(newValue) => setContent(newValue)}
       init={{
         height: 500,
         menubar: true,

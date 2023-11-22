@@ -4,7 +4,6 @@ import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
 import { users } from "../utils/constants/users";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 // import RichTextEditor from "./RichTextEditor";
 import { addArticle } from "../utils/addArticle";
 import { editArticle } from "../utils/editArticle";
@@ -219,8 +218,8 @@ export default function DashboardForm({
         </label>
       </div>
       <TinyMCE
-        getContentTiny={settersArticle.getContentTiny}
-        initialValue={article.content}
+        content={article.content}
+        setContent={settersArticle.setContent}
       />
       {/* <RichTextEditor
         content={article.content}
