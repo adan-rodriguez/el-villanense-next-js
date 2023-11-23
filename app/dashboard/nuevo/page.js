@@ -6,17 +6,13 @@ import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
 
 export default function NewArticle() {
-  const { article, settersArticle } = useDashboardForm();
+  const article = useDashboardForm();
   const { user } = useLogin();
 
   return (
     <>
       <h2 className={styles.title}>Nuevo artículo</h2>
-      <DashboardForm
-        user={user}
-        article={article}
-        settersArticle={settersArticle}
-      />
+      <DashboardForm article={article} user={user} />
     </>
   );
 }

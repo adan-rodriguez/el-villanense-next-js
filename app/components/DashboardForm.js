@@ -8,12 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { addArticle } from "../utils/addArticle";
 import { editArticle } from "../utils/editArticle";
 
-export default function DashboardForm({
-  article,
-  settersArticle,
-  user,
-  articleId,
-}) {
+export default function DashboardForm({ article, user, articleId }) {
   const [imageFile, setImageFile] = useState(null);
 
   const inputFileRef = useRef();
@@ -23,7 +18,7 @@ export default function DashboardForm({
   if (user) editor = users.find((_user) => _user.email === user);
 
   useEffect(() => {
-    if (editor) settersArticle.setAuthor(editor.name);
+    if (editor) article.setAuthor(editor.name);
   }, []);
 
   return (
@@ -90,7 +85,7 @@ export default function DashboardForm({
           <div className={styles.author_checkbox_container}>
             <input
               onChange={(e) =>
-                settersArticle.setAuthor(e.target.checked ? null : editor.name)
+                article.setAuthor(e.target.checked ? null : editor.name)
               }
               type="checkbox"
             />
@@ -113,7 +108,7 @@ export default function DashboardForm({
             placeholder="Título"
             required
             value={article.title}
-            onChange={(e) => settersArticle.setTitle(e.target.value)}
+            onChange={(e) => article.setTitle(e.target.value)}
           />
         </label>
       </div>
@@ -131,8 +126,8 @@ export default function DashboardForm({
             type="button"
             className={styles.btn_change_img}
             onClick={() => {
-              settersArticle.setImage("");
-              settersArticle.setAltImage("");
+              article.setImage("");
+              article.setAltImage("");
             }}
           >
             Cambiar imagen
@@ -178,7 +173,7 @@ export default function DashboardForm({
             placeholder="Introduce una descripción corta de la imagen..."
             required
             value={article.altImage}
-            onChange={(e) => settersArticle.setAltImage(e.target.value)}
+            onChange={(e) => article.setAltImage(e.target.value)}
           />
         </label>
       </div>
@@ -193,7 +188,7 @@ export default function DashboardForm({
             placeholder="Entrada"
             required
             value={article.lead}
-            onChange={(e) => settersArticle.setLead(e.target.value)}
+            onChange={(e) => article.setLead(e.target.value)}
             rows="4"
           />
         </label>
@@ -207,7 +202,7 @@ export default function DashboardForm({
             id="section"
             required
             value={article.section}
-            onChange={(e) => settersArticle.setSection(e.target.value)}
+            onChange={(e) => article.setSection(e.target.value)}
           >
             <option value="locales">Locales</option>
             <option value="regionales">Regionales</option>
@@ -217,13 +212,10 @@ export default function DashboardForm({
           </select>
         </label>
       </div>
-      <TinyMCE
-        content={article.content}
-        setContent={settersArticle.setContent}
-      />
+      <TinyMCE content={article.content} setContent={article.setContent} />
       {/* <RichTextEditor
         content={article.content}
-        setContent={settersArticle.setContent}
+        setContent={article.setContent}
       /> */}
       <button className={styles.form_btn} type="submit">
         {articleId ? "Editar artículo" : "Subir artículo"}
