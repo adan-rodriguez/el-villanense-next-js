@@ -3,10 +3,10 @@ import { db } from "../firebase/firebase";
 import { getFriendlyUrl } from "./getFriendlyUrl";
 import { timestampToDatetime } from "./timestampToDatetime";
 
-export const addArticle = async (
-  { title, altImage, lead, section, content, author },
-  image
-) => {
+export const addArticle = async ({
+  article: { title, altImage, lead, section, content, author },
+  image,
+}) => {
   const timestamp = Date.now();
   const dataForFirebase = {
     title,

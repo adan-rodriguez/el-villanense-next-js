@@ -127,8 +127,7 @@ export default async function Article({ params }) {
           className={styles.article_img}
           src={article.image}
           alt={article.altImage}
-          // width={500}
-          // height={300}
+          fetchPriority="high"
         />
         <ArticleContent content={article.content} />
         <div className={styles.share_social_container_bottom}>

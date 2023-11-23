@@ -1,11 +1,11 @@
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
-export const editArticle = async (
+export const editArticle = async ({
   articleId,
-  { title, altImage, lead, section, content },
-  image
-) => {
+  article: { title, altImage, lead, section, content },
+  image,
+}) => {
   await setDoc(
     doc(db, "articles", articleId),
     {

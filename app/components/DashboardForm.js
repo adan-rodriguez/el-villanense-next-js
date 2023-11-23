@@ -12,7 +12,7 @@ export default function DashboardForm({
   article,
   settersArticle,
   user,
-  articleToEdit,
+  articleId,
 }) {
   const [imageFile, setImageFile] = useState(null);
 
@@ -55,11 +55,11 @@ export default function DashboardForm({
             image = secure_url;
           }
 
-          if (!articleToEdit) {
-            addArticle(article, image);
+          if (!articleId) {
+            addArticle({ article, image });
             alert("Artículo subido con éxito");
           } else {
-            editArticle(articleToEdit, article, image);
+            editArticle({ articleId, article, image });
             alert("Artículo editado con éxito");
           }
         } catch {
@@ -69,7 +69,7 @@ export default function DashboardForm({
         e.target.inert = "";
       }}
     >
-      {!articleToEdit && (
+      {!articleId && (
         <div className={styles.form_author}>
           <div
             className={styles.author_img_name_container}
@@ -226,7 +226,7 @@ export default function DashboardForm({
         setContent={settersArticle.setContent}
       /> */}
       <button className={styles.form_btn} type="submit">
-        {articleToEdit ? "Editar artículo" : "Subir artículo"}
+        {articleId ? "Editar artículo" : "Subir artículo"}
       </button>
     </form>
   );

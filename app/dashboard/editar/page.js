@@ -4,9 +4,9 @@ import DashboardForm from "@/app/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
 import styles from "@/app/styles/EditArticle.module.css";
 
-export default function EditArticle({ params }) {
-  const { articleToEdit } = params;
-  const { article, settersArticle } = useDashboardForm(articleToEdit);
+export default function EditArticle({ searchParams }) {
+  const { articulo: articleId } = searchParams;
+  const { article, settersArticle } = useDashboardForm({ articleId });
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function EditArticle({ params }) {
       <DashboardForm
         article={article}
         settersArticle={settersArticle}
-        articleToEdit={articleToEdit}
+        articleId={articleId}
       />
     </>
   );
