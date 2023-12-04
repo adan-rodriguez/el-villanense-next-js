@@ -1,4 +1,4 @@
-import { getAllArticles } from "../services/articles";
+import { getAllArticles } from "../lib/services/articles";
 
 export async function GET() {
   const headers = new Headers();
@@ -7,22 +7,25 @@ export async function GET() {
   const articles = await getAllArticles();
   let xml = "";
   articles.forEach(
-    ({ datetimeAttribute, id }) =>
+    ({ id, datetimeAttribute, title }) =>
       (xml += `<url>
-                <loc>https://www.elvillanense.com.ar/${id}</loc>
-                <lastmod>${datetimeAttribute}</lastmod>
-              </url>`)
+                  <loc>http://www.elvillanense.com.ar/${id}</loc>
+                  <news:news>
+                    <news:publication>
+                      <news:name>El Villanense</news:name>
+                      <news:language>es</news:language>
+                    </news:publication>
+                    <news:publication_date>${datetimeAttribute}</news:publication_date>
+                    <news:title>${title}</news:title>
+                  </news:news>
+                </url>`)
   );
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url>
-              <loc>https://www.elvillanense.com.ar/</loc>
-              <lastmod>${articles[0].datetimeAttribute}</lastmod>
-            </url>
-            ${xml}
-        </urlset>
-    `,
+      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+              xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+        ${xml}
+      </urlset>`,
     {
       headers,
     }

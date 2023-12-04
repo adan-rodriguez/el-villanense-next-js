@@ -1,26 +1,21 @@
-import { DOMAIN } from "@/app/utils/constants/domain";
 import Image from "next/image";
-import ArticleContent from "../components/ArticleContent";
-import styles from "@/app/styles/Article.module.css";
-import EditAndDeleteButtonsContainer from "@/app/components/EditAndDeleteButtonsContainer";
-import { users } from "@/app/utils/constants/users";
+import ArticleContent from "../ui/components/ArticleContent";
+import styles from "@/app/ui/styles/Article.module.css";
+import EditAndDeleteButtonsContainer from "@/app/ui/components/EditAndDeleteButtonsContainer";
+import { users } from "@/app/lib/users";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getArticle } from "@/app/services/articles";
-import ShareSocial from "../components/ShareSocial";
+import { getArticle } from "@/app/lib/services/articles";
+import ShareSocial from "../ui/components/ShareSocial";
+import { DOMAIN } from "../lib/constants";
+import { routes } from "../lib/routes";
 
 export async function generateMetadata({ params }) {
   const { article: articleId } = params;
 
-  let article;
+  const article = await getArticle({ articleId });
 
-  try {
-    article = await getArticle({ articleId });
-  } catch {
-    return { title: "Página no encontrada - El Villanense" };
-  }
-
-  const url = `${DOMAIN}/${articleId}`;
+  if (!article) return { title: "Página no encontrada - El Villanense" };
 
   return {
     title: article.title,
@@ -29,7 +24,7 @@ export async function generateMetadata({ params }) {
       title: article.title,
       description: article.lead,
       images: [{ url: article.image, alt: article.altImage }],
-      url,
+      url: `${DOMAIN}/${articleId}`,
       siteName: "El Villanense",
       type: "article",
       publishedTime: article.datetimeAttribute,
@@ -45,13 +40,9 @@ export async function generateMetadata({ params }) {
 export default async function Article({ params }) {
   const { article: articleId } = params;
 
-  let article;
+  const article = await getArticle({ articleId });
 
-  try {
-    article = await getArticle({ articleId });
-  } catch {
-    notFound();
-  }
+  if (!article) notFound();
 
   const url = `${DOMAIN}/${articleId}`;
 
@@ -116,7 +107,7 @@ export default async function Article({ params }) {
               Por{" "}
               <Link
                 className={styles.article_author_name_link}
-                href={`/autores/${user.nick}`}
+                href={`${routes.authors.root}/${user.nick}`}
               >
                 {article.author}
               </Link>

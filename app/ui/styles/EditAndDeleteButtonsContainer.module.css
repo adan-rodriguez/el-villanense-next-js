@@ -1,0 +1,18 @@
+.container {
+  display: inline-flex;
+  column-gap: 5px;
+  background-color: white;
+  position: absolute;
+  border: 1px solid black;
+  padding: 2px 5px;
+}
+
+.container button {
+  display: flex;
+  border: none;
+  color: black;
+}
+
+.container button:hover {
+  transform: scale(1.03);
+}

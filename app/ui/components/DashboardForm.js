@@ -2,13 +2,13 @@
 
 import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
-import { users } from "../utils/constants/users";
+import { users } from "../../lib/users";
 import { useEffect, useRef, useState } from "react";
 // import RichTextEditor from "./RichTextEditor";
-import { addArticle } from "../utils/addArticle";
-import { editArticle } from "../utils/editArticle";
+import { addArticle, editArticle } from "../../lib/services/articles";
+import { DOMAIN } from "@/app/lib/constants";
 
-export default function DashboardForm({ article, user, articleId }) {
+export default function DashboardForm({ articleId, article, user }) {
   const [imageFile, setImageFile] = useState(null);
 
   const inputFileRef = useRef();
@@ -21,49 +21,46 @@ export default function DashboardForm({ article, user, articleId }) {
     if (editor) article.setAuthor(editor.name);
   }, []);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    e.target.inert = "true";
+    let image = article.image;
+
+    try {
+      if (imageFile) {
+        let formData = new FormData();
+        formData.append("file", imageFile);
+        formData.append("upload_preset", "elvillanense");
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const { secure_url } = await res.json();
+        image = secure_url;
+      }
+
+      if (!articleId) {
+        addArticle({ article, image });
+        alert("Artículo subido con éxito");
+      } else {
+        editArticle({ articleId, article, image });
+        alert("Artículo editado con éxito");
+      }
+
+      await fetch(`${DOMAIN}/api/revalidate`);
+    } catch {
+      alert("Ocurrió un error. Inténtelo nuevamente");
+    }
+
+    e.target.inert = "";
+  };
+
   return (
-    <form
-      className={styles.form}
-      onSubmit={async (e) => {
-        e.preventDefault();
-        if (process.env.NEXT_PUBLIC_ENV === "development") {
-          alert("No se puede subir una noticia en modo desarrollo.");
-          return;
-        }
-
-        e.target.inert = "true";
-        let image = article.image;
-
-        try {
-          if (imageFile) {
-            let formData = new FormData();
-            formData.append("file", imageFile);
-            formData.append("upload_preset", "elvillanense");
-            const res = await fetch(
-              "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
-              {
-                method: "POST",
-                body: formData,
-              }
-            );
-            const { secure_url } = await res.json();
-            image = secure_url;
-          }
-
-          if (!articleId) {
-            addArticle({ article, image });
-            alert("Artículo subido con éxito");
-          } else {
-            editArticle({ articleId, article, image });
-            alert("Artículo editado con éxito");
-          }
-        } catch {
-          alert("Ocurrió un error. Inténtelo nuevamente");
-        }
-
-        e.target.inert = "";
-      }}
-    >
+    <form className={styles.form} onSubmit={handleSubmit}>
       {!articleId && (
         <div className={styles.form_author}>
           <div

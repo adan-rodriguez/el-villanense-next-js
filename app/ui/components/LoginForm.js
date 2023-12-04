@@ -1,3 +1,4 @@
+import { handleLogin } from "../../lib/auth";
 import styles from "../styles/LoginForm.module.css";
 
 export default function LoginForm({
@@ -5,8 +6,8 @@ export default function LoginForm({
   password,
   setEmail,
   setPassword,
-  login,
   loginErrorMessage,
+  setLoginErrorMessage,
 }) {
   return (
     <>
@@ -14,7 +15,7 @@ export default function LoginForm({
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
-          login();
+          handleLogin({ email, password, setLoginErrorMessage });
         }}
       >
         <div>

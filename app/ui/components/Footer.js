@@ -1,7 +1,7 @@
-import { getCurrentYear } from "../utils/getCurrentYear";
 import Logo from "./Logo";
 import SocialMedia from "./SocialMedia";
 import styles from "../styles/Footer.module.css";
+import { getCurrentYear } from "../../lib/utils";
 
 export default function Footer() {
   return (

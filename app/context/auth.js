@@ -1,12 +1,12 @@
 "use client";
 
-import { auth } from "@/app/firebase/firebase";
+import { auth } from "@/app/lib/config-firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useState } from "react";
 
-export const LoginContext = createContext();
+export const AuthContext = createContext();
 
-export function LoginProvider({ children }) {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   onAuthStateChanged(auth, (user) => {
@@ -15,5 +15,7 @@ export function LoginProvider({ children }) {
     }
   });
 
-  return <LoginContext.Provider value={user}>{children}</LoginContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+  );
 }

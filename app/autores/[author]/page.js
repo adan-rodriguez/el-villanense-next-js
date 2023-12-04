@@ -1,10 +1,9 @@
-import Script from "next/script";
-import { DOMAIN } from "../../utils/constants/domain";
-import Articles from "../../components/Articles";
-import { users } from "../../utils/constants/users";
+import Articles from "../../ui/components/Articles";
+import { users } from "../../lib/users";
 import { notFound } from "next/navigation";
-import { getArticlesByAuthor } from "@/app/services/articles";
-import styles from "@/app/styles/AuthorPage.module.css";
+import { getArticles } from "@/app/lib/services/articles";
+import styles from "@/app/ui/styles/AuthorPage.module.css";
+import { DOMAIN } from "@/app/lib/constants";
 
 export function generateMetadata({ params }) {
   const { author } = params;
@@ -37,30 +36,14 @@ export default async function ArticlesByAuthor({ params }) {
 
   const user = users.find((user) => user.nick === author);
 
-  if (!user) {
-    notFound();
-  }
+  if (!user) notFound();
 
-  const articles = await getArticlesByAuthor({
-    name: user.name,
+  const articles = await getArticles({
+    author: user.name,
   });
 
   return (
     <>
-      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-V6RKJKGCX2');
-        `}
-      </Script>
       <h1 className={styles.title}>
         Noticias de <span className={styles.author}>{user.name}</span>
       </h1>

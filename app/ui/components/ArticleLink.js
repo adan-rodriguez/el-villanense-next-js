@@ -2,7 +2,7 @@ import Link from "next/link";
 import EditAndDeleteButtonsContainer from "./EditAndDeleteButtonsContainer";
 import styles from "../styles/ArticleLink.module.css";
 import Image from "next/image";
-import { users } from "../utils/constants/users";
+import { users } from "../../lib/users";
 
 export default function ArticleLink({
   id,
@@ -15,12 +15,7 @@ export default function ArticleLink({
 }) {
   return (
     <article className={styles.article}>
-      <EditAndDeleteButtonsContainer
-        articleId={id}
-        style={{
-          position: "absolute",
-        }}
-      />
+      <EditAndDeleteButtonsContainer articleId={id} />
       <Link className={styles.article_link} key={id} href={`/${id}`}>
         <img
           className={styles.article_link_img}

@@ -1,9 +1,10 @@
 "use client";
 
-import LoginForm from "@/app/components/LoginForm";
+import LoginForm from "@/app/ui/components/LoginForm";
 import useLogin from "@/app/hooks/useLogin";
-import { handleLoginAuthFirebase } from "@/app/utils/handleLoginAuthFirebase";
 import { redirect } from "next/navigation";
+import { routes } from "../lib/routes";
+import { handleLogin } from "../lib/auth";
 
 export default function LoginPage() {
   const {
@@ -16,7 +17,7 @@ export default function LoginPage() {
     user,
   } = useLogin();
 
-  if (user) redirect("/dashboard");
+  if (user) redirect(routes.dashboard.root);
 
   return (
     <LoginForm
@@ -25,10 +26,7 @@ export default function LoginPage() {
       loginErrorMessage={loginErrorMessage}
       setEmail={setEmail}
       setPassword={setPassword}
-      login={() => {
-        setLoginErrorMessage(null);
-        handleLoginAuthFirebase(email, password, setLoginErrorMessage);
-      }}
+      setLoginErrorMessage={setLoginErrorMessage}
     />
   );
 }

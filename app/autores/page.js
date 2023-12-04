@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { users } from "../utils/constants/users";
-import styles from "@/app/styles/Authors.module.css";
+import { users } from "../lib/users";
+import styles from "@/app/ui/styles/Authors.module.css";
 import Image from "next/image";
+import { routes } from "../lib/routes";
 
 export default function Authors() {
   return (
     <div className={styles.container}>
       {users.map((user) => (
-        <Link href={`/autores/${user.nick}`} key={user.email}>
+        <Link href={`${routes.authors.root}/${user.nick}`} key={user.email}>
           <Image
             src={user.image}
             alt={`Foto de ${user.name}`}

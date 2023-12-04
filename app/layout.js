@@ -1,11 +1,9 @@
-import { LoginProvider } from "@/app/context/login";
-import { Poppins } from "next/font/google";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import "./globals.css";
+import { AuthProvider } from "@/app/context/auth";
+import Footer from "./ui/components/Footer";
+import Header from "./ui/components/Header";
+import "./ui/globals.css";
 import Script from "next/script";
-
-const poppins = Poppins({ weight: ["400", "700", "900"], subsets: ["latin"] });
+import { poppins } from "./ui/fonts";
 
 export const metadata = {
   title: "El Villanense - Portal de noticias",
@@ -18,11 +16,11 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" className={poppins.className}>
-      <body>
+    <html lang="es">
+      <body className={poppins.className}>
         <Header />
         <main>
-          <LoginProvider>
+          <AuthProvider>
             {/* <RevalidateButton>
               <Image
                 src="/icons/dashboard/refresh.svg"
@@ -32,7 +30,7 @@ export default function RootLayout({ children }) {
               />
             </RevalidateButton> */}
             {children}
-          </LoginProvider>
+          </AuthProvider>
         </main>
         <Footer />
       </body>

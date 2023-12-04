@@ -1,9 +1,9 @@
 "use client";
 
 import { useSelectedLayoutSegments } from "next/navigation";
-import useLogin from "../hooks/useLogin";
-import { DOMAIN } from "../utils/constants/domain";
+import useLogin from "../../hooks/useLogin";
 import styles from "@/app/styles/RevalidateButton.module.css";
+import { DOMAIN } from "../../lib/constants";
 
 export default function RevalidateButton({ children }) {
   const { user } = useLogin();

@@ -1,16 +1,16 @@
 "use client";
 
-import DashboardForm from "@/app/components/DashboardForm";
+import DashboardForm from "@/app/ui/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
-import styles from "@/app/styles/EditArticle.module.css";
+import styles from "@/app/ui/styles/EditArticle.module.css";
 
-export default function DashboardEditArticle({ articleId }) {
-  const article = useDashboardForm(articleId);
+export default function DashboardEditArticle({ articleId, article }) {
+  const articleAndSetters = useDashboardForm(article);
 
   return (
     <>
       <h2 className={styles.title}>Editar artículo</h2>
-      <DashboardForm article={article} articleId={articleId} />
+      <DashboardForm article={articleAndSetters} articleId={articleId} />
     </>
   );
 }

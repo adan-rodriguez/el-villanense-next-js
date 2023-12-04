@@ -3,18 +3,18 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../firebase/firebase";
 import { redirect } from "next/navigation";
+import { auth } from "./config-firebase";
+import { routes } from "./routes";
 
-export const handleLoginAuthFirebase = (
-  email,
-  password,
-  setLoginErrorMessage
-) => {
+export const handleLogin = ({ email, password, setLoginErrorMessage }) => {
   setPersistence(auth, browserSessionPersistence)
     .then(() => {
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => redirect("/dashboard"))
+        .then(() => {
+          setLoginErrorMessage(null);
+          redirect(routes.dashboard.root);
+        })
         .catch((error) => {
           if (
             error.message.includes("user-not-found") ||

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "@/app/styles/Article.module.css";
+import styles from "@/app/ui/styles/Article.module.css";
 
 export default function ShareSocial({ data }) {
   return (

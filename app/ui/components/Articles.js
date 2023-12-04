@@ -2,7 +2,8 @@ import ArticleLink from "./ArticleLink";
 import styles from "../styles/Articles.module.css";
 
 export default function Articles({ articles }) {
-  if (articles.length === 0) return null;
+  if (articles.length === 0) return <p>No hay noticias por el moneto</p>;
+
   return (
     <div className={styles.articles_links_container}>
       {articles.map((article) => (
