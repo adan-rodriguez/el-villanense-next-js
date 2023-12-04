@@ -1,10 +1,10 @@
-import { getAllArticles } from "../lib/services/articles";
+import { getArticles } from "../lib/services/articles";
 
 export async function GET() {
   const headers = new Headers();
   headers.set("Content-Type", "application/xml");
 
-  const articles = await getAllArticles();
+  const articles = await getArticles();
   let xml = "";
   articles.forEach(
     ({ id, datetimeAttribute, title }) =>
