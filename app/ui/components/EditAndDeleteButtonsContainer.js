@@ -10,14 +10,13 @@ import { usePathname } from "next/navigation";
 export default function EditAndDeleteButtonsContainer({ articleId }) {
   const { user } = useLogin();
   const pathname = usePathname();
-  console.log(pathname);
 
   if (!user) return null;
 
   return (
     <div
       className={styles.container}
-      style={pathname === "/dashboard/articulos" && { position: "static" }}
+      style={pathname === "/dashboard/articulos" ? { position: "static" } : {}}
     >
       <EditButton articleId={articleId}>
         <Image

@@ -44,9 +44,13 @@ export const metadata = {
   },
 };
 
-const getCachedArticles = unstable_cache(async () => await getArticles(), {
-  tags: ["articles"],
-});
+const getCachedArticles = unstable_cache(
+  async () => await getArticles(),
+  ["articles-home"],
+  {
+    tags: ["articles"],
+  }
+);
 
 export default async function Home() {
   const articles = await getCachedArticles();
