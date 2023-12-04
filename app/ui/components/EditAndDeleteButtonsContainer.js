@@ -5,19 +5,17 @@ import useLogin from "../../hooks/useLogin";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 
-export default function EditAndDeleteButtonsContainer({ articleId }) {
+export default function EditAndDeleteButtonsContainer({
+  articleId,
+  positionAbsolute,
+}) {
   const { user } = useLogin();
-  const pathname = usePathname();
 
   if (!user) return null;
 
   return (
-    <div
-      className={styles.container}
-      style={pathname === "/dashboard/articulos" ? { position: "static" } : {}}
-    >
+    <div className={styles.container} style={positionAbsolute}>
       <EditButton articleId={articleId}>
         <Image
           src="/icons/dashboard/edit.svg"

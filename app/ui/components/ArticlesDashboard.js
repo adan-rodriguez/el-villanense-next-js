@@ -23,7 +23,9 @@ export default function ArticlesDashboard(props) {
       </select>
       {articles
         .filter((article) =>
-          search ? article.title.toLowerCase().includes(search) : true
+          search
+            ? article.title.toLowerCase().includes(search.toLowerCase())
+            : true
         )
         .map((article) => (
           <div key={article.id}>

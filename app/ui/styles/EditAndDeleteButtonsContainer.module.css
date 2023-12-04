@@ -2,7 +2,6 @@
   display: inline-flex;
   column-gap: 5px;
   background-color: white;
-  position: absolute;
   border: 1px solid black;
   padding: 2px 5px;
 }
