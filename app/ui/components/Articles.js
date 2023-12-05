@@ -1,8 +1,20 @@
 import ArticleLink from "./ArticleLink";
 import styles from "../styles/Articles.module.css";
+import { getArticles } from "@/app/lib/services/articles";
+import { unstable_cache } from "next/cache";
 
-export default function Articles({ articles }) {
-  if (articles.length === 0) return <p>No hay noticias por el moneto</p>;
+const getCachedArticles = unstable_cache(
+  async ({ author }) => await getArticles({ author }),
+  ["articles-home"],
+  {
+    tags: ["articles"],
+  }
+);
+
+export default async function Articles({ author }) {
+  const articles = await getCachedArticles({ author });
+
+  if (articles.length === 0) return <p>No hay noticias por el momento</p>;
 
   return (
     <div className={styles.articles_links_container}>

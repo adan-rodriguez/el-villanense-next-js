@@ -38,16 +38,12 @@ export default async function ArticlesByAuthor({ params }) {
 
   if (!user) notFound();
 
-  const articles = await getArticles({
-    author: user.name,
-  });
-
   return (
     <>
       <h1 className={styles.title}>
         Noticias de <span className={styles.author}>{user.name}</span>
       </h1>
-      <Articles articles={articles} />
+      <Articles author={user.name} />
     </>
   );
 }

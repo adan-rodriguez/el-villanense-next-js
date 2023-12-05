@@ -1,7 +1,5 @@
 import Articles from "./ui/components/Articles";
 import { DOMAIN } from "./lib/constants";
-import { getArticles } from "./lib/services/articles";
-import { unstable_cache } from "next/cache";
 
 export const metadata = {
   description:
@@ -44,16 +42,6 @@ export const metadata = {
   },
 };
 
-const getCachedArticles = unstable_cache(
-  async () => await getArticles(),
-  ["articles-home"],
-  {
-    tags: ["articles"],
-  }
-);
-
-export default async function Home() {
-  const articles = await getCachedArticles();
-
-  return <Articles articles={articles} />;
+export default function HomePage() {
+  return <Articles />;
 }
