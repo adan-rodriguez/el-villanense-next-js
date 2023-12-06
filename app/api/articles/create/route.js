@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 export async function POST(request) {
   const article = await request.json();
   //   if (!articleId) {
-  const newArticle = addArticle({ article });
+  const newArticle = await addArticle({ article });
   //   } else {
   //     editArticle({ articleId, article, image });
   //     alert("Artículo editado con éxito");
