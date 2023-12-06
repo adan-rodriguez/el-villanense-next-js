@@ -112,8 +112,7 @@ export const deleteArticle = async ({ articleId }) => {
 
 export const editArticle = async ({
   articleId,
-  article: { title, altImage, lead, section, content },
-  image,
+  article: { title, image, altImage, lead, section, content },
 }) => {
   const { NODE_ENV, NEXT_PUBLIC_ENV } = process.env;
   if (NODE_ENV === "development" || NEXT_PUBLIC_ENV === "development") {
@@ -143,6 +142,8 @@ export const editArticle = async ({
     },
     { merge: true }
   );
+
+  return `Artículo con id '${articleId}' editado`;
 };
 
 // export const getSectionArticlesDatabase = async ({section}) => {

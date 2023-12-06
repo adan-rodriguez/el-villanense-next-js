@@ -43,25 +43,47 @@ export default function DashboardForm({ articleId, article, user }) {
 
       const { title, altImage, lead, section, content, author } = article;
 
-      const response = await fetch(`${DOMAIN}/api/articles/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          image,
-          altImage,
-          lead,
-          section,
-          content,
-          author,
-        }),
-      });
+      if (articleId) {
+        const response = await fetch(`${DOMAIN}/api/articles/${articleId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            articleId,
+            title,
+            image,
+            altImage,
+            lead,
+            section,
+            content,
+          }),
+        });
 
-      const newArticle = await response.json();
-      console.log(newArticle);
-      alert("Artículo subido con éxito");
+        const data = await response.json();
+        console.log(data);
+        alert("Artículo subido con éxito");
+      } else {
+        const response = await fetch(`${DOMAIN}/api/articles/create`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            image,
+            altImage,
+            lead,
+            section,
+            content,
+            author,
+          }),
+        });
+
+        const newArticle = await response.json();
+        console.log(newArticle);
+        alert("Artículo subido con éxito");
+      }
     } catch {
       alert("Ocurrió un error. Inténtelo nuevamente");
     }
