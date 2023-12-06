@@ -66,8 +66,7 @@ export async function getArticle({ articleId }) {
 }
 
 export const addArticle = async ({
-  article: { title, altImage, lead, section, content, author },
-  image,
+  article: { title, image, altImage, lead, section, content, author },
 }) => {
   const timestamp = Date.now();
   const data = {
@@ -87,13 +86,15 @@ export const addArticle = async ({
   if (NODE_ENV === "development" || NEXT_PUBLIC_ENV === "development") {
     data.id = `${data.friendlyUrl}-${data.timestamp}`;
     mock_articles.push(data);
-    return;
+    return data;
   }
 
   await setDoc(
     doc(db, "articles", `${data.friendlyUrl}-${data.timestamp}`),
     data
   );
+  data.id = `${data.friendlyUrl}-${data.timestamp}`;
+  return data;
 };
 
 export const deleteArticle = async ({ articleId }) => {

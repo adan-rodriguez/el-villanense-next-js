@@ -4,9 +4,8 @@ import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
 import { users } from "../../lib/users";
 import { useEffect, useRef, useState } from "react";
-// import RichTextEditor from "./RichTextEditor";
-import { addArticle, editArticle } from "../../lib/services/articles";
 import { DOMAIN } from "@/app/lib/constants";
+// import RichTextEditor from "./RichTextEditor";
 
 export default function DashboardForm({ articleId, article, user }) {
   const [imageFile, setImageFile] = useState(null);
@@ -26,7 +25,6 @@ export default function DashboardForm({ articleId, article, user }) {
 
     e.target.inert = "true";
     let image = article.image;
-
     try {
       if (imageFile) {
         let formData = new FormData();
@@ -43,15 +41,27 @@ export default function DashboardForm({ articleId, article, user }) {
         image = secure_url;
       }
 
-      if (!articleId) {
-        addArticle({ article, image });
-        alert("Artículo subido con éxito");
-      } else {
-        editArticle({ articleId, article, image });
-        alert("Artículo editado con éxito");
-      }
+      const { title, altImage, lead, section, content, author } = article;
 
-      await fetch(`${DOMAIN}/api/revalidate`);
+      const response = await fetch(`${DOMAIN}/api/articles/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          image,
+          altImage,
+          lead,
+          section,
+          content,
+          author,
+        }),
+      });
+
+      const newArticle = await response.json();
+      console.log(newArticle);
+      alert("Artículo subido con éxito");
     } catch {
       alert("Ocurrió un error. Inténtelo nuevamente");
     }
