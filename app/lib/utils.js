@@ -1,3 +1,4 @@
+import { DOMAIN } from "./constants";
 import { deleteArticle } from "./services/articles";
 
 export const getCurrentYear = () => {
@@ -80,17 +81,15 @@ export async function handleDelete({ articleId, router }) {
   if (confirm("¿Estás seguro de borrar esta noticia?")) {
     try {
       await deleteArticle({ articleId });
+      const response = await fetch(`${DOMAIN}/articles/${articleId}`, {
+        method: "DELETE",
+      });
+      const data = await response.json();
+      console.log(data);
     } catch {
-      return alert("No se ha podido eliminar la noticia");
+      alert("No se ha podido eliminar la noticia");
+      return;
     }
-
-    // await fetch(
-    //   `${DOMAIN}/api/revalidateDelete?secret=h5h4j8912hg6df8d1s3h55k8op6k46f2d4s`,
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify({ articleId }),
-    //   }
-    // );
 
     alert("Noticia eliminada con éxito");
 

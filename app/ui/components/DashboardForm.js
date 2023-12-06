@@ -64,7 +64,7 @@ export default function DashboardForm({ articleId, article, user }) {
         console.log(data);
         alert("Artículo subido con éxito");
       } else {
-        const response = await fetch(`${DOMAIN}/api/articles/create`, {
+        const response = await fetch(`${DOMAIN}/api/articles`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

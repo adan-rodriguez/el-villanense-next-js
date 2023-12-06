@@ -108,6 +108,7 @@ export const deleteArticle = async ({ articleId }) => {
   }
 
   await deleteDoc(doc(db, "articles", articleId));
+  return `Artículo con id '${articleId}' eliminado`;
 };
 
 export const editArticle = async ({
