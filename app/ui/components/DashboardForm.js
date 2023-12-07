@@ -30,14 +30,14 @@ export default function DashboardForm({ articleId, article, user }) {
         let formData = new FormData();
         formData.append("file", imageFile);
         formData.append("upload_preset", "elvillanense");
-        const res = await fetch(
-          "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-        const { secure_url } = await res.json();
+
+        const response = await fetch(`${DOMAIN}/api/cloudinary`, {
+          method: "POST",
+          body: formData,
+        });
+
+        const secure_url = await response.json();
+
         image = secure_url;
       }
 
@@ -61,7 +61,7 @@ export default function DashboardForm({ articleId, article, user }) {
         });
 
         const data = await response.json();
-        console.log(data);
+
         alert("Artículo subido con éxito");
       } else {
         const response = await fetch(`${DOMAIN}/api/articles`, {
@@ -81,7 +81,7 @@ export default function DashboardForm({ articleId, article, user }) {
         });
 
         const newArticle = await response.json();
-        console.log(newArticle);
+
         alert("Artículo subido con éxito");
       }
     } catch {
