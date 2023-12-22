@@ -5,12 +5,49 @@ import useDashboardForm from "@/app/hooks/useDashboardForm";
 import styles from "@/app/ui/styles/EditArticle.module.css";
 
 export default function DashboardEditArticle({ articleId, article }) {
-  const articleAndSetters = useDashboardForm(article);
+  const {
+    title,
+    image,
+    altImage,
+    lead,
+    section,
+    content,
+    author,
+    getTitle,
+    getImage,
+    getAltImage,
+    getLead,
+    getSection,
+    getContent,
+    getAuthor,
+    imageFile,
+    getImageFile,
+  } = useDashboardForm({ article });
 
   return (
     <>
       <h2 className={styles.title}>Editar artículo</h2>
-      <DashboardForm article={articleAndSetters} articleId={articleId} />
+      <DashboardForm
+        {...{
+          title,
+          image,
+          altImage,
+          lead,
+          section,
+          content,
+          author,
+          getTitle,
+          getImage,
+          getAltImage,
+          getLead,
+          getSection,
+          getContent,
+          getAuthor,
+          imageFile,
+          getImageFile,
+        }}
+        articleId={articleId}
+      />
     </>
   );
 }

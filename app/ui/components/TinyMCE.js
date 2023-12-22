@@ -1,11 +1,12 @@
+import { TINYMCE_API_KEY } from "@/app/lib/config";
 import { Editor } from "@tinymce/tinymce-react";
 
-export default function TinyMCE({ setContent, content }) {
+export default function TinyMCE({ content, getContent }) {
   return (
     <Editor
-      apiKey="shr4ebbg4q013zmsd1tvhpy2okxwa8frfpg8gi6llkx3m5x5"
+      apiKey={TINYMCE_API_KEY}
       value={content}
-      onEditorChange={(newValue) => setContent(newValue)}
+      onEditorChange={(newValue) => getContent(newValue)}
       init={{
         height: 500,
         menubar: true,

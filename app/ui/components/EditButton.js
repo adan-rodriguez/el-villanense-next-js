@@ -6,7 +6,7 @@ export default function EditButton({ children, articleId }) {
   return (
     <button
       onClick={() =>
-        router.push(`${routes.dashboard.edit}?articulo=${articleId}`)
+        router.push(`${routes.dashboard.edit.root}?articulo=${articleId}`)
       }
       title="Editar noticia"
       aria-label="Editar noticia"

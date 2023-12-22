@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useDashboardForm(article) {
+export default function useDashboardForm({ article } = {}) {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [altImage, setAltImage] = useState("");
@@ -8,6 +8,18 @@ export default function useDashboardForm(article) {
   const [section, setSection] = useState("locales");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState(null);
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const getTitle = (title) => setTitle(title);
+  const getImage = (image) => setImage(image);
+  const getAltImage = (altImage) => setAltImage(altImage);
+  const getLead = (lead) => setLead(lead);
+  const getSection = (section) => setSection(section);
+  const getContent = (content) => setContent(content);
+  const getAuthor = (author) => setAuthor(author);
+
+  const getImageFile = (imageFile) => setImageFile(imageFile);
 
   useEffect(() => {
     if (article) {
@@ -28,12 +40,14 @@ export default function useDashboardForm(article) {
     section,
     content,
     author,
-    setTitle,
-    setImage,
-    setAltImage,
-    setLead,
-    setSection,
-    setContent,
-    setAuthor,
+    getTitle,
+    getImage,
+    getAltImage,
+    getLead,
+    getSection,
+    getContent,
+    getAuthor,
+    imageFile,
+    getImageFile,
   };
 }

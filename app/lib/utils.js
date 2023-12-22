@@ -1,4 +1,5 @@
 import { DOMAIN } from "./constants";
+import { routes } from "./routes";
 import { deleteArticle } from "./services/articles";
 
 export const getCurrentYear = () => {
@@ -27,48 +28,41 @@ export const timestampToDatetime = ({ timestamp }) => {
   const datetime = new Date(timestamp);
 
   const [year, month, day, hour, minutes] = [
-    datetime.getFullYear(),
-    datetime.getMonth(),
-    datetime.getDate(),
-    datetime.getHours(),
-    datetime.getMinutes(),
+    String(datetime.getFullYear()),
+    String(datetime.getMonth()),
+    String(datetime.getDate()),
+    String(datetime.getHours()),
+    String(datetime.getMinutes()),
   ];
 
-  const getMonth = (n) => {
-    const months = [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ];
-    return months[n];
-  };
+  const monthString = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ][Number(month)];
 
-  const monthString = getMonth(month);
+  const time = `${hour.length === 1 ? "0" : ""}${hour}:${
+    minutes.length === 1 ? "0" : ""
+  }${minutes}`; // 02:15
 
   const datetimeAttribute = `${year}-${
-    String(month).length === 1 ? 0 : ""
-  }${month}-${String(day).length === 1 ? 0 : ""}${day}T${
-    String(hour).length === 1 ? 0 : ""
-  }${hour}:${String(minutes).length === 1 ? 0 : ""}${minutes}-03:00`;
+    String(Number(month) + 1).length === 1 ? "0" : ""
+  }${Number(month) + 1}-${day.length === 1 ? "0" : ""}${day}T${time}-03:00`; // 2023-12-22T02:15-03:00
 
   const dateContent = `${
-    String(day).length === 1 ? 0 : ""
-  }${day} de ${monthString} de ${year}`;
+    day.length === 1 ? "0" : ""
+  }${day} de ${monthString} de ${year}`; // 22 de Diciembre de 2023
 
-  const datetimeContent = `${
-    String(day).length === 1 ? 0 : ""
-  }${day} de ${monthString} de ${year} - ${
-    String(hour).length === 1 ? 0 : ""
-  }${hour}:${String(minutes).length === 1 ? 0 : ""}${minutes}`;
+  const datetimeContent = `${dateContent} - ${time}`; // 22 de Diciembre de 2023 - 02:15
 
   return { datetimeAttribute, dateContent, datetimeContent };
 };
@@ -81,11 +75,13 @@ export async function handleDelete({ articleId, router }) {
   if (confirm("¿Estás seguro de borrar esta noticia?")) {
     try {
       await deleteArticle({ articleId });
-      const response = await fetch(`${DOMAIN}/articles/${articleId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${DOMAIN + routes.routes.articles.root + "/" + articleId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await response.json();
-      console.log(data);
     } catch {
       alert("No se ha podido eliminar la noticia");
       return;

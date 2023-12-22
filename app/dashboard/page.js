@@ -5,10 +5,10 @@ import { routes } from "../lib/routes";
 export default function Dashboard() {
   return (
     <div className={styles.container}>
-      <Link className={styles.links} href={routes.dashboard.new}>
+      <Link className={styles.links} href={routes.dashboard.new.root}>
         Nuevo artículo
       </Link>
-      <Link className={styles.links} href={routes.dashboard.articles}>
+      <Link className={styles.links} href={routes.dashboard.articles.root}>
         Editar/Borrar
       </Link>
     </div>

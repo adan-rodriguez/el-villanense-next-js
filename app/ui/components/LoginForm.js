@@ -1,13 +1,15 @@
+import { redirect } from "next/navigation";
 import { handleLogin } from "../../lib/auth";
 import styles from "../styles/LoginForm.module.css";
+import { routes } from "@/app/lib/routes";
 
 export default function LoginForm({
   email,
   password,
-  setEmail,
-  setPassword,
   loginErrorMessage,
-  setLoginErrorMessage,
+  getEmail,
+  getPassword,
+  getLoginErrorMessage,
 }) {
   return (
     <>
@@ -15,7 +17,12 @@ export default function LoginForm({
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
-          handleLogin({ email, password, setLoginErrorMessage });
+          const errorMessage = handleLogin({ email, password });
+          if (errorMessage) {
+            getLoginErrorMessage(errorMessage);
+          } else {
+            redirect(routes.dashboard.root);
+          }
         }}
       >
         <div>
@@ -27,7 +34,7 @@ export default function LoginForm({
               name="email"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => getEmail(e.target.value)}
               required
             />
           </label>
@@ -41,7 +48,7 @@ export default function LoginForm({
               name="password"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => getPassword(e.target.value)}
               required
             />
           </label>

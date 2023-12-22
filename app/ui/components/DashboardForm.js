@@ -3,13 +3,30 @@
 import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
 import { users } from "../../lib/users";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { DOMAIN } from "@/app/lib/constants";
-// import RichTextEditor from "./RichTextEditor";
+import { routes } from "@/app/lib/routes";
 
-export default function DashboardForm({ articleId, article, user }) {
-  const [imageFile, setImageFile] = useState(null);
-
+export default function DashboardForm({
+  articleId,
+  title,
+  image,
+  altImage,
+  lead,
+  section,
+  content,
+  author,
+  getTitle,
+  getImage,
+  getAltImage,
+  getLead,
+  getSection,
+  getContent,
+  getAuthor,
+  imageFile,
+  getImageFile,
+  user,
+}) {
   const inputFileRef = useRef();
 
   let editor;
@@ -17,68 +34,75 @@ export default function DashboardForm({ articleId, article, user }) {
   if (user) editor = users.find((_user) => _user.email === user);
 
   useEffect(() => {
-    if (editor) article.setAuthor(editor.name);
+    if (editor) getAuthor(editor.name);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     e.target.inert = "true";
-    let image = article.image;
+    let image = image;
     try {
       if (imageFile) {
         let formData = new FormData();
         formData.append("file", imageFile);
         formData.append("upload_preset", "elvillanense");
 
-        const response = await fetch(`${DOMAIN}/api/cloudinary`, {
-          method: "POST",
-          body: formData,
-        });
+        const response = await fetch(
+          `${DOMAIN + routes.routes.cloudinary.root}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
         const secure_url = await response.json();
 
         image = secure_url;
       }
 
-      const { title, altImage, lead, section, content, author } = article;
-
       if (articleId) {
-        const response = await fetch(`${DOMAIN}/api/articles/${articleId}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            articleId,
-            title,
-            image,
-            altImage,
-            lead,
-            section,
-            content,
-          }),
-        });
+        const response = await fetch(
+          `${DOMAIN + routes.routes.articles.root + "/" + articleId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              articleId,
+              title,
+              image,
+              altImage,
+              lead,
+              section,
+              content,
+            }),
+          }
+        );
 
         const data = await response.json();
 
         alert("Artículo subido con éxito");
       } else {
-        const response = await fetch(`${DOMAIN}/api/articles`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title,
-            image,
-            altImage,
-            lead,
-            section,
-            content,
-            author,
-          }),
-        });
+        const response = await fetch(
+          `${DOMAIN + routes.routes.articles.root}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title,
+              image,
+              altImage,
+              lead,
+              section,
+              content,
+              author,
+            }),
+          }
+        );
 
         const newArticle = await response.json();
 
@@ -97,9 +121,7 @@ export default function DashboardForm({ articleId, article, user }) {
         <div className={styles.form_author}>
           <div
             className={styles.author_img_name_container}
-            style={
-              !article.author ? { opacity: "0.2", userSelect: "none" } : {}
-            }
+            style={!author ? { opacity: "0.2", userSelect: "none" } : {}}
           >
             <p>Autor:</p>
             <img
@@ -113,13 +135,11 @@ export default function DashboardForm({ articleId, article, user }) {
           </div>
           <div className={styles.author_checkbox_container}>
             <input
-              onChange={(e) =>
-                article.setAuthor(e.target.checked ? null : editor.name)
-              }
+              onChange={(e) => getAuthor(e.target.checked ? null : editor.name)}
               type="checkbox"
             />
             <p className={styles.author_label_checkbox}>
-              {article.author
+              {author
                 ? "Marcá la casilla si preferís que la noticia no tenga autor"
                 : "Desmarcá la casilla si preferís que la noticia tenga autor"}
             </p>
@@ -136,17 +156,17 @@ export default function DashboardForm({ articleId, article, user }) {
             id="title"
             placeholder="Título"
             required
-            value={article.title}
-            onChange={(e) => article.setTitle(e.target.value)}
+            value={title}
+            onChange={(e) => getTitle(e.target.value)}
           />
         </label>
       </div>
-      {article.image ? (
+      {image ? (
         <div>
           <p>Imagen</p>
           <img
-            src={article.image}
-            alt={article.altImage}
+            src={image}
+            alt={altImage}
             width={256}
             height={170}
             className={styles.img_bbdd}
@@ -155,8 +175,8 @@ export default function DashboardForm({ articleId, article, user }) {
             type="button"
             className={styles.btn_change_img}
             onClick={() => {
-              article.setImage("");
-              article.setAltImage("");
+              getImage("");
+              getAltImage("");
             }}
           >
             Cambiar imagen
@@ -172,7 +192,7 @@ export default function DashboardForm({ articleId, article, user }) {
                 name="image"
                 id="image"
                 required
-                onChange={(e) => setImageFile(e.target.files[0])}
+                onChange={(e) => getImageFile(e.target.files[0])}
                 ref={inputFileRef}
                 className={styles.input_img}
               />
@@ -181,7 +201,7 @@ export default function DashboardForm({ articleId, article, user }) {
           {imageFile ? (
             <img
               src={URL.createObjectURL(imageFile)}
-              alt={article.altImage}
+              alt={altImage}
               width={256}
               height={170}
               className={styles.img_blob}
@@ -201,8 +221,8 @@ export default function DashboardForm({ articleId, article, user }) {
             id="alt-image"
             placeholder="Introduce una descripción corta de la imagen..."
             required
-            value={article.altImage}
-            onChange={(e) => article.setAltImage(e.target.value)}
+            value={altImage}
+            onChange={(e) => getAltImage(e.target.value)}
           />
         </label>
       </div>
@@ -216,8 +236,8 @@ export default function DashboardForm({ articleId, article, user }) {
             id="lead"
             placeholder="Entrada"
             required
-            value={article.lead}
-            onChange={(e) => article.setLead(e.target.value)}
+            value={lead}
+            onChange={(e) => getLead(e.target.value)}
             rows="4"
           />
         </label>
@@ -230,8 +250,8 @@ export default function DashboardForm({ articleId, article, user }) {
             name="section"
             id="section"
             required
-            value={article.section}
-            onChange={(e) => article.setSection(e.target.value)}
+            value={section}
+            onChange={(e) => getSection(e.target.value)}
           >
             <option value="locales">Locales</option>
             <option value="regionales">Regionales</option>
@@ -241,10 +261,10 @@ export default function DashboardForm({ articleId, article, user }) {
           </select>
         </label>
       </div>
-      <TinyMCE content={article.content} setContent={article.setContent} />
+      <TinyMCE content={content} getContent={getContent} />
       {/* <RichTextEditor
-        content={article.content}
-        setContent={article.setContent}
+        content={content}
+        getContent={getContent}
       /> */}
       <button className={styles.form_btn} type="submit">
         {articleId ? "Editar artículo" : "Subir artículo"}
