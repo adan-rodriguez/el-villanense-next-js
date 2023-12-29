@@ -51,11 +51,6 @@
   align-items: center;
 }
 
-.author_img {
-  border-radius: 100%;
-  object-fit: cover;
-}
-
 .author_checkbox_container {
   display: flex;
   column-gap: 5px;

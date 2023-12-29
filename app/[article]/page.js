@@ -1,4 +1,3 @@
-import Image from "next/image";
 import ArticleContent from "../ui/components/ArticleContent";
 import styles from "@/app/ui/styles/Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/ui/components/EditAndDeleteButtonsContainer";
@@ -9,6 +8,7 @@ import { getArticle } from "@/app/lib/services/articles";
 import ShareSocial from "../ui/components/ShareSocial";
 import { DOMAIN } from "../lib/constants";
 import { routes } from "../lib/routes";
+import AuthorImage from "../ui/components/AuthorImage";
 
 export async function generateMetadata({ params }) {
   const { article: articleId } = params;
@@ -96,12 +96,11 @@ export default async function Article({ params }) {
         <p className={styles.article_lead}>{article.lead}</p>
         {article.author && (
           <div className={styles.article_author_container}>
-            <Image
+            <AuthorImage
               src={user.image}
-              alt={`Foto de ${user.name}`}
+              author={user.name}
               width={36}
               height={36}
-              className={styles.article_author_img}
             />
             <p className={styles.article_author_name}>
               Por{" "}

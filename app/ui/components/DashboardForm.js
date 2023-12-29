@@ -6,6 +6,7 @@ import { users } from "../../lib/users";
 import { useEffect, useRef } from "react";
 import { DOMAIN } from "@/app/lib/constants";
 import { routes } from "@/app/lib/routes";
+import AuthorImage from "./AuthorImage";
 
 export default function DashboardForm({
   articleId,
@@ -124,12 +125,11 @@ export default function DashboardForm({
             style={!author ? { opacity: "0.2", userSelect: "none" } : {}}
           >
             <p>Autor:</p>
-            <img
+            <AuthorImage
               src={editor.image}
-              alt={`Foto de ${editor.name}`}
+              author={editor.name}
               width={36}
               height={36}
-              className={styles.author_img}
             />
             <p>{editor.name}</p>
           </div>
