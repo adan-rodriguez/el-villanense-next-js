@@ -13,4 +13,11 @@ export const users = [
     nick: "selva-rodriguez",
     email: "maselva@live.com.ar",
   },
+  {
+    name: "Germán Rodríguez",
+    image:
+      "https://res.cloudinary.com/dh4eh6jen/image/upload/v1703888334/el-villanense-redactores/person-icon_itua0j.webp",
+    nick: "german-rodriguez",
+    email: "germanrodriguezfusta@hotmail.com",
+  },
 ];

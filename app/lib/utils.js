@@ -29,7 +29,7 @@ export const timestampToDatetime = ({ timestamp }) => {
 
   const [year, month, day, hour, minutes] = [
     String(datetime.getFullYear()),
-    String(datetime.getMonth()),
+    String(datetime.getMonth() + 1),
     String(datetime.getDate()),
     String(datetime.getHours()),
     String(datetime.getMinutes()),
@@ -48,19 +48,19 @@ export const timestampToDatetime = ({ timestamp }) => {
     "Octubre",
     "Noviembre",
     "Diciembre",
-  ][Number(month)];
+  ][Number(month) - 1];
 
   const time = `${hour.length === 1 ? "0" : ""}${hour}:${
     minutes.length === 1 ? "0" : ""
   }${minutes}`; // 02:15
 
-  const datetimeAttribute = `${year}-${
-    String(Number(month) + 1).length === 1 ? "0" : ""
-  }${Number(month) + 1}-${day.length === 1 ? "0" : ""}${day}T${time}-03:00`; // 2023-12-22T02:15-03:00
+  const formattedDay = `${day.length === 1 ? "0" : ""}${day}`;
 
-  const dateContent = `${
-    day.length === 1 ? "0" : ""
-  }${day} de ${monthString} de ${year}`; // 22 de Diciembre de 2023
+  const datetimeAttribute = `${year}-${
+    month.length === 1 ? "0" : ""
+  }${month}-${formattedDay}T${time}-03:00`; // 2023-12-22T02:15-03:00
+
+  const dateContent = `${formattedDay} de ${monthString} de ${year}`; // 22 de Diciembre de 2023
 
   const datetimeContent = `${dateContent} - ${time}`; // 22 de Diciembre de 2023 - 02:15
 
