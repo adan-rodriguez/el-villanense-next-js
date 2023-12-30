@@ -42,7 +42,7 @@ export default function DashboardForm({
     e.preventDefault();
 
     e.target.inert = "true";
-    let image = image;
+    let imageUrl = image;
     try {
       if (imageFile) {
         let formData = new FormData();
@@ -59,7 +59,7 @@ export default function DashboardForm({
 
         const secure_url = await response.json();
 
-        image = secure_url;
+        imageUrl = secure_url;
       }
 
       if (articleId) {
@@ -73,7 +73,7 @@ export default function DashboardForm({
             body: JSON.stringify({
               articleId,
               title,
-              image,
+              image: imageUrl,
               altImage,
               lead,
               section,
@@ -95,7 +95,7 @@ export default function DashboardForm({
             },
             body: JSON.stringify({
               title,
-              image,
+              image: imageUrl,
               altImage,
               lead,
               section,
