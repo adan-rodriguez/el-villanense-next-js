@@ -23,45 +23,72 @@ export const getFriendlyUrl = ({ string }) => {
   return friendlyUrl;
 };
 
+// export const timestampToDatetime = ({ timestamp }) => {
+//   const datetime = new Date(timestamp);
+
+//   const [year, month, day, hour, minutes] = [
+//     String(datetime.getFullYear()),
+//     String(datetime.getMonth() + 1),
+//     String(datetime.getDate()),
+//     String(datetime.getHours()),
+//     String(datetime.getMinutes()),
+//   ];
+
+//   const monthString = [
+//     "Enero",
+//     "Febrero",
+//     "Marzo",
+//     "Abril",
+//     "Mayo",
+//     "Junio",
+//     "Julio",
+//     "Agosto",
+//     "Septiembre",
+//     "Octubre",
+//     "Noviembre",
+//     "Diciembre",
+//   ][Number(month) - 1];
+
+//   const time = `${hour.length === 1 ? "0" : ""}${hour}:${
+//     minutes.length === 1 ? "0" : ""
+//   }${minutes}`; // 02:15
+
+//   const formattedDay = `${day.length === 1 ? "0" : ""}${day}`;
+
+//   const datetimeAttribute = `${year}-${
+//     month.length === 1 ? "0" : ""
+//   }${month}-${formattedDay}T${time}-03:00`; // 2023-12-22T02:15-03:00
+
+//   const dateContent = `${formattedDay} de ${monthString} de ${year}`; // 22 de Diciembre de 2023
+
+//   const datetimeContent = `${dateContent} - ${time}`; // 22 de Diciembre de 2023 - 02:15
+
+//   return { datetimeAttribute, dateContent, datetimeContent };
+// };
+
 export const timestampToDatetime = ({ timestamp }) => {
   const datetime = new Date(timestamp);
 
-  const [year, month, day, hour, minutes] = [
-    String(datetime.getFullYear()),
-    String(datetime.getMonth() + 1),
-    String(datetime.getDate()),
-    String(datetime.getHours()),
-    String(datetime.getMinutes()),
-  ];
+  const year = datetime.getFullYear();
+  const month = String(datetime.getMonth() + 1).padStart(2, "0");
+  const day = String(datetime.getDate()).padStart(2, "0");
+  const hour = String(datetime.getHours()).padStart(2, "0");
+  const minutes = String(datetime.getMinutes()).padStart(2, "0");
 
-  const monthString = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ][Number(month) - 1];
+  const datetimeAttribute = `${year}-${month}-${day}T${hour}:${minutes}-03:00`;
 
-  const time = `${hour.length === 1 ? "0" : ""}${hour}:${
-    minutes.length === 1 ? "0" : ""
-  }${minutes}`; // 02:15
+  const dateContent = datetime.toLocaleDateString("es-AR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
-  const formattedDay = `${day.length === 1 ? "0" : ""}${day}`;
+  const time = datetime.toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-  const datetimeAttribute = `${year}-${
-    month.length === 1 ? "0" : ""
-  }${month}-${formattedDay}T${time}-03:00`; // 2023-12-22T02:15-03:00
-
-  const dateContent = `${formattedDay} de ${monthString} de ${year}`; // 22 de Diciembre de 2023
-
-  const datetimeContent = `${dateContent} - ${time}`; // 22 de Diciembre de 2023 - 02:15
+  const datetimeContent = `${dateContent} - ${time}`;
 
   return { datetimeAttribute, dateContent, datetimeContent };
 };
