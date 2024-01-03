@@ -1,16 +1,19 @@
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { handleDelete } from "../../lib/utils";
 
-export default function DeleteButton({ children, articleId }) {
-  const router = useRouter();
-
+export default function DeleteButton({ articleId }) {
   return (
     <button
-      onClick={() => handleDelete({ articleId, router })}
+      onClick={() => handleDelete({ articleId })}
       title="Borrar noticia"
       aria-label="Borrar noticia"
     >
-      {children}
+      <Image
+        src="/icons/dashboard/delete.svg"
+        alt="Borrar"
+        width={30}
+        height={30}
+      />
     </button>
   );
 }

@@ -1,3 +1,4 @@
+import { deleteAction } from "./actions";
 import { DOMAIN } from "./constants";
 import { routes } from "./routes";
 
@@ -27,10 +28,10 @@ export const timestampToDatetime = ({ timestamp }) => {
   const datetime1 = new Date(timestamp);
   const datetime2 = new Date(timestamp);
   datetime2.setUTCHours(datetime2.getUTCHours() - 3);
-  console.log(datetime1);
-  console.log(`${datetime1}`);
-  console.log(datetime2);
-  console.log(`${datetime2}`);
+  // console.log(datetime1);
+  // console.log(`${datetime1}`);
+  // console.log(datetime2);
+  // console.log(`${datetime2}`);
 
   const formatter = new Intl.DateTimeFormat("es-AR", {
     year: "numeric",
@@ -54,11 +55,11 @@ export const timestampToDatetime = ({ timestamp }) => {
     .find((part) => part.type === "minute")
     .value.padStart(2, "0");
 
-  console.log(`year: ${year}`);
-  console.log(`month: ${month}`);
-  console.log(`day: ${day}`);
-  console.log(`hour: ${hour}`);
-  console.log(`minute: ${minute}`);
+  // console.log(`year: ${year}`);
+  // console.log(`month: ${month}`);
+  // console.log(`day: ${day}`);
+  // console.log(`hour: ${hour}`);
+  // console.log(`minute: ${minute}`);
 
   const datetimeAttribute = `${year}-${month}-${day}T${hour}:${minute}-03:00`;
 
@@ -79,9 +80,9 @@ export const timestampToDatetime = ({ timestamp }) => {
 
   const datetimeContent = `${dateContent} - ${time}`;
 
-  console.log(`datetimeAttribute: ${datetimeAttribute}`);
-  console.log(`dateContent: ${dateContent}`);
-  console.log(`datetimeContent: ${datetimeContent}`);
+  // console.log(`datetimeAttribute: ${datetimeAttribute}`);
+  // console.log(`dateContent: ${dateContent}`);
+  // console.log(`datetimeContent: ${datetimeContent}`);
 
   return { datetimeAttribute, dateContent, datetimeContent };
 };
@@ -90,23 +91,15 @@ export const scrollToTop = () => {
   window.scrollTo(0, 0);
 };
 
-export async function handleDelete({ articleId, router }) {
+export async function handleDelete({ articleId }) {
   if (confirm("¿Estás seguro de borrar esta noticia?")) {
     try {
-      const response = await fetch(
-        `${DOMAIN + routes.routes.articles.root + "/" + articleId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const data = await response.json();
+      await deleteAction({ articleId });
     } catch {
       alert("No se ha podido eliminar la noticia");
       return;
     }
 
     alert("Noticia eliminada con éxito");
-
-    router.refresh();
   }
 }

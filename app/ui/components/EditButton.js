@@ -1,7 +1,8 @@
 import { useRouter } from "next/navigation";
 import { routes } from "../../lib/routes";
+import Image from "next/image";
 
-export default function EditButton({ children, articleId }) {
+export default function EditButton({ articleId }) {
   const router = useRouter();
   return (
     <button
@@ -11,7 +12,12 @@ export default function EditButton({ children, articleId }) {
       title="Editar noticia"
       aria-label="Editar noticia"
     >
-      {children}
+      <Image
+        src="/icons/dashboard/edit.svg"
+        alt="Editar"
+        width={30}
+        height={30}
+      />
     </button>
   );
 }
