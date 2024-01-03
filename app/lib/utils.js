@@ -68,12 +68,18 @@ export const getFriendlyUrl = ({ string }) => {
 
 export const timestampToDatetime = ({ timestamp }) => {
   const datetime = new Date(timestamp);
+  console.log(`datetime: ${datetime}`);
 
   const year = datetime.getFullYear();
   const month = String(datetime.getMonth() + 1).padStart(2, "0");
   const day = String(datetime.getDate()).padStart(2, "0");
   const hour = String(datetime.getHours()).padStart(2, "0");
   const minutes = String(datetime.getMinutes()).padStart(2, "0");
+  console.log(`year: ${year}`);
+  console.log(`month: ${month}`);
+  console.log(`day: ${day}`);
+  console.log(`hour: ${hour}`);
+  console.log(`minutes: ${minutes}`);
 
   const datetimeAttribute = `${year}-${month}-${day}T${hour}:${minutes}-03:00`;
 
@@ -89,6 +95,10 @@ export const timestampToDatetime = ({ timestamp }) => {
   });
 
   const datetimeContent = `${dateContent} - ${time}`;
+
+  console.log("datetimeAttribute:", datetimeAttribute);
+  console.log("dateContent:", dateContent);
+  console.log("datetimeContent:", datetimeContent);
 
   return { datetimeAttribute, dateContent, datetimeContent };
 };
