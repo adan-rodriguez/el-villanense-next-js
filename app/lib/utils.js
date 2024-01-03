@@ -1,6 +1,5 @@
 import { DOMAIN } from "./constants";
 import { routes } from "./routes";
-import { deleteArticle } from "./services/articles";
 
 export const getCurrentYear = () => {
   const currentTime = new Date();
@@ -74,7 +73,6 @@ export const scrollToTop = () => {
 export async function handleDelete({ articleId, router }) {
   if (confirm("¿Estás seguro de borrar esta noticia?")) {
     try {
-      await deleteArticle({ articleId });
       const response = await fetch(
         `${DOMAIN + routes.routes.articles.root + "/" + articleId}`,
         {

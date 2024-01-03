@@ -1,7 +1,6 @@
 import Articles from "../../ui/components/Articles";
 import { users } from "../../lib/users";
 import { notFound } from "next/navigation";
-import { getArticles } from "@/app/lib/services/articles";
 import styles from "@/app/ui/styles/AuthorPage.module.css";
 import { DOMAIN } from "@/app/lib/constants";
 

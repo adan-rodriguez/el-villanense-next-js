@@ -1,12 +1,12 @@
 import { addArticle } from "@/app/lib/services/articles";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export async function POST(request) {
   const article = await request.json();
 
   const newArticle = await addArticle({ article });
 
-  revalidatePath("/");
+  revalidateTag("articles");
 
   return new Response(JSON.stringify(newArticle));
 }

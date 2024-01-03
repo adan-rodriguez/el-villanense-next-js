@@ -12,12 +12,16 @@ import {
 import { db } from "../config-firebase";
 import { getFriendlyUrl, timestampToDatetime } from "../utils";
 import mock_articles from "../mocks/articles.json";
+import { isDev } from "../config";
 
-const articlesCollection = collection(db, "articles");
+const COLLECTIONS = {
+  ARTICLES: "articles",
+};
+
+const articlesCollection = collection(db, COLLECTIONS.ARTICLES);
 
 export async function getArticles({ author } = {}) {
-  const { NODE_ENV, NEXT_PUBLIC_ENV } = process.env;
-  if (NODE_ENV === "development" || NEXT_PUBLIC_ENV === "development") {
+  if (isDev) {
     if (author) {
       return mock_articles.filter((article) => article.author === author);
     }
@@ -43,19 +47,18 @@ export async function getArticles({ author } = {}) {
     }));
     return articles;
   } catch {
-    console.log("Ha ocuurido un error");
+    console.log("Ha ocurrido un error");
   }
 }
 
 export async function getArticle({ articleId }) {
-  const { NODE_ENV, NEXT_PUBLIC_ENV } = process.env;
-  if (NODE_ENV === "development" || NEXT_PUBLIC_ENV === "development") {
+  if (isDev) {
     const article = mock_articles.find((article) => article.id === articleId);
     return article;
   }
 
   try {
-    const articleRef = doc(db, "articles", articleId);
+    const articleRef = doc(db, COLLECTIONS.ARTICLES, articleId);
     const data = await getDoc(articleRef);
     if (data.exists()) {
       return { id: data.id, ...data.data() };
@@ -82,15 +85,14 @@ export const addArticle = async ({
     friendlyUrl: getFriendlyUrl({ string: title }),
   };
 
-  const { NODE_ENV, NEXT_PUBLIC_ENV } = process.env;
-  if (NODE_ENV === "development" || NEXT_PUBLIC_ENV === "development") {
+  if (isDev) {
     data.id = `${data.friendlyUrl}-${data.timestamp}`;
     mock_articles.push(data);
     return data;
   }
 
   await setDoc(
-    doc(db, "articles", `${data.friendlyUrl}-${data.timestamp}`),
+    doc(db, COLLECTIONS.ARTICLES, `${data.friendlyUrl}-${data.timestamp}`),
     data
   );
   data.id = `${data.friendlyUrl}-${data.timestamp}`;
@@ -98,8 +100,7 @@ export const addArticle = async ({
 };
 
 export const deleteArticle = async ({ articleId }) => {
-  const { NODE_ENV, NEXT_PUBLIC_ENV } = process.env;
-  if (NODE_ENV === "development" || NEXT_PUBLIC_ENV === "development") {
+  if (isDev) {
     const index = mock_articles.findIndex(
       (article) => article.id === articleId
     );
@@ -107,7 +108,7 @@ export const deleteArticle = async ({ articleId }) => {
     return;
   }
 
-  await deleteDoc(doc(db, "articles", articleId));
+  await deleteDoc(doc(db, COLLECTIONS.ARTICLES, articleId));
   return `Artículo con id '${articleId}' eliminado`;
 };
 
@@ -115,8 +116,7 @@ export const editArticle = async ({
   articleId,
   article: { title, image, altImage, lead, section, content },
 }) => {
-  const { NODE_ENV, NEXT_PUBLIC_ENV } = process.env;
-  if (NODE_ENV === "development" || NEXT_PUBLIC_ENV === "development") {
+  if (isDev) {
     const index = mock_articles.findIndex(
       (article) => article.id === articleId
     );
@@ -132,7 +132,7 @@ export const editArticle = async ({
   }
 
   await setDoc(
-    doc(db, "articles", articleId),
+    doc(db, COLLECTIONS.ARTICLES, articleId),
     {
       title,
       image,

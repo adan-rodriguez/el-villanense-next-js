@@ -84,7 +84,7 @@ export default function DashboardForm({
 
         const data = await response.json();
 
-        alert("Artículo subido con éxito");
+        alert("Artículo editado con éxito");
       } else {
         const response = await fetch(
           `${DOMAIN + routes.routes.articles.root}`,
