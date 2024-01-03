@@ -23,82 +23,62 @@ export const getFriendlyUrl = ({ string }) => {
   return friendlyUrl;
 };
 
-// export const timestampToDatetime = ({ timestamp }) => {
-//   const datetime = new Date(timestamp);
-
-//   const [year, month, day, hour, minutes] = [
-//     String(datetime.getFullYear()),
-//     String(datetime.getMonth() + 1),
-//     String(datetime.getDate()),
-//     String(datetime.getHours()),
-//     String(datetime.getMinutes()),
-//   ];
-
-//   const monthString = [
-//     "Enero",
-//     "Febrero",
-//     "Marzo",
-//     "Abril",
-//     "Mayo",
-//     "Junio",
-//     "Julio",
-//     "Agosto",
-//     "Septiembre",
-//     "Octubre",
-//     "Noviembre",
-//     "Diciembre",
-//   ][Number(month) - 1];
-
-//   const time = `${hour.length === 1 ? "0" : ""}${hour}:${
-//     minutes.length === 1 ? "0" : ""
-//   }${minutes}`; // 02:15
-
-//   const formattedDay = `${day.length === 1 ? "0" : ""}${day}`;
-
-//   const datetimeAttribute = `${year}-${
-//     month.length === 1 ? "0" : ""
-//   }${month}-${formattedDay}T${time}-03:00`; // 2023-12-22T02:15-03:00
-
-//   const dateContent = `${formattedDay} de ${monthString} de ${year}`; // 22 de Diciembre de 2023
-
-//   const datetimeContent = `${dateContent} - ${time}`; // 22 de Diciembre de 2023 - 02:15
-
-//   return { datetimeAttribute, dateContent, datetimeContent };
-// };
-
 export const timestampToDatetime = ({ timestamp }) => {
   const datetime = new Date(timestamp);
-  console.log(`datetime: ${datetime}`);
+  datetime.setUTCHours(datetime.getUTCHours() - 3);
+  console.log(datetime);
+  console.log(`${datetime}`);
 
-  const year = datetime.getFullYear();
-  const month = String(datetime.getMonth() + 1).padStart(2, "0");
-  const day = String(datetime.getDate()).padStart(2, "0");
-  const hour = String(datetime.getHours()).padStart(2, "0");
-  const minutes = String(datetime.getMinutes()).padStart(2, "0");
+  const formatter = new Intl.DateTimeFormat("es-AR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "America/Argentina/Buenos_Aires",
+  });
+  const parts = formatter.formatToParts(datetime);
+
+  const year = parts.find((part) => part.type === "year").value;
+  const month = parts
+    .find((part) => part.type === "month")
+    .value.padStart(2, "0");
+  const day = parts.find((part) => part.type === "day").value.padStart(2, "0");
+  const hour = parts
+    .find((part) => part.type === "hour")
+    .value.padStart(2, "0");
+  const minute = parts
+    .find((part) => part.type === "minute")
+    .value.padStart(2, "0");
+
   console.log(`year: ${year}`);
   console.log(`month: ${month}`);
   console.log(`day: ${day}`);
   console.log(`hour: ${hour}`);
-  console.log(`minutes: ${minutes}`);
+  console.log(`minute: ${minute}`);
 
-  const datetimeAttribute = `${year}-${month}-${day}T${hour}:${minutes}-03:00`;
+  const datetimeAttribute = `${year}-${month}-${day}T${hour}:${minute}-03:00`;
 
-  const dateContent = datetime.toLocaleDateString("es-AR", {
+  const dateContentFormatter = new Intl.DateTimeFormat("es-AR", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-  const time = datetime.toLocaleTimeString("es-AR", {
+  const dateContent = dateContentFormatter.format(datetime);
+
+  const timeFormatter = new Intl.DateTimeFormat("es-AR", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
+  const time = timeFormatter.format(datetime);
+
   const datetimeContent = `${dateContent} - ${time}`;
 
-  console.log("datetimeAttribute:", datetimeAttribute);
-  console.log("dateContent:", dateContent);
-  console.log("datetimeContent:", datetimeContent);
+  console.log(`datetimeAttribute: ${datetimeAttribute}`);
+  console.log(`dateContent: ${dateContent}`);
+  console.log(`datetimeContent: ${datetimeContent}`);
 
   return { datetimeAttribute, dateContent, datetimeContent };
 };
