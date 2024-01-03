@@ -24,10 +24,13 @@ export const getFriendlyUrl = ({ string }) => {
 };
 
 export const timestampToDatetime = ({ timestamp }) => {
-  const datetime = new Date(timestamp);
-  datetime.setUTCHours(datetime.getUTCHours() - 3);
-  console.log(datetime);
-  console.log(`${datetime}`);
+  const datetime1 = new Date(timestamp);
+  const datetime2 = new Date(timestamp);
+  datetime2.setUTCHours(datetime2.getUTCHours() - 3);
+  console.log(datetime1);
+  console.log(`${datetime1}`);
+  console.log(datetime2);
+  console.log(`${datetime2}`);
 
   const formatter = new Intl.DateTimeFormat("es-AR", {
     year: "numeric",
@@ -37,7 +40,7 @@ export const timestampToDatetime = ({ timestamp }) => {
     minute: "2-digit",
     timeZone: "America/Argentina/Buenos_Aires",
   });
-  const parts = formatter.formatToParts(datetime);
+  const parts = formatter.formatToParts(datetime1);
 
   const year = parts.find((part) => part.type === "year").value;
   const month = parts
@@ -65,14 +68,14 @@ export const timestampToDatetime = ({ timestamp }) => {
     day: "numeric",
   });
 
-  const dateContent = dateContentFormatter.format(datetime);
+  const dateContent = dateContentFormatter.format(datetime2);
 
   const timeFormatter = new Intl.DateTimeFormat("es-AR", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  const time = timeFormatter.format(datetime);
+  const time = timeFormatter.format(datetime2);
 
   const datetimeContent = `${dateContent} - ${time}`;
 
