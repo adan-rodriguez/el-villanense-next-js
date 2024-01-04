@@ -5,21 +5,29 @@ export async function GET() {
   headers.set("Content-Type", "application/xml");
 
   const articles = await getArticles();
+
+  const last48h = Date.now() - 172800000; // 48 * 60 * 60 * 1000;
+
   let xml = "";
-  articles.forEach(
-    ({ id, datetimeAttribute, title }) =>
-      (xml += `<url>
-                  <loc>http://www.elvillanense.com.ar/${id}</loc>
-                  <news:news>
-                    <news:publication>
-                      <news:name>El Villanense</news:name>
-                      <news:language>es</news:language>
-                    </news:publication>
-                    <news:publication_date>${datetimeAttribute}</news:publication_date>
-                    <news:title>${title}</news:title>
-                  </news:news>
-                </url>`)
-  );
+  articles.forEach(({ id, datetimeAttribute, title, timestamp }) => {
+    if (timestamp >= last48h) {
+      xml += `<url>
+                <loc>http://www.elvillanense.com.ar/${id}</loc>
+                <news:news>
+                  <news:publication>
+                  <news:name>El Villanense</news:name>
+                  <news:language>es</news:language>
+                  </news:publication>
+                  <news:publication_date>${datetimeAttribute}</news:publication_date>
+                  <news:title>${title}</news:title>
+                </news:news>
+              </url>`;
+    } else {
+      xml += `<url>
+                <loc>http://www.elvillanense.com.ar/${id}</loc>
+              </url>`;
+    }
+  });
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

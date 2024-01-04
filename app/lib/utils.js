@@ -109,20 +109,8 @@ export const handleSubmit = async (e, { articleId, article, imageFile }) => {
 
   try {
     if (imageFile) {
-      let formData = new FormData();
-      formData.append("file", imageFile);
-      formData.append("upload_preset", "elvillanense");
-
-      const response = await fetch(
-        "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const { secure_url } = await response.json();
-      article.image = secure_url;
+      const { imageUrl } = await uploadImage({ imageFile });
+      article.image = imageUrl;
     }
 
     if (articleId) {
@@ -139,4 +127,21 @@ export const handleSubmit = async (e, { articleId, article, imageFile }) => {
   }
 
   e.target.inert = "";
+};
+
+const uploadImage = async ({ imageFile }) => {
+  let formData = new FormData();
+  formData.append("file", imageFile);
+  formData.append("upload_preset", "elvillanense");
+
+  const response = await fetch(
+    "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  const { secure_url } = await response.json();
+  return { imageUrl: secure_url };
 };
