@@ -4,9 +4,8 @@ import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
 import { users } from "../../lib/users";
 import { useEffect, useRef } from "react";
-import { DOMAIN } from "@/app/lib/constants";
-import { routes } from "@/app/lib/routes";
 import AuthorImage from "./AuthorImage";
+import { handleSubmit } from "@/app/lib/utils";
 
 export default function DashboardForm({
   articleId,
@@ -38,86 +37,17 @@ export default function DashboardForm({
     if (editor) getAuthor(editor.name);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    e.target.inert = "true";
-    let imageUrl = image;
-    try {
-      if (imageFile) {
-        let formData = new FormData();
-        formData.append("file", imageFile);
-        formData.append("upload_preset", "elvillanense");
-
-        const response = await fetch(
-          `${DOMAIN + routes.routes.cloudinary.root}`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        const secure_url = await response.json();
-
-        imageUrl = secure_url;
-      }
-
-      if (articleId) {
-        const response = await fetch(
-          `${DOMAIN + routes.routes.articles.root + "/" + articleId}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              articleId,
-              title,
-              image: imageUrl,
-              altImage,
-              lead,
-              section,
-              content,
-            }),
-          }
-        );
-
-        const data = await response.json();
-
-        alert("Artículo editado con éxito");
-      } else {
-        const response = await fetch(
-          `${DOMAIN + routes.routes.articles.root}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              image: imageUrl,
-              altImage,
-              lead,
-              section,
-              content,
-              author,
-            }),
-          }
-        );
-
-        const newArticle = await response.json();
-
-        alert("Artículo subido con éxito");
-      }
-    } catch {
-      alert("Ocurrió un error. Inténtelo nuevamente");
-    }
-
-    e.target.inert = "";
-  };
-
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={styles.form}
+      onSubmit={async (e) => {
+        await handleSubmit(e, {
+          articleId,
+          article: { title, image, altImage, lead, section, content, author },
+          imageFile,
+        });
+      }}
+    >
       {!articleId && (
         <div className={styles.form_author}>
           <div

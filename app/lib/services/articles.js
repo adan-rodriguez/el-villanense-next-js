@@ -91,11 +91,10 @@ export const addArticle = async ({
     return data;
   }
 
-  await setDoc(
-    doc(db, COLLECTIONS.ARTICLES, `${data.friendlyUrl}-${data.timestamp}`),
-    data
-  );
-  data.id = `${data.friendlyUrl}-${data.timestamp}`;
+  const id = `${data.friendlyUrl}-${data.timestamp}`;
+
+  await setDoc(doc(db, COLLECTIONS.ARTICLES, id), data);
+  data.id = id;
   return data;
 };
 

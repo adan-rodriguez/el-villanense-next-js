@@ -1,6 +1,4 @@
-import { deleteAction } from "./actions";
-import { DOMAIN } from "./constants";
-import { routes } from "./routes";
+import { deleteAction } from "./server-actions";
 
 export const getCurrentYear = () => {
   const currentTime = new Date();
@@ -103,3 +101,42 @@ export async function handleDelete({ articleId }) {
     alert("Noticia eliminada con éxito");
   }
 }
+
+export const handleSubmit = async (e, { articleId, article, imageFile }) => {
+  e.preventDefault();
+
+  e.target.inert = "true";
+
+  try {
+    if (imageFile) {
+      let formData = new FormData();
+      formData.append("file", imageFile);
+      formData.append("upload_preset", "elvillanense");
+
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const { secure_url } = await response.json();
+      article.image = secure_url;
+    }
+
+    if (articleId) {
+      await editAction({ articleId, article });
+
+      alert("Artículo editado con éxito");
+    } else {
+      await addAction({ article });
+
+      alert("Artículo subido con éxito");
+    }
+  } catch {
+    alert("Ocurrió un error. Inténtelo nuevamente");
+  }
+
+  e.target.inert = "";
+};
