@@ -6,17 +6,17 @@ export async function GET() {
 
   const articles = await getArticles();
 
-  const last48h = Date.now() - 172800000; // 48 * 60 * 60 * 1000;
+  const _48HoursAgo = Date.now() - 172800000; // 48 * 60 * 60 * 1000;
 
   let xml = "";
   articles.forEach(({ id, datetimeAttribute, title, timestamp }) => {
-    if (timestamp >= last48h) {
+    if (timestamp >= _48HoursAgo) {
       xml += `<url>
                 <loc>http://www.elvillanense.com.ar/${id}</loc>
                 <news:news>
                   <news:publication>
-                  <news:name>El Villanense</news:name>
-                  <news:language>es</news:language>
+                    <news:name>El Villanense</news:name>
+                    <news:language>es</news:language>
                   </news:publication>
                   <news:publication_date>${datetimeAttribute}</news:publication_date>
                   <news:title>${title}</news:title>

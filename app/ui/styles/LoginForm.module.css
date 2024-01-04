@@ -9,6 +9,10 @@
   border: 1px solid black;
 }
 
+.form[inert] {
+  opacity: 0.3;
+}
+
 .form_label {
   display: block;
 }

@@ -1,7 +1,5 @@
-import { redirect } from "next/navigation";
-import { handleLogin } from "../../lib/auth";
+import { login } from "../../lib/auth";
 import styles from "../styles/LoginForm.module.css";
-import { routes } from "@/app/lib/routes";
 
 export default function LoginForm({
   email,
@@ -15,15 +13,7 @@ export default function LoginForm({
     <>
       <form
         className={styles.form}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const errorMessage = handleLogin({ email, password });
-          if (errorMessage) {
-            getLoginErrorMessage(errorMessage);
-          } else {
-            redirect(routes.dashboard.root);
-          }
-        }}
+        onSubmit={(e) => login(e, { email, password, getLoginErrorMessage })}
       >
         <div>
           <label className={styles.form_label} htmlFor="email">

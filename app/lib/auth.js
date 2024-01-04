@@ -5,25 +5,31 @@ import {
 } from "firebase/auth";
 import { auth } from "./config-firebase";
 
-export const handleLogin = ({ email, password }) => {
+export const login = async (e, { email, password, getLoginErrorMessage }) => {
+  e.preventDefault();
+
+  getLoginErrorMessage(null);
+
+  e.target.inert = "true";
+
   setPersistence(auth, browserSessionPersistence)
     .then(() => {
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          return null;
-        })
         .catch((error) => {
           if (
             error.message.includes("user-not-found") ||
             error.message.includes("wrong-password")
           ) {
-            return "El email y/o contraseña son incorrectos";
+            getLoginErrorMessage("El email y/o contraseña son incorrectos");
+          } else if (error.message.includes("invalid-email")) {
+            getLoginErrorMessage("Introduce un email válido");
           } else {
-            return "Ocurrió un error. Inténtalo nuevamente";
+            getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
           }
-        });
+        })
+        .finally(() => (e.target.inert = ""));
     })
     .catch(() => {
-      return "Ocurrió un error. Inténtalo nuevamente";
+      getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
     });
 };
