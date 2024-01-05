@@ -240,8 +240,11 @@ export default function RichEditorText({ content, setContent }) {
       buttonsContainerRef.current.querySelector("select").remove();
     }
 
-    const { anchorNode, anchorOffset, focusNode, focusOffset, isCollapsed } =
-      window.getSelection();
+    const {
+      anchorNode,
+      anchorOffset,
+      /* focusNode, focusOffset, */ isCollapsed,
+    } = window.getSelection();
     if (!anchorNode) return; // el cursor no estaba en ningun lado
 
     const positionsNodes = [];

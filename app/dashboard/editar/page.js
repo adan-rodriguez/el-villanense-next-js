@@ -1,5 +1,5 @@
 import { getArticle } from "@/app/lib/services/articles";
-import DashboardEditArticle from "./DashboardEditArticle";
+import DashboardEditArticle from "@/app/ui/components/DashboardEditArticle";
 import { notFound } from "next/navigation";
 
 export default async function EditArticlePage({ searchParams }) {

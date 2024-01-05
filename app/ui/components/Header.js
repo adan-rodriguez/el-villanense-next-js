@@ -20,13 +20,13 @@ import { useEffect, useState } from "react";
 
 export default function Header() {
   const [isMenuopen, setIsMenuopen] = useState(false);
-  const [innerWidth, setInnerWidth] = useState(null);
+  // const [innerWidth, setInnerWidth] = useState(null);
 
   // const pathname = usePathname();
 
-  useEffect(() => {
-    setInnerWidth(window.innerWidth);
-  }, []);
+  // useEffect(() => {
+  //   setInnerWidth(window.innerWidth);
+  // }, []);
 
   useEffect(() => {
     if (isMenuopen) {
@@ -55,13 +55,13 @@ export default function Header() {
     };
   }, [isMenuopen]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setInnerWidth(window.innerWidth);
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setInnerWidth(window.innerWidth);
+  //   };
 
-    addEventListener("resize", handleResize);
-  }, []);
+  //   addEventListener("resize", handleResize);
+  // }, []);
 
   return (
     <header className={styles.header}>

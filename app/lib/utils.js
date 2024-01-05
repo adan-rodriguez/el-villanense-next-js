@@ -149,7 +149,7 @@ const uploadImage = async ({ imageFile }) => {
 };
 
 export const getArticlesAndCache = unstable_cache(
-  async ({ author } = { author: undefined }) => await getArticles({ author }),
+  async ({ author } = {}) => await getArticles({ author }),
   ["articles"],
   {
     tags: ["articles"],

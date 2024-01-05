@@ -10,7 +10,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 export default function ArticlesDashboard(props) {
   const [articles, setArticles] = useState(props.articles);
   const [search, setSearch] = useState("");
-  const [isReversed, setIsReversed] = useState(false);
+  // const [isReversed, setIsReversed] = useState(false);
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -36,7 +36,7 @@ export default function ArticlesDashboard(props) {
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     setSearch(params.get("search") || "");
-    setIsReversed(Boolean(params.get("reverse")) || false);
+    // setIsReversed(Boolean(params.get("reverse")) || false);
   }, []);
 
   return (
@@ -55,7 +55,7 @@ export default function ArticlesDashboard(props) {
         onChange={(e) => {
           handleFilters({ reverse: e.target.value === "mas-antiguos" });
           setArticles(articles.toReversed());
-          setIsReversed(e.target.value === "mas-antiguos");
+          // setIsReversed(e.target.value === "mas-antiguos");
         }}
       >
         <option value="mas-recientes" selected>

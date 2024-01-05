@@ -1,10 +1,10 @@
-import { getArticles } from "../lib/services/articles";
+import { getArticlesAndCache } from "../lib/utils";
 
 export async function GET() {
   const headers = new Headers();
   headers.set("Content-Type", "application/xml");
 
-  const articles = await getArticles();
+  const articles = await getArticlesAndCache();
 
   const _48HoursAgo = Date.now() - 172800000; // 48 * 60 * 60 * 1000;
 
