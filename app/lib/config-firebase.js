@@ -1,15 +1,10 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { getFirestore } from "@firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { FIREBASE_API_KEY } from "./config";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCykhT4GBL5DUSBNppvlN7Py4vBngWBZnU",
+  apiKey: FIREBASE_API_KEY,
   authDomain: "el-villanense-4efa5.firebaseapp.com",
   projectId: "el-villanense-4efa5",
   storageBucket: "el-villanense-4efa5.appspot.com",
@@ -17,7 +12,6 @@ const firebaseConfig = {
   appId: "1:703366970993:web:bb2eb3bcb3cbbf95d1a5d0",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);

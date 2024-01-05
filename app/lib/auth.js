@@ -12,24 +12,20 @@ export const login = async (e, { email, password, getLoginErrorMessage }) => {
 
   e.target.inert = "true";
 
-  setPersistence(auth, browserSessionPersistence)
-    .then(() => {
-      signInWithEmailAndPassword(auth, email, password)
-        .catch((error) => {
-          if (
-            error.message.includes("user-not-found") ||
-            error.message.includes("wrong-password")
-          ) {
-            getLoginErrorMessage("El email y/o contraseña son incorrectos");
-          } else if (error.message.includes("invalid-email")) {
-            getLoginErrorMessage("Introduce un email válido");
-          } else {
-            getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
-          }
-        })
-        .finally(() => (e.target.inert = ""));
-    })
-    .catch(() => {
-      getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
-    });
+  setPersistence(auth, browserSessionPersistence).then(() => {
+    signInWithEmailAndPassword(auth, email, password)
+      .catch((error) => {
+        if (
+          error.message.includes("user-not-found") ||
+          error.message.includes("wrong-password")
+        ) {
+          getLoginErrorMessage("El email y/o contraseña son incorrectos");
+        } else if (error.message.includes("invalid-email")) {
+          getLoginErrorMessage("Introduce un email válido");
+        } else {
+          getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
+        }
+      })
+      .finally(() => (e.target.inert = ""));
+  });
 };

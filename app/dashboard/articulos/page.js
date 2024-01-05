@@ -1,7 +1,7 @@
-import { getArticles } from "@/app/lib/services/articles";
-import ArticlesDashboard from "../../ui/components/ArticlesDashboard";
+import { getArticlesAndCache } from "@/app/lib/utils";
+import ArticlesDashboard from "@/app/ui/components/ArticlesDashboard";
 
 export default async function ArticlesDashboardPage() {
-  const articles = await getArticles();
+  const articles = await getArticlesAndCache();
   return <ArticlesDashboard articles={articles} />;
 }

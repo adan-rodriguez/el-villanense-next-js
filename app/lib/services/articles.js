@@ -20,7 +20,7 @@ const COLLECTIONS = {
 
 const articlesCollection = collection(db, COLLECTIONS.ARTICLES);
 
-export async function getArticles({ author } = {}) {
+export async function getArticles({ author }) {
   if (isDev) {
     if (author) {
       return mock_articles.filter((article) => article.author === author);

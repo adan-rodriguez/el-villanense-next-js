@@ -1,4 +1,6 @@
+import { unstable_cache } from "next/cache";
 import { addAction, deleteAction, editAction } from "./server-actions";
+import { getArticles } from "./services/articles";
 
 export const getCurrentYear = () => {
   const currentTime = new Date();
@@ -145,3 +147,11 @@ const uploadImage = async ({ imageFile }) => {
   const { secure_url } = await response.json();
   return { imageUrl: secure_url };
 };
+
+export const getArticlesAndCache = unstable_cache(
+  async ({ author } = { author: undefined }) => await getArticles({ author }),
+  ["articles"],
+  {
+    tags: ["articles"],
+  }
+);
