@@ -2,9 +2,9 @@
 
 import DashboardForm from "@/app/ui/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
-import styles from "@/app/ui/styles/EditArticle.module.css";
+import styles from "@/app/ui/styles/EditArticleClientPage.module.css";
 
-export default function DashboardEditArticle({ articleId, article }) {
+export default function EditArticleClientPage({ articleId, article }) {
   const {
     title,
     image,

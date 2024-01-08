@@ -1,14 +1,16 @@
 "use client";
 
-import EditAndDeleteButtonsContainer from "./EditAndDeleteButtonsContainer";
-import styles from "../styles/ArticlesDashboard.module.css";
+import styles from "@/app/ui/styles/ArticlesDashboardClientPage.module.css";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import EditAndDeleteButtonsContainer from "@/app/ui/components/EditAndDeleteButtonsContainer";
 
 // no estoy usando los filtros de la url. Los pongo cuando en un futuro aprenda a usarlos para filtrar
 
-export default function ArticlesDashboard(props) {
-  const [articles, setArticles] = useState(props.articles);
+export default function ArticlesDashboardClientPage({
+  articles: initialArticles,
+}) {
+  const [articles, setArticles] = useState(initialArticles);
   const [search, setSearch] = useState("");
   // const [isReversed, setIsReversed] = useState(false);
 

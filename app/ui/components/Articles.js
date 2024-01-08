@@ -8,7 +8,7 @@ export default async function Articles({ author }) {
   if (articles.length === 0) return <p>No hay noticias por el momento</p>;
 
   return (
-    <div className={styles.articles_links_container}>
+    <section className={styles.articles_links_container}>
       {articles.map((article) => (
         <ArticleLink
           key={article.id}
@@ -21,6 +21,6 @@ export default async function Articles({ author }) {
           author={article.author}
         />
       ))}
-    </div>
+    </section>
   );
 }

@@ -4,6 +4,7 @@
 
 .article_title {
   font-weight: 700;
+  text-wrap: pretty;
 }
 
 .article_img {
@@ -43,6 +44,7 @@
 .article_lead {
   font-size: 1.15rem;
   margin-top: 5px;
+  text-wrap: pretty;
 }
 
 .article_author_container {

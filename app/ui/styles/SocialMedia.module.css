@@ -3,9 +3,14 @@
   column-gap: 15px;
 }
 
+.layout_links_social_container {
+  display: none;
+}
+
 /* // Dispositivos grandes (escritorios, 992px y más) */
 @media (min-width: 992px) {
-  .links_social_container_header {
+  .layout_links_social_container {
+    display: flex;
     position: fixed;
     left: 0;
     top: 50%;

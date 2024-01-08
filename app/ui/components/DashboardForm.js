@@ -82,9 +82,7 @@ export default function DashboardForm({
           <input
             className={styles.form_input}
             type="text"
-            name="title"
             id="title"
-            placeholder="Título"
             required
             value={title}
             onChange={(e) => getTitle(e.target.value)}
@@ -94,13 +92,7 @@ export default function DashboardForm({
       {image ? (
         <div>
           <p>Imagen</p>
-          <img
-            src={image}
-            alt={altImage}
-            width={256}
-            height={170}
-            className={styles.img_bbdd}
-          />
+          <img src={image} alt={altImage} className={styles.img_bbdd} />
           <button
             type="button"
             className={styles.btn_change_img}
@@ -119,7 +111,6 @@ export default function DashboardForm({
               Imagen
               <input
                 type="file"
-                name="image"
                 id="image"
                 required
                 onChange={(e) => getImageFile(e.target.files[0])}
@@ -132,8 +123,6 @@ export default function DashboardForm({
             <img
               src={URL.createObjectURL(imageFile)}
               alt={altImage}
-              width={256}
-              height={170}
               className={styles.img_blob}
             />
           ) : (
@@ -143,13 +132,11 @@ export default function DashboardForm({
       )}
       <div>
         <label className={styles.form_label} htmlFor="alt-image">
-          Texto alternativo de la imagen
+          Descripción corta de la imagen &#40;para personas no videntes&#41;
           <input
             className={styles.form_input}
             type="text"
-            name="alt-image"
             id="alt-image"
-            placeholder="Introduce una descripción corta de la imagen..."
             required
             value={altImage}
             onChange={(e) => getAltImage(e.target.value)}
@@ -161,10 +148,7 @@ export default function DashboardForm({
           Entrada
           <textarea
             className={styles.form_textarea}
-            type="text"
-            name="lead"
             id="lead"
-            placeholder="Entrada"
             required
             value={lead}
             onChange={(e) => getLead(e.target.value)}
@@ -177,7 +161,6 @@ export default function DashboardForm({
           Sección
           <select
             className={styles.form_select}
-            name="section"
             id="section"
             required
             value={section}

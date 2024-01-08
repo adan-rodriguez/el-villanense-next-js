@@ -29,6 +29,10 @@
   max-height: 600px;
 }
 
+.article_content {
+  text-wrap: pretty;
+}
+
 /* // Dispositivos medianos (tabletas, 768px y más) */
 /* @media (min-width: 768px) {
   .article_content img {

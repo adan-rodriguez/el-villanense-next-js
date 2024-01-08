@@ -34,3 +34,7 @@
 .address_item a {
   text-decoration: underline;
 }
+
+.copyright {
+  text-wrap: pretty;
+}

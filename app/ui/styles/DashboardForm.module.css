@@ -69,10 +69,14 @@
   object-fit: cover;
   vertical-align: bottom;
   margin-right: 10px;
+  width: 256px;
+  aspect-ratio: 3/2;
 }
 
 .img_blob {
   object-fit: cover;
+  width: 256px;
+  aspect-ratio: 3/2;
 }
 
 .img_preview {
