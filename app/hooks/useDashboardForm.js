@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { users } from "../lib/users";
 
 export default function useDashboardForm({ article } = {}) {
   const [title, setTitle] = useState("");
@@ -7,7 +8,8 @@ export default function useDashboardForm({ article } = {}) {
   const [lead, setLead] = useState("");
   const [section, setSection] = useState("locales");
   const [content, setContent] = useState("");
-  const [isThereAuthor, setIsThereAuthor] = useState(true);
+  const [author, setAuthor] = useState(null);
+  const [showAuthor, setShowAuthor] = useState(true);
 
   const [imageFile, setImageFile] = useState(null);
 
@@ -17,7 +19,7 @@ export default function useDashboardForm({ article } = {}) {
   const getLead = (lead) => setLead(lead);
   const getSection = (section) => setSection(section);
   const getContent = (content) => setContent(content);
-  const getIsThereAuthor = (author) => setIsThereAuthor(author);
+  const getShowAuthor = (bool) => setShowAuthor(bool);
 
   const getImageFile = (imageFile) => setImageFile(imageFile);
 
@@ -29,7 +31,9 @@ export default function useDashboardForm({ article } = {}) {
       setLead(article.lead);
       setSection(article.section);
       setContent(article.content);
-      setIsThereAuthor(Boolean(article.author));
+      const editor = users.find((_user) => _user.name === article.author);
+      setAuthor(editor);
+      setShowAuthor(Boolean(article.author));
     }
   }, []);
 
@@ -41,10 +45,10 @@ export default function useDashboardForm({ article } = {}) {
   //     lead,
   //     section,
   //     content,
-  //     isThereAuthor,
+  //     showAuthor,
   //   };
   //   window.sessionStorage.setItem("article", JSON.stringify(newArticle));
-  // }, [title, image, altImage, lead, section, content, isThereAuthor]);
+  // }, [title, image, altImage, lead, section, content, showAuthor]);
 
   return {
     title,
@@ -53,14 +57,15 @@ export default function useDashboardForm({ article } = {}) {
     lead,
     section,
     content,
-    isThereAuthor,
+    author,
+    showAuthor,
     getTitle,
     getImage,
     getAltImage,
     getLead,
     getSection,
     getContent,
-    getIsThereAuthor,
+    getShowAuthor,
     imageFile,
     getImageFile,
   };

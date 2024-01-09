@@ -14,14 +14,15 @@ export default function DashboardForm({
   lead,
   section,
   content,
-  isThereAuthor,
+  author,
+  showAuthor,
   getTitle,
   getImage,
   getAltImage,
   getLead,
   getSection,
   getContent,
-  getIsThereAuthor,
+  getShowAuthor,
   imageFile,
   getImageFile,
   user,
@@ -41,7 +42,7 @@ export default function DashboardForm({
             lead,
             section,
             content,
-            author: isThereAuthor ? user.name : null,
+            author: showAuthor ? (author ? author.name : user.name) : null,
           },
           imageFile,
         });
@@ -50,24 +51,24 @@ export default function DashboardForm({
       <div className={styles.form_author}>
         <div
           className={styles.author_img_name_container}
-          style={!isThereAuthor ? { opacity: "0.2", userSelect: "none" } : {}}
+          style={!showAuthor ? { opacity: "0.2", userSelect: "none" } : {}}
         >
           <p>Autor:</p>
           <AuthorImage
-            src={user.image}
-            author={user.name}
+            src={author ? author.image : user.image}
+            author={author ? author.name : user.name}
             width={36}
             height={36}
           />
-          <p>{user.name}</p>
+          <p>{author ? author.name : user.name}</p>
         </div>
         <div className={styles.author_checkbox_container}>
           <input
-            onChange={(e) => getIsThereAuthor(e.target.checked ? false : true)}
+            onChange={(e) => getShowAuthor(!e.target.checked)}
             type="checkbox"
           />
           <p className={styles.author_label_checkbox}>
-            {isThereAuthor
+            {showAuthor
               ? "Marcá la casilla si preferís que la noticia no tenga autor"
               : "Desmarcá la casilla si preferís que la noticia tenga autor"}
           </p>

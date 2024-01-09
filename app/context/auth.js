@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      let editor = users.find((_user) => _user.email === user.email);
+      const editor = users.find((_user) => _user.email === user.email);
       // window.sessionStorage.setItem("author", JSON.stringify(editor));
       setUser(editor);
     }
