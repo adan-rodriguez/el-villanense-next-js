@@ -96,12 +96,7 @@ export default async function Article({ params }) {
         <p className={styles.article_lead}>{article.lead}</p>
         {article.author && (
           <div className={styles.article_author_container}>
-            <AuthorImage
-              src={user.image}
-              author={user.name}
-              width={36}
-              height={36}
-            />
+            <AuthorImage src={user.image} author={user.name} />
             <p className={styles.article_author_name}>
               Por{" "}
               <Link

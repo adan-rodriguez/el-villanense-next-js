@@ -5,6 +5,12 @@ import Logo from "./Logo";
 import Image from "next/image";
 import useMenu from "@/app/hooks/useMenu";
 import MenuPhone from "./MenuPhone";
+import useAuth from "@/app/hooks/useAuth";
+import AuthorImage from "./AuthorImage";
+import { logout } from "@/app/lib/auth";
+import useMenuUser from "@/app/hooks/useMenuUser";
+import Link from "next/link";
+import { routes } from "@/app/lib/routes";
 // import dynamic from "next/dynamic";
 // const MenuPhone = dynamic(() => import("./MenuPhone"));
 
@@ -19,12 +25,53 @@ import MenuPhone from "./MenuPhone";
 
 export default function Header() {
   const { isMenuOpen, getIsMenuOpen } = useMenu();
+  const { isMenuUserOpen, getIsMenuUserOpen } = useMenuUser();
+  const { user } = useAuth();
+
+  // const closeUserMenu = (e) => {
+  //   console.log("click");
+  //   if (!e.target.closest("#user-menu-open-button")) {
+  //     getIsMenuUserOpen(false);
+  //   }
+  // };
+
+  // if (isMenuUserOpen) {
+  //   document.addEventListener("click", closeUserMenu);
+  // } else {
+  //   document.removeEventListener("click", closeUserMenu);
+  // }
 
   return (
     <header className={styles.header}>
       <div className={styles.header_container}>
         <Logo />
-        {!isMenuOpen && (
+        {user && !isMenuOpen && (
+          <div className={styles.buttonandmenu_user_container}>
+            <button
+              id="user-menu-open-button"
+              className={styles.openmenuuser_button}
+              onClick={() => getIsMenuUserOpen(!isMenuUserOpen)}
+            >
+              <AuthorImage src={user.image} author={user.name} />
+            </button>
+            {isMenuUserOpen && (
+              <div id="user-menu" className={styles.menuuser_container}>
+                <span className={styles.username}>{user.name}</span>
+                <Link href={routes.dashboard.root}>Perfil</Link>
+                <button
+                  className={styles.logout_button}
+                  onClick={() => {
+                    getIsMenuUserOpen(!isMenuUserOpen);
+                    logout();
+                  }}
+                >
+                  Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+        {!isMenuOpen ? (
           <button
             type="button"
             onClick={() => getIsMenuOpen(!isMenuOpen)}
@@ -38,8 +85,7 @@ export default function Header() {
               height={48}
             />
           </button>
-        )}
-        {isMenuOpen && (
+        ) : (
           <MenuPhone isMenuOpen={isMenuOpen} getIsMenuOpen={getIsMenuOpen} />
         )}
       </div>

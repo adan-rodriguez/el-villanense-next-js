@@ -15,6 +15,8 @@ export function AuthProvider({ children }) {
       const editor = users.find((_user) => _user.email === user.email);
       // window.sessionStorage.setItem("author", JSON.stringify(editor));
       setUser(editor);
+    } else {
+      setUser(null);
     }
   });
 

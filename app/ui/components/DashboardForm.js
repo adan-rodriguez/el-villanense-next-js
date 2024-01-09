@@ -4,7 +4,7 @@ import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
 import { useRef } from "react";
 import AuthorImage from "./AuthorImage";
-import { handleSubmit } from "@/app/lib/utils";
+import { handleDelete, handleSubmit } from "@/app/lib/utils";
 
 export default function DashboardForm({
   articleId,
@@ -57,8 +57,6 @@ export default function DashboardForm({
           <AuthorImage
             src={author ? author.image : user.image}
             author={author ? author.name : user.name}
-            width={36}
-            height={36}
           />
           <p>{author ? author.name : user.name}</p>
         </div>
@@ -177,9 +175,20 @@ export default function DashboardForm({
         content={content}
         getContent={getContent}
       /> */}
-      <button className={styles.form_btn} type="submit">
-        {articleId ? "Editar artículo" : "Subir artículo"}
-      </button>
+      <div className={styles.buttons_container}>
+        <button className={styles.form_btn} type="submit">
+          {articleId ? "Editar artículo" : "Subir artículo"}
+        </button>
+        {articleId && (
+          <button
+            type="button"
+            onClick={() => handleDelete({ articleId })}
+            className={styles.form_btn}
+          >
+            Borrar artículo
+          </button>
+        )}
+      </div>
     </form>
   );
 }

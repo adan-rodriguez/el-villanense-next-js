@@ -90,3 +90,9 @@
   text-align: center;
   padding: 10px;
 }
+
+.buttons_container {
+  display: flex;
+  column-gap: 15px;
+  justify-content: center;
+}

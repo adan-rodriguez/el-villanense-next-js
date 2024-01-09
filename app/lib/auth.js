@@ -2,6 +2,7 @@ import {
   browserSessionPersistence,
   setPersistence,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { auth } from "./config-firebase";
 
@@ -28,4 +29,12 @@ export const login = async (e, { email, password, getLoginErrorMessage }) => {
       })
       .finally(() => (e.target.inert = ""));
   });
+};
+
+export const logout = () => {
+  signOut(auth)
+    .then(() => {})
+    .catch(() => {
+      alert("No se ha podido cerrar sesión");
+    });
 };

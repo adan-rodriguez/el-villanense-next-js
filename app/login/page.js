@@ -2,8 +2,6 @@
 
 import LoginForm from "@/app/ui/components/LoginForm";
 import useAuth from "@/app/hooks/useAuth";
-import { redirect } from "next/navigation";
-import { routes } from "../lib/routes";
 
 export default function LoginPage() {
   const {
@@ -13,10 +11,7 @@ export default function LoginPage() {
     getEmail,
     getPassword,
     getLoginErrorMessage,
-    user,
   } = useAuth();
-
-  if (user) redirect(routes.dashboard.root);
 
   return (
     <LoginForm

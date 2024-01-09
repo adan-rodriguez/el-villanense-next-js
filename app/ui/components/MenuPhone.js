@@ -1,6 +1,6 @@
 import Image from "next/image";
-import SocialMedia from "./SocialMedia";
 import styles from "../styles/Header.module.css";
+import Footer from "./Footer";
 
 export default function MenuPhone({ isMenuOpen, getIsMenuOpen }) {
   return (
@@ -18,7 +18,7 @@ export default function MenuPhone({ isMenuOpen, getIsMenuOpen }) {
           height={48}
         />
       </button>
-      <SocialMedia />
+      <Footer />
     </div>
   );
 }
