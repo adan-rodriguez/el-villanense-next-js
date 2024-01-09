@@ -1,7 +1,7 @@
 import { AuthContext } from "@/app/context/auth";
 import { useContext, useState } from "react";
 
-export default function useLogin() {
+export default function useAuth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginErrorMessage, setLoginErrorMessage] = useState(null);

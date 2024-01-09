@@ -3,6 +3,7 @@
 import DashboardForm from "@/app/ui/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
 import styles from "@/app/ui/styles/EditArticleClientPage.module.css";
+import useAuth from "@/app/hooks/useAuth";
 
 export default function EditArticleClientPage({ articleId, article }) {
   const {
@@ -12,17 +13,19 @@ export default function EditArticleClientPage({ articleId, article }) {
     lead,
     section,
     content,
-    author,
+    isThereAuthor,
     getTitle,
     getImage,
     getAltImage,
     getLead,
     getSection,
     getContent,
-    getAuthor,
+    getIsThereAuthor,
     imageFile,
     getImageFile,
   } = useDashboardForm({ article });
+
+  const { user } = useAuth();
 
   return (
     <>
@@ -35,18 +38,19 @@ export default function EditArticleClientPage({ articleId, article }) {
           lead,
           section,
           content,
-          author,
+          isThereAuthor,
           getTitle,
           getImage,
           getAltImage,
           getLead,
           getSection,
           getContent,
-          getAuthor,
+          getIsThereAuthor,
           imageFile,
           getImageFile,
+          user,
+          articleId,
         }}
-        articleId={articleId}
       />
     </>
   );

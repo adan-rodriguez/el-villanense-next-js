@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../styles/EditAndDeleteButtonsContainer.module.css";
-import useLogin from "../../hooks/useLogin";
+import useAuth from "../../hooks/useAuth";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 
@@ -9,7 +9,7 @@ export default function EditAndDeleteButtonsContainer({
   articleId,
   positionAbsolute,
 }) {
-  const { user } = useLogin();
+  const { user } = useAuth();
 
   if (!user) return null;
 

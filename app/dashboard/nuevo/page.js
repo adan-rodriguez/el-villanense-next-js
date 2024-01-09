@@ -1,9 +1,9 @@
 "use client";
 
-import useLogin from "@/app/hooks/useLogin";
 import styles from "@/app/ui/styles/NewArticlePage.module.css";
 import DashboardForm from "@/app/ui/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
+import useAuth from "@/app/hooks/useAuth";
 
 export default function NewArticlePage() {
   const {
@@ -13,18 +13,18 @@ export default function NewArticlePage() {
     lead,
     section,
     content,
-    author,
+    isThereAuthor,
     getTitle,
     getImage,
     getAltImage,
     getLead,
     getSection,
     getContent,
-    getAuthor,
+    getIsThereAuthor,
     imageFile,
     getImageFile,
   } = useDashboardForm();
-  const { user } = useLogin();
+  const { user } = useAuth();
 
   return (
     <>
@@ -37,14 +37,14 @@ export default function NewArticlePage() {
           lead,
           section,
           content,
-          author,
+          isThereAuthor,
           getTitle,
           getImage,
           getAltImage,
           getLead,
           getSection,
           getContent,
-          getAuthor,
+          getIsThereAuthor,
           imageFile,
           getImageFile,
           user,

@@ -1,7 +1,7 @@
 "use client";
 
 import LoginForm from "@/app/ui/components/LoginForm";
-import useLogin from "@/app/hooks/useLogin";
+import useAuth from "@/app/hooks/useAuth";
 import { redirect } from "next/navigation";
 import { routes } from "../lib/routes";
 
@@ -14,7 +14,7 @@ export default function LoginPage() {
     getPassword,
     getLoginErrorMessage,
     user,
-  } = useLogin();
+  } = useAuth();
 
   if (user) redirect(routes.dashboard.root);
 

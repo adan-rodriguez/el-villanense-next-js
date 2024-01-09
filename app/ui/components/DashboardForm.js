@@ -2,8 +2,7 @@
 
 import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
-import { users } from "../../lib/users";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import AuthorImage from "./AuthorImage";
 import { handleSubmit } from "@/app/lib/utils";
 
@@ -15,27 +14,19 @@ export default function DashboardForm({
   lead,
   section,
   content,
-  author,
+  isThereAuthor,
   getTitle,
   getImage,
   getAltImage,
   getLead,
   getSection,
   getContent,
-  getAuthor,
+  getIsThereAuthor,
   imageFile,
   getImageFile,
   user,
 }) {
   const inputFileRef = useRef();
-
-  let editor;
-
-  if (user) editor = users.find((_user) => _user.email === user);
-
-  useEffect(() => {
-    if (editor) getAuthor(editor.name);
-  }, []);
 
   return (
     <form
@@ -43,39 +34,45 @@ export default function DashboardForm({
       onSubmit={async (e) => {
         await handleSubmit(e, {
           articleId,
-          article: { title, image, altImage, lead, section, content, author },
+          article: {
+            title,
+            image,
+            altImage,
+            lead,
+            section,
+            content,
+            author: isThereAuthor ? user.name : null,
+          },
           imageFile,
         });
       }}
     >
-      {!articleId && (
-        <div className={styles.form_author}>
-          <div
-            className={styles.author_img_name_container}
-            style={!author ? { opacity: "0.2", userSelect: "none" } : {}}
-          >
-            <p>Autor:</p>
-            <AuthorImage
-              src={editor.image}
-              author={editor.name}
-              width={36}
-              height={36}
-            />
-            <p>{editor.name}</p>
-          </div>
-          <div className={styles.author_checkbox_container}>
-            <input
-              onChange={(e) => getAuthor(e.target.checked ? null : editor.name)}
-              type="checkbox"
-            />
-            <p className={styles.author_label_checkbox}>
-              {author
-                ? "Marcá la casilla si preferís que la noticia no tenga autor"
-                : "Desmarcá la casilla si preferís que la noticia tenga autor"}
-            </p>
-          </div>
+      <div className={styles.form_author}>
+        <div
+          className={styles.author_img_name_container}
+          style={!isThereAuthor ? { opacity: "0.2", userSelect: "none" } : {}}
+        >
+          <p>Autor:</p>
+          <AuthorImage
+            src={user.image}
+            author={user.name}
+            width={36}
+            height={36}
+          />
+          <p>{user.name}</p>
         </div>
-      )}
+        <div className={styles.author_checkbox_container}>
+          <input
+            onChange={(e) => getIsThereAuthor(e.target.checked ? false : true)}
+            type="checkbox"
+          />
+          <p className={styles.author_label_checkbox}>
+            {isThereAuthor
+              ? "Marcá la casilla si preferís que la noticia no tenga autor"
+              : "Desmarcá la casilla si preferís que la noticia tenga autor"}
+          </p>
+        </div>
+      </div>
       <div>
         <label className={styles.form_label} htmlFor="title">
           Título

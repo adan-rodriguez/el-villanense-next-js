@@ -1,13 +1,13 @@
 "use client";
 
 import { useSelectedLayoutSegments } from "next/navigation";
-import useLogin from "../../hooks/useLogin";
+import useAuth from "../../hooks/useAuth";
 import styles from "@/app/styles/RevalidateButton.module.css";
 import { DOMAIN } from "../../lib/constants";
 import { routes } from "@/app/lib/routes";
 
 export default function RevalidateButton({ children }) {
-  const { user } = useLogin();
+  const { user } = useAuth();
   const segments = useSelectedLayoutSegments();
   const isInAdmin = segments[0] === "dashboard" || segments[0] === "login";
 

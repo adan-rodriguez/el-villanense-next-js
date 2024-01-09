@@ -7,7 +7,7 @@ export default function useDashboardForm({ article } = {}) {
   const [lead, setLead] = useState("");
   const [section, setSection] = useState("locales");
   const [content, setContent] = useState("");
-  const [author, setAuthor] = useState(null);
+  const [isThereAuthor, setIsThereAuthor] = useState(true);
 
   const [imageFile, setImageFile] = useState(null);
 
@@ -17,7 +17,7 @@ export default function useDashboardForm({ article } = {}) {
   const getLead = (lead) => setLead(lead);
   const getSection = (section) => setSection(section);
   const getContent = (content) => setContent(content);
-  const getAuthor = (author) => setAuthor(author);
+  const getIsThereAuthor = (author) => setIsThereAuthor(author);
 
   const getImageFile = (imageFile) => setImageFile(imageFile);
 
@@ -29,8 +29,22 @@ export default function useDashboardForm({ article } = {}) {
       setLead(article.lead);
       setSection(article.section);
       setContent(article.content);
+      setIsThereAuthor(Boolean(article.author));
     }
   }, []);
+
+  // useEffect(() => {
+  //   const newArticle = {
+  //     title,
+  //     image,
+  //     altImage,
+  //     lead,
+  //     section,
+  //     content,
+  //     isThereAuthor,
+  //   };
+  //   window.sessionStorage.setItem("article", JSON.stringify(newArticle));
+  // }, [title, image, altImage, lead, section, content, isThereAuthor]);
 
   return {
     title,
@@ -39,14 +53,14 @@ export default function useDashboardForm({ article } = {}) {
     lead,
     section,
     content,
-    author,
+    isThereAuthor,
     getTitle,
     getImage,
     getAltImage,
     getLead,
     getSection,
     getContent,
-    getAuthor,
+    getIsThereAuthor,
     imageFile,
     getImageFile,
   };

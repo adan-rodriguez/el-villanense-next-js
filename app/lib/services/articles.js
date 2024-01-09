@@ -113,7 +113,7 @@ export const deleteArticle = async ({ articleId }) => {
 
 export const editArticle = async ({
   articleId,
-  article: { title, image, altImage, lead, section, content },
+  article: { title, image, altImage, lead, section, content, author },
 }) => {
   if (isDev) {
     const index = mock_articles.findIndex(
@@ -139,6 +139,7 @@ export const editArticle = async ({
       lead,
       section,
       content,
+      author,
     },
     { merge: true }
   );
