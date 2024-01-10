@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { addAction, deleteAction, editAction } from "./server-actions";
 import { getArticles } from "./services/articles";
+import { DOMAIN } from "./constants";
 
 export const getCurrentYear = () => {
   const currentTime = new Date();
@@ -155,3 +156,35 @@ export const getArticlesAndCache = unstable_cache(
     tags: ["articles"],
   }
 );
+
+export const getStructuredData = ({ article }) => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: article.title,
+    image: article.image,
+    datePublished: article.datetimeAttribute,
+    ...(article.author && {
+      author: {
+        "@type": "Person",
+        name: article.author,
+        url:
+          DOMAIN +
+          "/" +
+          article.author
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(" ", "-"),
+      },
+    }),
+    publisher: {
+      "@type": "Organization",
+      name: "El Villanense",
+      logo: `${DOMAIN}/images/logo.png`,
+    },
+    url: DOMAIN + "/" + article.id,
+  };
+
+  return { structuredData };
+};

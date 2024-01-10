@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { users } from "../lib/users";
+import { users } from "../../lib/users";
 import styles from "@/app/ui/styles/Authors.module.css";
-import { routes } from "../lib/routes";
-import AuthorImage from "../ui/components/AuthorImage";
+import { routes } from "../../lib/routes";
+import AuthorImage from "../../ui/components/AuthorImage";
 
 export default function Authors() {
   return (

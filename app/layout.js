@@ -2,7 +2,6 @@ import { AuthProvider } from "@/app/context/auth";
 import Footer from "./ui/components/Footer";
 import Header from "./ui/components/Header";
 import "./ui/globals.css";
-import Script from "next/script";
 import { poppins } from "./ui/fonts";
 import SocialMedia from "./ui/components/SocialMedia";
 
@@ -38,19 +37,6 @@ export default function RootLayout({ children }) {
         </aside>
         <Footer />
       </body>
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-V6RKJKGCX2"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-V6RKJKGCX2');
-        `}
-      </Script>
     </html>
   );
 }

@@ -1,5 +1,5 @@
-import Articles from "./ui/components/Articles";
-import { DOMAIN } from "./lib/constants";
+import Articles from "../ui/components/Articles";
+import { DOMAIN } from "../lib/constants";
 
 export const metadata = {
   description:

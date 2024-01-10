@@ -1,14 +1,15 @@
-import ArticleContent from "../ui/components/ArticleContent";
+import ArticleContent from "../../ui/components/ArticleContent";
 import styles from "@/app/ui/styles/Article.module.css";
 import EditAndDeleteButtonsContainer from "@/app/ui/components/EditAndDeleteButtonsContainer";
 import { users } from "@/app/lib/users";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle } from "@/app/lib/services/articles";
-import ShareSocial from "../ui/components/ShareSocial";
-import { DOMAIN } from "../lib/constants";
-import { routes } from "../lib/routes";
-import AuthorImage from "../ui/components/AuthorImage";
+import ShareSocial from "../../ui/components/ShareSocial";
+import { DOMAIN } from "../../lib/constants";
+import { routes } from "../../lib/routes";
+import AuthorImage from "../../ui/components/AuthorImage";
+import { getStructuredData } from "@/app/lib/utils";
 
 export async function generateMetadata({ params }) {
   const { article: articleId } = params;
@@ -67,21 +68,15 @@ export default async function Article({ params }) {
     },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    headline: article.title,
-    image: article.image,
-    datePublished: article.datetimeAttribute,
-  };
-
   const user = users.find((user) => user.name === article.author);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getStructuredData({ article })),
+        }}
       />
       <article className={styles.article_container}>
         <EditAndDeleteButtonsContainer articleId={article.id} />
