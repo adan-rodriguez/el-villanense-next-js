@@ -1,17 +1,20 @@
 import {
   browserSessionPersistence,
+  createUserWithEmailAndPassword,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 import { auth } from "./config-firebase";
 
-export const login = async (e, { email, password, getLoginErrorMessage }) => {
+export const login = async (e, { getLoginErrorMessage }) => {
   e.preventDefault();
+  e.target.inert = "true";
 
   getLoginErrorMessage(null);
 
-  e.target.inert = "true";
+  const email = e.target.email.value;
+  const password = e.target.password.value;
 
   setPersistence(auth, browserSessionPersistence).then(() => {
     signInWithEmailAndPassword(auth, email, password)
@@ -37,4 +40,31 @@ export const logout = () => {
     .catch(() => {
       alert("No se ha podido cerrar sesión");
     });
+};
+
+export const signup = async (e, { getSignupErrorMessage }) => {
+  e.preventDefault();
+  e.target.inert = "true";
+
+  getSignupErrorMessage(null);
+
+  const email = e.target.email.value;
+  const password = e.target.password.value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Usuario creado con éxito");
+    })
+    .catch((error) => {
+      if (error.message.includes("invalid-email")) {
+        getSignupErrorMessage("Introduce un email válido");
+      } else if (error.message.includes("weak-password")) {
+        getSignupErrorMessage("La contraseña debe tener más de 6 caracteres");
+      } else if (error.message.includes("email-already-in-use")) {
+        getSignupErrorMessage("El email ya está en uso");
+      } else {
+        getSignupErrorMessage("Ocurrió un error. Inténtalo nuevamente");
+      }
+    })
+    .finally(() => (e.target.inert = ""));
 };

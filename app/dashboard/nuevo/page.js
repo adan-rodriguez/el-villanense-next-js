@@ -3,7 +3,8 @@
 import styles from "@/app/ui/styles/NewArticlePage.module.css";
 import DashboardForm from "@/app/ui/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
-import useAuth from "@/app/hooks/useAuth";
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/auth";
 
 export default function NewArticlePage() {
   const {
@@ -24,7 +25,8 @@ export default function NewArticlePage() {
     imageFile,
     getImageFile,
   } = useDashboardForm();
-  const { user } = useAuth();
+
+  const { user } = useContext(AuthContext);
 
   return (
     <>

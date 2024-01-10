@@ -3,7 +3,8 @@
 import DashboardForm from "@/app/ui/components/DashboardForm";
 import useDashboardForm from "@/app/hooks/useDashboardForm";
 import styles from "@/app/ui/styles/EditArticleClientPage.module.css";
-import useAuth from "@/app/hooks/useAuth";
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/auth";
 
 export default function EditArticleClientPage({ articleId, article }) {
   const {
@@ -26,7 +27,7 @@ export default function EditArticleClientPage({ articleId, article }) {
     getImageFile,
   } = useDashboardForm({ article });
 
-  const { user } = useAuth();
+  const { user } = useContext(AuthContext);
 
   return (
     <>

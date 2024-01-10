@@ -5,12 +5,13 @@ import Logo from "./Logo";
 import Image from "next/image";
 import useMenu from "@/app/hooks/useMenu";
 import MenuPhone from "./MenuPhone";
-import useAuth from "@/app/hooks/useAuth";
 import AuthorImage from "./AuthorImage";
 import { logout } from "@/app/lib/auth";
 import useMenuUser from "@/app/hooks/useMenuUser";
 import Link from "next/link";
 import { routes } from "@/app/lib/routes";
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/auth";
 // import dynamic from "next/dynamic";
 // const MenuPhone = dynamic(() => import("./MenuPhone"));
 
@@ -26,7 +27,7 @@ import { routes } from "@/app/lib/routes";
 export default function Header() {
   const { isMenuOpen, getIsMenuOpen } = useMenu();
   const { isMenuUserOpen, getIsMenuUserOpen } = useMenuUser();
-  const { user } = useAuth();
+  const { user } = useContext(AuthContext);
 
   // const closeUserMenu = (e) => {
   //   console.log("click");
@@ -45,46 +46,48 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.header_container}>
         <Logo />
-        {user && !isMenuOpen && (
-          <div className={styles.buttonandmenu_user_container}>
-            <button
-              id="user-menu-open-button"
-              className={styles.openmenuuser_button}
-              onClick={() => getIsMenuUserOpen(!isMenuUserOpen)}
-            >
-              <AuthorImage src={user.image} author={user.name} />
-            </button>
-            {isMenuUserOpen && (
-              <div id="user-menu" className={styles.menuuser_container}>
-                <span className={styles.username}>{user.name}</span>
-                <Link href={routes.dashboard.root}>Perfil</Link>
+        {!isMenuOpen ? (
+          <div className={styles.userandopenbutton_container}>
+            {user && (
+              <div className={styles.buttonandmenu_user_container}>
                 <button
-                  className={styles.logout_button}
-                  onClick={() => {
-                    getIsMenuUserOpen(!isMenuUserOpen);
-                    logout();
-                  }}
+                  id="user-menu-open-button"
+                  className={styles.openmenuuser_button}
+                  onClick={() => getIsMenuUserOpen(!isMenuUserOpen)}
                 >
-                  Cerrar sesión
+                  <AuthorImage src={user.image} author={user.name} />
                 </button>
+                {isMenuUserOpen && (
+                  <div id="user-menu" className={styles.menuuser_container}>
+                    <span className={styles.username}>{user.name}</span>
+                    <Link href={routes.dashboard.root}>Perfil</Link>
+                    <button
+                      className={styles.logout_button}
+                      onClick={() => {
+                        getIsMenuUserOpen(!isMenuUserOpen);
+                        logout();
+                      }}
+                    >
+                      Cerrar sesión
+                    </button>
+                  </div>
+                )}
               </div>
             )}
+            <button
+              type="button"
+              onClick={() => getIsMenuOpen(!isMenuOpen)}
+              className={styles.openmenu_button}
+              aria-label="Abrir menú"
+            >
+              <Image
+                src="/icons/menu/openmenu-icon.svg"
+                alt="Abrir menú"
+                width={48}
+                height={48}
+              />
+            </button>
           </div>
-        )}
-        {!isMenuOpen ? (
-          <button
-            type="button"
-            onClick={() => getIsMenuOpen(!isMenuOpen)}
-            className={styles.openmenu_button}
-            aria-label="Abrir menú"
-          >
-            <Image
-              src="/icons/menu/openmenu-icon.svg"
-              alt="Abrir menú"
-              width={48}
-              height={48}
-            />
-          </button>
         ) : (
           <MenuPhone isMenuOpen={isMenuOpen} getIsMenuOpen={getIsMenuOpen} />
         )}

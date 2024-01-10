@@ -11,6 +11,7 @@ export const routes = {
     new: { root: "/dashboard/nuevo" },
     edit: { root: "/dashboard/editar" },
     articles: { root: "/dashboard/articulos" },
+    signup: { root: "/dashboard/signup" },
   },
   authors: { root: "/autores" },
 };

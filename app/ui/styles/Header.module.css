@@ -57,6 +57,11 @@
   margin-bottom: 30px;
 } */
 
+.userandopenbutton_container {
+  display: flex;
+  align-items: center;
+}
+
 .buttonandmenu_user_container {
   position: relative;
 }

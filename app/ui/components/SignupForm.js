@@ -1,12 +1,17 @@
-import { login } from "../../lib/auth";
-import styles from "../styles/LoginForm.module.css";
+"use client";
 
-export default function LoginForm({ loginErrorMessage, getLoginErrorMessage }) {
+import useSignup from "@/app/hooks/useSignup";
+import { signup } from "../../lib/auth";
+import styles from "../styles/SignupForm.module.css";
+
+export default function SignupForm() {
+  const { signupErrorMessage, getSignupErrorMessage } = useSignup();
+
   return (
     <>
       <form
         className={styles.form}
-        onSubmit={(e) => login(e, { getLoginErrorMessage })}
+        onSubmit={(e) => signup(e, { getSignupErrorMessage })}
       >
         <label className={styles.form_label} htmlFor="email">
           Email
@@ -27,12 +32,12 @@ export default function LoginForm({ loginErrorMessage, getLoginErrorMessage }) {
           />
         </label>
         <button className={styles.form_btn} type="submit">
-          Ingresar
+          Crear usuario
         </button>
       </form>
-      {loginErrorMessage && (
-        <p className={styles.form_login_error_message} role="alert">
-          {loginErrorMessage}
+      {signupErrorMessage && (
+        <p className={styles.form_signup_error_message} role="alert">
+          {signupErrorMessage}
         </p>
       )}
     </>

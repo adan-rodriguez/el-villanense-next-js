@@ -1,15 +1,16 @@
 "use client";
 
 import styles from "../styles/EditAndDeleteButtonsContainer.module.css";
-import useAuth from "../../hooks/useAuth";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
+import { useContext } from "react";
+import { AuthContext } from "@/app/context/auth";
 
 export default function EditAndDeleteButtonsContainer({
   articleId,
   positionAbsolute,
 }) {
-  const { user } = useAuth();
+  const { user } = useContext(AuthContext);
 
   if (!user) return null;
 
