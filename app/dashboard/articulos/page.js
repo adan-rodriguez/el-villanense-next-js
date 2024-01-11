@@ -1,7 +1,7 @@
-import { getArticlesAndCache } from "@/app/lib/utils";
+import { getArticles } from "@/app/lib/services/articles";
 import ArticlesDashboardClientPage from "./page.client";
 
 export default async function ArticlesDashboardPage() {
-  const articles = await getArticlesAndCache({});
+  const articles = await getArticles();
   return <ArticlesDashboardClientPage articles={articles} />;
 }

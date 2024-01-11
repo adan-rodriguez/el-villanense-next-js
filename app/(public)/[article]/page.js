@@ -9,7 +9,6 @@ import ShareSocial from "../../ui/components/ShareSocial";
 import { DOMAIN } from "../../lib/constants";
 import { routes } from "../../lib/routes";
 import AuthorImage from "../../ui/components/AuthorImage";
-import { getStructuredData } from "@/app/lib/utils";
 
 export async function generateMetadata({ params }) {
   const { article: articleId } = params;
@@ -68,6 +67,34 @@ export default async function Article({ params }) {
     },
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: article.title,
+    image: article.image,
+    datePublished: article.datetimeAttribute,
+    ...(article.author && {
+      author: {
+        "@type": "Person",
+        name: article.author,
+        url:
+          DOMAIN +
+          "/" +
+          article.author
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(" ", "-"),
+      },
+    }),
+    publisher: {
+      "@type": "Organization",
+      name: "El Villanense",
+      logo: `${DOMAIN}/images/logo.png`,
+    },
+    url: DOMAIN + "/" + article.id,
+  };
+
   const user = users.find((user) => user.name === article.author);
 
   return (
@@ -75,7 +102,7 @@ export default async function Article({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getStructuredData({ article })),
+          __html: JSON.stringify(structuredData),
         }}
       />
       <article className={styles.article_container}>

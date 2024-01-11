@@ -1,10 +1,5 @@
 export const routes = {
   root: "/",
-  routes: {
-    articles: { root: "/routes/articles" },
-    cloudinary: { root: "/routes/cloudinary" },
-    revalidate: { root: "/routes/revalidate" },
-  },
   login: { root: "/login" },
   dashboard: {
     root: "/dashboard",
