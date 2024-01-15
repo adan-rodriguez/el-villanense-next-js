@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import styles from "@/app/ui/styles/DashboardHome.module.css";
+import styles from "@/app/ui/styles/DashboardHomePage.module.css";
 import { routes } from "../lib/routes";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth";
+import { SUPER_ADMINS } from "../lib/utils";
 
-export default function DashboardHome() {
+export default function DashboardHomePage() {
   const { user } = useContext(AuthContext);
 
   return (
@@ -23,7 +24,7 @@ export default function DashboardHome() {
       >
         Tus noticias
       </Link>
-      {user.email === "adan.rodriguez.fusta@gmail.com" && (
+      {SUPER_ADMINS.includes(user.email) && (
         <Link className={styles.link} href={routes.dashboard.signup.root}>
           Agregar usuario
         </Link>

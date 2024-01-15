@@ -1,8 +1,8 @@
 import Articles from "../../../ui/components/Articles";
-import { users } from "../../../lib/users";
+import { users } from "../../../lib/utils";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/styles/AuthorPage.module.css";
-import { DOMAIN } from "@/app/lib/constants";
+import { DOMAIN } from "@/app/lib/utils";
 
 export function generateMetadata({ params }) {
   const { author } = params;

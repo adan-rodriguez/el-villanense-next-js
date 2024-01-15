@@ -10,7 +10,7 @@ import { logout } from "@/app/lib/auth";
 import useMenuUser from "@/app/hooks/useMenuUser";
 import Link from "next/link";
 import { routes } from "@/app/lib/routes";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "@/app/context/auth";
 // import dynamic from "next/dynamic";
 // const MenuPhone = dynamic(() => import("./MenuPhone"));
@@ -29,18 +29,21 @@ export default function Header() {
   const { isMenuUserOpen, getIsMenuUserOpen } = useMenuUser();
   const { user } = useContext(AuthContext);
 
-  // const closeUserMenu = (e) => {
-  //   console.log("click");
-  //   if (!e.target.closest("#user-menu-open-button")) {
-  //     getIsMenuUserOpen(false);
-  //   }
-  // };
+  useEffect(() => {
+    const closeUserMenu = (e) => {
+      if (!e.target.closest("#user-menu")) {
+        getIsMenuUserOpen(false);
+      }
+    };
 
-  // if (isMenuUserOpen) {
-  //   document.addEventListener("click", closeUserMenu);
-  // } else {
-  //   document.removeEventListener("click", closeUserMenu);
-  // }
+    if (isMenuUserOpen) {
+      document.addEventListener("click", closeUserMenu);
+    }
+
+    return () => {
+      document.removeEventListener("click", closeUserMenu);
+    };
+  }, [isMenuUserOpen]);
 
   return (
     <header className={styles.header}>
@@ -51,20 +54,32 @@ export default function Header() {
             {user && (
               <div className={styles.buttonandmenu_user_container}>
                 <button
-                  id="user-menu-open-button"
                   className={styles.openmenuuser_button}
                   onClick={() => getIsMenuUserOpen(!isMenuUserOpen)}
                 >
                   <AuthorImage src={user.image} author={user.name} />
                 </button>
                 {isMenuUserOpen && (
-                  <div id="user-menu" className={styles.menuuser_container}>
+                  <div className={styles.menuuser_container}>
                     <span className={styles.username}>{user.name}</span>
-                    <Link href={routes.dashboard.root}>Perfil</Link>
+                    <Link
+                      className={styles.dashboard_link}
+                      onClick={() => getIsMenuUserOpen(false)}
+                      href={routes.dashboard.root}
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      className={styles.account_link}
+                      onClick={() => getIsMenuUserOpen(false)}
+                      href={routes.dashboard.account.root}
+                    >
+                      Cuenta
+                    </Link>
                     <button
                       className={styles.logout_button}
                       onClick={() => {
-                        getIsMenuUserOpen(!isMenuUserOpen);
+                        getIsMenuUserOpen(false);
                         logout();
                       }}
                     >

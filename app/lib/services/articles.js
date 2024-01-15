@@ -14,11 +14,7 @@ import { getFriendlyUrl, timestampToDatetime } from "../utils";
 import mock_articles from "../mocks/articles.json";
 import { isDev } from "../config";
 
-const COLLECTIONS = {
-  ARTICLES: "articles",
-};
-
-const articlesCollection = collection(db, COLLECTIONS.ARTICLES);
+const articlesCollection = collection(db, "articles");
 
 export async function getArticles({ author } = {}) {
   if (isDev) {
@@ -58,7 +54,7 @@ export async function getArticle({ articleId }) {
   }
 
   try {
-    const articleRef = doc(db, COLLECTIONS.ARTICLES, articleId);
+    const articleRef = doc(db, "articles", articleId);
     const data = await getDoc(articleRef);
     if (data.exists()) {
       return { id: data.id, ...data.data() };
@@ -85,29 +81,15 @@ export const addArticle = async ({
     friendlyUrl: getFriendlyUrl({ string: title }),
   };
 
-  if (isDev) {
-    data.id = `${data.friendlyUrl}-${data.timestamp}`;
-    mock_articles.push(data);
-    return data;
-  }
-
   const id = `${data.friendlyUrl}-${data.timestamp}`;
 
-  await setDoc(doc(db, COLLECTIONS.ARTICLES, id), data);
+  await setDoc(doc(db, "articles", id), data);
   data.id = id;
   return data;
 };
 
 export const deleteArticle = async ({ articleId }) => {
-  if (isDev) {
-    const index = mock_articles.findIndex(
-      (article) => article.id === articleId
-    );
-    mock_articles.splice(index, 1);
-    return;
-  }
-
-  await deleteDoc(doc(db, COLLECTIONS.ARTICLES, articleId));
+  await deleteDoc(doc(db, "articles", articleId));
   return `Artículo con id '${articleId}' eliminado`;
 };
 
@@ -115,23 +97,8 @@ export const editArticle = async ({
   articleId,
   article: { title, image, altImage, lead, section, content, author },
 }) => {
-  if (isDev) {
-    const index = mock_articles.findIndex(
-      (article) => article.id === articleId
-    );
-    console.log(mock_articles[index]);
-    mock_articles[index].title = title;
-    mock_articles[index].image = image;
-    mock_articles[index].altImage = altImage;
-    mock_articles[index].lead = lead;
-    mock_articles[index].section = section;
-    mock_articles[index].content = content;
-    console.log(mock_articles[index]);
-    return;
-  }
-
   await setDoc(
-    doc(db, COLLECTIONS.ARTICLES, articleId),
+    doc(db, "articles", articleId),
     {
       title,
       image,

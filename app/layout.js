@@ -20,17 +20,7 @@ export default function RootLayout({ children }) {
       <body className={poppins.className}>
         <AuthProvider>
           <Header />
-          <main>
-            {/* <RevalidateButton>
-              <Image
-                src="/icons/dashboard/refresh.svg"
-                alt="Actualizar"
-                width={30}
-                height={30}
-              />
-            </RevalidateButton> */}
-            {children}
-          </main>
+          <main>{children}</main>
         </AuthProvider>
         <aside>
           <SocialMedia classname="layout_links_social_container" />

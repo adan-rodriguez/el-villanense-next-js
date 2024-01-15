@@ -3,7 +3,7 @@
 import styles from "@/app/ui/styles/ArticlesDashboardClientPage.module.css";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import EditAndDeleteButtonsContainer from "@/app/ui/components/EditAndDeleteButtonsContainer";
+import EditAndDeleteButtons from "@/app/ui/components/EditAndDeleteButtons";
 
 // no estoy usando los filtros de la url. Los pongo cuando en un futuro aprenda a usarlos para filtrar
 
@@ -76,7 +76,7 @@ export default function ArticlesDashboardClientPage({
             <img src={article.image} alt={article.altImage} loading="lazy" />
             <div>
               <h2>{article.title}</h2>
-              <EditAndDeleteButtonsContainer articleId={article.id} />
+              <EditAndDeleteButtons articleId={article.id} />
             </div>
           </div>
         ))}

@@ -1,12 +1,12 @@
 import ArticleContent from "../../ui/components/ArticleContent";
 import styles from "@/app/ui/styles/Article.module.css";
-import EditAndDeleteButtonsContainer from "@/app/ui/components/EditAndDeleteButtonsContainer";
-import { users } from "@/app/lib/users";
+import EditAndDeleteButtons from "@/app/ui/components/EditAndDeleteButtons";
+import { users } from "@/app/lib/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle } from "@/app/lib/services/articles";
-import ShareSocial from "../../ui/components/ShareSocial";
-import { DOMAIN } from "../../lib/constants";
+import ShareSocialMedia from "../../ui/components/ShareSocialMedia";
+import { DOMAIN } from "../../lib/utils";
 import { routes } from "../../lib/routes";
 import AuthorImage from "../../ui/components/AuthorImage";
 
@@ -46,7 +46,7 @@ export default async function Article({ params }) {
 
   const url = `${DOMAIN}/${articleId}`;
 
-  const shareSocialData = [
+  const shareSocialMediaData = [
     {
       href: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
       title: "Compartir en Facebook",
@@ -106,9 +106,9 @@ export default async function Article({ params }) {
         }}
       />
       <article className={styles.article_container}>
-        <EditAndDeleteButtonsContainer articleId={article.id} />
+        <EditAndDeleteButtons articleId={article.id} />
         <h1 className={styles.article_title}>{article.title}</h1>
-        <ShareSocial data={shareSocialData} />
+        <ShareSocialMedia data={shareSocialMediaData} />
         <time
           className={styles.article_time}
           dateTime={article.datetimeAttribute}
@@ -138,7 +138,7 @@ export default async function Article({ params }) {
         />
         <ArticleContent content={article.content} />
         <div className={styles.share_social_container_bottom}>
-          <ShareSocial data={shareSocialData} />
+          <ShareSocialMedia data={shareSocialMediaData} />
         </div>
       </article>
     </>

@@ -19,11 +19,6 @@
   column-gap: 10px;
 }
 
-.share_social_link:is(:hover, :focus) {
-  height: 30px;
-  transform: scale(1.05);
-}
-
 .share_text {
   position: absolute;
   font-size: 10px;

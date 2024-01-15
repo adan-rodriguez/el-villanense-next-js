@@ -3,7 +3,7 @@
 import { auth } from "@/app/lib/config-firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useState } from "react";
-import { users } from "../lib/users";
+import { users } from "../lib/utils";
 
 export const AuthContext = createContext();
 

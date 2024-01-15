@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../styles/ArticleLink.module.css";
-import { users } from "../../lib/users";
+import { users } from "../../lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

@@ -1,16 +1,23 @@
 import Image from "next/image";
 import styles from "../styles/SocialMediaLink.module.css";
 
-export default function SocialMediaLink({ href, title, icon, alt }) {
+export default function SocialMediaLink({
+  href,
+  title,
+  src,
+  alt,
+  width = 30,
+  height = 30,
+}) {
   return (
     <a
-      className={styles.link_social}
+      className={styles.link}
       href={href}
       target="_blank"
       rel="noreferrer"
       title={title}
     >
-      <Image width={30} height={30} src={icon} alt={alt} />
+      <Image width={width} height={height} src={src} alt={alt} />
     </a>
   );
 }

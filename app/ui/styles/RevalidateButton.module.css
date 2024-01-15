@@ -1,9 +1,0 @@
-.button {
-  display: flex;
-}
-
-@media (min-width: 992px) {
-  .button {
-    position: absolute;
-  }
-}

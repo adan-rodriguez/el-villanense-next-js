@@ -11,6 +11,8 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  color: rgb(15, 15, 15);
+  background-color: rgb(245, 245, 245);
 }
 
 body > * {
@@ -38,6 +40,11 @@ textarea,
 select {
   font-family: inherit;
   font-size: 1em;
+}
+
+input,
+textarea {
+  outline: none;
 }
 
 /* // Dispositivos X-Small (teléfonos verticales, menos de 576px)

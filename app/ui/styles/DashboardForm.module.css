@@ -5,8 +5,9 @@
   flex-direction: column;
   row-gap: 10px;
   max-width: 1000px;
-  padding: 10px;
-  border: 1px solid black;
+  padding: 20px 10px;
+  border: 1px solid gray;
+  border-radius: 2px;
 }
 
 .form[inert] {
@@ -17,12 +18,17 @@
   display: block;
 }
 
+.form_input {
+  text-overflow: ellipsis;
+}
+
 .form_input,
 .form_textarea,
 .form_select {
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid gray;
   padding: 5px 10px;
+  border-radius: 2px;
 }
 
 .input_img {
@@ -32,6 +38,10 @@
 
 .btn_change_img {
   padding: 5px 20px;
+  margin-top: 10px;
+  background-color: transparent;
+  border: 1px solid gray;
+  border-radius: 2px;
 }
 
 .form_textarea {
@@ -41,11 +51,14 @@
 .form_btn {
   align-self: center;
   padding: 10px 40px;
+  background-color: transparent;
+  border: 1px solid gray;
+  border-radius: 2px;
 }
 
 .form_author {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   column-gap: 20px;
 }
 
@@ -58,6 +71,7 @@
 .author_checkbox_container {
   display: flex;
   column-gap: 5px;
+  align-items: center;
 }
 
 .author_label_checkbox {
@@ -85,7 +99,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 1px solid gray;
   font-size: 10px;
   text-align: center;
   padding: 10px;

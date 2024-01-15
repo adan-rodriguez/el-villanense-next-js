@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { routes } from "../../lib/routes";
 import Image from "next/image";
 
-export default function EditButton({ articleId }) {
+export default function EditButton({ articleId, width = 30, height = 30 }) {
   const router = useRouter();
   return (
     <button
@@ -15,8 +15,8 @@ export default function EditButton({ articleId }) {
       <Image
         src="/icons/dashboard/edit.svg"
         alt="Editar"
-        width={30}
-        height={30}
+        width={width}
+        height={height}
       />
     </button>
   );

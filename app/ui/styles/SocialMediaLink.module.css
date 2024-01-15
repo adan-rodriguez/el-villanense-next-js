@@ -1,7 +1,7 @@
-.link_social {
-  height: 30px;
+.link {
+  display: flex;
 }
 
-.link_social:is(:hover, :focus) {
+.link:is(:hover, :focus) {
   transform: scale(1.05);
 }

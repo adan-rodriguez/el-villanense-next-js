@@ -4,6 +4,11 @@
   padding-bottom: 14px;
 }
 
+.article > div {
+  position: absolute;
+  box-shadow: 0px 0px 20px 20px white;
+}
+
 .article_link {
   display: flex;
   flex-direction: column;

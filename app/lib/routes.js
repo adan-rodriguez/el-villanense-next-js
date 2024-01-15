@@ -7,6 +7,7 @@ export const routes = {
     edit: { root: "/dashboard/editar" },
     articles: { root: "/dashboard/articulos" },
     signup: { root: "/dashboard/signup" },
+    account: { root: "/dashboard/cuenta" },
   },
   authors: { root: "/autores" },
 };

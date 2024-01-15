@@ -1,5 +1,5 @@
 import Link from "next/link";
-import EditAndDeleteButtonsContainer from "./EditAndDeleteButtonsContainer";
+import EditAndDeleteButtons from "./EditAndDeleteButtons";
 import styles from "../styles/ArticleLink.module.css";
 import ArticleLinkAuthor from "./ArticleLinkAuthor";
 
@@ -14,10 +14,7 @@ export default function ArticleLink({
 }) {
   return (
     <article className={styles.article}>
-      <EditAndDeleteButtonsContainer
-        articleId={id}
-        positionAbsolute={{ position: "absolute" }}
-      />
+      <EditAndDeleteButtons articleId={id} />
       <Link className={styles.article_link} key={id} href={`/${id}`}>
         <img
           className={styles.article_link_img}

@@ -2,7 +2,6 @@
 
 import TinyMCE from "./TinyMCE";
 import styles from "../styles/DashboardForm.module.css";
-import { useRef } from "react";
 import AuthorImage from "./AuthorImage";
 import { handleDelete, handleSubmit } from "@/app/lib/utils";
 
@@ -27,8 +26,6 @@ export default function DashboardForm({
   getImageFile,
   user,
 }) {
-  const inputFileRef = useRef();
-
   return (
     <form
       className={styles.form}
@@ -73,7 +70,7 @@ export default function DashboardForm({
         </div>
       </div>
       <div>
-        <label className={styles.form_label} htmlFor="title">
+        <label className={styles.form_label}>
           Título
           <input
             className={styles.form_input}
@@ -103,14 +100,13 @@ export default function DashboardForm({
       ) : (
         <>
           <div>
-            <label className={styles.form_label} htmlFor="image">
+            <label className={styles.form_label}>
               Imagen
               <input
                 type="file"
                 id="image"
                 required
                 onChange={(e) => getImageFile(e.target.files[0])}
-                ref={inputFileRef}
                 className={styles.input_img}
               />
             </label>
@@ -127,7 +123,7 @@ export default function DashboardForm({
         </>
       )}
       <div>
-        <label className={styles.form_label} htmlFor="alt-image">
+        <label className={styles.form_label}>
           Descripción corta de la imagen &#40;para personas no videntes&#41;
           <input
             className={styles.form_input}
@@ -140,7 +136,7 @@ export default function DashboardForm({
         </label>
       </div>
       <div>
-        <label className={styles.form_label} htmlFor="lead">
+        <label className={styles.form_label}>
           Entrada
           <textarea
             className={styles.form_textarea}
@@ -153,7 +149,7 @@ export default function DashboardForm({
         </label>
       </div>
       <div>
-        <label className={styles.form_label} htmlFor="section">
+        <label className={styles.form_label}>
           Sección
           <select
             className={styles.form_select}

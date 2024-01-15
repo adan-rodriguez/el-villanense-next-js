@@ -9,18 +9,28 @@ export default async function Articles({ author }) {
 
   return (
     <section className={styles.articles_links_container}>
-      {articles.map((article) => (
-        <ArticleLink
-          key={article.id}
-          id={article.id}
-          title={article.title}
-          image={article.image}
-          altImage={article.altImage}
-          datetimeAttribute={article.datetimeAttribute}
-          dateContent={article.dateContent}
-          author={article.author}
-        />
-      ))}
+      {articles.map(
+        ({
+          id,
+          title,
+          image,
+          altImage,
+          datetimeAttribute,
+          dateContent,
+          author,
+        }) => (
+          <ArticleLink
+            key={id}
+            id={id}
+            title={title}
+            image={image}
+            altImage={altImage}
+            datetimeAttribute={datetimeAttribute}
+            dateContent={dateContent}
+            author={author}
+          />
+        )
+      )}
     </section>
   );
 }

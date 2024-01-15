@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { users } from "../lib/users";
+import { users } from "../lib/utils";
 
 export default function useDashboardForm({ article } = {}) {
   const [title, setTitle] = useState("");

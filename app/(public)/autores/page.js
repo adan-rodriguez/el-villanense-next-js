@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { users } from "../../lib/users";
-import styles from "@/app/ui/styles/Authors.module.css";
+import { users } from "../../lib/utils";
+import styles from "@/app/ui/styles/AuthorsPage.module.css";
 import { routes } from "../../lib/routes";
 import AuthorImage from "../../ui/components/AuthorImage";
 
-export default function Authors() {
+export default function AuthorsPage() {
   return (
     <div className={styles.container}>
       {users.map((user) => (

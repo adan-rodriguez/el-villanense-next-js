@@ -11,7 +11,6 @@ export default function useMenu() {
     }
 
     const handleResize = () => {
-      console.log(window.innerWidth);
       if (window.innerWidth > 992) {
         setIsMenuOpen(false);
       }
@@ -28,6 +27,6 @@ export default function useMenu() {
 
   return {
     isMenuOpen,
-    getIsMenuOpen: (menuOpenState) => setIsMenuOpen(menuOpenState),
+    getIsMenuOpen: (bool) => setIsMenuOpen(bool),
   };
 }
