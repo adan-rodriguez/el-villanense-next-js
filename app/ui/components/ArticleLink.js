@@ -10,7 +10,7 @@ export default function ArticleLink({
   title,
   datetimeAttribute,
   dateContent,
-  author,
+  authors,
 }) {
   return (
     <article className={styles.article}>
@@ -27,7 +27,10 @@ export default function ArticleLink({
         </time>
         <p className={styles.article_link_title}>{title}</p>
       </Link>
-      {author && <ArticleLinkAuthor author={author} />}
+      {!authors?.anonymous &&
+        authors?.names.map((name, index) => (
+          <ArticleLinkAuthor key={index} name={name} />
+        ))}
     </article>
   );
 }

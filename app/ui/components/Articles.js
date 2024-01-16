@@ -17,7 +17,7 @@ export default async function Articles({ author }) {
           altImage,
           datetimeAttribute,
           dateContent,
-          author,
+          authors,
         }) => (
           <ArticleLink
             key={id}
@@ -27,7 +27,7 @@ export default async function Articles({ author }) {
             altImage={altImage}
             datetimeAttribute={datetimeAttribute}
             dateContent={dateContent}
-            author={author}
+            authors={authors}
           />
         )
       )}

@@ -28,7 +28,8 @@ export async function generateMetadata({ params }) {
       siteName: "El Villanense",
       type: "article",
       publishedTime: article.datetimeAttribute,
-      ...(article.author && { authors: article.author }),
+      ...(article.author &&
+        !article.authors?.anonymous && { authors: article.author?.names }),
     },
     twitter: {
       card: "summary_large_image",
@@ -73,20 +74,24 @@ export default async function Article({ params }) {
     headline: article.title,
     image: article.image,
     datePublished: article.datetimeAttribute,
-    ...(article.author && {
-      author: {
-        "@type": "Person",
-        name: article.author,
-        url:
-          DOMAIN +
-          "/" +
-          article.author
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase()
-            .replace(" ", "-"),
-      },
-    }),
+    ...(article.authors &&
+      !article.authors.anonymous &&
+      article.authors.names.forEach((name) => {
+        return {
+          author: {
+            "@type": "Person",
+            name,
+            url:
+              DOMAIN +
+              "/" +
+              name
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .replace(" ", "-"),
+          },
+        };
+      })),
     publisher: {
       "@type": "Organization",
       name: "El Villanense",
@@ -95,7 +100,9 @@ export default async function Article({ params }) {
     url: DOMAIN + "/" + article.id,
   };
 
-  const user = users.find((user) => user.name === article.author);
+  const authors = users.filter((user) =>
+    article.authors?.names.includes(user.name)
+  );
 
   return (
     <>
@@ -116,20 +123,21 @@ export default async function Article({ params }) {
           {article.datetimeContent}
         </time>
         <p className={styles.article_lead}>{article.lead}</p>
-        {article.author && (
-          <div className={styles.article_author_container}>
-            <AuthorImage src={user.image} author={user.name} />
-            <p className={styles.article_author_name}>
-              Por{" "}
-              <Link
-                className={styles.article_author_name_link}
-                href={`${routes.authors.root}/${user.nick}`}
-              >
-                {article.author}
-              </Link>
-            </p>
-          </div>
-        )}
+        {!article.authors?.anonymous &&
+          authors.map((author, index) => (
+            <div key={index} className={styles.article_author_container}>
+              <AuthorImage src={author.image} author={author.name} />
+              <p className={styles.article_author_name}>
+                Por{" "}
+                <Link
+                  className={styles.article_author_name_link}
+                  href={`${routes.authors.root}/${author.nick}`}
+                >
+                  {author.name}
+                </Link>
+              </p>
+            </div>
+          ))}
         <img
           className={styles.article_img}
           src={article.image}

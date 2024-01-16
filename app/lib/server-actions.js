@@ -6,13 +6,14 @@ import { addArticle, deleteArticle, editArticle } from "./services/articles";
 import { routes } from "./routes";
 
 export async function addAction({ article }) {
-  await addArticle({ article });
+  const newArticle = await addArticle({ article });
 
   revalidatePath(routes.root);
   revalidatePath(routes.dashboard.articles.root);
   revalidatePath("/sitemap.xml");
 
   // revalidateTag("articles");
+  return newArticle;
 }
 
 export async function editAction({ articleId, article }) {

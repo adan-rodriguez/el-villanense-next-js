@@ -135,6 +135,10 @@ export const handleSubmit = async (e, { articleId, article, imageFile }) => {
 
   e.target.inert = "true";
 
+  // const articlesDraft = JSON.parse(window.localStorage.getItem("draft"));
+  // articlesDraft.shift();
+  // window.localStorage.setItem("draft", JSON.stringify(articlesDraft));
+
   try {
     if (imageFile) {
       const { imageUrl } = await uploadImage({ imageFile });
@@ -155,6 +159,48 @@ export const handleSubmit = async (e, { articleId, article, imageFile }) => {
   }
 
   e.target.inert = "";
+};
+
+export const handleSubmitEditArticle = async (
+  e,
+  { articleId, article, imageFile }
+) => {
+  e.preventDefault();
+
+  e.target.inert = "true";
+
+  try {
+    if (imageFile) {
+      const { imageUrl } = await uploadImage({ imageFile });
+      article.image = imageUrl;
+    }
+    await editAction({ articleId, article });
+    alert("Artículo editado con éxito");
+  } catch {
+    alert("Ocurrió un error. Inténtelo nuevamente");
+  }
+
+  e.target.inert = "";
+};
+
+export const handleSubmitNewArticle = async (e, { article, imageFile }) => {
+  e.preventDefault();
+  e.target.inert = "true";
+
+  let newArticle;
+
+  try {
+    const { imageUrl } = await uploadImage({ imageFile });
+    article.image = imageUrl;
+
+    newArticle = await addAction({ article });
+    alert("Artículo subido con éxito");
+  } catch {
+    alert("Ocurrió un error. Inténtelo nuevamente");
+  }
+
+  e.target.inert = "";
+  return newArticle;
 };
 
 const uploadImage = async ({ imageFile }) => {
@@ -183,3 +229,17 @@ export const getArticlesAndCache = unstable_cache(
 );
 
 export const SUPER_ADMINS = ["adan.rodriguez.fusta@gmail.com"];
+
+export function objCompare(obj1, obj2) {
+  const Obj1_keys = Object.keys(obj1);
+  const Obj2_keys = Object.keys(obj2);
+  if (Obj1_keys.length !== Obj2_keys.length) {
+    return false;
+  }
+  for (let k of Obj1_keys) {
+    if (obj1[k] !== obj2[k]) {
+      return false;
+    }
+  }
+  return true;
+}

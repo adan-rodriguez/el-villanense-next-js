@@ -106,7 +106,10 @@ export default function DashboardForm({
                 type="file"
                 id="image"
                 required
-                onChange={(e) => getImageFile(e.target.files[0])}
+                onChange={(e) => {
+                  console.log(e.target.files[0]);
+                  getImageFile(e.target.files[0]);
+                }}
                 className={styles.input_img}
               />
             </label>

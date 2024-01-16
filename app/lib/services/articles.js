@@ -6,7 +6,7 @@ import {
   getDocs,
   orderBy,
   query,
-  where,
+  // where,
   setDoc,
 } from "firebase/firestore";
 import { db } from "../config-firebase";
@@ -17,30 +17,43 @@ import { isDev } from "../config";
 const articlesCollection = collection(db, "articles");
 
 export async function getArticles({ author } = {}) {
-  if (isDev) {
-    if (author) {
-      return mock_articles.filter((article) => article.author === author);
-    }
-    return mock_articles;
-  }
+  // if (isDev) {
+  //   if (author) {
+  //     return mock_articles.filter(
+  //       (article) =>
+  //         article.authors?.names.includes(author) && !article.authors?.anonymous
+  //     );
+  //   }
+  //   return mock_articles;
+  // }
 
   try {
     let q;
-    if (author) {
-      q = query(
-        articlesCollection,
-        where("author", "==", author),
-        orderBy("timestamp", "desc")
-      );
-    } else {
-      q = query(articlesCollection, orderBy("timestamp", "desc"));
-    }
+    // if (author) {
+    //   q = query(
+    //     articlesCollection,
+    //     where("authors.names", "array-contains", author),
+    //     orderBy("timestamp", "desc")
+    //   );
+    // } else {
+    q = query(articlesCollection, orderBy("timestamp", "desc"));
+    // }
 
     const data = await getDocs(q);
-    const articles = data.docs.map((article) => ({
-      id: article.id,
-      ...article.data(),
-    }));
+    let articles;
+    if (author) {
+      articles = data.docs
+        .filter((article) => article.data().authors?.names.includes(author))
+        .map((article) => ({
+          id: article.id,
+          ...article.data(),
+        }));
+    } else {
+      articles = data.docs.map((article) => ({
+        id: article.id,
+        ...article.data(),
+      }));
+    }
     return articles;
   } catch {
     console.log("Ha ocurrido un error");
@@ -65,27 +78,27 @@ export async function getArticle({ articleId }) {
 }
 
 export const addArticle = async ({
-  article: { title, image, altImage, lead, section, content, author },
+  article: { title, image, altImage, lead, section, content, authors },
 }) => {
   const timestamp = Date.now();
-  const data = {
+  const newArticle = {
     title,
     image,
     altImage,
     lead,
     section,
     content,
-    author,
+    authors,
     timestamp,
     ...timestampToDatetime({ timestamp }),
     friendlyUrl: getFriendlyUrl({ string: title }),
   };
 
-  const id = `${data.friendlyUrl}-${data.timestamp}`;
+  const id = `${newArticle.friendlyUrl}-${newArticle.timestamp}`;
 
-  await setDoc(doc(db, "articles", id), data);
-  data.id = id;
-  return data;
+  await setDoc(doc(db, "articles", id), newArticle);
+  newArticle.id = id;
+  return newArticle;
 };
 
 export const deleteArticle = async ({ articleId }) => {

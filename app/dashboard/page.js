@@ -24,6 +24,9 @@ export default function DashboardHomePage() {
       >
         Tus noticias
       </Link>
+      {/* <Link className={styles.link} href="/dashboard/borradores">
+        Borradores
+      </Link> */}
       {SUPER_ADMINS.includes(user.email) && (
         <Link className={styles.link} href={routes.dashboard.signup.root}>
           Agregar usuario

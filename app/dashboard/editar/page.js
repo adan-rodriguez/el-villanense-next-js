@@ -9,5 +9,5 @@ export default async function EditArticlePage({ searchParams }) {
 
   if (!article) notFound();
 
-  return <EditArticleClientPage articleId={articleId} article={article} />;
+  return <EditArticleClientPage article={article} />;
 }

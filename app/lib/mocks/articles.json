@@ -7,7 +7,7 @@
     "timestamp": 1684612075503,
     "altImage": "Persona introduciendo su voto en la urna",
     "title": "Listas Elecciones 2023 en Villa Ana",
-    "author": "Adán Rodríguez",
+    "authors": { "names": ["Adán Rodríguez"], "anonymous": false },
     "content": "<h2>Lista de Catalino Com&aacute;n</h2>\n<p><img src=\"https://res.cloudinary.com/dh4eh6jen/image/upload/v1684611037/el-villanense/lista-catalino_jrnubb.webp\" alt=\"Lista de Catalino Com&aacute;n\" width=\"713\" height=\"522\"></p>\n<h2>&nbsp;</h2>\n<h2>Lista de Ram&oacute;n Romano</h2>\n<p><img src=\"https://res.cloudinary.com/dh4eh6jen/image/upload/v1684611037/el-villanense/lista-ramon_a0cshk.webp\" alt=\"Lista de Ram&oacute;n Romano\" width=\"639\" height=\"520\"></p>\n<p>&nbsp;</p>\n<h2>Lista de Patricio Beltr&aacute;n</h2>\n<p><img src=\"https://res.cloudinary.com/dh4eh6jen/image/upload/v1684611037/el-villanense/lista-patricio_u1urcu.webp\" alt=\"Lista de Patricio Beltr&aacute;n\" width=\"605\" height=\"499\"></p>",
     "section": "locales",
     "friendlyUrl": "listas-elecciones-2023-en-villa-ana",
@@ -15,6 +15,10 @@
     "id": "listas-elecciones-2023-en-villa-ana-1684612075503"
   },
   {
+    "authors": {
+      "names": ["Adán Rodríguez", "Germán Rodríguez"],
+      "anonymous": true
+    },
     "lead": "Así lo informó el Ministerio de Economía de la provincia. Incluye a los trabajadores activos y pasivos. Incluirá el 22% de aumento acordado en paritarias.",
     "datetimeAttribute": "2023-02-30T11:23-03:00",
     "content": "<div class=\"article-body\">\n<p>El Ministerio de Econom&iacute;a inform&oacute; que sueldos y jubilaciones de la Administraci&oacute;n P&uacute;blica Provincial&nbsp;<strong>se abonar&aacute;n a partir de la semana pr&oacute;xima. Con los haberes de marzo se incluyen el aumento del 22 % acordado en el &aacute;mbito paritario con los diferentes gremios y tambi&eacute;n ser&aacute;n percibidos en simult&aacute;neo por el sector pasivo.</strong></p>\n</div>\n<div class=\"article-body\">\n<p><strong>Cronograma completo para el mes de marzo:</strong></p>\n<p><strong>Lunes 3 de abril de 2023</strong></p>\n<p>&bull; Pasivos a los que les corresponde percibir un monto de bolsillo de hasta 207.000 pesos</p>\n<p>&bull; Escalaf&oacute;n policial</p>\n<p><strong>Martes 4 de abril de 2023</strong></p>\n<p>&bull; Activos a los que les corresponde percibir un monto de bolsillo de hasta 198.000 pesos</p>\n<p>&bull; Docentes de Escuelas Privadas Transferidas 1&ordm; y 2&ordm; Convenio</p>\n<p><strong>Mi&eacute;rcoles 5 de abril de 2023</strong></p>\n<p>&bull; Resto de Activos a los que les corresponde percibir un monto de bolsillo superior a 198.000 pesos</p>\n<p>&bull; Docentes de Escuelas Privadas Hist&oacute;ricas</p>\n<p><strong>Lunes 10 de abril de 2023</strong></p>\n<p>&bull; Resto de Pasivos a los que les corresponde percibir un monto de bolsillo superior a 207.000 pesos</p>\n<p><strong>Martes 11 de abril</strong></p>\n<p>&bull; Autoridades Superiores Poder Judicial, Poder Legislativo y Poder Ejecutivo</p>\n</div>",
@@ -29,6 +33,10 @@
     "id": "cronograma-de-pago-de-empleados-publicos-de-santa-fe-1680186221751"
   },
   {
+    "authors": {
+      "names": ["Adán Rodríguez", "Germán Rodríguez"],
+      "anonymous": false
+    },
     "datetimeContent": "14 de Marzo de 2023 - 10:21",
     "dateContent": "14 de Marzo de 2023",
     "altImage": "Jubilados siendo atendidos en una caja de jubilaciones",

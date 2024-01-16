@@ -38,6 +38,7 @@ button,
 input,
 textarea,
 select {
+  color: inherit;
   font-family: inherit;
   font-size: 1em;
 }
