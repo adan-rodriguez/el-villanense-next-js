@@ -17,15 +17,15 @@ import { isDev } from "../config";
 const articlesCollection = collection(db, "articles");
 
 export async function getArticles({ author } = {}) {
-  // if (isDev) {
-  //   if (author) {
-  //     return mock_articles.filter(
-  //       (article) =>
-  //         article.authors?.names.includes(author) && !article.authors?.anonymous
-  //     );
-  //   }
-  //   return mock_articles;
-  // }
+  if (isDev) {
+    if (author) {
+      return mock_articles.filter(
+        (article) =>
+          article.authors?.names.includes(author) && !article.authors?.anonymous
+      );
+    }
+    return mock_articles;
+  }
 
   try {
     let q;
@@ -108,7 +108,7 @@ export const deleteArticle = async ({ articleId }) => {
 
 export const editArticle = async ({
   articleId,
-  article: { title, image, altImage, lead, section, content, author },
+  article: { title, image, altImage, lead, section, content, authors },
 }) => {
   await setDoc(
     doc(db, "articles", articleId),
@@ -119,7 +119,7 @@ export const editArticle = async ({
       lead,
       section,
       content,
-      author,
+      authors,
     },
     { merge: true }
   );
