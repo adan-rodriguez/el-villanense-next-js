@@ -4,6 +4,20 @@ import { notFound } from "next/navigation";
 import styles from "@/app/ui/styles/AuthorPage.module.css";
 import { DOMAIN } from "@/app/lib/utils";
 
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  return users.map((user) => ({
+    author: user.nick,
+  }));
+}
+
+// // Multiple versions of this page will be statically generated
+// // using the `params` returned by `generateStaticParams`
+// export default function Page({ params }) {
+//   const { slug } = params
+//   // ...
+// }
+
 export function generateMetadata({ params }) {
   const { author: nick } = params;
 

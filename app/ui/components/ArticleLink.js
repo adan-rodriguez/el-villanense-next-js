@@ -15,7 +15,7 @@ export default function ArticleLink({
 }) {
   return (
     <article className={styles.article}>
-      <EditAndDeleteButtons articleId={id} />
+      <EditAndDeleteButtons articleId={id} nick={authors[0]} />
       <Link className={styles.article_link} key={id} href={`/${id}`}>
         <img
           className={styles.article_link_img}

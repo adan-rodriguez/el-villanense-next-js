@@ -9,6 +9,7 @@ export async function addAction({ article }) {
   const newArticle = await addArticle({ article });
 
   revalidatePath(routes.root);
+  revalidatePath(routes.authors + "/" + article.authors[0]);
   revalidatePath(routes.dashboard.articles.root);
   revalidatePath("/sitemap.xml");
 
@@ -20,16 +21,18 @@ export async function editAction({ articleId, article }) {
   await editArticle({ articleId, article });
 
   revalidatePath(routes.root);
+  revalidatePath(routes.authors + "/" + article.authors[0]);
   revalidatePath(routes.dashboard.articles.root);
   revalidatePath("/sitemap.xml");
 
   // revalidateTag("articles");
 }
 
-export async function deleteAction({ articleId }) {
+export async function deleteAction({ articleId, nick }) {
   await deleteArticle({ articleId });
 
   revalidatePath(routes.root);
+  revalidatePath(routes.authors + "/" + nick);
   revalidatePath(routes.dashboard.articles.root);
   revalidatePath("/sitemap.xml");
 

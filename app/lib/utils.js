@@ -117,10 +117,10 @@ export const scrollToTop = () => {
   window.scrollTo(0, 0);
 };
 
-export async function handleDelete({ articleId }) {
+export async function handleDelete({ articleId, nick }) {
   if (confirm("¿Estás seguro de borrar esta noticia?")) {
     try {
-      await deleteAction({ articleId });
+      await deleteAction({ articleId, nick });
     } catch {
       alert("No se ha podido eliminar la noticia");
       return;

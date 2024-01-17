@@ -3,10 +3,15 @@
 import Image from "next/image";
 import { handleDelete } from "../../lib/utils";
 
-export default function DeleteButton({ articleId, width = 30, height = 30 }) {
+export default function DeleteButton({
+  articleId,
+  nick,
+  width = 30,
+  height = 30,
+}) {
   return (
     <button
-      onClick={() => handleDelete({ articleId })}
+      onClick={() => handleDelete({ articleId, nick })}
       title="Borrar noticia"
       aria-label="Borrar noticia"
     >
