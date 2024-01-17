@@ -114,7 +114,7 @@ export default async function Article({ params }) {
       <article className={styles.article_container}>
         <EditAndDeleteButtons
           articleId={article.id}
-          nick={article.authors[0]}
+          nick={article.authors && article.authors[0]}
         />
         <h1 className={styles.article_title}>{article.title}</h1>
         <ShareSocialMedia data={shareSocialMediaData} />

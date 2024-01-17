@@ -78,7 +78,7 @@ export default function ArticlesDashboardClientPage({
               <h2>{article.title}</h2>
               <EditAndDeleteButtons
                 articleId={article.id}
-                nick={article.authors[0]}
+                nick={article.authors && article.authors[0]}
               />
             </div>
           </div>
