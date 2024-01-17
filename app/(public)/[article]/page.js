@@ -17,6 +17,10 @@ export async function generateMetadata({ params }) {
 
   if (!article) return { title: "Página no encontrada - El Villanense" };
 
+  const names = users.map(
+    (user) => article.authors?.includes(user.nick) && user.name
+  );
+
   return {
     title: article.title,
     description: article.lead,
@@ -24,12 +28,11 @@ export async function generateMetadata({ params }) {
       title: article.title,
       description: article.lead,
       images: [{ url: article.image, alt: article.altImage }],
-      url: `${DOMAIN}/${articleId}`,
+      url: `${DOMAIN}/${article.id}`,
       siteName: "El Villanense",
       type: "article",
       publishedTime: article.datetimeAttribute,
-      ...(article.author &&
-        !article.authors?.anonymous && { authors: article.author?.names }),
+      ...(article.anonymous === false && { authors: names }),
     },
     twitter: {
       card: "summary_large_image",
@@ -45,7 +48,7 @@ export default async function Article({ params }) {
 
   if (!article) notFound();
 
-  const url = `${DOMAIN}/${articleId}`;
+  const url = `${DOMAIN}/${article.id}`;
 
   const shareSocialMediaData = [
     {
@@ -68,30 +71,30 @@ export default async function Article({ params }) {
     },
   ];
 
+  const authors = users.filter((user) => article.authors?.includes(user.nick));
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     headline: article.title,
     image: article.image,
     datePublished: article.datetimeAttribute,
-    ...(article.authors &&
-      !article.authors.anonymous &&
-      article.authors.names.forEach((name) => {
-        return {
-          author: {
-            "@type": "Person",
-            name,
-            url:
-              DOMAIN +
-              "/" +
-              name
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase()
-                .replace(" ", "-"),
-          },
-        };
-      })),
+    ...(article.anonymous === false &&
+      (authors.length > 1
+        ? {
+            author: authors?.map((author) => ({
+              "@type": "Person",
+              name: author.name,
+              url: DOMAIN + "/" + author.nick,
+            })),
+          }
+        : {
+            author: {
+              "@type": "Person",
+              name: authors[0].name,
+              url: DOMAIN + "/" + authors[0].nick,
+            },
+          })),
     publisher: {
       "@type": "Organization",
       name: "El Villanense",
@@ -99,10 +102,6 @@ export default async function Article({ params }) {
     },
     url: DOMAIN + "/" + article.id,
   };
-
-  const authors = users.filter((user) =>
-    article.authors?.names.includes(user.name)
-  );
 
   return (
     <>
@@ -123,17 +122,17 @@ export default async function Article({ params }) {
           {article.datetimeContent}
         </time>
         <p className={styles.article_lead}>{article.lead}</p>
-        {!article.authors?.anonymous &&
-          authors.map((author, index) => (
-            <div key={index} className={styles.article_author_container}>
-              <AuthorImage src={author.image} author={author.name} />
+        {article.anonymous === false &&
+          authors.map(({ name, image, nick }) => (
+            <div key={nick} className={styles.article_author_container}>
+              <AuthorImage src={image} author={name} />
               <p className={styles.article_author_name}>
                 Por{" "}
                 <Link
                   className={styles.article_author_name_link}
-                  href={`${routes.authors.root}/${author.nick}`}
+                  href={`${routes.authors.root}/${nick}`}
                 >
-                  {author.name}
+                  {name}
                 </Link>
               </p>
             </div>

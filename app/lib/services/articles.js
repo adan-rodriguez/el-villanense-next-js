@@ -6,65 +6,61 @@ import {
   getDocs,
   orderBy,
   query,
-  // where,
+  where,
   setDoc,
 } from "firebase/firestore";
 import { db } from "../config-firebase";
 import { getFriendlyUrl, timestampToDatetime } from "../utils";
-import mock_articles from "../mocks/articles.json";
-import { isDev } from "../config";
+// import mock_articles from "../mocks/articles.json";
+// import { isDev } from "../config";
 
 const articlesCollection = collection(db, "articles");
 
 export async function getArticles({ author } = {}) {
-  if (isDev) {
-    if (author) {
-      return mock_articles.filter(
-        (article) =>
-          article.authors?.names.includes(author) && !article.authors?.anonymous
-      );
-    }
-    return mock_articles;
-  }
+  // if (isDev) {
+  //   if (author) {
+  //     return mock_articles.filter(
+  //       (article) => article.authors?.includes(author) && !article.anonymous
+  //     );
+  //   }
+  //   return mock_articles;
+  // }
 
   try {
     let q;
-    // if (author) {
-    //   q = query(
-    //     articlesCollection,
-    //     where("authors.names", "array-contains", author),
-    //     orderBy("timestamp", "desc")
-    //   );
-    // } else {
-    q = query(articlesCollection, orderBy("timestamp", "desc"));
-    // }
+    if (author) {
+      q = query(
+        articlesCollection,
+        where("authors", "array-contains", author),
+        orderBy("timestamp", "desc")
+      );
+    } else {
+      q = query(articlesCollection, orderBy("timestamp", "desc"));
+    }
 
     const data = await getDocs(q);
-    let articles;
-    if (author) {
-      articles = data.docs
-        .filter((article) => article.data().authors?.names.includes(author))
-        .map((article) => ({
-          id: article.id,
-          ...article.data(),
-        }));
-    } else {
-      articles = data.docs.map((article) => ({
+
+    console.log(
+      data.docs.map((article) => ({
         id: article.id,
         ...article.data(),
-      }));
-    }
-    return articles;
-  } catch {
+      }))
+    );
+
+    return data.docs.map((article) => ({
+      id: article.id,
+      ...article.data(),
+    }));
+  } catch (error) {
     console.log("Ha ocurrido un error");
   }
 }
 
 export async function getArticle({ articleId }) {
-  if (isDev) {
-    const article = mock_articles.find((article) => article.id === articleId);
-    return article;
-  }
+  // if (isDev) {
+  //   const article = mock_articles.find((article) => article.id === articleId);
+  //   return article;
+  // }
 
   try {
     const articleRef = doc(db, "articles", articleId);
@@ -78,7 +74,16 @@ export async function getArticle({ articleId }) {
 }
 
 export const addArticle = async ({
-  article: { title, image, altImage, lead, section, content, authors },
+  article: {
+    title,
+    image,
+    altImage,
+    lead,
+    section,
+    content,
+    authors,
+    anonymous,
+  },
 }) => {
   const timestamp = Date.now();
   const newArticle = {
@@ -89,6 +94,7 @@ export const addArticle = async ({
     section,
     content,
     authors,
+    anonymous,
     timestamp,
     ...timestampToDatetime({ timestamp }),
     friendlyUrl: getFriendlyUrl({ string: title }),

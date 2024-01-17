@@ -7,6 +7,7 @@ import styles from "@/app/ui/styles/DashboardForm.module.css";
 import {
   handleDelete,
   handleSubmitEditArticle,
+  users,
   // objCompare,
 } from "@/app/lib/utils";
 import TinyMCE from "@/app/ui/components/TinyMCE";
@@ -62,40 +63,44 @@ export default function EditArticleClientPage({ article }) {
               lead,
               section,
               content,
-              authors: {
-                names: authors.map((author) => author.name),
-                anonymous,
-              },
+              authors,
+              anonymous,
             },
             imageFile,
           });
         }}
       >
-        <div className={styles.form_author}>
-          {authors.map((author, index) => (
-            <div
-              key={index}
-              className={styles.author_img_name_container}
-              style={anonymous ? { opacity: "0.2", userSelect: "none" } : {}}
-            >
-              <p>Autor:</p>
-              <AuthorImage src={author.image} author={author.name} />
-              <p>{author.name}</p>
+        {authors && (
+          <div className={styles.form_author}>
+            {users
+              .filter((user) => authors?.includes(user.nick))
+              .map((author) => (
+                <div
+                  key={author.nick}
+                  className={styles.author_img_name_container}
+                  style={
+                    anonymous ? { opacity: "0.2", userSelect: "none" } : {}
+                  }
+                >
+                  <p>Autor:</p>
+                  <AuthorImage src={author.image} author={author.name} />
+                  <p>{author.name}</p>
+                </div>
+              ))}
+            <div className={styles.author_checkbox_container}>
+              <input
+                onChange={(e) => getAnonymous(e.target.checked)}
+                type="checkbox"
+                checked={anonymous}
+              />
+              <p className={styles.author_label_checkbox}>
+                {!anonymous
+                  ? "Marcá la casilla si preferís que la noticia no tenga autor"
+                  : "Desmarcá la casilla si preferís que la noticia tenga autor"}
+              </p>
             </div>
-          ))}
-          <div className={styles.author_checkbox_container}>
-            <input
-              onChange={(e) => getAnonymous(e.target.checked)}
-              type="checkbox"
-              checked={anonymous}
-            />
-            <p className={styles.author_label_checkbox}>
-              {!anonymous
-                ? "Marcá la casilla si preferís que la noticia no tenga autor"
-                : "Desmarcá la casilla si preferís que la noticia tenga autor"}
-            </p>
           </div>
-        </div>
+        )}
         <div>
           <label className={styles.form_label}>
             Título

@@ -19,7 +19,7 @@ export default function useNewArticle({ user }) {
   const getImageFile = (imageFile) => setImageFile(imageFile);
 
   useEffect(() => {
-    setAuthors([user.name]);
+    setAuthors([user.nick]);
   }, []);
 
   return {

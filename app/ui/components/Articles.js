@@ -18,6 +18,7 @@ export default async function Articles({ author }) {
           datetimeAttribute,
           dateContent,
           authors,
+          anonymous,
         }) => (
           <ArticleLink
             key={id}
@@ -28,6 +29,7 @@ export default async function Articles({ author }) {
             datetimeAttribute={datetimeAttribute}
             dateContent={dateContent}
             authors={authors}
+            anonymous={anonymous}
           />
         )
       )}

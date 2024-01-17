@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { users } from "../lib/utils";
 
 export default function useEditArticle({ article }) {
   const [title, setTitle] = useState("");
@@ -9,7 +8,7 @@ export default function useEditArticle({ article }) {
   const [section, setSection] = useState("locales");
   const [content, setContent] = useState("");
   const [authors, setAuthors] = useState([]);
-  const [anonymous, setAnonymous] = useState(true);
+  const [anonymous, setAnonymous] = useState(false);
 
   const [imageFile, setImageFile] = useState(null);
 
@@ -31,10 +30,8 @@ export default function useEditArticle({ article }) {
       setLead(article.lead);
       setSection(article.section);
       setContent(article.content);
-      setAuthors(
-        users.filter((user) => article.authors?.names.includes(user.name))
-      );
-      setAnonymous(article.authors?.anonymous);
+      setAuthors(article.authors);
+      setAnonymous(article.anonymous);
     }
   }, []);
 

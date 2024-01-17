@@ -5,22 +5,24 @@ import styles from "@/app/ui/styles/AuthorPage.module.css";
 import { DOMAIN } from "@/app/lib/utils";
 
 export function generateMetadata({ params }) {
-  const { author } = params;
+  const { author: nick } = params;
 
-  const user = users.find((user) => user.nick === author);
+  const user = users.find((user) => user.nick === nick);
 
   if (!user) {
     return { title: "Página no encontrada - El Villanense" };
   }
 
+  const { name } = user;
+
   return {
-    title: `${user.name} - El Villanense`,
-    description: `Todas las noticias publicadas por ${user.name}`,
+    title: `${name} - El Villanense`,
+    description: `Todas las noticias publicadas por ${name}`,
     openGraph: {
-      title: `${user.name} - El Villanense`,
-      description: `Todas las noticias publicadas por ${user.name}`,
+      title: `${name} - El Villanense`,
+      description: `Todas las noticias publicadas por ${name}`,
       images: `${DOMAIN}/images/logo.png`,
-      url: `${DOMAIN}/autor/${author}`,
+      url: `${DOMAIN}/autor/${nick}`,
       siteName: "El Villanense",
       type: "website",
     },
@@ -31,9 +33,9 @@ export function generateMetadata({ params }) {
 }
 
 export default async function ArticlesByAuthor({ params }) {
-  const { author } = params;
+  const { author: nick } = params;
 
-  const user = users.find((user) => user.nick === author);
+  const user = users.find((user) => user.nick === nick);
 
   if (!user) notFound();
 
@@ -42,7 +44,7 @@ export default async function ArticlesByAuthor({ params }) {
       <h1 className={styles.title}>
         Noticias de <span className={styles.author}>{user.name}</span>
       </h1>
-      <Articles author={user.name} />
+      <Articles author={nick} />
     </>
   );
 }

@@ -53,7 +53,8 @@ export default function NewArticlePage() {
               lead,
               section,
               content,
-              authors: { names: authors, anonymous },
+              authors,
+              anonymous,
             },
             imageFile,
           });

@@ -5,17 +5,19 @@ import { users } from "../../lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function ArticleLinkAuthor({ name }) {
+export default function ArticleLinkAuthor({ nick }) {
   const pathname = usePathname();
 
   if (pathname.includes("autores")) return null;
+
+  const { name } = users.find((user) => user.nick === nick);
 
   return (
     <p className={styles.article_link_author_name}>
       Por{" "}
       <Link
         className={styles.article_link_author_name_link}
-        href={`/autores/${users.find((user) => user.name === name).nick}`}
+        href={`/autores/${nick}`}
       >
         {name}
       </Link>
