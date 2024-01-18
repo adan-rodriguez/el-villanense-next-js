@@ -73,7 +73,7 @@ export default function EditArticleClientPage({ article }) {
         {authors && (
           <div className={styles.form_author}>
             {users
-              .filter((user) => authors?.includes(user.nick))
+              .filter((user) => authors.includes(user.nick))
               .map((author) => (
                 <div
                   key={author.nick}

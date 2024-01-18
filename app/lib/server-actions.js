@@ -22,7 +22,7 @@ export async function editAction({ articleId, article }) {
   await editArticle({ articleId, article });
 
   revalidatePath(routes.root);
-  article.authors && revalidatePath(routes.authors + "/" + article.authors[0]);
+  revalidatePath(routes.authors + "/" + article.authors[0]);
   revalidatePath(routes.dashboard.articles.root);
   revalidatePath("/sitemap.xml");
 
@@ -33,7 +33,7 @@ export async function deleteAction({ articleId, nick }) {
   await deleteArticle({ articleId });
 
   revalidatePath(routes.root);
-  nick && revalidatePath(routes.authors + "/" + nick);
+  revalidatePath(routes.authors + "/" + nick);
   revalidatePath(routes.dashboard.articles.root);
   revalidatePath("/sitemap.xml");
 

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
   if (!article) return { title: "Página no encontrada - El Villanense" };
 
   const names = users.map(
-    (user) => article.authors?.includes(user.nick) && user.name
+    (user) => article.authors.includes(user.nick) && user.name
   );
 
   return {
@@ -71,7 +71,7 @@ export default async function Article({ params }) {
     },
   ];
 
-  const authors = users.filter((user) => article.authors?.includes(user.nick));
+  const authors = users.filter((user) => article.authors.includes(user.nick));
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -82,7 +82,7 @@ export default async function Article({ params }) {
     ...(article.anonymous === false &&
       (authors.length > 1
         ? {
-            author: authors?.map((author) => ({
+            author: authors.map((author) => ({
               "@type": "Person",
               name: author.name,
               url: DOMAIN + "/" + author.nick,
@@ -114,7 +114,7 @@ export default async function Article({ params }) {
       <article className={styles.article_container}>
         <EditAndDeleteButtons
           articleId={article.id}
-          nick={article.authors && article.authors[0]}
+          nick={article.authors[0]}
         />
         <h1 className={styles.article_title}>{article.title}</h1>
         <ShareSocialMedia data={shareSocialMediaData} />

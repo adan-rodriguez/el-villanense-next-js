@@ -15,7 +15,7 @@ export default function ArticleLink({
 }) {
   return (
     <article className={styles.article}>
-      <EditAndDeleteButtons articleId={id} nick={authors && authors[0]} />
+      <EditAndDeleteButtons articleId={id} nick={authors[0]} />
       <Link className={styles.article_link} key={id} href={`/${id}`}>
         <img
           className={styles.article_link_img}
@@ -29,7 +29,7 @@ export default function ArticleLink({
         <p className={styles.article_link_title}>{title}</p>
       </Link>
       {!anonymous &&
-        authors?.map((nick) => <ArticleLinkAuthor key={nick} nick={nick} />)}
+        authors.map((nick) => <ArticleLinkAuthor key={nick} nick={nick} />)}
     </article>
   );
 }
