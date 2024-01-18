@@ -4,11 +4,12 @@ import styles from "../styles/ArticleLink.module.css";
 import { users } from "../../lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { routes } from "@/app/lib/routes";
 
 export default function ArticleLinkAuthor({ nick }) {
   const pathname = usePathname();
 
-  if (pathname.includes("autores")) return null;
+  if (pathname.includes("autor")) return null;
 
   const { name } = users.find((user) => user.nick === nick);
 
@@ -17,7 +18,7 @@ export default function ArticleLinkAuthor({ nick }) {
       Por{" "}
       <Link
         className={styles.article_link_author_name_link}
-        href={`/autores/${nick}`}
+        href={`${routes.author.root}/${nick}`}
       >
         {name}
       </Link>

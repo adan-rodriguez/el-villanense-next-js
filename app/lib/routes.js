@@ -9,5 +9,5 @@ export const routes = {
     signup: { root: "/dashboard/signup" },
     account: { root: "/dashboard/cuenta" },
   },
-  authors: { root: "/autores" },
+  author: { root: "/autor" },
 };

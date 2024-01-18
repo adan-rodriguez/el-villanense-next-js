@@ -18,10 +18,7 @@ export default function DashboardHomePage() {
       <Link className={styles.link} href={routes.dashboard.articles.root}>
         Editar/Borrar
       </Link>
-      <Link
-        className={styles.link}
-        href={routes.authors.root + `/${user.nick}`}
-      >
+      <Link className={styles.link} href={routes.author.root + `/${user.nick}`}>
         Tus noticias
       </Link>
       {/* <Link className={styles.link} href="/dashboard/borradores">

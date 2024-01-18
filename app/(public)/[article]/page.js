@@ -149,7 +149,7 @@ export default async function Article({ params }) {
                 Por{" "}
                 <Link
                   className={styles.article_author_name_link}
-                  href={`${routes.authors.root}/${nick}`}
+                  href={`${routes.author.root}/${nick}`}
                 >
                   {name}
                 </Link>
