@@ -17,8 +17,8 @@ export async function generateMetadata({ params }) {
 
   if (!article) return { title: "Página no encontrada - El Villanense" };
 
-  const names = users.map(
-    (user) => article.authors.includes(user.nick) && user.name
+  const facebookProfiles = users.map(
+    (user) => article.authors.includes(user.nick) && user.facebook
   );
 
   return {
@@ -27,17 +27,33 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: article.title,
       description: article.lead,
-      images: [{ url: article.image, alt: article.altImage }],
+      images: { url: article.image, alt: article.altImage },
       url: `${DOMAIN}/${article.id}`,
       siteName: "El Villanense",
       type: "article",
+      locale: "es_LA",
       publishedTime: article.datetimeAttribute,
-      ...(article.anonymous === false && { authors: names }),
+      // ...(article.lastModified && {modifiedTime: article.lastModified}),
+      // publisher: "https://www.facebook.com/elvillanense",
+      // section: "locales",
+      ...(article.anonymous === false && { authors: facebookProfiles }),
     },
     twitter: {
       card: "summary_large_image",
       // site: "@elvillanense",
+      // siteId: "1467726470533754880",
+      // creator: "@nextjs",
+      // creatorId: "1467726470533754880",
     },
+    other: {
+      "article:publisher": "https://www.facebook.com/elvillanense",
+    },
+    // other: {
+    //   "profile:first_name": "Adán",
+    //   "profile:last_name": "Rodríguez",
+    //   "profile:username": "adan-rodriguez",
+    //   "profile:gender": "male",
+    // },
   };
 }
 

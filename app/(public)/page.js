@@ -25,10 +25,11 @@ export const metadata = {
     title: "El Villanense",
     description:
       "Todas las noticias de Villa Ana y las noticias más importantes de la región, de la provincia de Santa Fe, de la Argentina y del mundo.",
-    images: `${DOMAIN}/images/logo.png`,
+    images: { url: `${DOMAIN}/images/logo.png`, alt: "Logo de El Villanense" },
     url: DOMAIN,
     siteName: "El Villanense",
     type: "website",
+    locale: "es_LA",
   },
   twitter: {
     card: "summary_large_image",

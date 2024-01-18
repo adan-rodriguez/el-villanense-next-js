@@ -27,7 +27,7 @@ export function generateMetadata({ params }) {
     return { title: "Página no encontrada - El Villanense" };
   }
 
-  const { name } = user;
+  const { name, image } = user;
 
   return {
     title: `${name} - El Villanense`,
@@ -35,10 +35,11 @@ export function generateMetadata({ params }) {
     openGraph: {
       title: `${name} - El Villanense`,
       description: `Todas las noticias publicadas por ${name}`,
-      images: `${DOMAIN}/images/logo.png`,
+      images: { url: image, alt: `Foto de ${name}` },
       url: `${DOMAIN}/autor/${nick}`,
       siteName: "El Villanense",
       type: "website",
+      locale: "es_LA",
     },
     twitter: {
       card: "summary_large_image",
