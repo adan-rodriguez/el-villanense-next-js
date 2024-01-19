@@ -3,7 +3,6 @@ import { users } from "../../../lib/utils";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/styles/AuthorPage.module.css";
 import { DOMAIN } from "@/app/lib/utils";
-import { routes } from "@/app/lib/routes";
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
@@ -37,7 +36,7 @@ export function generateMetadata({ params }) {
       title: `${name} - El Villanense`,
       description: `Todas las noticias publicadas por ${name}`,
       images: { url: image, alt: `Foto de ${name}` },
-      url: `${DOMAIN}${routes.author.root}/${nick}`,
+      url: `${DOMAIN}/autor/${nick}`,
       siteName: "El Villanense",
       type: "website",
       locale: "es_LA",

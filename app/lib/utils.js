@@ -232,7 +232,7 @@ const uploadImage = async ({ imageFile }) => {
   return { imageUrl: secure_url };
 };
 
-export const getArticlesAndCache = unstable_cache(
+export const obtainArticles = unstable_cache(
   async ({ author } = {}) => await getArticles({ author }),
   ["articles"],
   {

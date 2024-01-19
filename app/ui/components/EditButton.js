@@ -1,14 +1,11 @@
 import { useRouter } from "next/navigation";
-import { routes } from "../../lib/routes";
 import Image from "next/image";
 
 export default function EditButton({ articleId, width = 30, height = 30 }) {
   const router = useRouter();
   return (
     <button
-      onClick={() =>
-        router.push(`${routes.dashboard.edit.root}?articulo=${articleId}`)
-      }
+      onClick={() => router.push(`/editar?articulo=${articleId}`)}
       title="Editar noticia"
       aria-label="Editar noticia"
     >

@@ -1,7 +1,6 @@
 "use client";
 
 import { AuthContext } from "@/app/context/auth";
-import { routes } from "@/app/lib/routes";
 import { SUPER_ADMINS } from "@/app/lib/utils";
 import SignupForm from "@/app/ui/components/SignupForm";
 import styles from "@/app/ui/styles/SignupPage.module.css";
@@ -12,7 +11,7 @@ export default function SignupPage() {
   const { user } = useContext(AuthContext);
 
   if (!SUPER_ADMINS.includes(user.email)) {
-    redirect(routes.dashboard.root, "replace");
+    redirect("/dashboard", "replace");
   }
 
   return (

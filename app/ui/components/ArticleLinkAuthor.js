@@ -4,7 +4,6 @@ import styles from "../styles/ArticleLink.module.css";
 import { users } from "../../lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { routes } from "@/app/lib/routes";
 
 export default function ArticleLinkAuthor({ nick }) {
   const pathname = usePathname();
@@ -18,7 +17,7 @@ export default function ArticleLinkAuthor({ nick }) {
       Por{" "}
       <Link
         className={styles.article_link_author_name_link}
-        href={`${routes.author.root}/${nick}`}
+        href={`/autor/${nick}`}
       >
         {name}
       </Link>

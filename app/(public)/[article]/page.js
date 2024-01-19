@@ -7,7 +7,6 @@ import { notFound } from "next/navigation";
 import { getArticle } from "@/app/lib/services/articles";
 import ShareSocialMedia from "../../ui/components/ShareSocialMedia";
 import { DOMAIN } from "../../lib/utils";
-import { routes } from "../../lib/routes";
 import AuthorImage from "../../ui/components/AuthorImage";
 
 export async function generateMetadata({ params }) {
@@ -149,7 +148,7 @@ export default async function Article({ params }) {
                 Por{" "}
                 <Link
                   className={styles.article_author_name_link}
-                  href={`${routes.author.root}/${nick}`}
+                  href={`/autor/${nick}`}
                 >
                   {name}
                 </Link>

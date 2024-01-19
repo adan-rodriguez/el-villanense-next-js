@@ -9,7 +9,6 @@ import AuthorImage from "./AuthorImage";
 import { logout } from "@/app/lib/auth";
 import useMenuUser from "@/app/hooks/useMenuUser";
 import Link from "next/link";
-import { routes } from "@/app/lib/routes";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "@/app/context/auth";
 // import dynamic from "next/dynamic";
@@ -65,14 +64,14 @@ export default function Header() {
                     <Link
                       className={styles.dashboard_link}
                       onClick={() => getIsMenuUserOpen(false)}
-                      href={routes.dashboard.root}
+                      href="/dashboard"
                     >
                       Dashboard
                     </Link>
                     <Link
                       className={styles.account_link}
                       onClick={() => getIsMenuUserOpen(false)}
-                      href={routes.dashboard.account.root}
+                      href="/dashboard/cuenta"
                     >
                       Cuenta
                     </Link>

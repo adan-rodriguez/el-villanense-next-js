@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import styles from "@/app/ui/styles/DashboardHomePage.module.css";
-import { routes } from "../lib/routes";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth";
 import { SUPER_ADMINS } from "../lib/utils";
@@ -12,20 +11,20 @@ export default function DashboardHomePage() {
 
   return (
     <div className={styles.links_container}>
-      <Link className={styles.link} href={routes.dashboard.new.root}>
+      <Link className={styles.link} href="/dashboard/nuevo">
         Nuevo artículo
       </Link>
-      <Link className={styles.link} href={routes.dashboard.articles.root}>
+      <Link className={styles.link} href="/dashboard/articulos">
         Editar/Borrar
       </Link>
-      <Link className={styles.link} href={routes.author.root + `/${user.nick}`}>
+      <Link className={styles.link} href={`/autor/${user.nick}`}>
         Tus noticias
       </Link>
       {/* <Link className={styles.link} href="/dashboard/borradores">
         Borradores
       </Link> */}
       {SUPER_ADMINS.includes(user.email) && (
-        <Link className={styles.link} href={routes.dashboard.signup.root}>
+        <Link className={styles.link} href="/dashboard/signup">
           Agregar usuario
         </Link>
       )}
