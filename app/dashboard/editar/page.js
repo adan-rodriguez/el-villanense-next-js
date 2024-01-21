@@ -5,6 +5,8 @@ import EditArticleClientPage from "./page.client";
 export default async function EditArticlePage({ searchParams }) {
   const { articulo: articleId } = searchParams;
 
+  if (!articleId) notFound();
+
   const article = await getArticle({ articleId });
 
   if (!article) notFound();

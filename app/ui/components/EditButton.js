@@ -5,7 +5,7 @@ export default function EditButton({ articleId, width = 30, height = 30 }) {
   const router = useRouter();
   return (
     <button
-      onClick={() => router.push(`/editar?articulo=${articleId}`)}
+      onClick={() => router.push(`/dashboard/editar?articulo=${articleId}`)}
       title="Editar noticia"
       aria-label="Editar noticia"
     >

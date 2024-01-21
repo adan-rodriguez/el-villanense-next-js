@@ -11,20 +11,22 @@ import {
 } from "firebase/firestore";
 import { db } from "../config-firebase";
 import { getFriendlyUrl, timestampToDatetime } from "../utils";
-// import mock_articles from "../mocks/articles.json";
-// import { isDev } from "../config";
+import mock_articles from "../mocks/articles.json";
+import { isDev } from "../config";
 
 const articlesCollection = collection(db, "articles");
 
 export async function getArticles({ author } = {}) {
-  // if (isDev) {
-  //   if (author) {
-  //     return mock_articles.filter(
-  //       (article) => article.authors.includes(author) && !article.anonymous
-  //     );
-  //   }
-  //   return mock_articles;
-  // }
+  if (isDev) {
+    if (author) {
+      return mock_articles.filter(
+        (article) => article.authors.includes(author) && !article.anonymous
+      );
+    }
+    console.log("aca");
+    return mock_articles;
+  }
+  console.log("aco");
 
   try {
     let q;
@@ -51,10 +53,10 @@ export async function getArticles({ author } = {}) {
 }
 
 export async function getArticle({ articleId }) {
-  // if (isDev) {
-  //   const article = mock_articles.find((article) => article.id === articleId);
-  //   return article;
-  // }
+  if (isDev) {
+    const article = mock_articles.find((article) => article.id === articleId);
+    return article;
+  }
 
   try {
     const articleRef = doc(db, "articles", articleId);
