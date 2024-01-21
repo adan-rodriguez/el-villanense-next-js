@@ -1,6 +1,4 @@
-import { unstable_cache } from "next/cache";
 import { addAction, deleteAction, editAction } from "./server-actions";
-import { getArticles } from "./services/articles";
 
 export const DOMAIN = "https://www.elvillanense.com.ar";
 
@@ -231,14 +229,6 @@ const uploadImage = async ({ imageFile }) => {
   const { secure_url } = await response.json();
   return { imageUrl: secure_url };
 };
-
-export const obtainArticles = unstable_cache(
-  async ({ author } = {}) => await getArticles({ author }),
-  ["articles"],
-  {
-    tags: ["articles"],
-  }
-);
 
 export const SUPER_ADMINS = ["adan.rodriguez.fusta@gmail.com"];
 

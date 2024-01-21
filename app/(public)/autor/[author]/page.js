@@ -1,8 +1,10 @@
 import Articles from "../../../ui/components/Articles";
 import { users } from "../../../lib/utils";
 import { notFound } from "next/navigation";
-import styles from "@/app/ui/styles/AuthorPage.module.css";
+import styles from "@/app/ui/styles/ArticlesByAuthorPage.module.css";
 import { DOMAIN } from "@/app/lib/utils";
+import { getArticles } from "@/app/lib/services/articles";
+import { unstable_cache } from "next/cache";
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
@@ -47,19 +49,29 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default async function ArticlesByAuthor({ params }) {
+const obtainArticles = unstable_cache(
+  async ({ author }) => await getArticles({ author }),
+  ["articles-by-author"],
+  {
+    tags: ["articles"],
+  }
+);
+
+export default async function ArticlesByAuthorPage({ params }) {
   const { author: nick } = params;
 
   const user = users.find((user) => user.nick === nick);
 
   if (!user) notFound();
 
+  const articles = await obtainArticles({ author: nick });
+
   return (
     <>
       <h1 className={styles.title}>
         Noticias de <span className={styles.author}>{user.name}</span>
       </h1>
-      <Articles author={nick} />
+      <Articles articles={articles} author={nick} />
     </>
   );
 }
