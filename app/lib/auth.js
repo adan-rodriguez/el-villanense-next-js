@@ -7,11 +7,13 @@ import {
 } from "firebase/auth";
 import { auth } from "./config-firebase";
 
-export const login = async (e, { getLoginErrorMessage }) => {
+export const login = async ({ e, getLoginErrorMessage, getLoading }) => {
   e.preventDefault();
   e.target.inert = "true";
+  document.body.inert = "true";
 
   getLoginErrorMessage(null);
+  getLoading(true);
 
   const email = e.target.email.value;
   const password = e.target.password.value;
@@ -30,23 +32,31 @@ export const login = async (e, { getLoginErrorMessage }) => {
           getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
         }
       })
-      .finally(() => (e.target.inert = ""));
+      .finally(() => {
+        e.target.inert = "";
+        document.body.inert = "";
+        getLoading(false);
+      });
   });
 };
 
 export const logout = () => {
+  document.body.inert = "true";
   signOut(auth)
     .then(() => {})
     .catch(() => {
       alert("No se ha podido cerrar sesión");
-    });
+    })
+    .finally((document.body.inert = ""));
 };
 
-export const signup = async (e, { getSignupErrorMessage }) => {
+export const signup = async ({ e, getSignupErrorMessage, getLoading }) => {
   e.preventDefault();
   e.target.inert = "true";
+  document.body.inert = "true";
 
   getSignupErrorMessage(null);
+  getLoading(true);
 
   const email = e.target.email.value;
   const password = e.target.password.value;
@@ -66,5 +76,9 @@ export const signup = async (e, { getSignupErrorMessage }) => {
         getSignupErrorMessage("Ocurrió un error. Inténtalo nuevamente");
       }
     })
-    .finally(() => (e.target.inert = ""));
+    .finally(() => {
+      e.target.inert = "";
+      document.body.inert = "";
+      getLoading(false);
+    });
 };

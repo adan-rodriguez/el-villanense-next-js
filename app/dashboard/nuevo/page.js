@@ -28,6 +28,8 @@ export default function NewArticlePage() {
     getAnonymous,
     imageFile,
     getImageFile,
+    loading,
+    getLoading,
   } = useNewArticle({ user });
 
   const router = useRouter();
@@ -42,11 +44,13 @@ export default function NewArticlePage() {
 
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>Nuevo artículo</h2>
+      <h2 className={styles.title}>Nuevo artículo</h2>
       <form
         className={styles.form}
         onSubmit={async (e) => {
-          const newArticle = await handleSubmitNewArticle(e, {
+          await handleSubmitNewArticle({
+            e,
+            router,
             article: {
               title,
               altImage,
@@ -57,12 +61,11 @@ export default function NewArticlePage() {
               anonymous,
             },
             imageFile,
+            getLoading,
           });
-
-          router.push(`/${newArticle.id}`);
         }}
       >
-        <div className={styles.form_author}>
+        <div className={styles.author_container}>
           <div
             className={styles.author_img_name_container}
             style={anonymous ? { opacity: "0.2", userSelect: "none" } : {}}
@@ -76,7 +79,7 @@ export default function NewArticlePage() {
               onChange={(e) => getAnonymous(e.target.checked)}
               type="checkbox"
             />
-            <p className={styles.author_label_checkbox}>
+            <p className={styles.author_checkbox_label}>
               {!anonymous
                 ? "Marcá la casilla si preferís que la noticia no tenga autor"
                 : "Desmarcá la casilla si preferís que la noticia tenga autor"}
@@ -84,10 +87,10 @@ export default function NewArticlePage() {
           </div>
         </div>
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Título
             <input
-              className={styles.form_input}
+              className={styles.input}
               type="text"
               id="title"
               required
@@ -97,7 +100,7 @@ export default function NewArticlePage() {
           </label>
         </div>
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Imagen
             <input
               type="file"
@@ -106,7 +109,7 @@ export default function NewArticlePage() {
               onChange={(e) => {
                 getImageFile(e.target.files[0]);
               }}
-              className={styles.input_img}
+              className={styles.img_input}
             />
           </label>
         </div>
@@ -120,10 +123,10 @@ export default function NewArticlePage() {
           <div className={styles.img_preview}>Previsualización de imagen</div>
         )}
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Descripción corta de la imagen &#40;para personas no videntes&#41;
             <input
-              className={styles.form_input}
+              className={styles.input}
               type="text"
               id="alt-image"
               required
@@ -133,10 +136,10 @@ export default function NewArticlePage() {
           </label>
         </div>
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Entrada
             <textarea
-              className={styles.form_textarea}
+              className={styles.textarea}
               id="lead"
               required
               value={lead}
@@ -146,10 +149,10 @@ export default function NewArticlePage() {
           </label>
         </div>
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Sección
             <select
-              className={styles.form_select}
+              className={styles.select}
               id="section"
               required
               value={section}
@@ -170,7 +173,7 @@ export default function NewArticlePage() {
       /> */}
         <div className={styles.buttons_container}>
           <button
-            className={styles.form_btn}
+            className={styles.btn}
             type="submit"
             // disabled={!isCompleted}
             // style={!isCompleted ? { cursor: "not-allowed" } : {}}
@@ -180,6 +183,7 @@ export default function NewArticlePage() {
           </button>
         </div>
       </form>
+      {loading && <p className={styles.upload}>Subiendo...</p>}
     </>
   );
 }

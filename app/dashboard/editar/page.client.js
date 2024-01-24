@@ -12,6 +12,7 @@ import {
 } from "@/app/lib/utils";
 import TinyMCE from "@/app/ui/components/TinyMCE";
 import AuthorImage from "@/app/ui/components/AuthorImage";
+import { useRouter } from "next/navigation";
 
 export default function EditArticleClientPage({ article }) {
   const {
@@ -32,7 +33,11 @@ export default function EditArticleClientPage({ article }) {
     getAnonymous,
     imageFile,
     getImageFile,
+    loading,
+    getLoading,
   } = useEditArticle({ article });
+
+  const router = useRouter();
 
   // const { user } = useContext(AuthContext);
 
@@ -50,11 +55,13 @@ export default function EditArticleClientPage({ article }) {
 
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>Editar artículo</h2>
+      <h2 className={styles.title}>Editar artículo</h2>
       <form
         className={styles.form}
         onSubmit={async (e) => {
-          await handleSubmitEditArticle(e, {
+          await handleSubmitEditArticle({
+            e,
+            router,
             articleId: article.id,
             article: {
               title,
@@ -67,11 +74,12 @@ export default function EditArticleClientPage({ article }) {
               anonymous,
             },
             imageFile,
+            getLoading,
           });
         }}
       >
         {authors && (
-          <div className={styles.form_author}>
+          <div className={styles.author_container}>
             {users
               .filter((user) => authors.includes(user.nick))
               .map((author) => (
@@ -93,7 +101,7 @@ export default function EditArticleClientPage({ article }) {
                 type="checkbox"
                 checked={anonymous}
               />
-              <p className={styles.author_label_checkbox}>
+              <p className={styles.author_checkbox_label}>
                 {!anonymous
                   ? "Marcá la casilla si preferís que la noticia no tenga autor"
                   : "Desmarcá la casilla si preferís que la noticia tenga autor"}
@@ -102,10 +110,10 @@ export default function EditArticleClientPage({ article }) {
           </div>
         )}
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Título
             <input
-              className={styles.form_input}
+              className={styles.input}
               type="text"
               id="title"
               required
@@ -120,7 +128,7 @@ export default function EditArticleClientPage({ article }) {
             <img src={image} alt={altImage} className={styles.img_bbdd} />
             <button
               type="button"
-              className={styles.btn_change_img}
+              className={styles.change_img_btn}
               onClick={() => {
                 getImage("");
                 getAltImage("");
@@ -132,7 +140,7 @@ export default function EditArticleClientPage({ article }) {
         ) : (
           <>
             <div>
-              <label className={styles.form_label}>
+              <label className={styles.label}>
                 Imagen
                 <input
                   type="file"
@@ -141,7 +149,7 @@ export default function EditArticleClientPage({ article }) {
                   onChange={(e) => {
                     getImageFile(e.target.files[0]);
                   }}
-                  className={styles.input_img}
+                  className={styles.img_input}
                 />
               </label>
             </div>
@@ -159,10 +167,10 @@ export default function EditArticleClientPage({ article }) {
           </>
         )}
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Descripción corta de la imagen &#40;para personas no videntes&#41;
             <input
-              className={styles.form_input}
+              className={styles.input}
               type="text"
               id="alt-image"
               required
@@ -172,10 +180,10 @@ export default function EditArticleClientPage({ article }) {
           </label>
         </div>
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Entrada
             <textarea
-              className={styles.form_textarea}
+              className={styles.textarea}
               id="lead"
               required
               value={lead}
@@ -185,10 +193,10 @@ export default function EditArticleClientPage({ article }) {
           </label>
         </div>
         <div>
-          <label className={styles.form_label}>
+          <label className={styles.label}>
             Sección
             <select
-              className={styles.form_select}
+              className={styles.select}
               id="section"
               required
               value={section}
@@ -209,7 +217,7 @@ export default function EditArticleClientPage({ article }) {
       /> */}
         <div className={styles.buttons_container}>
           <button
-            className={styles.form_btn}
+            className={styles.btn}
             type="submit"
             // disabled={isNotEdited}
             // style={isNotEdited ? { cursor: "not-allowed" } : {}}
@@ -220,12 +228,13 @@ export default function EditArticleClientPage({ article }) {
           <button
             type="button"
             onClick={() => handleDelete({ articleId: article.id })}
-            className={styles.form_btn}
+            className={styles.btn}
           >
             Borrar artículo
           </button>
         </div>
       </form>
+      {loading && <p className={styles.editing}>Editando...</p>}
     </>
   );
 }

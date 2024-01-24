@@ -1,7 +1,7 @@
 import Link from "next/link";
 import EditAndDeleteButtons from "./EditAndDeleteButtons";
 import styles from "../styles/ArticleLink.module.css";
-import ArticleLinkAuthor from "./ArticleLinkAuthor";
+import ArticleAuthorLink from "./ArticleAuthorLink";
 
 export default function ArticleLink({
   id,
@@ -29,7 +29,7 @@ export default function ArticleLink({
         <p className={styles.article_link_title}>{title}</p>
       </Link>
       {!anonymous &&
-        authors.map((nick) => <ArticleLinkAuthor key={nick} nick={nick} />)}
+        authors.map((nick) => <ArticleAuthorLink key={nick} nick={nick} />)}
     </article>
   );
 }

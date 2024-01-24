@@ -1,0 +1,12 @@
+.container {
+  color: gray;
+}
+
+.link {
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.link:hover {
+  color: #0289cb;
+}

@@ -4,7 +4,7 @@ import styles from "../styles/Header.module.css";
 import Logo from "./Logo";
 import Image from "next/image";
 import useMenu from "@/app/hooks/useMenu";
-import MenuPhone from "./MenuPhone";
+import PhoneMenu from "./PhoneMenu";
 import AuthorImage from "./AuthorImage";
 import { logout } from "@/app/lib/auth";
 import useMenuUser from "@/app/hooks/useMenuUser";
@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "@/app/context/auth";
 // import dynamic from "next/dynamic";
-// const MenuPhone = dynamic(() => import("./MenuPhone"));
+// const PhoneMenu = dynamic(() => import("./PhoneMenu"));
 
 // const links = [
 //   { label: "Inicio", route: "/" },
@@ -103,7 +103,7 @@ export default function Header() {
             </button>
           </div>
         ) : (
-          <MenuPhone isMenuOpen={isMenuOpen} getIsMenuOpen={getIsMenuOpen} />
+          <PhoneMenu isMenuOpen={isMenuOpen} getIsMenuOpen={getIsMenuOpen} />
         )}
       </div>
     </header>

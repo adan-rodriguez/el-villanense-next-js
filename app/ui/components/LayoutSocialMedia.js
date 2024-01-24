@@ -1,8 +1,8 @@
 import SocialMediaLink from "./SocialMediaLink";
-import styles from "../styles/SocialMedia.module.css";
+import styles from "../styles/LayoutSocialMedia.module.css";
 import { socialMediaData } from "@/app/lib/utils";
 
-export default function SocialMedia() {
+export default function LayoutSocialMedia() {
   return (
     <div className={styles.container}>
       {socialMediaData.map(({ href, title, src, alt }) => (

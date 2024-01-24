@@ -9,8 +9,8 @@ export default function useEditArticle({ article }) {
   const [content, setContent] = useState("");
   const [authors, setAuthors] = useState([]);
   const [anonymous, setAnonymous] = useState(false);
-
   const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const getTitle = (title) => setTitle(title);
   const getImage = (image) => setImage(image);
@@ -19,8 +19,8 @@ export default function useEditArticle({ article }) {
   const getSection = (section) => setSection(section);
   const getContent = (content) => setContent(content);
   const getAnonymous = (bool) => setAnonymous(bool);
-
   const getImageFile = (imageFile) => setImageFile(imageFile);
+  const getLoading = (bool) => setLoading(bool);
 
   useEffect(() => {
     if (article) {
@@ -53,5 +53,7 @@ export default function useEditArticle({ article }) {
     getAnonymous,
     imageFile,
     getImageFile,
+    loading,
+    getLoading,
   };
 }

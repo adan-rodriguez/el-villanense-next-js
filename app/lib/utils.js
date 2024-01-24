@@ -38,6 +38,27 @@ export const users = [
   },
 ];
 
+export const socialMediaData = [
+  {
+    href: "https://www.facebook.com/elvillanense/",
+    title: "Seguinos en Facebook",
+    src: "/icons/social/facebook.png",
+    alt: "Logo de Facebook",
+  },
+  {
+    href: "https://www.instagram.com/el_villanense/?hl=es-la",
+    title: "Seguinos en Instagram",
+    src: "/icons/social/instagram.png",
+    alt: "Logo de Instagram",
+  },
+  {
+    href: "https://twitter.com/Adan_Rodriguez_",
+    title: "Seguinos en Twitter",
+    src: "/icons/social/twitter.png",
+    alt: "Logo de Twitter",
+  },
+];
+
 export const getCurrentYear = () => {
   const currentTime = new Date();
   const currentYear = currentTime.getFullYear();
@@ -129,55 +150,32 @@ export const scrollToTop = () => {
 
 export async function handleDelete({ articleId, nick }) {
   if (confirm("¿Estás seguro de borrar esta noticia?")) {
+    document.body.inert = "true";
     try {
       await deleteAction({ articleId, nick });
+      alert("Noticia eliminada con éxito");
     } catch {
       alert("No se ha podido eliminar la noticia");
-      return;
+    } finally {
+      document.body.inert = "";
     }
-
-    alert("Noticia eliminada con éxito");
   }
 }
 
-export const handleSubmit = async (e, { articleId, article, imageFile }) => {
-  e.preventDefault();
-
-  e.target.inert = "true";
-
-  // const articlesDraft = JSON.parse(window.localStorage.getItem("draft"));
-  // articlesDraft.shift();
-  // window.localStorage.setItem("draft", JSON.stringify(articlesDraft));
-
-  try {
-    if (imageFile) {
-      const { imageUrl } = await uploadImage({ imageFile });
-      article.image = imageUrl;
-    }
-
-    if (articleId) {
-      await editAction({ articleId, article });
-
-      alert("Artículo editado con éxito");
-    } else {
-      await addAction({ article });
-
-      alert("Artículo subido con éxito");
-    }
-  } catch {
-    alert("Ocurrió un error. Inténtelo nuevamente");
-  }
-
-  e.target.inert = "";
-};
-
-export const handleSubmitEditArticle = async (
+export const handleSubmitEditArticle = async ({
   e,
-  { articleId, article, imageFile }
-) => {
+  router,
+  articleId,
+  article,
+  imageFile,
+  getLoading,
+}) => {
   e.preventDefault();
 
   e.target.inert = "true";
+  document.body.inert = "true";
+
+  getLoading(true);
 
   try {
     if (imageFile) {
@@ -185,17 +183,31 @@ export const handleSubmitEditArticle = async (
       article.image = imageUrl;
     }
     await editAction({ articleId, article });
-    alert("Artículo editado con éxito");
   } catch {
     alert("Ocurrió un error. Inténtelo nuevamente");
+    return;
+  } finally {
+    e.target.inert = "";
+    document.body.inert = "";
+    getLoading(false);
   }
 
-  e.target.inert = "";
+  router.push(`/${articleId}`);
 };
 
-export const handleSubmitNewArticle = async (e, { article, imageFile }) => {
+export const handleSubmitNewArticle = async ({
+  e,
+  router,
+  article,
+  imageFile,
+  getLoading,
+}) => {
   e.preventDefault();
+
   e.target.inert = "true";
+  document.body.inert = "true";
+
+  getLoading(true);
 
   let newArticle;
 
@@ -204,13 +216,17 @@ export const handleSubmitNewArticle = async (e, { article, imageFile }) => {
     article.image = imageUrl;
 
     newArticle = await addAction({ article });
-    alert("Artículo subido con éxito");
   } catch {
     alert("Ocurrió un error. Inténtelo nuevamente");
+
+    return;
+  } finally {
+    e.target.inert = "";
+    document.body.inert = "";
+    getLoading(false);
   }
 
-  e.target.inert = "";
-  return newArticle;
+  router.push(`/${newArticle.id}`);
 };
 
 const uploadImage = async ({ imageFile }) => {

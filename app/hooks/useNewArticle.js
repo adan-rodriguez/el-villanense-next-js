@@ -9,6 +9,7 @@ export default function useNewArticle({ user }) {
   const [authors, setAuthors] = useState([]);
   const [anonymous, setAnonymous] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const getTitle = (title) => setTitle(title);
   const getAltImage = (altImage) => setAltImage(altImage);
@@ -17,6 +18,7 @@ export default function useNewArticle({ user }) {
   const getContent = (content) => setContent(content);
   const getAnonymous = (bool) => setAnonymous(bool);
   const getImageFile = (imageFile) => setImageFile(imageFile);
+  const getLoading = (bool) => setLoading(bool);
 
   useEffect(() => {
     setAuthors([user.nick]);
@@ -38,5 +40,33 @@ export default function useNewArticle({ user }) {
     getAnonymous,
     imageFile,
     getImageFile,
+    loading,
+    getLoading,
   };
 }
+
+// const ref = useRef(true);
+// const firstRender = ref.current;
+// ref.current = false;
+
+// useEffect(() => {
+//   const articles = JSON.parse(window.localStorage.getItem("draft")) ?? [];
+
+//   articles.unshift({
+//     title,
+//     image,
+//     altImage,
+//     lead,
+//     section,
+//     content,
+//     author,
+//     showAuthor,
+//   });
+//   console.log(firstRender);
+
+//   if (!firstRender) {
+//     articles.splice(1, 1);
+//   }
+
+//   window.localStorage.setItem("draft", JSON.stringify(articles));
+// }, [title, image, altImage, lead, section, content, author, showAuthor]);

@@ -14,18 +14,18 @@
   opacity: 0.3;
 }
 
-.form_label {
+.label {
   display: block;
 }
 
-.form_input {
+.input {
   width: 100%;
   border: 1px solid gray;
   padding: 5px 10px;
   border-radius: 2px;
 }
 
-.form_btn {
+.btn {
   align-self: center;
   padding: 5px 30px;
   background-color: transparent;
@@ -33,7 +33,7 @@
   border-radius: 2px;
 }
 
-.form_signup_error_message {
+.error_message {
   text-align: center;
   color: red;
 }

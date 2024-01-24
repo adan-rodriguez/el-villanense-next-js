@@ -1,13 +1,8 @@
-import ArticleContent from "../../ui/components/ArticleContent";
-import styles from "@/app/ui/styles/Article.module.css";
-import EditAndDeleteButtons from "@/app/ui/components/EditAndDeleteButtons";
 import { users } from "@/app/lib/utils";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticle } from "@/app/lib/services/articles";
-import ShareSocialMedia from "../../ui/components/ShareSocialMedia";
 import { DOMAIN } from "../../lib/utils";
-import AuthorImage from "../../ui/components/AuthorImage";
+import Article from "@/app/ui/components/Article";
 
 export async function generateMetadata({ params }) {
   const { article: articleId } = params;
@@ -56,7 +51,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function Article({ params }) {
+export default async function ArticlePage({ params }) {
   const { article: articleId } = params;
 
   const article = await getArticle({ articleId });
@@ -100,14 +95,14 @@ export default async function Article({ params }) {
             author: authors.map((author) => ({
               "@type": "Person",
               name: author.name,
-              url: DOMAIN + "/" + author.nick,
+              url: `${DOMAIN}/${author.nick}`,
             })),
           }
         : {
             author: {
               "@type": "Person",
               name: authors[0].name,
-              url: DOMAIN + "/" + authors[0].nick,
+              url: `${DOMAIN}/${authors[0].nick}`,
             },
           })),
     publisher: {
@@ -115,7 +110,7 @@ export default async function Article({ params }) {
       name: "El Villanense",
       logo: `${DOMAIN}/images/logo.png`,
     },
-    url: DOMAIN + "/" + article.id,
+    url,
   };
 
   return (
@@ -126,46 +121,11 @@ export default async function Article({ params }) {
           __html: JSON.stringify(structuredData),
         }}
       />
-      <article className={styles.article_container}>
-        <EditAndDeleteButtons
-          articleId={article.id}
-          nick={article.authors[0]}
-        />
-        <h1 className={styles.article_title}>{article.title}</h1>
-        <ShareSocialMedia data={shareSocialMediaData} />
-        <time
-          className={styles.article_time}
-          dateTime={article.datetimeAttribute}
-        >
-          {article.datetimeContent}
-        </time>
-        <p className={styles.article_lead}>{article.lead}</p>
-        {article.anonymous === false &&
-          authors.map(({ name, image, nick }) => (
-            <div key={nick} className={styles.article_author_container}>
-              <AuthorImage src={image} author={name} />
-              <p className={styles.article_author_name}>
-                Por{" "}
-                <Link
-                  className={styles.article_author_name_link}
-                  href={`/autor/${nick}`}
-                >
-                  {name}
-                </Link>
-              </p>
-            </div>
-          ))}
-        <img
-          className={styles.article_img}
-          src={article.image}
-          alt={article.altImage}
-          fetchPriority="high"
-        />
-        <ArticleContent content={article.content} />
-        <div className={styles.share_social_container_bottom}>
-          <ShareSocialMedia data={shareSocialMediaData} />
-        </div>
-      </article>
+      <Article
+        article={article}
+        shareSocialMediaData={shareSocialMediaData}
+        authors={authors}
+      />
     </>
   );
 }

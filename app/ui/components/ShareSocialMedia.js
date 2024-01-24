@@ -1,9 +1,9 @@
-import styles from "@/app/ui/styles/Article.module.css";
+import styles from "@/app/ui/styles/ShareSocialMedia.module.css";
 import SocialMediaLink from "./SocialMediaLink";
 
 export default function ShareSocialMedia({ data }) {
   return (
-    <div className={styles.share_social_container}>
+    <div className={styles.container}>
       {data.map(({ href, title, src, alt }) => {
         return (
           <SocialMediaLink
@@ -15,7 +15,7 @@ export default function ShareSocialMedia({ data }) {
           />
         );
       })}
-      <span className={styles.share_text}>Comparte la noticia</span>
+      <span className={styles.text}>Comparte la noticia</span>
     </div>
   );
 }

@@ -1,25 +1,4 @@
-.links_social_container {
+.container {
   display: flex;
   column-gap: 15px;
-}
-
-.layout_links_social_container {
-  display: none;
-}
-
-/* // Dispositivos grandes (escritorios, 992px y más) */
-@media (min-width: 992px) {
-  .layout_links_social_container {
-    display: flex;
-    position: fixed;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgb(10, 10, 10);
-    flex-direction: column;
-    column-gap: 0;
-    row-gap: 10px;
-    border-radius: 0 10px 10px 0;
-    padding: 10px 2px;
-  }
 }

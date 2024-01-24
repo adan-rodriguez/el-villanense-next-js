@@ -1,42 +1,40 @@
 "use client";
 
-import useSignup from "@/app/hooks/useSignup";
 import { signup } from "../../lib/auth";
 import styles from "../styles/SignupForm.module.css";
 
-export default function SignupForm() {
-  const { signupErrorMessage, getSignupErrorMessage } = useSignup();
-
+export default function SignupForm({
+  signupErrorMessage,
+  getSignupErrorMessage,
+  loading,
+  getLoading,
+}) {
   return (
     <>
       <form
         className={styles.form}
-        onSubmit={(e) => signup(e, { getSignupErrorMessage })}
+        onSubmit={(e) => signup({ e, getSignupErrorMessage, getLoading })}
       >
-        <label className={styles.form_label} htmlFor="email">
+        <label className={styles.label}>
           Email
-          <input
-            className={styles.form_input}
-            type="text"
-            id="email"
-            required
-          />
+          <input className={styles.input} type="text" id="email" required />
         </label>
-        <label className={styles.form_label} htmlFor="password">
+        <label className={styles.label}>
           Contraseña
           <input
-            className={styles.form_input}
+            className={styles.input}
             type="password"
             id="password"
             required
           />
         </label>
-        <button className={styles.form_btn} type="submit">
+        <button className={styles.btn} type="submit">
           Crear usuario
         </button>
       </form>
+      {loading && <p className={styles.registering}>Registrando...</p>}
       {signupErrorMessage && (
-        <p className={styles.form_signup_error_message} role="alert">
+        <p className={styles.error_message} role="alert">
           {signupErrorMessage}
         </p>
       )}

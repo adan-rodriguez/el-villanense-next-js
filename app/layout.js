@@ -3,7 +3,7 @@ import Footer from "./ui/components/Footer";
 import Header from "./ui/components/Header";
 import "./ui/globals.css";
 import { poppins } from "./ui/fonts";
-import SocialMedia from "./ui/components/SocialMedia";
+import LayoutSocialMedia from "./ui/components/LayoutSocialMedia";
 
 export const metadata = {
   title: "El Villanense - Portal de noticias",
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           <main>{children}</main>
         </AuthProvider>
         <aside>
-          <SocialMedia classname="layout_links_social_container" />
+          <LayoutSocialMedia />
         </aside>
         <Footer />
       </body>
