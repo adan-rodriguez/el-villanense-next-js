@@ -3,6 +3,7 @@
 import { signup } from "../../lib/auth";
 import styles from "../styles/SignupForm.module.css";
 import Asterisk from "./Asterisk";
+import Button from "./Button";
 
 export default function SignupForm({
   signupErrorMessage,
@@ -32,9 +33,7 @@ export default function SignupForm({
             required
           />
         </label>
-        <button className={styles.btn} type="submit">
-          Crear usuario
-        </button>
+        <Button type="submit" label="Crear usuario" />
       </form>
       {loading && <p className={styles.registering}>Registrando...</p>}
       {signupErrorMessage && (

@@ -1,24 +1,8 @@
 .links_container {
+  width: max-content;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
   row-gap: 20px;
   padding: 20px;
-}
-
-.link {
-  border: 1px solid gray;
-  width: 200px;
-  text-align: center;
-  padding: 10px 0;
-  border-radius: 2px;
-  transition: background-color 0.5s;
-}
-
-.link:hover {
-  background-color: aliceblue;
-}
-
-.link:active {
-  transform: translateY(2px);
 }

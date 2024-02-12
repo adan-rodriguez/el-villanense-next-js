@@ -11,20 +11,20 @@ export default function DashboardHomePage() {
 
   return (
     <div className={styles.links_container}>
-      <Link className={styles.link} href="/dashboard/nuevo">
+      <Link className="btn" href="/dashboard/nuevo">
         Nuevo artículo
       </Link>
-      <Link className={styles.link} href="/dashboard/articulos">
+      <Link className="btn" href="/dashboard/articulos">
         Editar/Borrar
       </Link>
-      <Link className={styles.link} href={`/autor/${user.nick}`}>
+      <Link className="btn" href={`/autor/${user.nick}`}>
         Tus noticias
       </Link>
-      {/* <Link className={styles.link} href="/dashboard/borradores">
+      {/* <Link className="btn" href="/dashboard/borradores">
         Borradores
       </Link> */}
       {SUPER_ADMINS.includes(user.email) && (
-        <Link className={styles.link} href="/dashboard/signup">
+        <Link className="btn" href="/dashboard/signup">
           Agregar usuario
         </Link>
       )}

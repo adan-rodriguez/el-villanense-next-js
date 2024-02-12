@@ -13,6 +13,7 @@ import AuthorImage from "@/app/ui/components/AuthorImage";
 import useNewArticle from "@/app/hooks/useNewArticle";
 import { useRouter } from "next/navigation";
 import Asterisk from "@/app/ui/components/Asterisk";
+import Button from "@/app/ui/components/Button";
 
 export default function NewArticlePage() {
   const { user } = useContext(AuthContext);
@@ -89,7 +90,7 @@ export default function NewArticlePage() {
               : "Desmarcá la casilla si preferís que la noticia tenga autor"}
           </label>
         </div>
-        <label className={styles.label}>
+        <label>
           Título
           <Asterisk />
           <input
@@ -100,7 +101,7 @@ export default function NewArticlePage() {
             onChange={(e) => getTitle(e.target.value)}
           />
         </label>
-        <label className={`${styles.label} ${styles.img_label}`}>
+        <label className="btn" style={{ alignSelf: "flex-start" }}>
           Seleccionar imagen
           <Asterisk />
           <input
@@ -136,7 +137,7 @@ export default function NewArticlePage() {
             )}
           </div>
         </div>
-        <label className={styles.label}>
+        <label>
           Descripción corta de la imagen &#40;para personas no videntes&#41;
           <Asterisk />
           <input
@@ -147,7 +148,7 @@ export default function NewArticlePage() {
             onChange={(e) => getAltImage(e.target.value)}
           />
         </label>
-        <label className={styles.label}>
+        <label>
           Entrada
           <Asterisk />
           <textarea
@@ -158,7 +159,7 @@ export default function NewArticlePage() {
             rows="4"
           />
         </label>
-        <label className={styles.label}>
+        <label>
           Sección
           <select
             value={section}
@@ -179,15 +180,13 @@ export default function NewArticlePage() {
         getContent={getContent}
       /> */}
         <div className={styles.buttons_container}>
-          <button
-            className={styles.btn}
+          <Button
             type="submit"
+            label="Subir artículo"
             // disabled={!isCompleted}
             // style={!isCompleted ? { cursor: "not-allowed" } : {}}
             // title={!isCompleted ? "Faltan completar campos" : ""}
-          >
-            Subir artículo
-          </button>
+          />
         </div>
       </form>
       {loading && <p className={styles.upload}>Subiendo...</p>}

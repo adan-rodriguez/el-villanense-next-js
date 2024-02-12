@@ -32,6 +32,20 @@ a {
 
 button {
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 5px 40px;
+  border: 1px solid gray;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.btn:active {
+  transform: translateY(2px);
 }
 
 button,

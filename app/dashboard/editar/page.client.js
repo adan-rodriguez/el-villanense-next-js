@@ -16,6 +16,7 @@ import TinyMCE from "@/app/ui/components/TinyMCE";
 import AuthorImage from "@/app/ui/components/AuthorImage";
 import { useRouter } from "next/navigation";
 import Asterisk from "@/app/ui/components/Asterisk";
+import Button from "@/app/ui/components/Button";
 
 export default function EditArticleClientPage({ article }) {
   const {
@@ -108,7 +109,7 @@ export default function EditArticleClientPage({ article }) {
             </label>
           </div>
         )}
-        <label className={styles.label}>
+        <label>
           Título
           <Asterisk />
           <input
@@ -119,7 +120,7 @@ export default function EditArticleClientPage({ article }) {
             onChange={(e) => getTitle(e.target.value)}
           />
         </label>
-        <label className={`${styles.label} ${styles.img_label}`}>
+        <label className="btn" style={{ alignSelf: "flex-start" }}>
           Seleccionar imagen
           <Asterisk />
           <input
@@ -143,7 +144,7 @@ export default function EditArticleClientPage({ article }) {
             className={styles.image_preview}
           />
         </div>
-        <label className={styles.label}>
+        <label>
           Descripción corta de la imagen &#40;para personas no videntes&#41;
           <Asterisk />
           <input
@@ -154,7 +155,7 @@ export default function EditArticleClientPage({ article }) {
             onChange={(e) => getAltImage(e.target.value)}
           />
         </label>
-        <label className={styles.label}>
+        <label>
           Entrada
           <Asterisk />
           <textarea
@@ -165,7 +166,7 @@ export default function EditArticleClientPage({ article }) {
             rows="4"
           />
         </label>
-        <label className={styles.label}>
+        <label>
           Sección
           <select
             className={styles.select}
@@ -186,22 +187,17 @@ export default function EditArticleClientPage({ article }) {
         getContent={getContent}
       /> */}
         <div className={styles.buttons_container}>
-          <button
-            className={styles.btn}
+          <Button
             type="submit"
+            label="Editar artículo"
             // disabled={isNotEdited}
             // style={isNotEdited ? { cursor: "not-allowed" } : {}}
             // title={isNotEdited? "El artículo no tiene cambios" : {}}
-          >
-            Editar artículo
-          </button>
-          <button
-            type="button"
+          />
+          <Button
+            label="Borrar artículo"
             onClick={() => handleDelete({ articleId: article.id })}
-            className={styles.btn}
-          >
-            Borrar artículo
-          </button>
+          />
         </div>
       </form>
       {loading && <p className={styles.editing}>Editando...</p>}

@@ -2,6 +2,7 @@
 
 import { login } from "../../lib/auth";
 import styles from "../styles/LoginForm.module.css";
+import Button from "./Button";
 
 export default function LoginForm({
   loginErrorMessage,
@@ -28,9 +29,7 @@ export default function LoginForm({
             required
           />
         </label>
-        <button className={styles.btn} type="submit">
-          Ingresar
-        </button>
+        <Button type="submit" label="Ingresar" />
       </form>
       {loading && <p className={styles.loading}>Autenticando...</p>}
       {loginErrorMessage && (
