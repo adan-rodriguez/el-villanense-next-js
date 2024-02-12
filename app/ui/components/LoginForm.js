@@ -17,7 +17,7 @@ export default function LoginForm({
       >
         <label className={styles.label}>
           Email
-          <input className={styles.input} type="text" id="email" required />
+          <input className={styles.input} type="email" id="email" required />
         </label>
         <label className={styles.label}>
           Contraseña

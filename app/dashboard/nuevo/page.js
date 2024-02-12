@@ -1,13 +1,18 @@
 "use client";
 
-import styles from "@/app/ui/styles/DashboardForm.module.css";
+import styles from "@/app/ui/styles/ArticleForm.module.css";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/auth";
 import TinyMCE from "@/app/ui/components/TinyMCE";
-import { handleSubmitNewArticle } from "@/app/lib/utils";
+import {
+  handleDropFile,
+  handleFileChange,
+  handleSubmitNewArticle,
+} from "@/app/lib/utils";
 import AuthorImage from "@/app/ui/components/AuthorImage";
 import useNewArticle from "@/app/hooks/useNewArticle";
 import { useRouter } from "next/navigation";
+import Asterisk from "@/app/ui/components/Asterisk";
 
 export default function NewArticlePage() {
   const { user } = useContext(AuthContext);
@@ -55,7 +60,7 @@ export default function NewArticlePage() {
               title,
               altImage,
               lead,
-              section,
+              section: section || null,
               content,
               authors,
               anonymous,
@@ -74,98 +79,100 @@ export default function NewArticlePage() {
             <AuthorImage src={user.image} author={user.name} />
             <p>{user.name}</p>
           </div>
-          <div className={styles.author_checkbox_container}>
+          <label className={styles.author_label}>
             <input
               onChange={(e) => getAnonymous(e.target.checked)}
               type="checkbox"
             />
-            <p className={styles.author_checkbox_label}>
-              {!anonymous
-                ? "Marcá la casilla si preferís que la noticia no tenga autor"
-                : "Desmarcá la casilla si preferís que la noticia tenga autor"}
-            </p>
+            {!anonymous
+              ? "Marcá la casilla si preferís que la noticia no tenga autor"
+              : "Desmarcá la casilla si preferís que la noticia tenga autor"}
+          </label>
+        </div>
+        <label className={styles.label}>
+          Título
+          <Asterisk />
+          <input
+            className={styles.input}
+            type="text"
+            required
+            value={title}
+            onChange={(e) => getTitle(e.target.value)}
+          />
+        </label>
+        <label className={`${styles.label} ${styles.img_label}`}>
+          Seleccionar imagen
+          <Asterisk />
+          <input
+            type="file"
+            onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
+            accept=".jpg, .jpeg, .png, .svg, .webp"
+            className={styles.img_input}
+          />
+        </label>
+        <div
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => handleDropFile({ e, getImageFile, getAltImage })}
+          className={styles.dropzone}
+        >
+          <div
+            style={{
+              backgroundImage: imageFile
+                ? `url(${URL.createObjectURL(imageFile)})`
+                : "",
+            }}
+            className={styles.image_preview}
+          >
+            {!imageFile && (
+              <>
+                <p>O arrastra la imagen aquí </p>
+                <svg width="24" height="24">
+                  <path
+                    d="M19 7v3h-2V7h-3V5h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"
+                    fill="gray"
+                  ></path>
+                </svg>
+              </>
+            )}
           </div>
         </div>
-        <div>
-          <label className={styles.label}>
-            Título
-            <input
-              className={styles.input}
-              type="text"
-              id="title"
-              required
-              value={title}
-              onChange={(e) => getTitle(e.target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label className={styles.label}>
-            Imagen
-            <input
-              type="file"
-              id="image"
-              required
-              onChange={(e) => {
-                getImageFile(e.target.files[0]);
-              }}
-              className={styles.img_input}
-            />
-          </label>
-        </div>
-        {imageFile ? (
-          <img
-            src={URL.createObjectURL(imageFile)}
-            alt={altImage}
-            className={styles.img_blob}
+        <label className={styles.label}>
+          Descripción corta de la imagen &#40;para personas no videntes&#41;
+          <Asterisk />
+          <input
+            className={styles.input}
+            type="text"
+            required
+            value={altImage}
+            onChange={(e) => getAltImage(e.target.value)}
           />
-        ) : (
-          <div className={styles.img_preview}>Previsualización de imagen</div>
-        )}
-        <div>
-          <label className={styles.label}>
-            Descripción corta de la imagen &#40;para personas no videntes&#41;
-            <input
-              className={styles.input}
-              type="text"
-              id="alt-image"
-              required
-              value={altImage}
-              onChange={(e) => getAltImage(e.target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label className={styles.label}>
-            Entrada
-            <textarea
-              className={styles.textarea}
-              id="lead"
-              required
-              value={lead}
-              onChange={(e) => getLead(e.target.value)}
-              rows="4"
-            />
-          </label>
-        </div>
-        <div>
-          <label className={styles.label}>
-            Sección
-            <select
-              className={styles.select}
-              id="section"
-              required
-              value={section}
-              onChange={(e) => getSection(e.target.value)}
-            >
-              <option value="locales">Locales</option>
-              <option value="regionales">Regionales</option>
-              <option value="provinciales">Provinciales</option>
-              <option value="nacionales">Nacionales</option>
-              <option value="internacionales">Internacionales</option>
-            </select>
-          </label>
-        </div>
+        </label>
+        <label className={styles.label}>
+          Entrada
+          <Asterisk />
+          <textarea
+            className={styles.textarea}
+            required
+            value={lead}
+            onChange={(e) => getLead(e.target.value)}
+            rows="4"
+          />
+        </label>
+        <label className={styles.label}>
+          Sección
+          <select
+            value={section}
+            onChange={(e) => getSection(e.target.value)}
+            className={styles.select}
+          >
+            <option value="">--Seleccionar--</option>
+            <option value="locales">Locales</option>
+            <option value="regionales">Regionales</option>
+            <option value="provinciales">Provinciales</option>
+            <option value="nacionales">Nacionales</option>
+            <option value="internacionales">Internacionales</option>
+          </select>
+        </label>
         <TinyMCE content={content} getContent={getContent} />
         {/* <RichTextEditor
         content={content}

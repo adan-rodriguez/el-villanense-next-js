@@ -101,6 +101,7 @@
 }
 
 .dashboard_link,
+.new_link,
 .account_link,
 .logout_button {
   align-self: stretch;
@@ -109,6 +110,7 @@
 }
 
 .dashboard_link:hover,
+.new_link:hover,
 .account_link:hover,
 .logout_button:hover {
   background-color: rgb(10, 60, 65);
@@ -116,7 +118,7 @@
 }
 
 /* // Dispositivos medianos (tabletas, 768px y más) */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .logo {
     font-size: 2.5rem;
   }
@@ -131,7 +133,7 @@
 }
 
 /* // Dispositivos grandes (escritorios, 992px y más) */
-@media (min-width: 992px) {
+@media (width >= 992px) {
   .header_container {
     padding-left: 40px;
   }

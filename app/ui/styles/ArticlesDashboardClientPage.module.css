@@ -2,7 +2,7 @@
   padding: 10px;
 }
 
-@media (min-width: 992px) {
+@media (width >= 992px) {
   .container {
     padding-left: 40px;
   }

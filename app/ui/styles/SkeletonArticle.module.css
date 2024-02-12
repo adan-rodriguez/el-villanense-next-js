@@ -1,0 +1,23 @@
+.container {
+  padding: 10px;
+  width: 100%;
+}
+
+.img {
+  height: 300px;
+}
+
+/* Dispositivos medianos (tabletas, 768px y más) */
+@media (width >= 768px) {
+  .img {
+    height: 450px;
+  }
+}
+
+/* // Dispositivos grandes (escritorios, 992px y más) */
+@media (width >= 992px) {
+  .container {
+    width: 60%;
+    padding-left: 40px;
+  }
+}

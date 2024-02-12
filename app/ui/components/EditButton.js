@@ -1,5 +1,4 @@
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function EditButton({ articleId, width = 30, height = 30 }) {
   const router = useRouter();
@@ -9,11 +8,12 @@ export default function EditButton({ articleId, width = 30, height = 30 }) {
       title="Editar noticia"
       aria-label="Editar noticia"
     >
-      <Image
+      <img
         src="/icons/dashboard/edit.svg"
-        alt="Editar"
+        alt="Icono de editar"
         width={width}
         height={height}
+        loading="lazy"
       />
     </button>
   );

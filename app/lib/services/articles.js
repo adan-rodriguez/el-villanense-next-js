@@ -53,10 +53,10 @@ export async function getArticles({ author } = {}) {
 }
 
 export async function getArticle({ articleId }) {
-  if (isDev) {
-    const article = mock_articles.find((article) => article.id === articleId);
-    return article;
-  }
+  // if (isDev) {
+  //   const article = mock_articles.find((article) => article.id === articleId);
+  //   return article;
+  // }
 
   try {
     const articleRef = doc(db, "articles", articleId);
@@ -69,31 +69,13 @@ export async function getArticle({ articleId }) {
   }
 }
 
-export const addArticle = async ({
-  article: {
-    title,
-    image,
-    altImage,
-    lead,
-    section,
-    content,
-    authors,
-    anonymous,
-  },
-}) => {
+export const addArticle = async ({ article }) => {
   const timestamp = Date.now();
   const newArticle = {
-    title,
-    image,
-    altImage,
-    lead,
-    section,
-    content,
-    authors,
-    anonymous,
+    ...article,
     timestamp,
     ...timestampToDatetime({ timestamp }),
-    friendlyUrl: getFriendlyUrl({ string: title }),
+    friendlyUrl: getFriendlyUrl({ string: article.title }),
   };
 
   const id = `${newArticle.friendlyUrl}-${newArticle.timestamp}`;
@@ -108,23 +90,8 @@ export const deleteArticle = async ({ articleId }) => {
   return `Artículo con id '${articleId}' eliminado`;
 };
 
-export const editArticle = async ({
-  articleId,
-  article: { title, image, altImage, lead, section, content, authors },
-}) => {
-  await setDoc(
-    doc(db, "articles", articleId),
-    {
-      title,
-      image,
-      altImage,
-      lead,
-      section,
-      content,
-      authors,
-    },
-    { merge: true }
-  );
+export const editArticle = async ({ articleId, article }) => {
+  await setDoc(doc(db, "articles", articleId), article, { merge: true });
 
   return `Artículo con id '${articleId}' editado`;
 };

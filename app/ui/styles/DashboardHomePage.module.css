@@ -18,3 +18,7 @@
 .link:hover {
   background-color: aliceblue;
 }
+
+.link:active {
+  transform: translateY(2px);
+}

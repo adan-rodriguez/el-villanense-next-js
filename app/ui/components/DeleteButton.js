@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { handleDelete } from "../../lib/utils";
 
 export default function DeleteButton({
@@ -15,11 +14,12 @@ export default function DeleteButton({
       title="Borrar noticia"
       aria-label="Borrar noticia"
     >
-      <Image
+      <img
         src="/icons/dashboard/delete.svg"
-        alt="Borrar"
+        alt="Icono de borrar"
         width={width}
         height={height}
+        loading="lazy"
       />
     </button>
   );

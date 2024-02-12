@@ -44,35 +44,40 @@ select {
 }
 
 input,
-textarea {
+textarea,
+select {
   outline: none;
+}
+
+abbr[title] {
+  text-decoration: none;
 }
 
 /* // Dispositivos X-Small (teléfonos verticales, menos de 576px)
 // No hay media queries para `xs` ya que este es el valor predeterminado en Bootstrap */
 
 /* // Dispositivos pequeños (teléfonos horizontales, 576px y más) */
-@media (min-width: 576px) {
+@media (width >= 576px) {
 }
 
 /* // Dispositivos medianos (tabletas, 768px y más) */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   body {
     padding-top: 60px;
   }
 }
 
 /* // Dispositivos grandes (escritorios, 992px y más) */
-@media (min-width: 992px) {
+@media (width >= 992px) {
 }
 
 /* // Dispositivos X-Large (escritorios grandes, 1200px y más) */
-@media (min-width: 1200px) {
+@media (width >= 1200px) {
   body {
     padding-top: 72px;
   }
 }
 
 /* // Dispositivos XX-Large (escritorios más grandes, 1400px y más) */
-@media (min-width: 1400px) {
+@media (width >= 1400px) {
 }

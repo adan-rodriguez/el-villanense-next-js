@@ -43,14 +43,14 @@
 }
 
 /* // Dispositivos medianos (tabletas, 768px y más) */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .img {
     height: 450px;
   }
 }
 
 /* // Dispositivos grandes (escritorios, 992px y más) */
-@media (min-width: 992px) {
+@media (width >= 992px) {
   .container {
     width: 60%;
     padding-left: 40px;

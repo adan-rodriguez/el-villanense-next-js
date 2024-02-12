@@ -6,7 +6,7 @@
 
 .article > div {
   position: absolute;
-  box-shadow: 0px 0px 20px 20px white;
+  box-shadow: 0px 0px 20px 20px rgb(245, 245, 245);
 }
 
 .article_link {
@@ -15,7 +15,6 @@
 }
 
 .article_link_img {
-  width: 100%;
   aspect-ratio: 3/2;
   object-fit: cover;
   border-radius: 4px;

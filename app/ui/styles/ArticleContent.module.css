@@ -34,7 +34,7 @@
 }
 
 /* // Dispositivos medianos (tabletas, 768px y más) */
-/* @media (min-width: 768px) {
+/* @media (width >= 768px) {
   .article_content img {
     height: 450px;
   }

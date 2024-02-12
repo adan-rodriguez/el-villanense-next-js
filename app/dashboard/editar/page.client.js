@@ -1,11 +1,13 @@
 "use client";
 
 import useEditArticle from "@/app/hooks/useEditArticle";
-import styles from "@/app/ui/styles/DashboardForm.module.css";
+import styles from "@/app/ui/styles/ArticleForm.module.css";
 // import { useContext } from "react";
 // import { AuthContext } from "@/app/context/auth";
 import {
   handleDelete,
+  handleDropFile,
+  handleFileChange,
   handleSubmitEditArticle,
   users,
   // objCompare,
@@ -13,6 +15,7 @@ import {
 import TinyMCE from "@/app/ui/components/TinyMCE";
 import AuthorImage from "@/app/ui/components/AuthorImage";
 import { useRouter } from "next/navigation";
+import Asterisk from "@/app/ui/components/Asterisk";
 
 export default function EditArticleClientPage({ article }) {
   const {
@@ -25,7 +28,6 @@ export default function EditArticleClientPage({ article }) {
     authors,
     anonymous,
     getTitle,
-    getImage,
     getAltImage,
     getLead,
     getSection,
@@ -57,7 +59,6 @@ export default function EditArticleClientPage({ article }) {
     <>
       <h2 className={styles.title}>Editar artículo</h2>
       <form
-        className={styles.form}
         onSubmit={async (e) => {
           await handleSubmitEditArticle({
             e,
@@ -68,7 +69,7 @@ export default function EditArticleClientPage({ article }) {
               image,
               altImage,
               lead,
-              section,
+              section: section || null,
               content,
               authors,
               anonymous,
@@ -77,6 +78,7 @@ export default function EditArticleClientPage({ article }) {
             getLoading,
           });
         }}
+        className={styles.form}
       >
         {authors && (
           <div className={styles.author_container}>
@@ -95,121 +97,89 @@ export default function EditArticleClientPage({ article }) {
                   <p>{author.name}</p>
                 </div>
               ))}
-            <div className={styles.author_checkbox_container}>
+            <label className={styles.author_label}>
               <input
                 onChange={(e) => getAnonymous(e.target.checked)}
                 type="checkbox"
-                checked={anonymous}
               />
-              <p className={styles.author_checkbox_label}>
-                {!anonymous
-                  ? "Marcá la casilla si preferís que la noticia no tenga autor"
-                  : "Desmarcá la casilla si preferís que la noticia tenga autor"}
-              </p>
-            </div>
+              {!anonymous
+                ? "Marcá la casilla si preferís que la noticia no tenga autor"
+                : "Desmarcá la casilla si preferís que la noticia tenga autor"}
+            </label>
           </div>
         )}
-        <div>
-          <label className={styles.label}>
-            Título
-            <input
-              className={styles.input}
-              type="text"
-              id="title"
-              required
-              value={title}
-              onChange={(e) => getTitle(e.target.value)}
-            />
-          </label>
+        <label className={styles.label}>
+          Título
+          <Asterisk />
+          <input
+            className={styles.input}
+            type="text"
+            required
+            value={title}
+            onChange={(e) => getTitle(e.target.value)}
+          />
+        </label>
+        <label className={`${styles.label} ${styles.img_label}`}>
+          Seleccionar imagen
+          <Asterisk />
+          <input
+            type="file"
+            onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
+            accept=".jpg, .jpeg, .png, .svg, .webp"
+            className={styles.img_input}
+          />
+        </label>
+        <div
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => handleDropFile({ e, getImageFile, getAltImage })}
+          className={styles.dropzone}
+        >
+          <div
+            style={{
+              backgroundImage: imageFile
+                ? `url(${URL.createObjectURL(imageFile)})`
+                : `url(${image})`,
+            }}
+            className={styles.image_preview}
+          />
         </div>
-        {image ? (
-          <div>
-            <p>Imagen</p>
-            <img src={image} alt={altImage} className={styles.img_bbdd} />
-            <button
-              type="button"
-              className={styles.change_img_btn}
-              onClick={() => {
-                getImage("");
-                getAltImage("");
-              }}
-            >
-              Cambiar imagen
-            </button>
-          </div>
-        ) : (
-          <>
-            <div>
-              <label className={styles.label}>
-                Imagen
-                <input
-                  type="file"
-                  id="image"
-                  required
-                  onChange={(e) => {
-                    getImageFile(e.target.files[0]);
-                  }}
-                  className={styles.img_input}
-                />
-              </label>
-            </div>
-            {imageFile ? (
-              <img
-                src={URL.createObjectURL(imageFile)}
-                alt={altImage}
-                className={styles.img_blob}
-              />
-            ) : (
-              <div className={styles.img_preview}>
-                Previsualización de imagen
-              </div>
-            )}
-          </>
-        )}
-        <div>
-          <label className={styles.label}>
-            Descripción corta de la imagen &#40;para personas no videntes&#41;
-            <input
-              className={styles.input}
-              type="text"
-              id="alt-image"
-              required
-              value={altImage}
-              onChange={(e) => getAltImage(e.target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label className={styles.label}>
-            Entrada
-            <textarea
-              className={styles.textarea}
-              id="lead"
-              required
-              value={lead}
-              onChange={(e) => getLead(e.target.value)}
-              rows="4"
-            />
-          </label>
-        </div>
-        <div>
-          <label className={styles.label}>
-            Sección
-            <select
-              className={styles.select}
-              id="section"
-              required
-              value={section}
-              onChange={(e) => getSection(e.target.value)}
-            >
-              <option value="locales">Locales</option>
-              <option value="regionales">Regionales</option>
-              <option value="provinciales">Provinciales</option>
-              <option value="nacionales">Nacionales</option>
-              <option value="internacionales">Internacionales</option>
-            </select>
-          </label>
-        </div>
+        <label className={styles.label}>
+          Descripción corta de la imagen &#40;para personas no videntes&#41;
+          <Asterisk />
+          <input
+            className={styles.input}
+            type="text"
+            required
+            value={altImage}
+            onChange={(e) => getAltImage(e.target.value)}
+          />
+        </label>
+        <label className={styles.label}>
+          Entrada
+          <Asterisk />
+          <textarea
+            className={styles.textarea}
+            required
+            value={lead}
+            onChange={(e) => getLead(e.target.value)}
+            rows="4"
+          />
+        </label>
+        <label className={styles.label}>
+          Sección
+          <select
+            className={styles.select}
+            value={section}
+            onChange={(e) => getSection(e.target.value)}
+          >
+            <option value="">--Seleccionar--</option>
+            <option value="locales">Locales</option>
+            <option value="regionales">Regionales</option>
+            <option value="provinciales">Provinciales</option>
+            <option value="nacionales">Nacionales</option>
+            <option value="internacionales">Internacionales</option>
+          </select>
+        </label>
         <TinyMCE content={content} getContent={getContent} />
         {/* <RichTextEditor
         content={content}

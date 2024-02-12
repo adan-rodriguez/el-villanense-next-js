@@ -2,6 +2,7 @@
 
 import { signup } from "../../lib/auth";
 import styles from "../styles/SignupForm.module.css";
+import Asterisk from "./Asterisk";
 
 export default function SignupForm({
   signupErrorMessage,
@@ -17,14 +18,17 @@ export default function SignupForm({
       >
         <label className={styles.label}>
           Email
-          <input className={styles.input} type="text" id="email" required />
+          <Asterisk />
+          <input className={styles.input} type="email" id="email" required />
         </label>
         <label className={styles.label}>
           Contraseña
+          <Asterisk />
           <input
             className={styles.input}
             type="password"
             id="password"
+            minLength="6"
             required
           />
         </label>

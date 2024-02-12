@@ -22,6 +22,17 @@
   display: block;
 }
 
+.img_label {
+  border: 1px solid gray;
+  align-self: flex-start;
+  padding: 5px 25px;
+  cursor: pointer;
+}
+
+.img_label:active {
+  transform: translateY(2px);
+}
+
 .input {
   text-overflow: ellipsis;
 }
@@ -36,8 +47,7 @@
 }
 
 .img_input {
-  width: 100%;
-  padding: 5px 0;
+  display: none; /* segun MDN se utiliza opacity para ocultar input file en lugar de visibility: hidden o display: none, porque la tecnología de asistencia interpreta que input file no es interactiva. */
 }
 
 .change_img_btn {
@@ -60,6 +70,10 @@
   border-radius: 2px;
 }
 
+.btn:active {
+  transform: translateY(2px);
+}
+
 .author_container {
   display: flex;
   flex-wrap: wrap;
@@ -72,41 +86,32 @@
   align-items: center;
 }
 
-.author_checkbox_container {
+.author_label {
   display: flex;
   column-gap: 5px;
   align-items: center;
-}
-
-.author_checkbox_label {
   font-size: 12px;
-  opacity: 0.8;
+  color: gray;
 }
 
-.img_bbdd {
-  object-fit: cover;
-  vertical-align: bottom;
-  margin-right: 10px;
-  width: 256px;
-  aspect-ratio: 3/2;
+.dropzone {
+  border: 2px dashed gray;
+  border-radius: 1rem;
+  padding: 10px 15px;
+  align-self: flex-start;
 }
 
-.img_blob {
-  object-fit: cover;
-  width: 256px;
-  aspect-ratio: 3/2;
-}
-
-.img_preview {
-  width: 256px;
-  aspect-ratio: 3/2;
+.image_preview {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
   font-size: 10px;
-  text-align: center;
-  padding: 10px;
+  width: 320px;
+  aspect-ratio: 3/2;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.3s;
 }
 
 .buttons_container {

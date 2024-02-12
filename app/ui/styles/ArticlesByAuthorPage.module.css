@@ -4,13 +4,15 @@
   font-size: 24px;
   font-weight: normal;
   border-bottom: 1px solid #0289cb;
+  position: relative;
+  z-index: 1;
 }
 
 .author {
   color: #0289cb;
 }
 
-@media (min-width: 992px) {
+@media (width >= 992px) {
   .title {
     margin-left: 40px;
   }

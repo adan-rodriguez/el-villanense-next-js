@@ -9,14 +9,26 @@ import { auth } from "./config-firebase";
 
 export const login = async ({ e, getLoginErrorMessage, getLoading }) => {
   e.preventDefault();
-  e.target.inert = "true";
-  document.body.inert = "true";
+  const $form = e.target;
+  const $body = document.body;
+
+  const email = $form.email.value;
+  const password = $form.password.value;
 
   getLoginErrorMessage(null);
+
+  // const emailRegex =
+  //   /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+
+  // if (!emailRegex.test(email)) {
+  //   getLoginErrorMessage("Introduce un email válido");
+  //   return;
+  // }
+
   getLoading(true);
 
-  const email = e.target.email.value;
-  const password = e.target.password.value;
+  $form.inert = "true";
+  $body.inert = "true";
 
   setPersistence(auth, browserSessionPersistence).then(() => {
     signInWithEmailAndPassword(auth, email, password)
@@ -28,13 +40,19 @@ export const login = async ({ e, getLoginErrorMessage, getLoading }) => {
           getLoginErrorMessage("El email y/o contraseña son incorrectos");
         } else if (error.message.includes("invalid-email")) {
           getLoginErrorMessage("Introduce un email válido");
+        } else if (
+          error.message.includes(
+            "Superó la cantidad de intentos permitidos. Intente de nuevo más tarde"
+          )
+        ) {
+          getLoginErrorMessage("Introduce un email válido");
         } else {
           getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
         }
       })
       .finally(() => {
-        e.target.inert = "";
-        document.body.inert = "";
+        $form.inert = "";
+        $body.inert = "";
         getLoading(false);
       });
   });
@@ -52,14 +70,17 @@ export const logout = () => {
 
 export const signup = async ({ e, getSignupErrorMessage, getLoading }) => {
   e.preventDefault();
-  e.target.inert = "true";
-  document.body.inert = "true";
+  const $form = e.target;
+  const $body = document.body;
+
+  $form.inert = "true";
+  $body.inert = "true";
 
   getSignupErrorMessage(null);
   getLoading(true);
 
-  const email = e.target.email.value;
-  const password = e.target.password.value;
+  const email = $form.email.value;
+  const password = $form.password.value;
 
   createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
@@ -77,8 +98,8 @@ export const signup = async ({ e, getSignupErrorMessage, getLoading }) => {
       }
     })
     .finally(() => {
-      e.target.inert = "";
-      document.body.inert = "";
+      $form.inert = "";
+      $body.inert = "";
       getLoading(false);
     });
 };

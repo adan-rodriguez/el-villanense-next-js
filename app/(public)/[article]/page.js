@@ -64,19 +64,19 @@ export default async function ArticlePage({ params }) {
     {
       href: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
       title: "Compartir en Facebook",
-      src: "/icons/social/facebook.png",
+      src: "/icons/social/facebook.svg",
       alt: "Logo de Facebook",
     },
     {
       href: `https://twitter.com/intent/tweet?text=${article.title}&url=${url}`,
-      title: "Compartir en Twitter",
-      src: "/icons/social/twitter.png",
+      title: "Compartir en X",
+      src: "/icons/social/twitter.webp",
       alt: "Logo de Twitter",
     },
     {
       href: `https://api.whatsapp.com/send?text=${url}`,
       title: "Compartir en Whatsapp",
-      src: "/icons/social/whatsapp.png",
+      src: "/icons/social/whatsapp.svg",
       alt: "Logo de Whatsapp",
     },
   ];

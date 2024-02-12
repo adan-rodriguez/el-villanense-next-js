@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "../styles/SocialMediaLink.module.css";
 
 export default function SocialMediaLink({
@@ -17,7 +16,7 @@ export default function SocialMediaLink({
       rel="noreferrer"
       title={title}
     >
-      <Image width={width} height={height} src={src} alt={alt} />
+      <img src={src} alt={alt} width={width} height={height} loading="lazy" />
     </a>
   );
 }

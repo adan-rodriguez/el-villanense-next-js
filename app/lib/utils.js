@@ -40,21 +40,21 @@ export const users = [
 
 export const socialMediaData = [
   {
-    href: "https://www.facebook.com/elvillanense/",
+    href: "https://www.facebook.com/elvillanense",
     title: "Seguinos en Facebook",
-    src: "/icons/social/facebook.png",
+    src: "/icons/social/facebook.svg",
     alt: "Logo de Facebook",
   },
   {
     href: "https://www.instagram.com/el_villanense/?hl=es-la",
     title: "Seguinos en Instagram",
-    src: "/icons/social/instagram.png",
+    src: "/icons/social/instagram.webp",
     alt: "Logo de Instagram",
   },
   {
-    href: "https://twitter.com/Adan_Rodriguez_",
-    title: "Seguinos en Twitter",
-    src: "/icons/social/twitter.png",
+    href: "https://x.com/Adan_Rodriguez_",
+    title: "Seguinos en X",
+    src: "/icons/social/twitter.webp",
     alt: "Logo de Twitter",
   },
 ];
@@ -171,9 +171,11 @@ export const handleSubmitEditArticle = async ({
   getLoading,
 }) => {
   e.preventDefault();
+  const $form = e.target;
+  const $body = document.body;
 
-  e.target.inert = "true";
-  document.body.inert = "true";
+  $form.inert = "true";
+  $body.inert = "true";
 
   getLoading(true);
 
@@ -187,8 +189,8 @@ export const handleSubmitEditArticle = async ({
     alert("Ocurrió un error. Inténtelo nuevamente");
     return;
   } finally {
-    e.target.inert = "";
-    document.body.inert = "";
+    $form.inert = "";
+    $body.inert = "";
     getLoading(false);
   }
 
@@ -204,8 +206,20 @@ export const handleSubmitNewArticle = async ({
 }) => {
   e.preventDefault();
 
-  e.target.inert = "true";
-  document.body.inert = "true";
+  if (!imageFile) {
+    alert("Sube una imagen!");
+    return;
+  }
+
+  if (article.content === "") {
+    alert("Escribe el cuerpo de la noticia!");
+    return;
+  }
+
+  const $form = e.target;
+  const $body = document.body;
+  $form.inert = "true";
+  $body.inert = "true";
 
   getLoading(true);
 
@@ -221,8 +235,8 @@ export const handleSubmitNewArticle = async ({
 
     return;
   } finally {
-    e.target.inert = "";
-    document.body.inert = "";
+    $form.inert = "";
+    $body.inert = "";
     getLoading(false);
   }
 
@@ -260,4 +274,34 @@ export function objCompare(obj1, obj2) {
     }
   }
   return true;
+}
+
+export const handleFileChange = ({ e, getImageFile, getAltImage }) => {
+  const file = e.target.files[0];
+
+  handleFile({ file, getImageFile, getAltImage });
+};
+
+export const handleDropFile = ({ e, getImageFile, getAltImage }) => {
+  e.preventDefault();
+
+  const file = e.dataTransfer.files[0];
+
+  handleFile({ file, getImageFile, getAltImage });
+};
+
+function handleFile({ file, getImageFile, getAltImage }) {
+  if (!file) return;
+
+  const fileTypes = ["image/jpeg", "image/png", "image/svg+xml", "image/webp"];
+
+  const { type: fileType } = file;
+
+  if (!fileTypes.includes(fileType)) {
+    alert(`No se acepta un archivo con formato '${fileType}'`);
+    return;
+  }
+
+  getImageFile(file);
+  getAltImage("");
 }

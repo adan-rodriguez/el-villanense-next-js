@@ -69,6 +69,13 @@ export default function Header() {
                       Dashboard
                     </Link>
                     <Link
+                      className={styles.new_link}
+                      onClick={() => getIsMenuUserOpen(false)}
+                      href="/dashboard/nuevo"
+                    >
+                      Nuevo
+                    </Link>
+                    <Link
                       className={styles.account_link}
                       onClick={() => getIsMenuUserOpen(false)}
                       href="/dashboard/cuenta"

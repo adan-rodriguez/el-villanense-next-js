@@ -4,7 +4,7 @@ export default function useNewArticle({ user }) {
   const [title, setTitle] = useState("");
   const [altImage, setAltImage] = useState("");
   const [lead, setLead] = useState("");
-  const [section, setSection] = useState("locales");
+  const [section, setSection] = useState(null);
   const [content, setContent] = useState("");
   const [authors, setAuthors] = useState([]);
   const [anonymous, setAnonymous] = useState(false);
