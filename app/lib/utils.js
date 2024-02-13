@@ -1,4 +1,6 @@
+import { updateEmail, updatePassword } from "firebase/auth";
 import { addAction, deleteAction, editAction } from "./server-actions";
+import { auth } from "./config-firebase";
 
 export const DOMAIN = "https://www.elvillanense.com.ar";
 
@@ -304,4 +306,39 @@ function handleFile({ file, getImageFile, getAltImage }) {
 
   getImageFile(file);
   getAltImage("");
+}
+
+export const selectSectionOptions = [
+  { value: "", label: "--Seleccionar--" },
+  { value: "locales", label: "Locales" },
+  { value: "regionales", label: "Regionales" },
+  { value: "provinciales", label: "Provinciales" },
+  { value: "nacionales", label: "Nacionales" },
+  { value: "internacionales", label: "Internacionales" },
+];
+
+export function handleChangeEmail({ e }) {
+  e.preventDefault();
+  if (confirm("¿Está seguro de cambiar su email?")) {
+    updateEmail(auth.currentUser, e.target.email.value)
+      .then(() => {
+        alert("Email actualizado");
+      })
+      .catch(() => {
+        alert("Ha ocurrido un error. No se pudo actualizar el email");
+      });
+  }
+}
+
+export function handleChangePassword({ e }) {
+  e.preventDefault();
+  if (confirm("¿Está seguro de cambiar su contraseña?")) {
+    updatePassword(auth.currentUser, e.target.email.password)
+      .then(() => {
+        alert("Contraseña actualizada");
+      })
+      .catch(() => {
+        alert("Ha ocurrido un error. No se pudo actualizar la contraseña");
+      });
+  }
 }

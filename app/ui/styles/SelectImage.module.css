@@ -1,0 +1,3 @@
+.input {
+  display: none; /* segun MDN se utiliza opacity para ocultar input file en lugar de visibility: hidden o display: none, porque la tecnología de asistencia interpreta que input file no es interactiva. */
+}

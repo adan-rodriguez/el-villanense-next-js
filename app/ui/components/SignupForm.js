@@ -4,6 +4,9 @@ import { signup } from "../../lib/auth";
 import styles from "../styles/SignupForm.module.css";
 import Asterisk from "./Asterisk";
 import Button from "./Button";
+import Form from "./Form";
+import Input from "./Input";
+import Label from "./Label";
 
 export default function SignupForm({
   signupErrorMessage,
@@ -13,28 +16,24 @@ export default function SignupForm({
 }) {
   return (
     <>
-      <form
-        className={styles.form}
+      <Form
+        style={{ maxWidth: "400px" }}
         onSubmit={(e) => signup({ e, getSignupErrorMessage, getLoading })}
       >
-        <label className={styles.label}>
-          Email
+        <Label label="Email">
           <Asterisk />
-          <input className={styles.input} type="email" id="email" required />
-        </label>
-        <label className={styles.label}>
-          Contraseña
+          <Input type="email" id="email" required={true} />
+        </Label>
+        <Label label="Contraseña">
           <Asterisk />
-          <input
-            className={styles.input}
-            type="password"
-            id="password"
-            minLength="6"
-            required
-          />
-        </label>
-        <Button type="submit" label="Crear usuario" />
-      </form>
+          <Input type="password" id="password" required={true} minLength="6" />
+        </Label>
+        <Button
+          type="submit"
+          label="Crear usuario"
+          style={{ alignSelf: "center" }}
+        />
+      </Form>
       {loading && <p className={styles.registering}>Registrando...</p>}
       {signupErrorMessage && (
         <p className={styles.error_message} role="alert">

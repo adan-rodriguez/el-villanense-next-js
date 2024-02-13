@@ -9,6 +9,7 @@ import {
   handleDropFile,
   handleFileChange,
   handleSubmitEditArticle,
+  selectSectionOptions,
   users,
   // objCompare,
 } from "@/app/lib/utils";
@@ -17,6 +18,12 @@ import AuthorImage from "@/app/ui/components/AuthorImage";
 import { useRouter } from "next/navigation";
 import Asterisk from "@/app/ui/components/Asterisk";
 import Button from "@/app/ui/components/Button";
+import Label from "@/app/ui/components/Label";
+import Input from "@/app/ui/components/Input";
+import SelectImage from "@/app/ui/components/SelectImage";
+import Form from "@/app/ui/components/Form";
+import Select from "@/app/ui/components/Select";
+import DragAndDrop from "@/app/ui/components/DragAndDrop";
 
 export default function EditArticleClientPage({ article }) {
   const {
@@ -59,7 +66,8 @@ export default function EditArticleClientPage({ article }) {
   return (
     <>
       <h2 className={styles.title}>Editar artículo</h2>
-      <form
+      <Form
+        style={{ maxWidth: "1000px" }}
         onSubmit={async (e) => {
           await handleSubmitEditArticle({
             e,
@@ -109,54 +117,34 @@ export default function EditArticleClientPage({ article }) {
             </label>
           </div>
         )}
-        <label>
-          Título
+        <Label label="Título">
           <Asterisk />
-          <input
-            className={styles.input}
-            type="text"
-            required
+          <Input
+            id="title"
+            required={true}
             value={title}
             onChange={(e) => getTitle(e.target.value)}
           />
-        </label>
-        <label className="btn" style={{ alignSelf: "flex-start" }}>
-          Seleccionar imagen
-          <Asterisk />
-          <input
-            type="file"
-            onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
-            accept=".jpg, .jpeg, .png, .svg, .webp"
-            className={styles.img_input}
-          />
-        </label>
-        <div
+        </Label>
+        <SelectImage
+          onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
+        />
+        <DragAndDrop
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => handleDropFile({ e, getImageFile, getAltImage })}
-          className={styles.dropzone}
-        >
-          <div
-            style={{
-              backgroundImage: imageFile
-                ? `url(${URL.createObjectURL(imageFile)})`
-                : `url(${image})`,
-            }}
-            className={styles.image_preview}
-          />
-        </div>
-        <label>
-          Descripción corta de la imagen &#40;para personas no videntes&#41;
+          image={image}
+          imageFile={imageFile}
+        />
+        <Label label="Descripción corta de la imagen &#40;para personas no videntes&#41;">
           <Asterisk />
-          <input
-            className={styles.input}
-            type="text"
-            required
+          <Input
+            id="alt_image"
+            required={true}
             value={altImage}
             onChange={(e) => getAltImage(e.target.value)}
           />
-        </label>
-        <label>
-          Entrada
+        </Label>
+        <Label label="Entrada">
           <Asterisk />
           <textarea
             className={styles.textarea}
@@ -165,22 +153,16 @@ export default function EditArticleClientPage({ article }) {
             onChange={(e) => getLead(e.target.value)}
             rows="4"
           />
-        </label>
-        <label>
-          Sección
-          <select
-            className={styles.select}
-            value={section}
-            onChange={(e) => getSection(e.target.value)}
-          >
-            <option value="">--Seleccionar--</option>
-            <option value="locales">Locales</option>
-            <option value="regionales">Regionales</option>
-            <option value="provinciales">Provinciales</option>
-            <option value="nacionales">Nacionales</option>
-            <option value="internacionales">Internacionales</option>
-          </select>
-        </label>
+        </Label>
+        <Label label="Sección">
+          <Select value={section} onChange={(e) => getSection(e.target.value)}>
+            {selectSectionOptions.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </Select>
+        </Label>
         <TinyMCE content={content} getContent={getContent} />
         {/* <RichTextEditor
         content={content}
@@ -199,7 +181,7 @@ export default function EditArticleClientPage({ article }) {
             onClick={() => handleDelete({ articleId: article.id })}
           />
         </div>
-      </form>
+      </Form>
       {loading && <p className={styles.editing}>Editando...</p>}
     </>
   );

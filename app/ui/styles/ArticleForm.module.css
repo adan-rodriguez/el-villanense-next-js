@@ -2,48 +2,11 @@
   text-align: center;
 }
 
-.form {
-  width: 90%;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  max-width: 1000px;
-  padding: 20px 10px;
-  border: 1px solid gray;
-  border-radius: 2px;
-}
-
-.form[inert] {
-  opacity: 0.3;
-}
-
-.input {
-  text-overflow: ellipsis;
-}
-
-.input,
-.textarea,
-.select {
+.textarea {
   width: 100%;
   border: 1px solid gray;
   padding: 5px 10px;
   border-radius: 2px;
-}
-
-.img_input {
-  display: none; /* segun MDN se utiliza opacity para ocultar input file en lugar de visibility: hidden o display: none, porque la tecnología de asistencia interpreta que input file no es interactiva. */
-}
-
-.change_img_btn {
-  padding: 5px 20px;
-  margin-top: 10px;
-  background-color: transparent;
-  border: 1px solid gray;
-  border-radius: 2px;
-}
-
-.textarea {
   resize: none;
 }
 
@@ -65,25 +28,6 @@
   align-items: center;
   font-size: 12px;
   color: gray;
-}
-
-.dropzone {
-  border: 2px dashed gray;
-  border-radius: 1rem;
-  padding: 10px 15px;
-  max-width: 400px;
-}
-
-.image_preview {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-  aspect-ratio: 3/2;
-  border-radius: 4px;
-  background-size: cover;
-  background-position: center;
-  transition: background-image 0.3s;
 }
 
 .buttons_container {

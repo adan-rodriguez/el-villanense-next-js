@@ -3,6 +3,9 @@
 import { login } from "../../lib/auth";
 import styles from "../styles/LoginForm.module.css";
 import Button from "./Button";
+import Form from "./Form";
+import Input from "./Input";
+import Label from "./Label";
 
 export default function LoginForm({
   loginErrorMessage,
@@ -12,25 +15,22 @@ export default function LoginForm({
 }) {
   return (
     <>
-      <form
-        className={styles.form}
+      <Form
+        style={{ maxWidth: "400px" }}
         onSubmit={(e) => login({ e, getLoginErrorMessage, getLoading })}
       >
-        <label className={styles.label}>
-          Email
-          <input className={styles.input} type="email" id="email" required />
-        </label>
-        <label className={styles.label}>
-          Contraseña
-          <input
-            className={styles.input}
-            type="password"
-            id="password"
-            required
-          />
-        </label>
-        <Button type="submit" label="Ingresar" />
-      </form>
+        <Label label="Email">
+          <Input type="email" id="email" required={true} />
+        </Label>
+        <Label label="Contraseña">
+          <Input type="password" id="password" required={true} />
+        </Label>
+        <Button
+          type="submit"
+          label="Ingresar"
+          style={{ alignSelf: "center" }}
+        />
+      </Form>
       {loading && <p className={styles.loading}>Autenticando...</p>}
       {loginErrorMessage && (
         <p className={styles.error_message} role="alert">

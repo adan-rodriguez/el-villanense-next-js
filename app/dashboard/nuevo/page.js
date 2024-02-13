@@ -8,12 +8,19 @@ import {
   handleDropFile,
   handleFileChange,
   handleSubmitNewArticle,
+  selectSectionOptions,
 } from "@/app/lib/utils";
 import AuthorImage from "@/app/ui/components/AuthorImage";
 import useNewArticle from "@/app/hooks/useNewArticle";
 import { useRouter } from "next/navigation";
 import Asterisk from "@/app/ui/components/Asterisk";
 import Button from "@/app/ui/components/Button";
+import Form from "@/app/ui/components/Form";
+import Label from "@/app/ui/components/Label";
+import Input from "@/app/ui/components/Input";
+import SelectImage from "@/app/ui/components/SelectImage";
+import Select from "@/app/ui/components/Select";
+import DragAndDrop from "@/app/ui/components/DragAndDrop";
 
 export default function NewArticlePage() {
   const { user } = useContext(AuthContext);
@@ -51,8 +58,8 @@ export default function NewArticlePage() {
   return (
     <>
       <h2 className={styles.title}>Nuevo artículo</h2>
-      <form
-        className={styles.form}
+      <Form
+        style={{ maxWidth: "1000px" }}
         onSubmit={async (e) => {
           await handleSubmitNewArticle({
             e,
@@ -90,66 +97,33 @@ export default function NewArticlePage() {
               : "Desmarcá la casilla si preferís que la noticia tenga autor"}
           </label>
         </div>
-        <label>
-          Título
+        <Label label="Título">
           <Asterisk />
-          <input
-            className={styles.input}
-            type="text"
-            required
+          <Input
+            id="title"
+            required={true}
             value={title}
             onChange={(e) => getTitle(e.target.value)}
           />
-        </label>
-        <label className="btn" style={{ alignSelf: "flex-start" }}>
-          Seleccionar imagen
-          <Asterisk />
-          <input
-            type="file"
-            onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
-            accept=".jpg, .jpeg, .png, .svg, .webp"
-            className={styles.img_input}
-          />
-        </label>
-        <div
+        </Label>
+        <SelectImage
+          onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
+        />
+        <DragAndDrop
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => handleDropFile({ e, getImageFile, getAltImage })}
-          className={styles.dropzone}
-        >
-          <div
-            style={{
-              backgroundImage: imageFile
-                ? `url(${URL.createObjectURL(imageFile)})`
-                : "",
-            }}
-            className={styles.image_preview}
-          >
-            {!imageFile && (
-              <>
-                <p>O arrastra la imagen aquí </p>
-                <svg width="24" height="24">
-                  <path
-                    d="M19 7v3h-2V7h-3V5h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"
-                    fill="gray"
-                  ></path>
-                </svg>
-              </>
-            )}
-          </div>
-        </div>
-        <label>
-          Descripción corta de la imagen &#40;para personas no videntes&#41;
+          imageFile={imageFile}
+        />
+        <Label label="Descripción corta de la imagen &#40;para personas no videntes&#41;">
           <Asterisk />
-          <input
-            className={styles.input}
-            type="text"
-            required
+          <Input
+            id="alt_image"
+            required={true}
             value={altImage}
             onChange={(e) => getAltImage(e.target.value)}
           />
-        </label>
-        <label>
-          Entrada
+        </Label>
+        <Label label="Entrada">
           <Asterisk />
           <textarea
             className={styles.textarea}
@@ -158,22 +132,16 @@ export default function NewArticlePage() {
             onChange={(e) => getLead(e.target.value)}
             rows="4"
           />
-        </label>
-        <label>
-          Sección
-          <select
-            value={section}
-            onChange={(e) => getSection(e.target.value)}
-            className={styles.select}
-          >
-            <option value="">--Seleccionar--</option>
-            <option value="locales">Locales</option>
-            <option value="regionales">Regionales</option>
-            <option value="provinciales">Provinciales</option>
-            <option value="nacionales">Nacionales</option>
-            <option value="internacionales">Internacionales</option>
-          </select>
-        </label>
+        </Label>
+        <Label label="Sección">
+          <Select value={section} onChange={(e) => getSection(e.target.value)}>
+            {selectSectionOptions.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </Select>
+        </Label>
         <TinyMCE content={content} getContent={getContent} />
         {/* <RichTextEditor
         content={content}
@@ -188,7 +156,7 @@ export default function NewArticlePage() {
             // title={!isCompleted ? "Faltan completar campos" : ""}
           />
         </div>
-      </form>
+      </Form>
       {loading && <p className={styles.upload}>Subiendo...</p>}
     </>
   );

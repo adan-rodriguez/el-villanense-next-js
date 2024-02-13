@@ -1,0 +1,14 @@
+.form {
+  width: 100%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 1rem;
+  border: 1px solid gray;
+  border-radius: 2px;
+}
+
+.form[inert] {
+  opacity: 0.3;
+}
