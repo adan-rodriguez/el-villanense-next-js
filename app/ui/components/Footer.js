@@ -37,8 +37,8 @@ export default function Footer() {
       <p className={styles.dev}>
         Desarrollado por{" "}
         <a
-          className={styles.adan__ig}
-          href="https://www.instagram.com/adan.rodriguez_/"
+          className={styles.portafolio}
+          href="https://adanrodriguez.vercel.app/"
         >
           Adán Rodríguez
         </a>
