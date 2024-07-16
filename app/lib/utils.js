@@ -50,14 +50,14 @@ export const socialMediaData = [
   {
     href: "https://www.instagram.com/el_villanense/?hl=es-la",
     title: "Seguinos en Instagram",
-    src: "/icons/social/instagram.webp",
+    src: "/icons/social/instagram.svg",
     alt: "Logo de Instagram",
   },
   {
     href: "https://x.com/Adan_Rodriguez_",
     title: "Seguinos en X",
-    src: "/icons/social/twitter.webp",
-    alt: "Logo de Twitter",
+    src: "/icons/social/x.png",
+    alt: "Logo de X",
   },
 ];
 
@@ -278,34 +278,30 @@ export function objCompare(obj1, obj2) {
   return true;
 }
 
-export const handleFileChange = ({ e, getImageFile, getAltImage }) => {
-  const file = e.target.files[0];
+export const handleFileChange = ({ file, getImageFile }) => {
+  const allowedImageFileTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/webp",
+  ];
 
-  handleFile({ file, getImageFile, getAltImage });
+  if (isValidImageFile({ file, allowedImageFileTypes })) {
+    getImageFile(file);
+  }
 };
 
-export const handleDropFile = ({ e, getImageFile, getAltImage }) => {
-  e.preventDefault();
-
-  const file = e.dataTransfer.files[0];
-
-  handleFile({ file, getImageFile, getAltImage });
-};
-
-function handleFile({ file, getImageFile, getAltImage }) {
-  if (!file) return;
-
-  const fileTypes = ["image/jpeg", "image/png", "image/svg+xml", "image/webp"];
+export function isValidImageFile({ file, allowedImageFileTypes }) {
+  if (!file) return false;
 
   const { type: fileType } = file;
 
-  if (!fileTypes.includes(fileType)) {
+  if (!allowedImageFileTypes.includes(fileType)) {
     alert(`No se acepta un archivo con formato '${fileType}'`);
-    return;
+    return false;
   }
 
-  getImageFile(file);
-  getAltImage("");
+  return true;
 }
 
 export const selectSectionOptions = [

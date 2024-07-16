@@ -70,8 +70,8 @@ export default async function ArticlePage({ params }) {
     {
       href: `https://twitter.com/intent/tweet?text=${article.title}&url=${url}`,
       title: "Compartir en X",
-      src: "/icons/social/twitter.webp",
-      alt: "Logo de Twitter",
+      src: "/icons/social/x.png",
+      alt: "Logo de X",
     },
     {
       href: `https://api.whatsapp.com/send?text=${url}`,

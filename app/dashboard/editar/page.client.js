@@ -6,8 +6,6 @@ import styles from "@/app/ui/styles/ArticleForm.module.css";
 // import { AuthContext } from "@/app/context/auth";
 import {
   handleDelete,
-  handleDropFile,
-  handleFileChange,
   handleSubmitEditArticle,
   selectSectionOptions,
   users,
@@ -126,14 +124,17 @@ export default function EditArticleClientPage({ article }) {
             onChange={(e) => getTitle(e.target.value)}
           />
         </Label>
-        <SelectImage
-          onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
-        />
+        <SelectImage getImageFile={getImageFile} />
         <DragAndDrop
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDropFile({ e, getImageFile, getAltImage })}
-          image={image}
-          imageFile={imageFile}
+          allowedImageFileTypes={[
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/webp",
+          ]}
+          getImageFile={getImageFile}
+          externalImageFile={imageFile}
+          imageUrl={image}
         />
         <Label label="Descripción corta de la imagen &#40;para personas no videntes&#41;">
           <Asterisk />

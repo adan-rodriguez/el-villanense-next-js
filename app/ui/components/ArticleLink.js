@@ -15,18 +15,25 @@ export default function ArticleLink({
 }) {
   return (
     <article className={styles.article}>
-      <EditAndDeleteButtons articleId={id} nick={authors[0]} />
-      <Link className={styles.article_link} key={id} href={`/${id}`}>
+      <EditAndDeleteButtons
+        articleId={id}
+        nick={authors[0]}
+        style={{
+          position: "absolute",
+          boxShadow: "0px 0px 20px 20px rgb(245, 245, 245)",
+        }}
+      />
+      <Link className={styles.link} key={id} href={id}>
         <img
-          className={styles.article_link_img}
+          className={styles.image}
           src={image}
           alt={altImage}
           loading="lazy"
         />
-        <time className={styles.article_link_time} dateTime={datetimeAttribute}>
+        <time className={styles.time} dateTime={datetimeAttribute}>
           {dateContent}
         </time>
-        <p className={styles.article_link_title}>{title}</p>
+        <p className={styles.title}>{title}</p>
       </Link>
       {!anonymous &&
         authors.map((nick) => <ArticleAuthorLink key={nick} nick={nick} />)}

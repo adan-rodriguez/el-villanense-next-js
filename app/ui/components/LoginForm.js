@@ -20,10 +20,15 @@ export default function LoginForm({
         onSubmit={(e) => login({ e, getLoginErrorMessage, getLoading })}
       >
         <Label label="Email">
-          <Input type="email" id="email" required={true} />
+          <Input type="email" id="email" name="email" required={true} />
         </Label>
         <Label label="Contraseña">
-          <Input type="password" id="password" required={true} />
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            required={true}
+          />
         </Label>
         <Button
           type="submit"

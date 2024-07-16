@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --border-color: gray;
+}
+
 body {
   min-width: 320px;
   padding-top: 48px;

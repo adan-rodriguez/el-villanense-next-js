@@ -3,6 +3,7 @@
   border-radius: 1rem;
   padding: 10px 15px;
   max-width: 400px;
+  transition: all 0.3s;
 }
 
 .image_preview {
@@ -15,4 +16,9 @@
   background-size: cover;
   background-position: center;
   transition: background-image 0.3s;
+}
+
+.drag {
+  background-color: rgb(230, 230, 230);
+  border-color: black;
 }

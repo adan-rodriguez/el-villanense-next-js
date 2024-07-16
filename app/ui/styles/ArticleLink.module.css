@@ -4,34 +4,29 @@
   padding-bottom: 14px;
 }
 
-.article > div {
-  position: absolute;
-  box-shadow: 0px 0px 20px 20px rgb(245, 245, 245);
-}
-
-.article_link {
+.link {
   display: flex;
   flex-direction: column;
 }
 
-.article_link_img {
+.image {
   aspect-ratio: 3/2;
   object-fit: cover;
   border-radius: 4px;
 }
 
-.article_link_time {
+.time {
   color: grey;
   font-size: 0.75rem;
   margin-top: 6px;
 }
 
-.article_link_title {
+.title {
   font-weight: 700;
   text-wrap: pretty;
 }
 
-.article_link:is(:hover, :focus) .article_link_title {
+.link:is(:hover, :focus) .title {
   transition: 0.3s;
   color: #0289cb;
 }

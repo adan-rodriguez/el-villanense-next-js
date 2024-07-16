@@ -1,24 +1,64 @@
-import styles from "@/app/ui/styles/DragAndDrop.module.css";
+"use client";
+
+import { isValidImageFile } from "@/app/lib/utils";
+import {
+  dropzone,
+  image_preview,
+  drag,
+} from "@/app/ui/styles/DragAndDrop.module.css";
+import { useEffect, useState } from "react";
 
 export default function DragAndDrop({
-  onDragOver,
-  onDrop,
-  image = "",
-  imageFile,
+  getImageFile,
+  externalImageFile,
+  imageUrl,
+  allowedImageFileTypes,
 }) {
+  const [imageFile, setImageFile] = useState(null);
+
+  useEffect(() => {
+    if (isValidImageFile({ file: externalImageFile, allowedImageFileTypes })) {
+      setImageFile(externalImageFile);
+    }
+  }, [externalImageFile]);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.target.classList.add(drag);
+  };
+
+  const handleDragLeave = (e) => {
+    e.target.classList.remove(drag);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (isValidImageFile({ file, allowedImageFileTypes })) {
+      getImageFile(file);
+      setImageFile(file);
+    }
+    e.target.classList.remove(drag);
+  };
+
   return (
-    <div onDragOver={onDragOver} onDrop={onDrop} className={styles.dropzone}>
+    <div
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      className={dropzone}
+    >
       <div
         style={{
           backgroundImage: imageFile
             ? `url(${URL.createObjectURL(imageFile)})`
-            : image
-            ? `url(${image})`
+            : imageUrl
+            ? `url(${imageUrl})`
             : "",
         }}
-        className={styles.image_preview}
+        className={image_preview}
       >
-        {!imageFile && !image && (
+        {!imageFile && !imageUrl && (
           <>
             <p>O arrastra la imagen aquí </p>
             <svg width="24" height="24">

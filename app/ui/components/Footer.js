@@ -1,7 +1,7 @@
 import Logo from "./Logo";
 import SocialMedia from "./SocialMedia";
 import styles from "../styles/Footer.module.css";
-import { getCurrentYear } from "../../lib/utils";
+// import { getCurrentYear } from "../../lib/utils";
 
 export default function Footer() {
   return (
@@ -30,9 +30,18 @@ export default function Footer() {
           </li>
         </ul>
       </address>
-      <p className={styles.copyright}>
+      {/* <p className={styles.copyright}>
         {`Copyright ${getCurrentYear()} www.elvillanense.com.ar - Todos los
         derechos reservados`}
+      </p> */}
+      <p className={styles.dev}>
+        Desarrollado por{" "}
+        <a
+          className={styles.adan__ig}
+          href="https://www.instagram.com/adan.rodriguez_/"
+        >
+          Adán Rodríguez
+        </a>
       </p>
     </footer>
   );

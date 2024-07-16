@@ -12,8 +12,7 @@ export const login = async ({ e, getLoginErrorMessage, getLoading }) => {
   const $form = e.target;
   const $body = document.body;
 
-  const email = $form.email.value;
-  const password = $form.password.value;
+  const { email, password } = Object.fromEntries(new FormData($form));
 
   getLoginErrorMessage(null);
 

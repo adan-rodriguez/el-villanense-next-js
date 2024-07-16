@@ -4,12 +4,7 @@ import styles from "@/app/ui/styles/ArticleForm.module.css";
 import { useContext } from "react";
 import { AuthContext } from "@/app/context/auth";
 import TinyMCE from "@/app/ui/components/TinyMCE";
-import {
-  handleDropFile,
-  handleFileChange,
-  handleSubmitNewArticle,
-  selectSectionOptions,
-} from "@/app/lib/utils";
+import { handleSubmitNewArticle, selectSectionOptions } from "@/app/lib/utils";
 import AuthorImage from "@/app/ui/components/AuthorImage";
 import useNewArticle from "@/app/hooks/useNewArticle";
 import { useRouter } from "next/navigation";
@@ -106,13 +101,16 @@ export default function NewArticlePage() {
             onChange={(e) => getTitle(e.target.value)}
           />
         </Label>
-        <SelectImage
-          onChange={(e) => handleFileChange({ e, getImageFile, getAltImage })}
-        />
+        <SelectImage getImageFile={getImageFile} />
         <DragAndDrop
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDropFile({ e, getImageFile, getAltImage })}
-          imageFile={imageFile}
+          allowedImageFileTypes={[
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/webp",
+          ]}
+          getImageFile={getImageFile}
+          externalImageFile={imageFile}
         />
         <Label label="Descripción corta de la imagen &#40;para personas no videntes&#41;">
           <Asterisk />
