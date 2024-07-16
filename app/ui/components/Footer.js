@@ -39,6 +39,8 @@ export default function Footer() {
         <a
           className={styles.portafolio}
           href="https://adanrodriguez.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Adán Rodríguez
         </a>
