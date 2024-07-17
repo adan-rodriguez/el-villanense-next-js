@@ -1,5 +1,5 @@
 .container {
-  padding: 10px;
+  max-width: 768px;
 }
 
 .title {
@@ -9,7 +9,7 @@
 
 .img {
   width: 100%;
-  height: 300px;
+  aspect-ratio: 3/2;
   object-fit: cover;
   margin-top: 5px;
 }
@@ -40,19 +40,4 @@
   justify-content: center;
   border-top: 1px solid silver;
   border-bottom: 1px solid silver;
-}
-
-/* // Dispositivos medianos (tabletas, 768px y más) */
-@media (width >= 768px) {
-  .img {
-    height: 450px;
-  }
-}
-
-/* // Dispositivos grandes (escritorios, 992px y más) */
-@media (width >= 992px) {
-  .container {
-    width: 60%;
-    padding-left: 40px;
-  }
 }

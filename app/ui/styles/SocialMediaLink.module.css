@@ -1,7 +1,8 @@
 .link {
   display: flex;
+  transition: scale 0.3s;
 }
 
 .link:is(:hover, :focus) {
-  transform: scale(1.05);
+  scale: 1.05;
 }

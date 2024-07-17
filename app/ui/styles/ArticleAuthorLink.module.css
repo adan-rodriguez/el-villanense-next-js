@@ -4,9 +4,9 @@
 
 .link {
   font-weight: bold;
-  transition: 0.3s;
+  transition: color 0.3s;
 }
 
-.link:hover {
+.link:is(:hover, :focus-visible) {
   color: #0289cb;
 }

@@ -1,7 +1,7 @@
 .title {
-  margin: 10px 10px 0 10px;
+  margin-bottom: 1rem;
   padding-bottom: 5px;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: normal;
   border-bottom: 1px solid #0289cb;
   position: relative;
@@ -10,10 +10,5 @@
 
 .author {
   color: #0289cb;
-}
-
-@media (width >= 992px) {
-  .title {
-    margin-left: 40px;
-  }
+  font-weight: bold;
 }

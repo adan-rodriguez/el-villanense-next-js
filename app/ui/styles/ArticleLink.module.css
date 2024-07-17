@@ -9,10 +9,27 @@
   flex-direction: column;
 }
 
+.link:is(:hover, :focus-visible) {
+  & .image {
+    scale: 1.1;
+  }
+
+  & .title {
+    color: #0289cb;
+  }
+}
+
+.figure {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
 .image {
+  display: block;
+  width: 100%;
   aspect-ratio: 3/2;
   object-fit: cover;
-  border-radius: 4px;
+  transition: scale 0.3s;
 }
 
 .time {
@@ -24,9 +41,5 @@
 .title {
   font-weight: 700;
   text-wrap: pretty;
-}
-
-.link:is(:hover, :focus) .title {
-  transition: 0.3s;
-  color: #0289cb;
+  transition: color 0.3s;
 }

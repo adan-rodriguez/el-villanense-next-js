@@ -25,9 +25,9 @@ body > * {
 
 main {
   max-width: 1440px;
-  margin: 0 auto;
+  margin-inline: auto;
   flex-grow: 1;
-  padding: 10px;
+  padding: 1rem;
 }
 
 a {

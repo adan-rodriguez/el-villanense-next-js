@@ -24,12 +24,14 @@ export default function ArticleLink({
         }}
       />
       <Link className={styles.link} key={id} href={id}>
-        <img
-          className={styles.image}
-          src={image}
-          alt={altImage}
-          loading="lazy"
-        />
+        <figure className={styles.figure}>
+          <img
+            className={styles.image}
+            src={image}
+            alt={altImage}
+            loading="lazy"
+          />
+        </figure>
         <time className={styles.time} dateTime={datetimeAttribute}>
           {dateContent}
         </time>
