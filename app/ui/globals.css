@@ -6,28 +6,21 @@
 
 :root {
   --border-color: gray;
+  scrollbar-width: thin;
 }
 
 body {
   min-width: 320px;
-  padding-top: 48px;
-  min-height: 100vh;
   min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
   color: rgb(15, 15, 15);
   background-color: rgb(245, 245, 245);
-}
-
-body > * {
-  width: 100%;
 }
 
 main {
   max-width: 1440px;
   margin-inline: auto;
-  flex-grow: 1;
   padding: 1rem;
+  min-height: calc(100dvh - 239px);
 }
 
 a {
@@ -70,33 +63,4 @@ select {
 
 abbr[title] {
   text-decoration: none;
-}
-
-/* // Dispositivos X-Small (teléfonos verticales, menos de 576px)
-// No hay media queries para `xs` ya que este es el valor predeterminado en Bootstrap */
-
-/* // Dispositivos pequeños (teléfonos horizontales, 576px y más) */
-@media (width >= 576px) {
-}
-
-/* // Dispositivos medianos (tabletas, 768px y más) */
-@media (width >= 768px) {
-  body {
-    padding-top: 60px;
-  }
-}
-
-/* // Dispositivos grandes (escritorios, 992px y más) */
-@media (width >= 992px) {
-}
-
-/* // Dispositivos X-Large (escritorios grandes, 1200px y más) */
-@media (width >= 1200px) {
-  body {
-    padding-top: 72px;
-  }
-}
-
-/* // Dispositivos XX-Large (escritorios más grandes, 1400px y más) */
-@media (width >= 1400px) {
 }

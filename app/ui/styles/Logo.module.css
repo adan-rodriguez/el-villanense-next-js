@@ -3,17 +3,3 @@
   font-weight: 900;
   user-select: none;
 }
-
-/* // Dispositivos medianos (tabletas, 768px y más) */
-@media (width >= 768px) {
-  .logo {
-    font-size: 2.5rem;
-  }
-}
-
-/* // Dispositivos X-Large (escritorios grandes, 1200px y más) */
-@media (width >= 1200px) {
-  .logo {
-    font-size: 3rem;
-  }
-}

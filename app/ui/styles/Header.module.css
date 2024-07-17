@@ -1,10 +1,7 @@
 .header {
-  background-color: rgb(10, 10, 10, 0.98);
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  z-index: 100;
-  box-shadow: 0px 0px 20px 0px rgb(10 10 10);
+  background-color: black;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgb(0, 0, 0) 0px 10px 15px -3px, rgb(0, 0, 0) 0px 4px 6px -4px;
 }
 
 .header_container {
@@ -17,47 +14,6 @@
   padding-inline: 1rem;
 }
 
-.openmenu_button,
-.closemenu_button {
-  background-color: transparent;
-  border: none;
-  height: 48px;
-}
-
-.closemenu_button {
-  position: fixed;
-  top: 0;
-  right: 10px;
-}
-
-.menu_phone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  position: fixed;
-  left: 0;
-  top: 48px;
-  width: 100%;
-  min-height: 100%;
-  background-color: rgba(10, 10, 10);
-  overflow-y: auto;
-  padding-top: 30px;
-}
-
-.menu_phone footer {
-  transform: translateY(-48px);
-}
-
-/* .navbar_list {
-  text-align: center;
-  list-style-type: none;
-}
-
-.navbar_list_item {
-  margin-bottom: 30px;
-} */
-
 .userandopenbutton_container {
   display: flex;
   align-items: center;
@@ -68,8 +24,6 @@
 }
 
 .openmenuuser_button {
-  background-color: transparent;
-  border: none;
   display: flex;
 }
 
@@ -115,48 +69,4 @@
 .logout_button:hover {
   background-color: rgb(10, 60, 65);
   box-shadow: 0px 0px 13px 10px rgb(10, 60, 65);
-}
-
-/* // Dispositivos medianos (tabletas, 768px y más) */
-@media (width >= 768px) {
-  .logo {
-    font-size: 2.5rem;
-  }
-
-  .menu_phone {
-    top: 60px;
-  }
-
-  .closemenu_button {
-    top: 6px;
-  }
-}
-
-/* // Dispositivos grandes (escritorios, 992px y más) */
-@media (width >= 992px) {
-  .openmenu_button {
-    display: none;
-  }
-
-  /* .menu {
-    display: block;
-    position: static;
-    width: auto;
-    height: auto;
-    overflow-y: visible;
-    padding-top: 0;
-  } */
-
-  /* .navbar_list {
-    display: flex;
-    column-gap: 10px;
-  }
-
-  .navbar_list_item {
-    margin-bottom: 0;
-  }
-
-  .navbar_link:hover {
-    border-bottom: 2px solid white;
-  } */
 }
