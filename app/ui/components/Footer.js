@@ -6,7 +6,7 @@ import styles from "../styles/Footer.module.css";
 export default function Footer() {
   return (
     <footer className={styles.footer}>
-      <div>
+      <div className={styles.follow}>
         <SocialMedia />
         <span className={styles.follow_text}>Seguinos en nuestras redes</span>
       </div>
@@ -41,6 +41,7 @@ export default function Footer() {
           href="https://adanrodriguez.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
+          title="Ir al sitio de Adán Rodríguez"
         >
           Adán Rodríguez
         </a>

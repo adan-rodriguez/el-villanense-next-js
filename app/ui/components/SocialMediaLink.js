@@ -5,8 +5,8 @@ export default function SocialMediaLink({
   title,
   src,
   alt,
-  width = 30,
-  height = 30,
+  width = 24,
+  height = 24,
 }) {
   return (
     <a

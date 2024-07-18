@@ -35,7 +35,7 @@
 }
 
 .share_social_media_container_bottom {
-  padding: 10px 0 20px 0;
+  padding-block: 1rem;
   display: flex;
   justify-content: center;
   border-top: 1px solid silver;

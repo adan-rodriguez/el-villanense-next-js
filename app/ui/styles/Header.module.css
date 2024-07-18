@@ -1,7 +1,6 @@
 .header {
-  background-color: black;
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgb(0, 0, 0) 0px 10px 15px -3px, rgb(0, 0, 0) 0px 4px 6px -4px;
+  background-color: rgb(17 24 39);
+  box-shadow: var(--box-shadow);
 }
 
 .header_container {
@@ -12,11 +11,6 @@
   max-width: 1440px;
   margin-inline: auto;
   padding-inline: 1rem;
-}
-
-.userandopenbutton_container {
-  display: flex;
-  align-items: center;
 }
 
 .buttonandmenu_user_container {
@@ -34,7 +28,6 @@
   min-width: max-content;
   padding: 10px;
   border-radius: 5px;
-  display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 20px;

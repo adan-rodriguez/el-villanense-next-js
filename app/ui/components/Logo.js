@@ -3,7 +3,12 @@ import styles from "../styles/Logo.module.css";
 
 export default function Logo() {
   return (
-    <Link translate="no" className={styles.logo} href="/" title="Inicio">
+    <Link
+      translate="no"
+      className={styles.logo}
+      href="/"
+      aria-label="Ir al inicio"
+    >
       El Villanense
     </Link>
   );

@@ -9,6 +9,7 @@ import useMenuUser from "@/app/hooks/useMenuUser";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "@/app/context/auth";
+import SocialMedia from "./SocialMedia";
 // import dynamic from "next/dynamic";
 // const PhoneMenu = dynamic(() => import("./PhoneMenu"));
 
@@ -46,49 +47,57 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.header_container}>
         <Logo />
+        <SocialMedia />
         {user && (
           <div className={styles.buttonandmenu_user_container}>
             <button
               className={styles.openmenuuser_button}
               onClick={() => getIsMenuUserOpen(!isMenuUserOpen)}
+              aria-label={isMenuUserOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={isMenuUserOpen}
+              aria-controls="user-menu"
             >
               <AuthorImage src={user.image} author={user.name} />
             </button>
-            {isMenuUserOpen && (
-              <div className={styles.menuuser_container}>
-                <span className={styles.username}>{user.name}</span>
-                <Link
-                  className={styles.dashboard_link}
-                  onClick={() => getIsMenuUserOpen(false)}
-                  href="/dashboard"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  className={styles.new_link}
-                  onClick={() => getIsMenuUserOpen(false)}
-                  href="/dashboard/nuevo"
-                >
-                  Nuevo
-                </Link>
-                <Link
-                  className={styles.account_link}
-                  onClick={() => getIsMenuUserOpen(false)}
-                  href="/dashboard/cuenta"
-                >
-                  Cuenta
-                </Link>
-                <button
-                  className={styles.logout_button}
-                  onClick={() => {
-                    getIsMenuUserOpen(false);
-                    logout();
-                  }}
-                >
-                  Cerrar sesión
-                </button>
-              </div>
-            )}
+            <div
+              id="user-menu"
+              style={{
+                display: isMenuUserOpen ? "flex" : "none",
+              }}
+              className={styles.menuuser_container}
+            >
+              <span className={styles.username}>{user.name}</span>
+              <Link
+                className={styles.dashboard_link}
+                onClick={() => getIsMenuUserOpen(false)}
+                href="/dashboard"
+              >
+                Dashboard
+              </Link>
+              <Link
+                className={styles.new_link}
+                onClick={() => getIsMenuUserOpen(false)}
+                href="/dashboard/nuevo"
+              >
+                Nuevo
+              </Link>
+              <Link
+                className={styles.account_link}
+                onClick={() => getIsMenuUserOpen(false)}
+                href="/dashboard/cuenta"
+              >
+                Cuenta
+              </Link>
+              <button
+                className={styles.logout_button}
+                onClick={() => {
+                  getIsMenuUserOpen(false);
+                  logout();
+                }}
+              >
+                Cerrar sesión
+              </button>
+            </div>
           </div>
         )}
       </div>

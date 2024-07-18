@@ -4,7 +4,10 @@ import { socialMediaData } from "@/app/lib/utils";
 
 export default function SocialMedia() {
   return (
-    <div className={styles.container}>
+    <div
+      aria-label="Redes sociales de El Villanense"
+      className={styles.container}
+    >
       {socialMediaData.map(({ href, title, src, alt }) => (
         <SocialMediaLink
           key={href}
