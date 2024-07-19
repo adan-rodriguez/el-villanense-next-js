@@ -7,8 +7,8 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.follow}>
-        <SocialMedia />
         <span className={styles.follow_text}>Seguinos en nuestras redes</span>
+        <SocialMedia />
       </div>
       <Logo />
       <address className={styles.address}>

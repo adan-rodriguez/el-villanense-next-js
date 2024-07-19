@@ -23,10 +23,8 @@ export async function getArticles({ author } = {}) {
         (article) => article.authors.includes(author) && !article.anonymous
       );
     }
-    console.log("aca");
     return mock_articles;
   }
-  console.log("aco");
 
   try {
     let q;

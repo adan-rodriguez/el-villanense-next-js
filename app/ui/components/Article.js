@@ -29,9 +29,7 @@ export default function Article({ article, shareSocialMediaData, authors }) {
         fetchPriority="high"
       />
       <ArticleContent content={article.content} />
-      <div className={styles.share_social_media_container_bottom}>
-        <ShareSocialMedia data={shareSocialMediaData} />
-      </div>
+      <ShareSocialMedia data={shareSocialMediaData} isBottom />
     </article>
   );
 }
