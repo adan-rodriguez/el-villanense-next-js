@@ -15,7 +15,7 @@ export default function ArticleLink({
 }) {
   return (
     <article className={styles.article}>
-      <EditAndDeleteButtons
+      <EditAndDeleteButtons // Se muestran cuando el usuario está logueado
         articleId={id}
         nick={authors[0]}
         style={{
@@ -23,7 +23,7 @@ export default function ArticleLink({
           boxShadow: "0px 0px 20px 20px rgb(245, 245, 245)",
         }}
       />
-      <Link className={styles.link} key={id} href={id}>
+      <Link className={styles.link} key={id} href={`/${id}`}>
         <figure className={styles.figure}>
           <img
             className={styles.image}
