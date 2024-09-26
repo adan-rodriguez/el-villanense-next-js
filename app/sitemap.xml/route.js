@@ -21,7 +21,7 @@ export async function GET() {
   articles.forEach(({ id, datetimeAttribute, title, timestamp }) => {
     if (timestamp >= _48HoursAgo) {
       xml += `<url>
-                <loc>http://www.elvillanense.com.ar/${id}</loc>
+                <loc>https://www.elvillanense.com.ar/${id}</loc>
                 <news:news>
                   <news:publication>
                     <news:name>El Villanense</news:name>
