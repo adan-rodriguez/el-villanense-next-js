@@ -20,7 +20,8 @@ export async function generateStaticParams() {
 //   // ...
 // }
 
-export function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const { author: nick } = params;
 
   const user = users.find((user) => user.nick === nick);
@@ -57,7 +58,8 @@ const obtainArticles = unstable_cache(
   }
 );
 
-export default async function ArticlesByAuthorPage({ params }) {
+export default async function ArticlesByAuthorPage(props) {
+  const params = await props.params;
   const { author: nick } = params;
 
   const user = users.find((user) => user.nick === nick);

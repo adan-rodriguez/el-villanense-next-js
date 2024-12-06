@@ -1,7 +1,7 @@
 import Articles from "../ui/components/Articles";
 import { DOMAIN } from "../lib/utils";
 import { getArticles } from "../lib/services/articles";
-import { unstable_cache } from "next/cache";
+// import { unstable_cache } from "next/cache";
 
 export const metadata = {
   description:
@@ -45,16 +45,16 @@ export const metadata = {
   },
 };
 
-const obtainArticles = unstable_cache(
-  async () => await getArticles(),
-  ["articles-home"],
-  {
-    tags: ["articles"],
-  }
-);
+// const obtainArticles = unstable_cache(
+//   async () => await getArticles(),
+//   ["articles-home"],
+//   {
+//     tags: ["articles"],
+//   }
+// );
 
 export default async function HomePage() {
-  const articles = await obtainArticles();
+  const articles = await getArticles();
 
   return <Articles articles={articles} />;
 }

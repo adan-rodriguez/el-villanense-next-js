@@ -4,7 +4,8 @@ import { getArticle } from "@/app/lib/services/articles";
 import { DOMAIN } from "../../lib/utils";
 import Article from "@/app/ui/components/Article";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   const { article: articleId } = params;
 
   const article = await getArticle({ articleId });
@@ -51,7 +52,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ArticlePage({ params }) {
+export default async function ArticlePage(props) {
+  const params = await props.params;
   const { article: articleId } = params;
 
   const article = await getArticle({ articleId });
