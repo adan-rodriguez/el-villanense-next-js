@@ -1,13 +1,22 @@
-"use client";
-
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { useContext } from "react";
-import { AuthContext } from "../context/auth";
+import { auth } from "../lib/firebase/server";
 
-export default function DashboardLayout({ children }) {
-  const { user } = useContext(AuthContext);
+export default async function DashboardLayout({ children }) {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("__session")?.value;
 
-  if (!user) redirect("/login", "replace");
+  if (!sessionCookie) {
+    redirect("/login");
+  }
+
+  try {
+    const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+    console.log("Token válido", decodedIdToken);
+  } catch (error) {
+    console.error({ error });
+    redirect("/login");
+  }
 
   return children;
 }

@@ -1,23 +1,26 @@
 "use client";
 
-import { login } from "../../lib/auth";
-import styles from "../styles/LoginForm.module.css";
 import Button from "./Button";
 import Form from "./Form";
 import Input from "./Input";
 import Label from "./Label";
+import { useRouter } from "next/navigation";
+import { login } from "@/app/lib/auth";
 
-export default function LoginForm({
-  loginErrorMessage,
-  getLoginErrorMessage,
-  loading,
-  getLoading,
-}) {
+export default function LoginForm() {
+  const router = useRouter();
+
   return (
     <>
       <Form
         style={{ maxWidth: "400px" }}
-        onSubmit={(e) => login({ e, getLoginErrorMessage, getLoading })}
+        onSubmit={async (e) => {
+          const response = await login({ e });
+
+          if (response.ok) {
+            router.push("/dashboard");
+          }
+        }}
       >
         <Label label="Email">
           <Input type="email" id="email" name="email" required={true} />
@@ -36,12 +39,12 @@ export default function LoginForm({
           style={{ alignSelf: "center" }}
         />
       </Form>
-      {loading && <p className={styles.loading}>Autenticando...</p>}
+      {/* {loading && <p className={styles.loading}>Autenticando...</p>}
       {loginErrorMessage && (
         <p className={styles.error_message} role="alert">
           {loginErrorMessage}
         </p>
-      )}
+      )} */}
     </>
   );
 }

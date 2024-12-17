@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/auth";
 
-export default function useNewArticle({ user }) {
+export default function useNewArticle() {
+  const { user } = useContext(AuthContext);
+
   const [title, setTitle] = useState("");
   const [altImage, setAltImage] = useState("");
   const [lead, setLead] = useState("");
@@ -10,6 +14,8 @@ export default function useNewArticle({ user }) {
   const [anonymous, setAnonymous] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const getTitle = (title) => setTitle(title);
   const getAltImage = (altImage) => setAltImage(altImage);
@@ -21,8 +27,8 @@ export default function useNewArticle({ user }) {
   const getLoading = (bool) => setLoading(bool);
 
   useEffect(() => {
-    setAuthors([user.nick]);
-  }, []);
+    setAuthors([user?.nick]);
+  }, [user]);
 
   return {
     title,
@@ -42,6 +48,8 @@ export default function useNewArticle({ user }) {
     getImageFile,
     loading,
     getLoading,
+    router,
+    user,
   };
 }
 

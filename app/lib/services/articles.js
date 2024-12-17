@@ -1,121 +1,82 @@
-import {
-  deleteDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  where,
-  setDoc,
-} from "firebase/firestore";
-import { db } from "../config-firebase";
-import { getFriendlyUrl, timestampToDatetime } from "../utils";
-import mock_articles from "../mocks/articles.json";
-import { isDev } from "../config";
+import { db } from "../firebase/server";
 
-const articlesCollection = collection(db, "articles");
+// export async function getArticles({ author } = {}) {
+//   const articlesCollection = collection(db, "articles");
+
+//   try {
+//     let q;
+//     if (author) {
+//       q = query(
+//         articlesCollection,
+//         where("authors", "array-contains", author),
+//         where("anonymous", "==", false),
+//         orderBy("timestamp", "desc")
+//       );
+//     } else {
+//       q = query(articlesCollection, orderBy("timestamp", "desc"));
+//     }
+
+//     const data = await getDocs(q);
+
+//     return data.docs.map((article) => ({
+//       id: article.id,
+//       ...article.data(),
+//     }));
+//   } catch (error) {
+//     console.log("Ha ocurrido un error");
+//   }
+// }
 
 export async function getArticles({ author } = {}) {
-  if (isDev) {
-    if (author) {
-      return mock_articles.filter(
-        (article) => article.authors.includes(author) && !article.anonymous
-      );
-    }
-    return mock_articles;
+  const articlesRef = db.collection("articles");
+
+  let query;
+
+  if (author) {
+    query = articlesRef
+      .where("anonymous", "==", false)
+      .where("authors", "array-contains", author)
+      .orderBy("timestamp", "desc");
+  } else {
+    query = articlesRef.orderBy("timestamp", "desc");
   }
 
-  try {
-    let q;
-    if (author) {
-      q = query(
-        articlesCollection,
-        where("authors", "array-contains", author),
-        where("anonymous", "==", false),
-        orderBy("timestamp", "desc")
-      );
-    } else {
-      q = query(articlesCollection, orderBy("timestamp", "desc"));
-    }
+  const articlesSnapshot = await query.get();
+  const articles = articlesSnapshot.docs.map((article) => ({
+    id: article.id,
+    ...article.data(),
+  }));
 
-    const data = await getDocs(q);
-
-    return data.docs.map((article) => ({
-      id: article.id,
-      ...article.data(),
-    }));
-  } catch (error) {
-    console.log("Ha ocurrido un error");
-  }
+  return articles;
 }
+
+// export async function getArticle({ articleId }) {
+//   // if (isDev) {
+//   //   const article = mock_articles.find((article) => article.id === articleId);
+//   //   return article;
+//   // }
+
+//   try {
+//     const articleRef = doc(db, "articles", articleId);
+//     const data = await getDoc(articleRef);
+//     if (data.exists()) {
+//       return { id: data.id, ...data.data() };
+//     }
+//   } catch {
+//     console.log("Ha ocurrido un error");
+//   }
+// }
 
 export async function getArticle({ articleId }) {
-  // if (isDev) {
-  //   const article = mock_articles.find((article) => article.id === articleId);
-  //   return article;
-  // }
-
   try {
-    const articleRef = doc(db, "articles", articleId);
-    const data = await getDoc(articleRef);
-    if (data.exists()) {
-      return { id: data.id, ...data.data() };
-    }
-  } catch {
-    console.log("Ha ocurrido un error");
+    const articlesRef = db.collection("articles");
+    const articleSnapshot = await articlesRef.doc(articleId).get();
+    const article = {
+      articleId: articleSnapshot.id,
+      ...articleSnapshot.data(),
+    };
+    return article;
+  } catch (error) {
+    console.error(error);
   }
 }
-
-export const addArticle = async ({ article }) => {
-  const timestamp = Date.now();
-  const newArticle = {
-    ...article,
-    timestamp,
-    ...timestampToDatetime({ timestamp }),
-    friendlyUrl: getFriendlyUrl({ string: article.title }),
-  };
-
-  const id = `${newArticle.friendlyUrl}-${newArticle.timestamp}`;
-
-  await setDoc(doc(db, "articles", id), newArticle);
-  newArticle.id = id;
-  return newArticle;
-};
-
-export const deleteArticle = async ({ articleId }) => {
-  await deleteDoc(doc(db, "articles", articleId));
-  return `Artículo con id '${articleId}' eliminado`;
-};
-
-export const editArticle = async ({ articleId, article }) => {
-  await setDoc(doc(db, "articles", articleId), article, { merge: true });
-
-  return `Artículo con id '${articleId}' editado`;
-};
-
-// export const getSectionArticlesDatabase = async ({section}) => {
-//   const q = query(
-//     articlesCollection,
-//     where("section", "==", section),
-//     orderBy("timestamp", "desc")
-//   );
-//   const data = await getDocs(q);
-//   const articles = data.docs.map((art) => ({ ...art.data(), id: art.id }));
-//   return articles;
-// };
-
-// export const getLastArticleDatabase = async () => {
-//   const q = query(articlesCollection, orderBy("timestamp", "desc"), limit(1));
-//   const data = await getDocs(q);
-//   const articleData = data.docs[0];
-//   const article = { id: articleData.id, ...articleData.data() };
-//   return article;
-// };
-
-// if (data.exists()) {
-//   return { id: data.id, ...data.data() };
-// } else {
-//   // data.data() will be undefined in this case
-//   return undefined
-// }

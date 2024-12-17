@@ -1,14 +1,12 @@
 import ArticleAuthorLink from "./ArticleAuthorLink";
 import ArticleContent from "./ArticleContent";
 import AuthorImage from "./AuthorImage";
-import EditAndDeleteButtons from "./EditAndDeleteButtons";
 import ShareSocialMedia from "./ShareSocialMedia";
 import styles from "@/app/ui/styles/Article.module.css";
 
 export default function Article({ article, shareSocialMediaData, authors }) {
   return (
     <article className={styles.container}>
-      <EditAndDeleteButtons articleId={article.id} nick={article.authors[0]} />
       <h1 className={styles.title}>{article.title}</h1>
       <ShareSocialMedia data={shareSocialMediaData} />
       <time className={styles.time} dateTime={article.datetimeAttribute}>

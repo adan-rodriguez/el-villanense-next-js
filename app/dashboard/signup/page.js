@@ -1,28 +1,27 @@
-"use client";
-
-import { AuthContext } from "@/app/context/auth";
-import useSignup from "@/app/hooks/useSignup";
+import { auth } from "@/app/lib/firebase/server";
 import { SUPER_ADMINS } from "@/app/lib/utils";
 import SignupForm from "@/app/ui/components/SignupForm";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { useContext } from "react";
 
-export default function SignupPage() {
-  const { user } = useContext(AuthContext);
+export default async function SignupPage() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("__session")?.value;
+  let decodedIdToken;
 
-  if (!SUPER_ADMINS.includes(user.email)) {
-    redirect("/dashboard", "replace");
+  if (sessionCookie) {
+    try {
+      decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+      console.log("Token válido", decodedIdToken);
+    } catch (error) {
+      console.error({ error });
+      redirect("/login");
+    }
   }
 
-  const { signupErrorMessage, getSignupErrorMessage, loading, getLoading } =
-    useSignup();
+  if (!SUPER_ADMINS.includes(decodedIdToken.email)) {
+    redirect("/dashboard");
+  }
 
-  return (
-    <SignupForm
-      signupErrorMessage={signupErrorMessage}
-      getSignupErrorMessage={getSignupErrorMessage}
-      loading={loading}
-      getLoading={getLoading}
-    />
-  );
+  return <SignupForm />;
 }

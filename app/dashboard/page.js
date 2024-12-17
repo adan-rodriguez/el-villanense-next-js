@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import styles from "@/app/ui/styles/DashboardHomePage.module.css";
+import { SUPER_ADMINS } from "../lib/utils";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth";
-import { SUPER_ADMINS } from "../lib/utils";
 
 export default function DashboardHomePage() {
-  const { user } = useContext(AuthContext);
+  const { userFirebase } = useContext(AuthContext);
 
   return (
     <div className={styles.links_container}>
@@ -17,13 +17,10 @@ export default function DashboardHomePage() {
       <Link className="btn" href="/dashboard/articulos">
         Editar/Borrar
       </Link>
-      <Link className="btn" href={`/autor/${user.nick}`}>
-        Tus noticias
-      </Link>
       {/* <Link className="btn" href="/dashboard/borradores">
         Borradores
       </Link> */}
-      {SUPER_ADMINS.includes(user.email) && (
+      {SUPER_ADMINS.includes(userFirebase?.email) && (
         <Link className="btn" href="/dashboard/signup">
           Agregar usuario
         </Link>
@@ -31,3 +28,7 @@ export default function DashboardHomePage() {
     </div>
   );
 }
+
+// export default function DashboardHomePage() {
+//   return <p>dashboard</p>;
+// }

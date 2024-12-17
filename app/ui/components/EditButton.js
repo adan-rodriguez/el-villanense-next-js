@@ -1,12 +1,10 @@
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function EditButton({ articleId, width = 30, height = 30 }) {
-  const router = useRouter();
   return (
-    <button
-      onClick={() => router.push(`/dashboard/editar?articulo=${articleId}`)}
+    <Link
+      href={`/dashboard/editar?articulo=${articleId}`}
       title="Editar noticia"
-      aria-label="Editar noticia"
     >
       <img
         src="/icons/dashboard/edit.svg"
@@ -15,6 +13,6 @@ export default function EditButton({ articleId, width = 30, height = 30 }) {
         height={height}
         loading="lazy"
       />
-    </button>
+    </Link>
   );
 }

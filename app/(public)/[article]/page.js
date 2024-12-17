@@ -12,26 +12,36 @@ export async function generateMetadata(props) {
 
   if (!article) return { title: "Página no encontrada - El Villanense" };
 
+  const {
+    title,
+    lead,
+    image,
+    altImage,
+    datetimeAttribute,
+    authors,
+    anonymous,
+  } = article;
+
   const facebookProfiles = users.map(
-    (user) => article.authors.includes(user.nick) && user.facebook
+    (user) => authors.includes(user.nick) && user.facebook
   );
 
   return {
-    title: article.title,
-    description: article.lead,
+    title: title,
+    description: lead,
     openGraph: {
-      title: article.title,
-      description: article.lead,
-      images: { url: article.image, alt: article.altImage },
-      url: `${DOMAIN}/${article.id}`,
+      title: title,
+      description: lead,
+      images: { url: image, alt: altImage },
+      url: `${DOMAIN}/${articleId}`,
       siteName: "El Villanense",
       type: "article",
       locale: "es_LA",
-      publishedTime: article.datetimeAttribute,
-      // ...(article.lastModified && {modifiedTime: article.lastModified}),
+      publishedTime: datetimeAttribute,
+      // ...(lastModified && {modifiedTime: lastModified}),
       // publisher: "https://www.facebook.com/elvillanense",
       // section: "locales",
-      ...(article.anonymous === false && { authors: facebookProfiles }),
+      ...(anonymous === false && { authors: facebookProfiles }),
     },
     twitter: {
       card: "summary_large_image",

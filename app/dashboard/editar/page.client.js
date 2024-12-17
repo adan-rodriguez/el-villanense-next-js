@@ -1,19 +1,14 @@
 "use client";
 
-import useEditArticle from "@/app/hooks/useEditArticle";
+import { useEditArticle } from "@/app/hooks/useEditArticle";
 import styles from "@/app/ui/styles/ArticleForm.module.css";
-// import { useContext } from "react";
-// import { AuthContext } from "@/app/context/auth";
 import {
-  handleDelete,
-  handleSubmitEditArticle,
   selectSectionOptions,
   users,
   // objCompare,
 } from "@/app/lib/utils";
 import TinyMCE from "@/app/ui/components/TinyMCE";
 import AuthorImage from "@/app/ui/components/AuthorImage";
-import { useRouter } from "next/navigation";
 import Asterisk from "@/app/ui/components/Asterisk";
 import Button from "@/app/ui/components/Button";
 import Label from "@/app/ui/components/Label";
@@ -22,8 +17,11 @@ import SelectImage from "@/app/ui/components/SelectImage";
 import Form from "@/app/ui/components/Form";
 import Select from "@/app/ui/components/Select";
 import DragAndDrop from "@/app/ui/components/DragAndDrop";
+import { deleteAction, editAction } from "@/app/lib/server-actions";
 
-export default function EditArticleClientPage({ article }) {
+export function EditArticleClientPage({ article }) {
+  const { articleId } = article;
+
   const {
     title,
     image,
@@ -43,11 +41,8 @@ export default function EditArticleClientPage({ article }) {
     getImageFile,
     loading,
     getLoading,
+    router,
   } = useEditArticle({ article });
-
-  const router = useRouter();
-
-  // const { user } = useContext(AuthContext);
 
   // const isNotEdited = objCompare(
   //   {
@@ -61,30 +56,72 @@ export default function EditArticleClientPage({ article }) {
   //   { title, image, altImage, lead, section, content }
   // );
 
+  async function handleSubmitEditArticle(e) {
+    e.preventDefault();
+    getLoading(true);
+
+    const editedArticle = {
+      articleId,
+      title,
+      image,
+      altImage,
+      lead,
+      section: section || null,
+      content,
+      authors,
+      anonymous,
+    };
+
+    try {
+      if (imageFile) {
+        const { imageUrl } = await uploadImage();
+        editedArticle.image = imageUrl;
+      }
+      await editAction({ article: editedArticle });
+    } catch {
+      alert("Ocurrió un error. Inténtelo nuevamente");
+      return;
+    } finally {
+      getLoading(false);
+    }
+
+    router.push(`/${articleId}`);
+  }
+
+  async function uploadImage() {
+    let formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", "elvillanense");
+
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dh4eh6jen/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const { secure_url } = await response.json();
+    return { imageUrl: secure_url };
+  }
+
+  async function handleDelete({ articleId }) {
+    if (confirm("¿Estás seguro de borrar esta noticia?")) {
+      try {
+        await deleteAction({ articleId });
+        alert("Noticia eliminada con éxito");
+      } catch {
+        alert("No se ha podido eliminar la noticia");
+      }
+    }
+  }
+
   return (
     <>
       <h2 className={styles.title}>Editar artículo</h2>
       <Form
         style={{ maxWidth: "1000px" }}
-        onSubmit={async (e) => {
-          await handleSubmitEditArticle({
-            e,
-            router,
-            articleId: article.id,
-            article: {
-              title,
-              image,
-              altImage,
-              lead,
-              section: section || null,
-              content,
-              authors,
-              anonymous,
-            },
-            imageFile,
-            getLoading,
-          });
-        }}
+        onSubmit={handleSubmitEditArticle}
         className={styles.form}
       >
         {authors && (
@@ -179,7 +216,7 @@ export default function EditArticleClientPage({ article }) {
           />
           <Button
             label="Borrar artículo"
-            onClick={() => handleDelete({ articleId: article.id })}
+            onClick={async () => await handleDelete({ articleId })}
           />
         </div>
       </Form>

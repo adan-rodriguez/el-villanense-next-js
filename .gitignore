@@ -30,3 +30,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+.env.development
+.env.production
+/firebase-emulator-data
+firebase-debug.log
+firestore-debug.log

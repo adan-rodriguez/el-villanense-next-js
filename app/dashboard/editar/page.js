@@ -1,6 +1,6 @@
 import { getArticle } from "@/app/lib/services/articles";
 import { notFound } from "next/navigation";
-import EditArticleClientPage from "./page.client";
+import { EditArticleClientPage } from "./page.client";
 
 export default async function EditArticlePage(props) {
   const searchParams = await props.searchParams;

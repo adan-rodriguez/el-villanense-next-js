@@ -1,18 +1,21 @@
-"use client";
+import { cookies } from "next/headers";
+import LoginForm from "../ui/components/LoginForm";
+import { redirect } from "next/navigation";
+import { auth } from "../lib/firebase/server";
 
-import LoginForm from "@/app/ui/components/LoginForm";
-import useLogin from "../hooks/useLogin";
+export default async function LoginPage() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("__session")?.value;
 
-export default function LoginPage() {
-  const { loginErrorMessage, getLoginErrorMessage, loading, getLoading } =
-    useLogin();
+  if (sessionCookie) {
+    try {
+      const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+      console.log("Token válido", decodedIdToken);
+      redirect("/dashboard");
+    } catch (error) {
+      console.error({ error });
+    }
+  }
 
-  return (
-    <LoginForm
-      loginErrorMessage={loginErrorMessage}
-      getLoginErrorMessage={getLoginErrorMessage}
-      loading={loading}
-      getLoading={getLoading}
-    />
-  );
+  return <LoginForm />;
 }

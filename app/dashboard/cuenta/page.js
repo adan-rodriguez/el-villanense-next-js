@@ -1,55 +1,42 @@
-"use client";
-
-import { AuthContext } from "@/app/context/auth";
-import { handleChangeEmail, handleChangePassword } from "@/app/lib/utils";
+import { auth } from "@/app/lib/firebase/server";
 import AuthorImage from "@/app/ui/components/AuthorImage";
-import Button from "@/app/ui/components/Button";
-import Form from "@/app/ui/components/Form";
-import Input from "@/app/ui/components/Input";
-import Label from "@/app/ui/components/Label";
-import { useContext } from "react";
 import styles from "@/app/ui/styles/AccountPage.module.css";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { UpdateUserForm } from "./UpdateUserForm";
 
-export default function AccountPage() {
-  const { user } = useContext(AuthContext);
+export default async function AccountPage() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("__session")?.value;
+  let decodedIdToken;
+
+  if (sessionCookie) {
+    try {
+      decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+      console.log("Token válido", decodedIdToken);
+    } catch (error) {
+      console.error({ error });
+      redirect("/login");
+    }
+  }
+
+  const { uid, name, email, phone_number, picture } = decodedIdToken;
+
   return (
     <div className={styles.container}>
       <div className={styles.data_container}>
-        <p>{user.name}</p>
-        <AuthorImage
-          src={user.image}
-          author={user.name}
-          width={60}
-          height={60}
-        />
-        <p>{user.email}</p>
+        <p>{name}</p>
+        <AuthorImage src={picture} author={name} width={60} height={60} />
+        <p>{email}</p>
+        <p>{phone_number}</p>
       </div>
-      <Form
-        style={{ maxWidth: "400px" }}
-        onSubmit={(e) => handleChangeEmail({ e })}
-      >
-        <Label label="Nuevo email">
-          <Input id="email" type="email" required={true} />
-        </Label>
-        <Button
-          type="submit"
-          label="Cambiar email"
-          style={{ alignSelf: "center" }}
-        />
-      </Form>
-      <Form
-        style={{ maxWidth: "400px" }}
-        onSubmit={(e) => handleChangePassword({ e })}
-      >
-        <Label label="Nueva contraseña">
-          <Input id="password" type="password" required={true} />
-        </Label>
-        <Button
-          type="submit"
-          label="Cambiar contraseña"
-          style={{ alignSelf: "center" }}
-        />
-      </Form>
+      <UpdateUserForm
+        uid={uid}
+        name={name}
+        email={email}
+        phone_number={phone_number}
+        picture={picture}
+      />
     </div>
   );
 }

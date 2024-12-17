@@ -50,13 +50,13 @@ export async function generateMetadata(props) {
   };
 }
 
-const obtainArticles = unstable_cache(
-  async ({ author }) => await getArticles({ author }),
-  ["articles-by-author"],
-  {
-    tags: ["articles"],
-  }
-);
+// const obtainArticles = unstable_cache(
+//   async ({ author }) => await getArticles({ author }),
+//   ["articles-by-author"],
+//   {
+//     tags: ["articles"],
+//   }
+// );
 
 export default async function ArticlesByAuthorPage(props) {
   const params = await props.params;
@@ -66,7 +66,7 @@ export default async function ArticlesByAuthorPage(props) {
 
   if (!user) notFound();
 
-  const articles = await obtainArticles({ author: nick });
+  const articles = await getArticles({ author: nick });
 
   return (
     <>

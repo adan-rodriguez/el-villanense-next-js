@@ -1,6 +1,6 @@
 "use client";
 
-import { auth } from "@/app/lib/config-firebase";
+import { auth } from "@/app/lib/firebase/client";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useState } from "react";
 import { users } from "../lib/utils";
@@ -9,18 +9,22 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [userFirebase, setUserFirebase] = useState(null);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const editor = users.find((_user) => _user.email === user.email);
-      // window.sessionStorage.setItem("author", JSON.stringify(editor));
       setUser(editor);
+      setUserFirebase(user);
     } else {
       setUser(null);
+      setUserFirebase(null);
     }
   });
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, userFirebase }}>
+      {children}
+    </AuthContext.Provider>
   );
 }

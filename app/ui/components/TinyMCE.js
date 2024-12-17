@@ -1,10 +1,11 @@
-import { TINYMCE_API_KEY } from "@/app/lib/config";
+"use client";
+
 import { Editor } from "@tinymce/tinymce-react";
 
 export default function TinyMCE({ content, getContent }) {
   return (
     <Editor
-      apiKey={TINYMCE_API_KEY}
+      apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
       value={content}
       onEditorChange={(newValue) => getContent(newValue)}
       init={{

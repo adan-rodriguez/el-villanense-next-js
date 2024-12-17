@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "dev": "el-villanense-dev",
+    "prod": "el-villanense-4efa5",
+    "default": "el-villanense-dev"
+  }
+}

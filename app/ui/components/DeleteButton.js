@@ -1,18 +1,24 @@
 "use client";
 
-import { handleDelete } from "../../lib/utils";
+import { deleteAction } from "@/app/lib/server-actions";
 
-export default function DeleteButton({
-  articleId,
-  nick,
-  width = 30,
-  height = 30,
-}) {
+export default function DeleteButton({ articleId, width = 30, height = 30 }) {
+  async function handleDelete({ e, articleId }) {
+    if (confirm("¿Estás seguro de borrar esta noticia?")) {
+      try {
+        await deleteAction({ articleId });
+        alert("Noticia eliminada con éxito");
+        e.target.closest("article").remove();
+      } catch {
+        alert("No se ha podido eliminar la noticia");
+      }
+    }
+  }
+
   return (
     <button
-      onClick={() => handleDelete({ articleId, nick })}
+      onClick={async (e) => await handleDelete({ e, articleId })}
       title="Borrar noticia"
-      aria-label="Borrar noticia"
     >
       <img
         src="/icons/dashboard/delete.svg"

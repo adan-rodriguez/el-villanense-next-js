@@ -27,33 +27,28 @@
   right: 0;
   min-width: max-content;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 4px;
   flex-direction: column;
   align-items: center;
-  row-gap: 20px;
   background-color: rgba(15, 80, 90, 0.96);
   color: rgb(210, 210, 210);
   font-size: small;
-  overflow: hidden;
 }
 
 .username {
   border-bottom: 1px solid silver;
-}
-
-.logout_button {
-  color: inherit;
-  background-color: transparent;
-  border: none;
+  margin-bottom: 5px;
 }
 
 .dashboard_link,
 .new_link,
 .account_link,
 .logout_button {
+  border-radius: 4px;
+  padding: 5px 10px;
   align-self: stretch;
   text-align: center;
-  transition: background-color 0.8s, box-shadow 0.8s;
+  transition: background-color 0.3s;
 }
 
 .dashboard_link:hover,
@@ -61,5 +56,4 @@
 .account_link:hover,
 .logout_button:hover {
   background-color: rgb(10, 60, 65);
-  box-shadow: 0px 0px 13px 10px rgb(10, 60, 65);
 }

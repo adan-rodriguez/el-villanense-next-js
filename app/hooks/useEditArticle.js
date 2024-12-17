@@ -1,6 +1,7 @@
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function useEditArticle({ article }) {
+export function useEditArticle({ article }) {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [altImage, setAltImage] = useState("");
@@ -11,6 +12,8 @@ export default function useEditArticle({ article }) {
   const [anonymous, setAnonymous] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const getTitle = (title) => setTitle(title);
   const getImage = (image) => setImage(image);
@@ -55,5 +58,6 @@ export default function useEditArticle({ article }) {
     getImageFile,
     loading,
     getLoading,
+    router,
   };
 }

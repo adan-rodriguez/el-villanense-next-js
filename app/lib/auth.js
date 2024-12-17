@@ -1,71 +1,83 @@
 import {
-  browserSessionPersistence,
   createUserWithEmailAndPassword,
-  setPersistence,
   signInWithEmailAndPassword,
-  signOut,
+  browserSessionPersistence,
 } from "firebase/auth";
-import { auth } from "./config-firebase";
+import { auth } from "./firebase/client";
 
-export const login = async ({ e, getLoginErrorMessage, getLoading }) => {
+export const login = async ({ e }) => {
   e.preventDefault();
   const $form = e.target;
-  const $body = document.body;
 
-  const { email, password } = Object.fromEntries(new FormData($form));
+  // Esto evitará que el navegador almacene los datos de sesión
+  auth.setPersistence(browserSessionPersistence);
 
-  getLoginErrorMessage(null);
+  const formData = new FormData($form);
+  const email = formData.get("email")?.toString();
+  const password = formData.get("password")?.toString();
 
-  // const emailRegex =
-  //   /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+  if (!email || !password) {
+    console.log("Falta email o contraseña");
+    return;
+  }
 
-  // if (!emailRegex.test(email)) {
-  //   getLoginErrorMessage("Introduce un email válido");
-  //   return;
-  // }
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
 
-  getLoading(true);
+  const idToken = await userCredential.user.getIdToken();
 
-  $form.inert = "true";
-  $body.inert = "true";
-
-  setPersistence(auth, browserSessionPersistence).then(() => {
-    signInWithEmailAndPassword(auth, email, password)
-      .catch((error) => {
-        if (
-          error.message.includes("user-not-found") ||
-          error.message.includes("wrong-password")
-        ) {
-          getLoginErrorMessage("El email y/o contraseña son incorrectos");
-        } else if (error.message.includes("invalid-email")) {
-          getLoginErrorMessage("Introduce un email válido");
-        } else if (
-          error.message.includes(
-            "Superó la cantidad de intentos permitidos. Intente de nuevo más tarde"
-          )
-        ) {
-          getLoginErrorMessage("Introduce un email válido");
-        } else {
-          getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
-        }
-      })
-      .finally(() => {
-        $form.inert = "";
-        $body.inert = "";
-        getLoading(false);
-      });
+  const response = await fetch("/api/auth/login", {
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
   });
+
+  return response;
 };
 
-export const logout = () => {
-  document.body.inert = "true";
-  signOut(auth)
-    .then(() => {})
-    .catch(() => {
-      alert("No se ha podido cerrar sesión");
-    })
-    .finally((document.body.inert = ""));
-};
+// export const login = async ({ e }) => {
+//   e.preventDefault();
+//   const $form = e.target;
+//   const $body = document.body;
+
+//   const { email, password } = Object.fromEntries(new FormData($form));
+
+//   // getLoginErrorMessage(null);
+//   // getLoading(true);
+
+//   $form.inert = "true";
+//   $body.inert = "true";
+
+//   setPersistence(auth, browserSessionPersistence).then(() => {
+//     signInWithEmailAndPassword(auth, email, password)
+//       .catch((error) => {
+//         if (
+//           error.message.includes("user-not-found") ||
+//           error.message.includes("wrong-password")
+//         ) {
+//           // getLoginErrorMessage("El email y/o contraseña son incorrectos");
+//         } else if (error.message.includes("invalid-email")) {
+//           // getLoginErrorMessage("Introduce un email válido");
+//         } else if (
+//           error.message.includes(
+//             "Superó la cantidad de intentos permitidos. Intente de nuevo más tarde"
+//           )
+//         ) {
+//           // getLoginErrorMessage("Introduce un email válido");
+//         } else {
+//           // getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
+//         }
+//       })
+//       .finally(() => {
+//         $form.inert = "";
+//         $body.inert = "";
+//         // getLoading(false);
+//       });
+//   });
+// };
 
 export const signup = async ({ e, getSignupErrorMessage, getLoading }) => {
   e.preventDefault();

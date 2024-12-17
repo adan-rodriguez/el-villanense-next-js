@@ -98,10 +98,7 @@ export default function ArticlesDashboardClientPage({
               <img src={article.image} alt={article.altImage} loading="lazy" />
               <div>
                 <h2>{article.title}</h2>
-                <EditAndDeleteButtons
-                  articleId={article.id}
-                  nick={article.authors[0]}
-                />
+                <EditAndDeleteButtons articleId={article.id} />
               </div>
             </article>
           ))
