@@ -70,7 +70,9 @@ export default async function ArticlePage(props) {
 
   if (!article) notFound();
 
-  const url = `${DOMAIN}/${article.id}`;
+  const url = `${DOMAIN}/${articleId}`;
+
+  const { title, image, datetimeAttribute, authors, anonymous } = article;
 
   const shareSocialMediaData = [
     {
@@ -80,7 +82,7 @@ export default async function ArticlePage(props) {
       alt: "Logo de Facebook",
     },
     {
-      href: `https://twitter.com/intent/tweet?text=${article.title}&url=${url}`,
+      href: `https://twitter.com/intent/tweet?text=${title}&url=${url}`,
       title: "Compartir en X",
       src: "/icons/social/x.png",
       alt: "Logo de X",
@@ -93,18 +95,18 @@ export default async function ArticlePage(props) {
     },
   ];
 
-  const authors = users.filter((user) => article.authors.includes(user.nick));
+  const editors = users.filter((user) => authors.includes(user.nick));
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    headline: article.title,
-    image: article.image,
-    datePublished: article.datetimeAttribute,
-    ...(article.anonymous === false &&
-      (authors.length > 1
+    headline: title,
+    image: image,
+    datePublished: datetimeAttribute,
+    ...(anonymous === false &&
+      (editors.length > 1
         ? {
-            author: authors.map((author) => ({
+            author: editors.map((author) => ({
               "@type": "Person",
               name: author.name,
               url: `${DOMAIN}/${author.nick}`,
@@ -113,8 +115,8 @@ export default async function ArticlePage(props) {
         : {
             author: {
               "@type": "Person",
-              name: authors[0].name,
-              url: `${DOMAIN}/${authors[0].nick}`,
+              name: editors[0].name,
+              url: `${DOMAIN}/${editors[0].nick}`,
             },
           })),
     publisher: {
@@ -136,7 +138,7 @@ export default async function ArticlePage(props) {
       <Article
         article={article}
         shareSocialMediaData={shareSocialMediaData}
-        authors={authors}
+        authors={editors}
       />
     </>
   );
