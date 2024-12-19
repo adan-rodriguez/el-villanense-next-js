@@ -1,32 +1,5 @@
 import { db } from "../firebase/server";
 
-// export async function getArticles({ author } = {}) {
-//   const articlesCollection = collection(db, "articles");
-
-//   try {
-//     let q;
-//     if (author) {
-//       q = query(
-//         articlesCollection,
-//         where("authors", "array-contains", author),
-//         where("anonymous", "==", false),
-//         orderBy("timestamp", "desc")
-//       );
-//     } else {
-//       q = query(articlesCollection, orderBy("timestamp", "desc"));
-//     }
-
-//     const data = await getDocs(q);
-
-//     return data.docs.map((article) => ({
-//       id: article.id,
-//       ...article.data(),
-//     }));
-//   } catch (error) {
-//     console.log("Ha ocurrido un error");
-//   }
-// }
-
 export async function getArticles({ author } = {}) {
   const articlesRef = db.collection("articles");
 
