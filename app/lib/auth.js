@@ -7,12 +7,10 @@ import { auth } from "./firebase/client";
 
 export const login = async ({ e }) => {
   e.preventDefault();
-  const $form = e.target;
 
-  // Esto evitará que el navegador almacene los datos de sesión
   auth.setPersistence(browserSessionPersistence);
 
-  const formData = new FormData($form);
+  const formData = new FormData(e.target);
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
 
@@ -37,47 +35,6 @@ export const login = async ({ e }) => {
 
   return response;
 };
-
-// export const login = async ({ e }) => {
-//   e.preventDefault();
-//   const $form = e.target;
-//   const $body = document.body;
-
-//   const { email, password } = Object.fromEntries(new FormData($form));
-
-//   // getLoginErrorMessage(null);
-//   // getLoading(true);
-
-//   $form.inert = "true";
-//   $body.inert = "true";
-
-//   setPersistence(auth, browserSessionPersistence).then(() => {
-//     signInWithEmailAndPassword(auth, email, password)
-//       .catch((error) => {
-//         if (
-//           error.message.includes("user-not-found") ||
-//           error.message.includes("wrong-password")
-//         ) {
-//           // getLoginErrorMessage("El email y/o contraseña son incorrectos");
-//         } else if (error.message.includes("invalid-email")) {
-//           // getLoginErrorMessage("Introduce un email válido");
-//         } else if (
-//           error.message.includes(
-//             "Superó la cantidad de intentos permitidos. Intente de nuevo más tarde"
-//           )
-//         ) {
-//           // getLoginErrorMessage("Introduce un email válido");
-//         } else {
-//           // getLoginErrorMessage("Ocurrió un error. Inténtalo nuevamente");
-//         }
-//       })
-//       .finally(() => {
-//         $form.inert = "";
-//         $body.inert = "";
-//         // getLoading(false);
-//       });
-//   });
-// };
 
 export const signup = async ({ e, getSignupErrorMessage, getLoading }) => {
   e.preventDefault();

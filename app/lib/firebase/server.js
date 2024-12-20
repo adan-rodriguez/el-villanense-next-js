@@ -5,9 +5,9 @@ import { getFirestore } from "firebase-admin/firestore";
 const app =
   getApps().length > 0
     ? getApp()
-    : process.env.NODE_ENV == "development"
-    ? initializeApp({ projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID })
-    : initializeApp({
+    : // : process.env.NODE_ENV == "development"
+      // ? initializeApp({ projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID })
+      initializeApp({
         credential: cert({
           projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
           clientEmail: process.env.FIREBASE_CLIENT_EMAIL,

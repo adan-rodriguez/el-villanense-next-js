@@ -1,44 +1,37 @@
 import Articles from "../../../ui/components/Articles";
-import { users } from "../../../lib/utils";
 import { notFound } from "next/navigation";
 import styles from "@/app/ui/styles/ArticlesByAuthorPage.module.css";
 import { DOMAIN } from "@/app/lib/utils";
 import { getArticles } from "@/app/lib/services/articles";
-import { unstable_cache } from "next/cache";
+import { getAuthorByNick, getAuthors } from "@/app/lib/services/authors";
+import { getUser } from "@/app/lib/services/users";
 
-// Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  return users.map((user) => ({
-    author: user.nick,
-  }));
+  const authors = await getAuthors();
+  return authors.map((author) => ({ author: author.nick }));
 }
-
-// // Multiple versions of this page will be statically generated
-// // using the `params` returned by `generateStaticParams`
-// export default function Page({ params }) {
-//   const { slug } = params
-//   // ...
-// }
 
 export async function generateMetadata(props) {
   const params = await props.params;
   const { author: nick } = params;
 
-  const user = users.find((user) => user.nick === nick);
+  const author = await getAuthorByNick(nick);
 
-  if (!user) {
+  if (!author) {
     return { title: "Página no encontrada - El Villanense" };
   }
 
-  const { name, image } = user;
+  const user = await getUser(author.uid);
+
+  const { displayName, photoURL } = user;
 
   return {
-    title: `${name} - El Villanense`,
-    description: `Todas las noticias publicadas por ${name}`,
+    title: `${displayName} - El Villanense`,
+    description: `Todas las noticias publicadas por ${displayName}`,
     openGraph: {
-      title: `${name} - El Villanense`,
-      description: `Todas las noticias publicadas por ${name}`,
-      images: { url: image, alt: `Foto de ${name}` },
+      title: `${displayName} - El Villanense`,
+      description: `Todas las noticias publicadas por ${displayName}`,
+      images: { url: photoURL, alt: `Foto de ${displayName}` },
       url: `${DOMAIN}/autor/${nick}`,
       siteName: "El Villanense",
       type: "website",
@@ -50,30 +43,24 @@ export async function generateMetadata(props) {
   };
 }
 
-// const obtainArticles = unstable_cache(
-//   async ({ author }) => await getArticles({ author }),
-//   ["articles-by-author"],
-//   {
-//     tags: ["articles"],
-//   }
-// );
-
 export default async function ArticlesByAuthorPage(props) {
   const params = await props.params;
   const { author: nick } = params;
 
-  const user = users.find((user) => user.nick === nick);
+  const author = await getAuthorByNick(nick);
 
-  if (!user) notFound();
+  if (!author) notFound();
+
+  const user = await getUser(author.uid);
 
   const articles = await getArticles({ author: nick });
 
   return (
     <>
       <h1 className={styles.title}>
-        Noticias de <span className={styles.author}>{user.name}</span>
+        Noticias de <span className={styles.author}>{user.displayName}</span>
       </h1>
-      <Articles articles={articles} author={nick} />
+      <Articles articles={articles} />
     </>
   );
 }

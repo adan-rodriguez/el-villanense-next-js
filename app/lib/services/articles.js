@@ -15,6 +15,7 @@ export async function getArticles({ author } = {}) {
   }
 
   const articlesSnapshot = await query.get();
+
   const articles = articlesSnapshot.docs.map((article) => ({
     id: article.id,
     ...article.data(),
@@ -22,23 +23,6 @@ export async function getArticles({ author } = {}) {
 
   return articles;
 }
-
-// export async function getArticle({ articleId }) {
-//   // if (isDev) {
-//   //   const article = mock_articles.find((article) => article.id === articleId);
-//   //   return article;
-//   // }
-
-//   try {
-//     const articleRef = doc(db, "articles", articleId);
-//     const data = await getDoc(articleRef);
-//     if (data.exists()) {
-//       return { id: data.id, ...data.data() };
-//     }
-//   } catch {
-//     console.log("Ha ocurrido un error");
-//   }
-// }
 
 export async function getArticle({ articleId }) {
   try {
