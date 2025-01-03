@@ -1,0 +1,108 @@
+import { Articles } from "../../../ui/components/Articles";
+import { notFound } from "next/navigation";
+import styles from "@/app/ui/styles/ArticlesByAuthorPage.module.css";
+import { API_URL, DOMAIN } from "@/app/lib/utils";
+import { getAuthorByNick /*, getAuthors*/ } from "@/app/lib/services/authors";
+import { getUser } from "@/app/lib/services/users";
+import { Article } from "@/app/lib/types";
+
+// export async function generateStaticParams() {
+//   const authors = await getAuthors();
+//   return authors.map((author) => ({ author: author.nick }));
+// }
+
+export async function generateMetadata(props) {
+  const params = await props.params;
+  const { author: nick } = params;
+
+  const author = await getAuthorByNick(nick);
+
+  if (!author) {
+    return { title: "Página no encontrada - El Villanense" };
+  }
+
+  const user = await getUser(author.id);
+
+  const { displayName, photoURL } = user;
+
+  return {
+    title: `${displayName} - El Villanense`,
+    description: `Todas las noticias publicadas por ${displayName}`,
+    openGraph: {
+      title: `${displayName} - El Villanense`,
+      description: `Todas las noticias publicadas por ${displayName}`,
+      images: { url: photoURL, alt: `Foto de ${displayName}` },
+      url: `${DOMAIN}/autor/${nick}`,
+      siteName: "El Villanense",
+      type: "website",
+      locale: "es_LA",
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
+  };
+}
+
+export default async function ArticlesByAuthorPage(props) {
+  const params = await props.params;
+  const { author: nick } = params;
+
+  let name;
+  try {
+    const author = await getAuthorByNick(nick);
+
+    if (!author) notFound();
+
+    const { displayName } = await getUser(author.id);
+    name = displayName;
+  } catch (error) {
+    return <p>Ocurrió un error. Intenta nuevamente más tarde.</p>;
+  }
+
+  const response = await fetch(`${API_URL}/articles/${nick}`);
+
+  if (!response.ok) {
+    return <p>Ocurrió un error. Intenta nuevamente más tarde.</p>;
+  }
+
+  const articles: Article[] = await response.json();
+
+  const articlesList = articles.map((article) => {
+    // Convertir el timestamp de Firebase a milisegundos
+    const date = new Date(
+      article.createdAt._seconds * 1000 +
+        article.createdAt._nanoseconds / 1000000
+    );
+
+    // Ajustar la fecha a UTC-3 (hora local de Argentina)
+    const adjustedDate = new Date(date.getTime() - 3 * 60 * 60 * 1000); // Restar 3 horas para ajustar a UTC-3
+
+    // Formatear la fecha para el tag meta
+    const publishedTime = adjustedDate.toISOString().slice(0, -8) + "-03:00";
+
+    // Formatear la fecha para el tag time en formato legible
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "America/Argentina/Buenos_Aires", // Ajustar zona horaria
+    };
+
+    const readableTime = new Intl.DateTimeFormat("es-AR", options).format(date);
+
+    return {
+      ...article,
+      publishedTime,
+      readableTime,
+    };
+  });
+
+  return (
+    <div>
+      <h1 className={styles.title}>
+        Noticias de <span className={styles.author}>{name}</span>
+      </h1>
+      <Articles articles={articlesList} />
+    </div>
+  );
+}

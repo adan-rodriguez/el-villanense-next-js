@@ -1,19 +1,19 @@
 .container {
   display: inline-flex;
-  column-gap: 0.5rem;
-  background-color: rgb(245, 245, 245);
-  z-index: 1;
+  align-items: center;
 }
 
-.container button {
+.container > :is(a, button) {
+  border-radius: 4px;
+  transition: background-color 0.3s, translate 0s;
   display: flex;
-  transition: all 0.3s, translate 0s;
+  padding: 0.25rem;
 }
 
-.container button:is(:hover, :focus-visible) {
-  scale: 1.03;
+.container > :is(a, button):is(:hover, :focus-visible) {
+  background-color: #0289cb;
 }
 
-.container button:active {
+.container > :is(a, button):active {
   translate: 0 0.125rem;
 }
