@@ -16,6 +16,7 @@ export function Header() {
         <Logo />
         {!user && <SocialMedia />}
         {user && <UserMenu name={user.name} image={user.image} />}
+        {/* {user && <UserMenu name={user.displayName} image={user.photoURL} />} */}
       </div>
     </header>
   );

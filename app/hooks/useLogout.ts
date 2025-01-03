@@ -18,7 +18,6 @@ export const useLogout = () => {
         }
       })
       .catch((error) => {
-        console.error("Error al cerrar sesión:", error);
         alert("No se ha podido cerrar sesión");
       });
   }
