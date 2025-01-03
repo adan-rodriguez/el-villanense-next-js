@@ -49,26 +49,23 @@ export function LoginForm() {
       return;
     }
 
-    console.log({ userCredential });
-
     const idToken = await userCredential.user.getIdToken();
-    console.log({ idToken });
 
-    // const response = await fetch("/api/auth/login", {
-    //   headers: {
-    //     Authorization: `Bearer ${idToken}`,
-    //   },
-    // });
+    const response = await fetch("/api/auth/login", {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
 
-    // if (!response.ok) {
-    //   getErrorMessage("Ocurrió un error, intenta de nuevo más tarde");
-    //   getLoading(false);
-    //   return;
-    // }
+    if (!response.ok) {
+      getErrorMessage("Ocurrió un error, intenta de nuevo más tarde");
+      getLoading(false);
+      return;
+    }
 
-    // getErrorMessage(null);
-    // getLoading(false);
-    // router.push("/dashboard");
+    getErrorMessage(null);
+    getLoading(false);
+    router.push("/dashboard");
   }
 
   return (
