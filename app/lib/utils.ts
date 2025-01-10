@@ -147,25 +147,6 @@ export function objCompare(obj1, obj2) {
   return true;
 }
 
-export function isValidImageFile({
-  file,
-  allowedImageFileTypes,
-}: {
-  file: File | null;
-  allowedImageFileTypes: string[];
-}) {
-  if (!file) return false;
-
-  const { type } = file;
-
-  if (!allowedImageFileTypes.includes(type)) {
-    alert(`No se acepta un archivo con formato '${type}'`);
-    return false;
-  }
-
-  return true;
-}
-
 export const selectSectionOptions = [
   { value: "", label: "--Seleccionar--" },
   { value: "locales", label: "Locales" },
@@ -173,4 +154,11 @@ export const selectSectionOptions = [
   { value: "provinciales", label: "Provinciales" },
   { value: "nacionales", label: "Nacionales" },
   { value: "internacionales", label: "Internacionales" },
+];
+
+export const allowedImageFileTypes = [
+  "image/jpeg",
+  "image/png",
+  "image/svg+xml",
+  "image/webp",
 ];

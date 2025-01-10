@@ -9,8 +9,14 @@ export type ArticleData = {
   image: string;
   altImage: string;
   content: string;
-  authors: string[];
-  anonymous: boolean;
+  authorsIds: string[];
+  authors: {
+    id: string;
+    nick: string;
+    name: string;
+    image: string | null;
+    anonymous: boolean;
+  }[];
   createdAt: CreatedAt;
 };
 
@@ -19,9 +25,21 @@ export type Article = { id: string } & ArticleData;
 export type AuthorData = {
   nick: string;
   name: string;
-  email?: string;
-  image?: string;
-  superAdmin?: boolean;
+  email: string;
+  image: string | null;
+  phone: string | null;
+  role: Role;
 };
 
 export type Author = { id: string } & AuthorData;
+
+export type Role = "superadmin" | "editor";
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  image: string | null;
+  phone: string | null;
+  role: Role;
+};

@@ -2,7 +2,6 @@ import { Articles } from "../ui/components/Articles";
 import { DOMAIN } from "../lib/utils";
 import { Article } from "../lib/types";
 import { Metadata } from "next";
-import { getArticles } from "../lib/services/articles";
 
 export const dynamic = "force-dynamic";
 

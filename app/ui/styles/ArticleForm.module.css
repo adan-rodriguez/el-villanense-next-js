@@ -1,7 +1,3 @@
-.title {
-  text-align: center;
-}
-
 .textarea {
   width: 100%;
   border: 1px solid gray;
@@ -34,9 +30,4 @@
   display: flex;
   column-gap: 15px;
   justify-content: center;
-}
-
-.upload,
-.editing {
-  text-align: center;
 }

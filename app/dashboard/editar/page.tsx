@@ -1,26 +1,12 @@
 import { notFound, redirect } from "next/navigation";
 import { EditArticleClientPage } from "./page.client";
-import { cookies } from "next/headers";
-import { auth } from "@/app/lib/firebase/server";
 
 export default async function EditArticlePage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("__session")?.value;
-
-  if (!sessionCookie) redirect("/login");
-
-  let decodedIdToken;
-  try {
-    decodedIdToken = await auth.verifySessionCookie(sessionCookie);
-  } catch (error) {
-    redirect("/login");
-  }
-
-  const { articulo: id } = await searchParams;
+  const { id } = await searchParams;
 
   if (typeof id !== "string") notFound();
 

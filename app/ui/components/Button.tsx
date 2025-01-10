@@ -5,18 +5,14 @@
 // };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  label: string;
+  label?: string;
   type: "button" | "submit" | "reset";
 }
 
-export function Button({
-  label = "Botón",
-  type = "button",
-  ...props
-}: ButtonProps) {
+export function Button({ label, type, children, ...props }: ButtonProps) {
   return (
     <button type={type} {...props} className="btn">
-      {label}
+      {label ?? children}
     </button>
   );
 }

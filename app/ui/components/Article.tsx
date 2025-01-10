@@ -9,14 +9,12 @@ export default function Article({
   article,
   publishedTime,
   readableTime,
-  authors,
 }: {
   article: TArticle;
   publishedTime: string;
   readableTime: string;
-  authors: Author[];
 }) {
-  const { id, title, lead, image, altImage, content, anonymous } = article;
+  const { id, title, lead, image, altImage, content, authors } = article;
   return (
     <article className={styles.container}>
       <h1 className={styles.title}>{title}</h1>
@@ -25,13 +23,25 @@ export default function Article({
         {readableTime}
       </time>
       <p className={styles.lead}>{lead}</p>
-      {!anonymous &&
-        authors.map(({ name, image, nick }) => (
-          <div key={nick} className={styles.author_container}>
-            <AuthorImage name={name} image={image} />
-            <ArticleAuthorLink nick={nick} fontSize="12px" color="#0289cb" />
-          </div>
-        ))}
+      <div
+        style={{ display: "flex", flexDirection: "column", rowGap: "0.5rem" }}
+      >
+        {authors.map(({ name, image, nick, anonymous }) => {
+          if (anonymous) return null;
+
+          return (
+            <div key={nick} className={styles.author_container}>
+              <AuthorImage name={name} image={image} />
+              <ArticleAuthorLink
+                nick={nick}
+                name={name}
+                fontSize="12px"
+                color="#0289cb"
+              />
+            </div>
+          );
+        })}
+      </div>
       <img
         className={styles.img}
         src={image}

@@ -1,29 +1,30 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { auth } from "../lib/firebase/server";
-import { DashboardClientHomePage } from "./page.client";
-import { getAuthor } from "../lib/services/authors";
+"use client";
 
-export default async function DashboardHomePage() {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("__session")?.value;
+import Link from "next/link";
+import styles from "@/app/ui/styles/DashboardHomePage.module.css";
+import { Button } from "../ui/components/Button";
+import { useLogout } from "../hooks/useLogout";
 
-  if (!sessionCookie) redirect("/login");
+export default function DashboardHomePage() {
+  const { loading, logout } = useLogout();
 
-  let decodedIdToken;
-  try {
-    decodedIdToken = await auth.verifySessionCookie(sessionCookie);
-  } catch (error) {
-    redirect("/login");
-  }
-
-  let isSuperAdmin;
-  try {
-    const { superAdmin } = await getAuthor(decodedIdToken.uid);
-    isSuperAdmin = superAdmin;
-  } catch (error) {
-    return <p>Ocurrió un error. Intenta nuevamente más tarde.</p>;
-  }
-
-  return <DashboardClientHomePage isSuperAdmin={isSuperAdmin} />;
+  return (
+    <div className={styles.links_container}>
+      <Link className="btn" href="/dashboard/nuevo">
+        Nueva noticia
+      </Link>
+      <Link className="btn" href="/dashboard/articulos">
+        Editar/Borrar noticias
+      </Link>
+      <Link className="btn" href="/dashboard/cuenta">
+        Perfil
+      </Link>
+      <Button
+        type="button"
+        label="Cerrar sesión"
+        onClick={logout}
+        disabled={loading}
+      />
+    </div>
+  );
 }

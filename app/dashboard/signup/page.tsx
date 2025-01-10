@@ -10,23 +10,19 @@ export default async function SignupPage() {
 
   if (!sessionCookie) redirect("/login");
 
-  let decodedIdToken;
-
+  let id;
   try {
-    decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+    const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+    id = decodedIdToken.uid;
   } catch (error) {
+    console.error(error);
+    cookieStore.delete("__session");
     redirect("/login");
   }
 
-  let isSuperAdmin;
-  try {
-    const { superAdmin } = await getAuthor(decodedIdToken.uid);
-    isSuperAdmin = superAdmin;
-  } catch (error) {
-    return <p>Ocurrió un error. Intenta nuevamente más tarde.</p>;
-  }
+  const user = await auth.getUser(id);
 
-  if (!isSuperAdmin) redirect("/dashboard");
+  if (user.customClaims?.role !== "superadmin") redirect("/dashboard");
 
   return <SignupForm />;
 }

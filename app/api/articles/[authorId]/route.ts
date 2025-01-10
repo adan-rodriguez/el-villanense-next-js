@@ -1,12 +1,13 @@
-import { getArticlesByAuthor } from "@/app/lib/services/articles";
+import { getArticlesByAuthorId } from "@/app/lib/services/articles";
 import { NextRequest } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ author: string }> }
+  { params }: { params: Promise<{ authorId: string }> }
 ) {
-  const { author } = await params;
-  const articles = await getArticlesByAuthor(author);
+  const { authorId } = await params;
+
+  const articles = await getArticlesByAuthorId(authorId);
 
   return new Response(JSON.stringify(articles), {
     status: 200,

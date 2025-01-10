@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import ArticleComponent from "@/app/ui/components/Article";
 import { Article } from "@/app/lib/types";
 import { Metadata } from "next";
-import { getAuthorByNick } from "@/app/lib/services/authors";
 
 export async function generateMetadata({
   params,
@@ -92,7 +91,7 @@ export default async function ArticlePage({
 
   const article: Article = await response.json();
 
-  const { title, image, authors, anonymous, createdAt } = article;
+  const { title, image, authors, createdAt } = article;
 
   const date = new Date(
     createdAt._seconds * 1000 + createdAt._nanoseconds / 1000000
@@ -102,7 +101,7 @@ export default async function ArticlePage({
 
   const publishedTime = adjustedDate.toISOString().slice(0, -8) + "-03:00";
 
-  const options = {
+  const readableTime = new Intl.DateTimeFormat("es-AR", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -110,28 +109,22 @@ export default async function ArticlePage({
     minute: "2-digit",
     hour12: false, // Para usar formato 24 horas
     timeZone: "America/Argentina/Buenos_Aires", // Ajustar zona horaria
-  };
-
-  const readableTime = new Intl.DateTimeFormat("es-AR", options).format(date);
-
-  const editors = [];
-  for (const _author of authors) {
-    const author = await getAuthorByNick(_author);
-    editors.push(author);
-  }
+  }).format(date);
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     headline: title,
-    image: image,
+    image,
     datePublished: publishedTime,
-    ...(anonymous === false && {
-      author: editors.map((author) => ({
+    author: authors.map(({ nick, name, anonymous }) => {
+      if (anonymous) return;
+
+      return {
         "@type": "Person",
-        name: author.name,
-        url: `${DOMAIN}/${author.nick}`,
-      })),
+        name,
+        url: `${DOMAIN}/${nick}`,
+      };
     }),
     publisher: {
       "@type": "Organization",
@@ -153,7 +146,6 @@ export default async function ArticlePage({
         article={article}
         publishedTime={publishedTime}
         readableTime={readableTime}
-        authors={editors}
       />
     </>
   );

@@ -6,16 +6,8 @@ import { Article } from "@/app/lib/types";
 type ArticleCard = Article & { publishedTime: string; readableTime: string };
 
 export function ArticleLink({ article }: { article: ArticleCard }) {
-  const {
-    id,
-    image,
-    altImage,
-    publishedTime,
-    readableTime,
-    anonymous,
-    authors,
-    title,
-  } = article;
+  const { id, image, altImage, publishedTime, readableTime, authors, title } =
+    article;
   return (
     <article className={styles.article}>
       <Link className={styles.link} key={id} href={`/${id}`}>
@@ -32,8 +24,11 @@ export function ArticleLink({ article }: { article: ArticleCard }) {
         </time>
         <p className={styles.title}>{title}</p>
       </Link>
-      {!anonymous &&
-        authors.map((nick) => <ArticleAuthorLink key={nick} nick={nick} />)}
+      {authors.map(({ nick, name, anonymous }) => {
+        if (anonymous) return null;
+
+        return <ArticleAuthorLink key={nick} nick={nick} name={name} />;
+      })}
     </article>
   );
 }

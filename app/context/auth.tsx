@@ -15,21 +15,6 @@ export function AuthProvider({
 }: Readonly<{ children: React.ReactNode }>) {
   const [user, setUser] = useState<Author | null>(null);
 
-  // onAuthStateChanged(auth, async (_user) => {
-  //   if (_user) {
-  //     try {
-  //       const user = await getAuthor(_user.uid);
-  //       setUser(user);
-  //     } catch (error) {
-  //       setUser(null);
-  //     }
-  //     return;
-  //   }
-
-  //   setUser(null);
-  //   // setUser(_user);
-  // });
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (_user) => {
       if (_user) {

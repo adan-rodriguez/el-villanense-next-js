@@ -47,19 +47,16 @@ export default async function ArticlesByAuthorPage(props) {
   const params = await props.params;
   const { author: nick } = params;
 
-  let name;
+  let author;
   try {
-    const author = await getAuthorByNick(nick);
+    author = await getAuthorByNick(nick);
 
     if (!author) notFound();
-
-    const { displayName } = await getUser(author.id);
-    name = displayName;
   } catch (error) {
     return <p>Ocurrió un error. Intenta nuevamente más tarde.</p>;
   }
 
-  const response = await fetch(`${API_URL}/articles/${nick}`);
+  const response = await fetch(`${API_URL}/articles/${author.id}`);
 
   if (!response.ok) {
     return <p>Ocurrió un error. Intenta nuevamente más tarde.</p>;
@@ -67,7 +64,12 @@ export default async function ArticlesByAuthorPage(props) {
 
   const articles: Article[] = await response.json();
 
-  const articlesList = articles.map((article) => {
+  const nonAnonymousArticles = articles.filter(
+    (article) =>
+      !article.authors.find((_author) => _author.id === author.id)?.anonymous
+  );
+
+  const articlesList = nonAnonymousArticles.map((article) => {
     // Convertir el timestamp de Firebase a milisegundos
     const date = new Date(
       article.createdAt._seconds * 1000 +
@@ -100,7 +102,7 @@ export default async function ArticlesByAuthorPage(props) {
   return (
     <div>
       <h1 className={styles.title}>
-        Noticias de <span className={styles.author}>{name}</span>
+        Noticias de <span className={styles.author}>{author.name}</span>
       </h1>
       <Articles articles={articlesList} />
     </div>

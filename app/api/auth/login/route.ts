@@ -8,10 +8,19 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Token no encontrado" }, { status: 401 });
   }
 
+  let decodedIdToken;
   try {
-    await auth.verifyIdToken(idToken);
+    decodedIdToken = await auth.verifyIdToken(idToken);
   } catch (error) {
     return NextResponse.json({ error }, { status: 401 });
+  }
+
+  if (!(new Date().getTime() / 1000 - decodedIdToken.auth_time < 5 * 60)) {
+    // Only process if the user just signed in in the last 5 minutes.
+    return NextResponse.json(
+      { error: "Recent sign in required!" },
+      { status: 401 }
+    );
   }
 
   const fiveDays = 60 * 60 * 24 * 5 * 1000;

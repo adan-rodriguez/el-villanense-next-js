@@ -1,13 +1,13 @@
 import styles from "../styles/AuthorImage.module.css";
 
 export function AuthorImage({
-  name,
+  name = "autor",
   image,
   width = 36,
   height = 36,
 }: {
-  name: string;
-  image?: string;
+  name?: string;
+  image?: string | null;
   width?: number;
   height?: number;
 }) {

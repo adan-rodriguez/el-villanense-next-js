@@ -2,10 +2,6 @@
 
 import { useEditArticle } from "@/app/hooks/useEditArticle";
 import styles from "@/app/ui/styles/ArticleForm.module.css";
-import {
-  users,
-  // objCompare,
-} from "@/app/lib/utils";
 import { TinyMCE } from "@/app/ui/components/TinyMCE";
 import { AuthorImage } from "@/app/ui/components/AuthorImage";
 import { Button } from "@/app/ui/components/Button";
@@ -13,29 +9,28 @@ import { Label } from "@/app/ui/components/Label";
 import { Input } from "@/app/ui/components/Input";
 import { SelectImage } from "@/app/ui/components/SelectImage";
 import { Form } from "@/app/ui/components/Form";
-import { DragAndDrop } from "@/app/ui/components/DragAndDrop";
 import { uploadImage } from "@/app/lib/server-actions";
 import { Article } from "@/app/lib/types";
 
 export function EditArticleClientPage({ article }: { article: Article }) {
-  const { id } = article;
+  const { id, image } = article;
 
   const {
     title,
-    image,
     altImage,
     lead,
     content,
     authors,
-    anonymous,
+    imageFile,
+    loading,
+    changeImage,
     getTitle,
     getAltImage,
     getLead,
     getContent,
-    getAnonymous,
-    imageFile,
+    getAuthors,
     getImageFile,
-    loading,
+    getChangeImage,
     getLoading,
     router,
   } = useEditArticle(article);
@@ -54,6 +49,12 @@ export function EditArticleClientPage({ article }: { article: Article }) {
 
   async function handleSubmitEditArticle(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (content === "") {
+      alert("Escribe el cuerpo de la noticia!");
+      return;
+    }
+
     getLoading(true);
 
     const editedArticle = {
@@ -63,23 +64,26 @@ export function EditArticleClientPage({ article }: { article: Article }) {
       lead,
       content,
       authors,
-      anonymous,
     };
 
-    if (imageFile) {
+    if (changeImage) {
+      if (!imageFile) {
+        alert("Sube una imagen!");
+        return;
+      }
+
       let formData = new FormData();
       formData.append("file", imageFile);
       formData.append("upload_preset", "elvillanense");
 
-      const response = await uploadImage(formData);
+      const { secure_url } = await uploadImage(formData);
 
-      if (!response.ok) {
-        alert("Ocurrió un error. Inténtelo nuevamente");
-        getLoading(false);
-        return;
-      }
+      // if (!response.ok) {
+      //   alert("Ocurrió un error. Inténtelo nuevamente");
+      //   getLoading(false);
+      //   return;
+      // }
 
-      const { secure_url } = await response.json();
       editedArticle.image = secure_url;
     }
 
@@ -120,97 +124,104 @@ export function EditArticleClientPage({ article }: { article: Article }) {
   }
 
   return (
-    <>
-      <h2 className={styles.title}>Editar artículo</h2>
-      <Form
-        style={{ maxWidth: "1000px" }}
-        onSubmit={handleSubmitEditArticle}
-        className={styles.form}
-      >
-        {authors && (
-          <div className={styles.author_container}>
-            {users
-              .filter((user) => authors.includes(user.nick))
-              .map((author) => (
-                <div
-                  key={author.nick}
-                  className={styles.author_img_name_container}
-                  style={
-                    anonymous ? { opacity: "0.2", userSelect: "none" } : {}
-                  }
-                >
-                  <p>Autor:</p>
-                  <AuthorImage image={author.image} name={author.name} />
-                  <p>{author.name}</p>
-                </div>
-              ))}
+    <Form
+      style={{ maxWidth: "1000px" }}
+      onSubmit={handleSubmitEditArticle}
+      className={styles.form}
+    >
+      <div className={styles.author_container}>
+        {authors.map((author) => (
+          <div key={author.id}>
+            <div
+              className={styles.author_img_name_container}
+              style={
+                author.anonymous ? { opacity: "0.2", userSelect: "none" } : {}
+              }
+            >
+              <p>{authors.length > 1 ? "Autores:" : "Autor:"}</p>
+              <AuthorImage image={author.image} name={author.name} />
+              <p>{author.name}</p>
+            </div>
             <label className={styles.author_label}>
               <input
-                onChange={(e) => getAnonymous(e.target.checked)}
+                onChange={() => {
+                  const updatedAuthors = authors.map((_author) =>
+                    _author.id === author.id
+                      ? { ..._author, anonymous: !_author.anonymous }
+                      : _author
+                  );
+                  getAuthors(updatedAuthors);
+                }}
                 type="checkbox"
+                checked={author.anonymous}
               />
-              {!anonymous
-                ? "Marcá la casilla si preferís que la noticia no tenga autor"
-                : "Desmarcá la casilla si preferís que la noticia tenga autor"}
+              Anónimo
             </label>
           </div>
-        )}
-        <Label label="Título">
-          <Input
-            id="title"
-            required={true}
-            value={title}
-            onChange={(e) => getTitle(e.target.value)}
-          />
-        </Label>
-        <SelectImage getImageFile={getImageFile} />
-        <DragAndDrop
-          allowedImageFileTypes={[
-            "image/jpeg",
-            "image/png",
-            "image/svg+xml",
-            "image/webp",
-          ]}
-          getImageFile={getImageFile}
-          externalImageFile={imageFile}
-          imageUrl={image}
+        ))}
+      </div>
+      <Label label="Título" required={true}>
+        <Input
+          id="title"
+          required
+          value={title}
+          onChange={(e) => getTitle(e.target.value)}
         />
-        <Label label="Descripción corta de la imagen &#40;para personas no videntes&#41;">
-          <Input
-            id="alt_image"
+      </Label>
+      {changeImage ? (
+        <>
+          <SelectImage imageFile={imageFile} getImageFile={getImageFile} />
+          <Label
+            label="Descripción corta de la imagen &#40;para personas no videntes&#41;"
             required={true}
-            value={altImage}
-            onChange={(e) => getAltImage(e.target.value)}
-          />
-        </Label>
-        <Label label="Entrada">
-          <textarea
-            className={styles.textarea}
-            required
-            value={lead}
-            onChange={(e) => getLead(e.target.value)}
-            rows={4}
-          />
-        </Label>
-        <TinyMCE content={content} getContent={getContent} />
-        <div className={styles.buttons_container}>
-          <Button
-            type="submit"
-            label="Editar artículo"
-            disabled={loading}
-            // disabled={isNotEdited}
-            // style={isNotEdited ? { cursor: "not-allowed" } : {}}
-            // title={isNotEdited? "El artículo no tiene cambios" : {}}
-          />
+          >
+            <Input
+              id="alt_image"
+              required
+              value={altImage}
+              onChange={(e) => getAltImage(e.target.value)}
+            />
+          </Label>
+        </>
+      ) : (
+        <div>
+          <img src={image} alt={altImage} />
           <Button
             type="button"
-            label="Borrar artículo"
-            disabled={loading}
-            onClick={handleDelete}
+            label="Cambiar imagen"
+            onClick={() => {
+              getChangeImage();
+              getAltImage("");
+            }}
           />
         </div>
-      </Form>
-      {loading && <p className={styles.editing}>Editando...</p>}
-    </>
+      )}
+      <Label label="Entrada" required={true}>
+        <textarea
+          className={styles.textarea}
+          required
+          value={lead}
+          onChange={(e) => getLead(e.target.value)}
+          rows={4}
+        />
+      </Label>
+      <TinyMCE content={content} getContent={getContent} />
+      <div className={styles.buttons_container}>
+        <Button
+          type="submit"
+          label="Editar artículo"
+          disabled={loading}
+          // disabled={isNotEdited}
+          // style={isNotEdited ? { cursor: "not-allowed" } : {}}
+          // title={isNotEdited? "El artículo no tiene cambios" : {}}
+        />
+        <Button
+          type="button"
+          label="Borrar artículo"
+          disabled={loading}
+          onClick={handleDelete}
+        />
+      </div>
+    </Form>
   );
 }

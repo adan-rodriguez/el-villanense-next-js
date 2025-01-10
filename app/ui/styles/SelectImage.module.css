@@ -1,3 +1,29 @@
 .input {
-  display: none; /* segun MDN se utiliza opacity para ocultar input file en lugar de visibility: hidden o display: none, porque la tecnología de asistencia interpreta que input file no es interactiva. */
+  /* display: none;  */
+  /* segun MDN se utiliza opacity para ocultar input file en lugar de visibility: hidden o display: none, porque la tecnología de asistencia interpreta que input file no es interactiva. */
+}
+
+.dropzone {
+  border: 2px dashed gray;
+  border-radius: 1rem;
+  padding: 10px 15px;
+  max-width: 400px;
+  transition: all 0.3s;
+}
+
+.image_preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  aspect-ratio: 3/2;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.3s;
+}
+
+.drag {
+  background-color: rgb(230, 230, 230);
+  border-color: black;
 }

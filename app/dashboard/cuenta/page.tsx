@@ -3,7 +3,6 @@ import { AuthorImage } from "@/app/ui/components/AuthorImage";
 import styles from "@/app/ui/styles/AccountPage.module.css";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { UpdateUserForm } from "./UpdateUserForm";
 
 export default async function AccountPage() {
   const cookieStore = await cookies();
@@ -11,30 +10,33 @@ export default async function AccountPage() {
 
   if (!sessionCookie) redirect("/login");
 
-  let decodedIdToken;
+  let id;
   try {
-    decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+    const { uid } = await auth.verifySessionCookie(sessionCookie);
+    id = uid;
   } catch (error) {
+    console.log(error);
+    cookieStore.delete("__session");
     redirect("/login");
   }
 
-  const { uid, name, email, phone_number, picture } = decodedIdToken;
+  const user = await auth.getUser(id);
+
+  const { displayName, email, phoneNumber, photoURL } = user;
 
   return (
     <div className={styles.container}>
       <div className={styles.data_container}>
-        <p>{name}</p>
-        <AuthorImage image={picture} name={name} width={60} height={60} />
-        <p>{email}</p>
-        <p>{phone_number}</p>
+        <p>{displayName}</p>
+        <AuthorImage
+          image={photoURL}
+          name={displayName}
+          width={60}
+          height={60}
+        />
+        {email && <p>{email}</p>}
+        {phoneNumber && <p>{phoneNumber}</p>}
       </div>
-      <UpdateUserForm
-        uid={uid}
-        name={name}
-        email={email}
-        phone_number={phone_number}
-        picture={picture}
-      />
     </div>
   );
 }

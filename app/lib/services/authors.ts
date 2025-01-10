@@ -1,5 +1,5 @@
 import { db } from "../firebase/server";
-import { Author, AuthorData } from "../types";
+import { Author, AuthorData, Role } from "../types";
 
 export async function getAuthors() {
   const authorsSnapshot = await db.collection("authors").get();
@@ -32,4 +32,29 @@ export async function getAuthor(uid: string) {
   const data = authorSnapshot.data() as AuthorData;
   const author: Author = { id, ...data };
   return author;
+}
+
+export async function createAuthor(author: Author) {
+  const { id, name, nick, image, email, phone } = author;
+  const authorsRef = db.collection("authors");
+  await authorsRef.doc(id).set({ name, nick, image, email, phone });
+}
+
+export async function updateAuthor({
+  id,
+  name,
+  image,
+  email,
+  phone,
+  role,
+}: {
+  id: string;
+  name: string;
+  email: string;
+  image: string | null;
+  phone: string | null;
+  role: Role;
+}) {
+  const authorsRef = db.collection("authors");
+  await authorsRef.doc(id).update({ name, image, email, phone, role });
 }

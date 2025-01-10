@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { NewArticleClientPage } from "./page.client";
 import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/firebase/server";
+import { getAuthor } from "@/app/lib/services/authors";
 
 export default async function NewArticlePage() {
   const cookieStore = await cookies();
@@ -9,14 +10,33 @@ export default async function NewArticlePage() {
 
   if (!sessionCookie) redirect("/login");
 
-  let decodedIdToken;
+  let id;
   try {
-    decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+    const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+    id = decodedIdToken.uid;
   } catch (error) {
+    console.error(error);
+    cookieStore.delete("__session");
     redirect("/login");
   }
 
-  const { uid, name, picture } = decodedIdToken;
+  let author;
+  try {
+    author = await getAuthor(id);
+  } catch (error) {
+    console.error(error);
+    redirect("/dashboard");
+  }
 
-  return <NewArticleClientPage id={uid} name={name} image={picture} />;
+  return (
+    <NewArticleClientPage
+      author={{
+        id: author.id,
+        name: author.name,
+        image: author.image,
+        nick: author.nick,
+        anonymous: false,
+      }}
+    />
+  );
 }

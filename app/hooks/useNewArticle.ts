@@ -1,39 +1,62 @@
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLoading } from "./useLoading";
 
-export function useNewArticle() {
+export function useNewArticle(author: {
+  id: string;
+  nick: string;
+  name: string;
+  image: string | null;
+  anonymous: boolean;
+}) {
   const [title, setTitle] = useState("");
   const [altImage, setAltImage] = useState("");
   const [lead, setLead] = useState("");
   const [content, setContent] = useState("");
-  const [anonymous, setAnonymous] = useState(false);
+  const [authors, setAuthors] = useState<
+    {
+      id: string;
+      nick: string;
+      name: string;
+      image: string | null;
+      anonymous: boolean;
+    }[]
+  >([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);
-
+  const { loading, getLoading } = useLoading();
   const router = useRouter();
 
   const getTitle = (title: string) => setTitle(title);
   const getAltImage = (altImage: string) => setAltImage(altImage);
   const getLead = (lead: string) => setLead(lead);
   const getContent = (content: string) => setContent(content);
-  const getAnonymous = (bool: boolean) => setAnonymous(bool);
+  const getAuthors = (
+    authors: {
+      id: string;
+      nick: string;
+      name: string;
+      image: string | null;
+      anonymous: boolean;
+    }[]
+  ) => setAuthors(authors);
   const getImageFile = (imageFile: File | null) => setImageFile(imageFile);
-  const getLoading = (bool: boolean) => setLoading(bool);
+
+  useEffect(() => setAuthors([author]), []);
 
   return {
     title,
     altImage,
     lead,
     content,
-    anonymous,
+    authors,
+    imageFile,
+    loading,
     getTitle,
     getAltImage,
     getLead,
     getContent,
-    getAnonymous,
-    imageFile,
+    getAuthors,
     getImageFile,
-    loading,
     getLoading,
     router,
   };

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function EditButton({ id }: { id: string }) {
   return (
-    <Link href={`/dashboard/editar?articulo=${id}`} title="Editar noticia">
+    <Link href={`/dashboard/editar?id=${id}`} title="Editar noticia">
       <img
         src="/icons/dashboard/edit.svg"
         alt="Icono de editar"

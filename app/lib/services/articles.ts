@@ -18,13 +18,12 @@ export async function getArticles() {
   return articles;
 }
 
-export async function getArticlesByAuthor(author: string) {
+export async function getArticlesByAuthorId(id: string) {
   const articlesRef = db.collection("articles");
 
   const query = articlesRef
-    .where("anonymous", "==", false)
-    .where("authors", "array-contains", author)
-    .orderBy("timestamp", "desc");
+    .where("authorsIds", "array-contains", id)
+    .orderBy("createdAt", "desc");
 
   const articlesSnapshot = await query.get();
 

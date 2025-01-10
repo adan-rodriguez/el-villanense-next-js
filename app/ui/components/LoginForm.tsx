@@ -14,67 +14,15 @@ import {
 import styles from "@/app/ui/styles/LoginForm.module.css";
 
 export function LoginForm() {
-  const { errorMessage, getErrorMessage, loading, getLoading, router } =
-    useLogin();
-
-  async function login(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    getErrorMessage(null);
-    getLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
-
-    if (!email || !password) {
-      alert("Falta email o contraseña!");
-      return;
-    }
-
-    await setPersistence(auth, browserSessionPersistence);
-
-    let userCredential;
-    try {
-      userCredential = await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      const { code } = error;
-      if (code === "auth/invalid-email" || code === "auth/wrong-password") {
-        getErrorMessage("Email o contraseña incorrectos");
-      } else {
-        getErrorMessage("Ocurrió un error, intenta de nuevo más tarde");
-      }
-
-      getLoading(false);
-      return;
-    }
-
-    const idToken = await userCredential.user.getIdToken();
-
-    const response = await fetch("/api/auth/login", {
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
-
-    if (!response.ok) {
-      getErrorMessage("Ocurrió un error, intenta de nuevo más tarde");
-      getLoading(false);
-      return;
-    }
-
-    getErrorMessage(null);
-    getLoading(false);
-    router.push("/dashboard");
-  }
+  const { errorMessage, loading, login } = useLogin();
 
   return (
     <>
       <Form style={{ maxWidth: "400px" }} onSubmit={login}>
-        <Label label="Email">
+        <Label label="Email" required={false}>
           <Input type="email" id="email" name="email" required={true} />
         </Label>
-        <Label label="Contraseña">
+        <Label label="Contraseña" required={false}>
           <Input
             type="password"
             id="password"
@@ -82,12 +30,7 @@ export function LoginForm() {
             required={true}
           />
         </Label>
-        <Button
-          type="submit"
-          label="Ingresar"
-          style={{ alignSelf: "center" }}
-          disabled={loading}
-        />
+        <Button type="submit" label="Ingresar" disabled={loading} />
       </Form>
       {errorMessage && (
         <p className={styles.error_message} role="alert">

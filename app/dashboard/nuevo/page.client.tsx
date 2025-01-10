@@ -8,38 +8,38 @@ import { Form } from "@/app/ui/components/Form";
 import { Label } from "@/app/ui/components/Label";
 import { Input } from "@/app/ui/components/Input";
 import { SelectImage } from "@/app/ui/components/SelectImage";
-import { DragAndDrop } from "@/app/ui/components/DragAndDrop";
 import { uploadImage } from "@/app/lib/server-actions";
-import { Article, Author } from "@/app/lib/types";
+import { Article } from "@/app/lib/types";
 import { Button } from "@/app/ui/components/Button";
-import { getAuthor } from "@/app/lib/services/client/authors";
 
 export function NewArticleClientPage({
-  id,
-  name,
-  image,
+  author,
 }: {
-  id: string;
-  name: string;
-  image?: string;
+  author: {
+    id: string;
+    nick: string;
+    name: string;
+    image: string | null;
+    anonymous: false;
+  };
 }) {
   const {
     title,
     altImage,
     lead,
     content,
-    anonymous,
+    authors,
+    imageFile,
+    loading,
     getTitle,
     getAltImage,
     getLead,
     getContent,
-    getAnonymous,
-    imageFile,
+    getAuthors,
     getImageFile,
-    loading,
     getLoading,
     router,
-  } = useNewArticle();
+  } = useNewArticle(author);
 
   // const isCompleted =
   //   Boolean(title) &&
@@ -68,24 +68,13 @@ export function NewArticleClientPage({
     formData.append("file", imageFile);
     formData.append("upload_preset", "elvillanense");
 
-    const response = await uploadImage(formData);
+    const { secure_url } = await uploadImage(formData);
 
-    if (!response.ok) {
-      alert("Ocurrió un error. Inténtelo nuevamente");
-      getLoading(false);
-      return;
-    }
-
-    const { secure_url } = await response.json();
-
-    let author: Author;
-    try {
-      author = await getAuthor(id);
-    } catch (error) {
-      alert("Ocurrió un error. Inténtelo nuevamente");
-      getLoading(false);
-      return;
-    }
+    // if (!response.ok) {
+    //   alert("Ocurrió un error. Inténtelo nuevamente");
+    //   getLoading(false);
+    //   return;
+    // }
 
     const responseAddArticles = await fetch("/api/articles", {
       method: "POST",
@@ -98,8 +87,7 @@ export function NewArticleClientPage({
         altImage,
         lead,
         content,
-        authors: [author.nick],
-        anonymous,
+        authors,
       }),
     });
 
@@ -118,81 +106,81 @@ export function NewArticleClientPage({
   }
 
   return (
-    <>
-      <h2 className={styles.title}>Nuevo artículo</h2>
-      <Form style={{ maxWidth: "1000px" }} onSubmit={handleSubmitNewArticle}>
-        <div className={styles.author_container}>
-          <div
-            className={styles.author_img_name_container}
-            style={anonymous ? { opacity: "0.2", userSelect: "none" } : {}}
-          >
-            <p>Autor:</p>
-            <AuthorImage image={image} name={name} />
-            <p>{name}</p>
+    <Form style={{ maxWidth: "1000px" }} onSubmit={handleSubmitNewArticle}>
+      <div>
+        {authors.map((author) => (
+          <div key={author.id} className={styles.author_container}>
+            <div
+              className={styles.author_img_name_container}
+              style={
+                author.anonymous ? { opacity: "0.2", userSelect: "none" } : {}
+              }
+            >
+              <p>{authors.length > 1 ? "Autores:" : "Autor:"}</p>
+              <AuthorImage image={author.image} name={author.name} />
+              <p>{author.name}</p>
+            </div>
+            <label className={styles.author_label}>
+              <input
+                onChange={() => {
+                  const updatedAuthors = authors.map((_author) =>
+                    _author.id === author.id
+                      ? { ..._author, anonymous: !_author.anonymous }
+                      : _author
+                  );
+                  getAuthors(updatedAuthors);
+                }}
+                type="checkbox"
+                checked={author.anonymous}
+              />
+              Anónimo
+            </label>
           </div>
-          <label className={styles.author_label}>
-            <input
-              onChange={(e) => getAnonymous(e.target.checked)}
-              type="checkbox"
-            />
-            {!anonymous
-              ? "Marcá la casilla si preferís que la noticia no tenga autor"
-              : "Desmarcá la casilla si preferís que la noticia tenga autor"}
-          </label>
-        </div>
-        <Label label="Título">
-          <Input
-            id="title"
-            required={true}
-            value={title}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              getTitle(e.currentTarget.value)
-            }
-          />
-        </Label>
-        <SelectImage getImageFile={getImageFile} />
-        <DragAndDrop
-          allowedImageFileTypes={[
-            "image/jpeg",
-            "image/png",
-            "image/svg+xml",
-            "image/webp",
-          ]}
+        ))}
+      </div>
+      <Label label="Título" required={true}>
+        <Input
+          required
+          value={title}
+          onChange={(e) => getTitle(e.currentTarget.value)}
+        />
+      </Label>
+      <SelectImage imageFile={imageFile} getImageFile={getImageFile} />
+      {/* <DragAndDrop
+          allowedImageFileTypes={allowedImageFileTypes}
           getImageFile={getImageFile}
           externalImageFile={imageFile}
+        /> */}
+      <Label
+        label="Descripción corta de la imagen &#40;para personas no videntes&#41;"
+        required={true}
+      >
+        <Input
+          required
+          value={altImage}
+          onChange={(e) => getAltImage(e.currentTarget.value)}
         />
-        <Label label="Descripción corta de la imagen &#40;para personas no videntes&#41;">
-          <Input
-            id="alt_image"
-            required={true}
-            value={altImage}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              getAltImage(e.currentTarget.value)
-            }
-          />
-        </Label>
-        <Label label="Entrada">
-          <textarea
-            className={styles.textarea}
-            required
-            value={lead}
-            onChange={(e) => getLead(e.target.value)}
-            rows={4}
-          />
-        </Label>
-        <TinyMCE content={content} getContent={getContent} />
-        <div className={styles.buttons_container}>
-          {/* <Button
+      </Label>
+      <Label label="Entrada" required={true}>
+        <textarea
+          className={styles.textarea}
+          required
+          value={lead}
+          onChange={(e) => getLead(e.currentTarget.value)}
+          rows={4}
+        />
+      </Label>
+      <TinyMCE content={content} getContent={getContent} />
+      <div className={styles.buttons_container}>
+        {/* <Button
             type="submit"
             label="Subir artículo"
             // disabled={!isCompleted}
             // style={!isCompleted ? { cursor: "not-allowed" } : {}}
             // title={!isCompleted ? "Faltan completar campos" : ""}
           /> */}
-          <Button label="Subir artículo" type="submit" disabled={loading} />
-        </div>
-      </Form>
-      {loading && <p className={styles.upload}>Subiendo...</p>}
-    </>
+        <Button label="Subir artículo" type="submit" disabled={loading} />
+      </div>
+    </Form>
   );
 }

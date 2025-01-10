@@ -1,6 +1,5 @@
 "use client";
 
-import { signup } from "@/app/lib/server-actions";
 import { useSignup } from "@/app/hooks/useSignup";
 import styles from "../styles/SignupForm.module.css";
 import { Form } from "./Form";
@@ -9,37 +8,24 @@ import { Label } from "./Label";
 import { Button } from "./Button";
 
 export function SignupForm() {
-  const { loading, getLoading, errorMessage, getErrorMessage } = useSignup();
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    getLoading(true);
-    getErrorMessage(null);
-
-    const formData = new FormData(e.currentTarget);
-    const { error: signupErrorMessage } = await signup(formData);
-    if (!signupErrorMessage) {
-      alert("Usuario creado con exito");
-      getLoading(false);
-      return;
-    }
-
-    getLoading(false);
-    getErrorMessage(signupErrorMessage);
-  }
+  const { loading, errorMessage, register } = useSignup();
 
   return (
     <>
-      <Form style={{ maxWidth: "400px" }} onSubmit={handleSubmit}>
-        <Label label="Nombre completo">
+      <Form style={{ maxWidth: "400px" }} onSubmit={register}>
+        <Label label="Nombre completo" required={true}>
           <Input id="name" name="name" required={true} />
         </Label>
-        <Label label="Email">
+        <Label label="Nombre de usuario" required={true}>
+          <Input id="nick" name="nick" required={true} />
+        </Label>
+        <Label label="Email" required={true}>
           <Input type="email" id="email" name="email" required={true} />
         </Label>
-        <Label label="Contraseña">
-          Mínimo: 6 caracteres
+        <Label label="Contraseña" required={true}>
+          <small>
+            <em>Mínimo: 6 caracteres</em>
+          </small>
           <Input
             type="password"
             id="password"
@@ -65,6 +51,27 @@ export function SignupForm() {
         ni caracteres. */}
         <Label label="Link de una foto" required={false}>
           <Input type="url" id="photo" name="photo" />
+        </Label>
+        <Label label="Rol" required={true}>
+          <div>
+            <input
+              type="radio"
+              name="role"
+              value="editor"
+              defaultChecked
+              style={{ marginRight: "0.25rem", verticalAlign: "middle" }}
+            />
+            <small>Editor</small>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="role"
+              value="superadmin"
+              style={{ marginRight: "0.25rem", verticalAlign: "middle" }}
+            />
+            <small>Superadministrador</small>
+          </div>
         </Label>
         <Button type="submit" label="Crear usuario" disabled={loading} />
       </Form>

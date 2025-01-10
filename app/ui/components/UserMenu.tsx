@@ -8,10 +8,16 @@ import { useUserMenu } from "@/app/hooks/useUserMenu";
 import Link from "next/link";
 import { useEffect } from "react";
 
-export function UserMenu({ name, image }: { name: string; image?: string }) {
+export function UserMenu({
+  name,
+  image,
+}: {
+  name: string;
+  image: string | null;
+}) {
   // const { isMenuOpen, getIsMenuOpen } = useMenu();
   const { isUserMenuOpen, getIsUserMenuOpen } = useUserMenu();
-  const logout = useLogout();
+  const { loading, logout } = useLogout();
 
   useEffect(() => {
     const closeUserMenu = (e: Event) => {
@@ -56,23 +62,34 @@ export function UserMenu({ name, image }: { name: string; image?: string }) {
           onClick={() => getIsUserMenuOpen(false)}
           href="/dashboard"
         >
-          Dashboard
+          Inicio
         </Link>
         <Link
           className={styles.new_link}
           onClick={() => getIsUserMenuOpen(false)}
           href="/dashboard/nuevo"
         >
-          Nuevo
+          Redactar
+        </Link>
+        <Link
+          className={styles.new_link}
+          onClick={() => getIsUserMenuOpen(false)}
+          href="/dashboard/articulos"
+        >
+          Editar/Borrar
         </Link>
         <Link
           className={styles.account_link}
           onClick={() => getIsUserMenuOpen(false)}
           href="/dashboard/cuenta"
         >
-          Cuenta
+          Perfil
         </Link>
-        <button className={styles.logout_button} onClick={logout}>
+        <button
+          className={styles.logout_button}
+          onClick={logout}
+          disabled={loading}
+        >
           Cerrar sesión
         </button>
       </div>

@@ -10,9 +10,11 @@ export default async function LoginPage() {
   if (!sessionCookie) return <LoginForm />;
 
   try {
-    await auth.verifySessionCookie(sessionCookie);
+    await auth.verifySessionCookie(sessionCookie, true);
     redirect("/dashboard");
   } catch (error) {
+    console.log({ error });
+    cookieStore.delete("__session");
     return <LoginForm />;
   }
 }
