@@ -5,12 +5,6 @@ import { Button } from "./Button";
 import { Form } from "./Form";
 import { Input } from "./Input";
 import { Label } from "./Label";
-import { auth } from "@/app/lib/firebase/client";
-import {
-  browserSessionPersistence,
-  setPersistence,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import styles from "@/app/ui/styles/LoginForm.module.css";
 
 export function LoginForm() {

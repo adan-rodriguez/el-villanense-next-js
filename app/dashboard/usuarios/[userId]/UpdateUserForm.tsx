@@ -21,7 +21,7 @@ export function UpdateUserForm({
   email?: string;
   phone?: string;
   image?: string;
-  role?: Role;
+  role: Role;
 }) {
   const { loading, errorMessage, update } = useUpdateUser();
 
@@ -90,7 +90,7 @@ export function UpdateUserForm({
               type="radio"
               name="role"
               value="editor"
-              defaultChecked={role === "editor" || !role}
+              defaultChecked={role === "editor"}
               style={{ marginRight: "0.25rem", verticalAlign: "middle" }}
             />
             <small>Editor</small>

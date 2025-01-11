@@ -11,6 +11,8 @@ import {
   UsersIcon,
 } from "../ui/components/Icons";
 import { LogoutButton } from "./LogoutButton";
+import { deleteCookie } from "../lib/server-actions";
+import { Role } from "../lib/types";
 
 export default async function DashboardLayout({
   children,
@@ -22,17 +24,15 @@ export default async function DashboardLayout({
 
   if (!sessionCookie) redirect("/login");
 
-  let id;
+  let role: Role;
   try {
-    const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
-    id = decodedIdToken.uid;
+    const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
+    role = decodedIdToken.role;
   } catch (error) {
     console.error(error);
-    cookieStore.delete("__session");
+    await deleteCookie("__session");
     redirect("/login");
   }
-
-  const user = await auth.getUser(id);
 
   return (
     <div style={{ display: "flex", gap: "1rem" }}>
@@ -69,7 +69,7 @@ export default async function DashboardLayout({
         >
           <UserIcon />
         </Link>
-        {user.customClaims?.role === "superadmin" && (
+        {role === "superadmin" && (
           <>
             <Link
               className="btn"

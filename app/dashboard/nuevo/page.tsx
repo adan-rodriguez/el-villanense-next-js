@@ -3,6 +3,7 @@ import { NewArticleClientPage } from "./page.client";
 import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/firebase/server";
 import { getAuthor } from "@/app/lib/services/authors";
+import { deleteCookie } from "@/app/lib/server-actions";
 
 export default async function NewArticlePage() {
   const cookieStore = await cookies();
@@ -12,11 +13,11 @@ export default async function NewArticlePage() {
 
   let id;
   try {
-    const decodedIdToken = await auth.verifySessionCookie(sessionCookie);
+    const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
     id = decodedIdToken.uid;
   } catch (error) {
     console.error(error);
-    cookieStore.delete("__session");
+    await deleteCookie("__session");
     redirect("/login");
   }
 
@@ -25,7 +26,7 @@ export default async function NewArticlePage() {
     author = await getAuthor(id);
   } catch (error) {
     console.error(error);
-    redirect("/dashboard");
+    return <p>Ocurrió un error. Intenta nuevamente más tarde.</p>;
   }
 
   return (

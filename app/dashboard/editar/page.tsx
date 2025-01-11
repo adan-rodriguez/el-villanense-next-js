@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { EditArticleClientPage } from "./page.client";
 
 export default async function EditArticlePage({

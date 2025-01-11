@@ -12,7 +12,7 @@ export function UserMenu({
   name,
   image,
 }: {
-  name: string;
+  name: string | null;
   image: string | null;
 }) {
   // const { isMenuOpen, getIsMenuOpen } = useMenu();

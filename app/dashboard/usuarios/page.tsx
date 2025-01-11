@@ -1,31 +1,9 @@
 import { auth } from "@/app/lib/firebase/server";
 import { Role } from "@/app/lib/types";
-import { cookies } from "next/headers";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { Fragment } from "react";
 
 export default async function UsersPage() {
-  const cookiesStore = await cookies();
-  const sessionCookie = cookiesStore.get("__session")?.value;
-
-  if (!sessionCookie) redirect("/login");
-
-  let id;
-  try {
-    const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
-    id = decodedIdToken.uid;
-  } catch (error) {
-    console.error(error);
-    cookiesStore.delete("__session");
-    redirect("/login");
-  }
-
-  const user = await auth.getUser(id);
-  const role: Role = user.customClaims?.role ?? "editor";
-
-  if (role !== "superadmin") redirect("/dashboard");
-
   let users;
   try {
     const listUsersResult = await auth.listUsers();

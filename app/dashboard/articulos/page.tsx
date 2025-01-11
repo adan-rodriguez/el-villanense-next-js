@@ -3,6 +3,7 @@ import { ArticlesDashboardClientPage } from "./page.client";
 import { auth } from "@/app/lib/firebase/server";
 import { redirect } from "next/navigation";
 import { Role } from "@/app/lib/types";
+import { deleteCookie } from "@/app/lib/server-actions";
 
 export default async function ArticlesDashboardPage() {
   const cookieStore = await cookies();
@@ -10,18 +11,17 @@ export default async function ArticlesDashboardPage() {
 
   if (!sessionCookie) redirect("/login");
 
+  let role: Role;
   let id;
   try {
-    const { uid } = await auth.verifySessionCookie(sessionCookie);
-    id = uid;
+    const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
+    role = decodedIdToken.role;
+    id = decodedIdToken.id;
   } catch (error) {
     console.error(error);
-    cookieStore.delete("__session");
+    await deleteCookie("__session");
     redirect("/login");
   }
-
-  const user = await auth.getUser(id);
-  const role: Role = user.customClaims?.role ?? "editor";
 
   let response;
   if (role === "superadmin") {

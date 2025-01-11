@@ -1,4 +1,5 @@
 import { auth } from "@/app/lib/firebase/server";
+import { deleteCookie } from "@/app/lib/server-actions";
 import { AuthorImage } from "@/app/ui/components/AuthorImage";
 import styles from "@/app/ui/styles/AccountPage.module.css";
 import { cookies } from "next/headers";
@@ -10,32 +11,34 @@ export default async function AccountPage() {
 
   if (!sessionCookie) redirect("/login");
 
-  let id;
+  let user;
   try {
-    const { uid } = await auth.verifySessionCookie(sessionCookie);
-    id = uid;
+    const { email, picture, phone_number, name } =
+      await auth.verifySessionCookie(sessionCookie, true);
+    user = {
+      name,
+      email,
+      picture,
+      phone_number,
+    };
   } catch (error) {
     console.log(error);
-    cookieStore.delete("__session");
+    await deleteCookie("__session");
     redirect("/login");
   }
-
-  const user = await auth.getUser(id);
-
-  const { displayName, email, phoneNumber, photoURL } = user;
 
   return (
     <div className={styles.container}>
       <div className={styles.data_container}>
-        <p>{displayName}</p>
+        <p>{user.name && "Nombre no proporcionado"}</p>
         <AuthorImage
-          image={photoURL}
-          name={displayName}
+          image={user.picture}
+          name={user.name}
           width={60}
           height={60}
         />
-        {email && <p>{email}</p>}
-        {phoneNumber && <p>{phoneNumber}</p>}
+        {user.email && <p>{user.email}</p>}
+        {user.phone_number && <p>{user.phone_number}</p>}
       </div>
     </div>
   );

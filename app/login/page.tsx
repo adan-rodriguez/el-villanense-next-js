@@ -13,7 +13,7 @@ export default async function LoginPage() {
     await auth.verifySessionCookie(sessionCookie, true);
     redirect("/dashboard");
   } catch (error) {
-    console.log({ error });
+    console.log(error);
     cookieStore.delete("__session");
     return <LoginForm />;
   }

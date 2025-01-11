@@ -1,5 +1,6 @@
 import { auth } from "@/app/lib/firebase/server";
 import { UpdateUserForm } from "./UpdateUserForm";
+import { Role } from "@/app/lib/types";
 
 export default async function UserPage({
   params,
@@ -11,7 +12,7 @@ export default async function UserPage({
   const user = await auth.getUser(userId);
 
   const { uid, displayName, email, phoneNumber, photoURL, customClaims } = user;
-  const role = customClaims?.role;
+  const role: Role = customClaims?.role || "editor";
 
   return (
     <UpdateUserForm

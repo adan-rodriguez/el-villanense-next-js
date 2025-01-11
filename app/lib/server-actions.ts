@@ -311,6 +311,9 @@ export async function uploadImage(formData: FormData) {
   return await response.json();
 }
 
+// The .delete method can only be called:
+// In a Server Action or Route Handler.
+// If it belongs to the same domain from which .set is called. Additionally, the code must be executed on the same protocol (HTTP or HTTPS) as the cookie you want to delete.
 export async function deleteCookie(key: string) {
   const cookieStore = await cookies();
   cookieStore.delete(key);
@@ -328,5 +331,22 @@ export async function signout() {
     await auth.revokeRefreshTokens(uid);
   } catch (error) {
     console.error(error);
+    redirect("/login");
+  }
+}
+
+export async function getCustomToken() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("__session")?.value;
+
+  if (!sessionCookie) return;
+
+  try {
+    const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
+    const customToken = await auth.createCustomToken(decodedIdToken.uid);
+    return customToken;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Cookie de sesión inválida o expirada.");
   }
 }
