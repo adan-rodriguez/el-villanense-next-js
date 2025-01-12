@@ -1,11 +1,11 @@
 "use client";
 
 import { useSignup } from "@/app/hooks/useSignup";
-import styles from "../styles/SignupForm.module.css";
-import { Form } from "./Form";
-import { Input } from "./Input";
-import { Label } from "./Label";
-import { Button } from "./Button";
+import styles from "@/app/ui/styles/SignupForm.module.css";
+import { Form } from "../../ui/components/Form";
+import { Input } from "../../ui/components/Input";
+import { Label } from "../../ui/components/Label";
+import { Button } from "../../ui/components/Button";
 
 export function SignupForm() {
   const { loading, errorMessage, register } = useSignup();

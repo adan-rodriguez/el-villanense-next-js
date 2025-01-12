@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /login
+
+Sitemap: https://www.elvillanense.com.ar/sitemap.xml

@@ -1,7 +1,7 @@
 import { auth } from "@/app/lib/firebase/server";
 import { deleteCookie } from "@/app/lib/server-actions";
 import { Role } from "@/app/lib/types";
-import { SignupForm } from "@/app/ui/components/SignupForm";
+import { SignupForm } from "./SignupForm";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
