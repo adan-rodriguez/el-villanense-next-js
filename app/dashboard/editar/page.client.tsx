@@ -13,7 +13,7 @@ import { uploadImage } from "@/app/lib/server-actions";
 import { Article } from "@/app/lib/types";
 
 export function EditArticleClientPage({ article }: { article: Article }) {
-  const { id, image } = article;
+  const { id, image, authorsIds } = article;
 
   const {
     title,
@@ -64,6 +64,7 @@ export function EditArticleClientPage({ article }: { article: Article }) {
       lead,
       content,
       authors,
+      authorsIds,
     };
 
     if (changeImage) {

@@ -223,8 +223,9 @@ export async function updateUser({
     if (!sessionCookie) redirect("/login");
 
     try {
-      await auth.verifySessionCookie(sessionCookie);
+      await auth.verifySessionCookie(sessionCookie, true);
     } catch (error) {
+      console.error(error);
       const { code } = error;
       if (code === "auth/session-cookie-revoked") {
         return {

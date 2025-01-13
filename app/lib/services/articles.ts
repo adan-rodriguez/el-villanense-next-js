@@ -1,5 +1,5 @@
 import { db } from "../firebase/server";
-import { Article, ArticleData } from "../types";
+import { Article, ArticleBasicData, ArticleData } from "../types";
 
 export async function getArticles() {
   const articlesRef = db.collection("articles");
@@ -55,7 +55,7 @@ export async function deleteArticle(id: string) {
   await db.collection("articles").doc(id).delete();
 }
 
-export async function addArticle(article): Promise<Article> {
+export async function addArticle(article: ArticleBasicData) {
   // Generar el slug del título quitando caracteres especiales
   const slugify = (text: string) =>
     text
@@ -69,9 +69,10 @@ export async function addArticle(article): Promise<Article> {
 
   const titleSlug = slugify(article.title);
 
+  const createdAt = new Date();
+
   // Formatear la fecha actual como DD-MM-YY
-  const today = new Date();
-  const formattedDate = today
+  const formattedDate = createdAt
     .toLocaleDateString("es-AR", {
       day: "2-digit",
       month: "2-digit",
@@ -82,19 +83,25 @@ export async function addArticle(article): Promise<Article> {
   // Concatenar el título y la fecha para formar el ID
   const id = `${titleSlug}-${formattedDate}`;
 
-  const newArticle = {
+  await db
+    .collection("articles")
+    .doc(id)
+    .set({ createdAt, ...article });
+
+  return {
+    id,
+    createdAt,
     ...article,
-    createdAt: today,
   };
-
-  await db.collection("articles").doc(id).set(newArticle);
-
-  newArticle.id = id;
-
-  return newArticle;
 }
 
-export async function editArticle({ id, article }: { id: string }) {
+export async function editArticle({
+  id,
+  article,
+}: {
+  id: string;
+  article: ArticleBasicData;
+}) {
   await db.collection("articles").doc(id).set(article, { merge: true });
   return { id, ...article };
 }

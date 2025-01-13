@@ -1,15 +1,8 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/client";
 import { Author, AuthorData } from "../../types";
 
-export async function getAuthor(id: string): Promise<Author> {
+export async function getAuthor(id: string) {
   const authorRef = doc(db, "authors", id);
   const authorSnap = await getDoc(authorRef);
 
@@ -21,3 +14,24 @@ export async function getAuthor(id: string): Promise<Author> {
   };
   return author;
 }
+
+export async function getClientAuthors() {
+  const authorsSnapshot = await getDocs(collection(db, "authors"));
+
+  if (authorsSnapshot.empty) return [];
+
+  const authors = authorsSnapshot.docs.map((author) => {
+    return {
+      id: author.id,
+      ...(author.data() as AuthorData),
+    };
+  });
+
+  return authors;
+}
+
+const querySnapshot = await getDocs(collection(db, "cities"));
+querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  console.log(doc.id, " => ", doc.data());
+});

@@ -9,8 +9,11 @@ import { Label } from "@/app/ui/components/Label";
 import { Input } from "@/app/ui/components/Input";
 import { SelectImage } from "@/app/ui/components/SelectImage";
 import { uploadImage } from "@/app/lib/server-actions";
-import { Article } from "@/app/lib/types";
+import { Article, Author } from "@/app/lib/types";
 import { Button } from "@/app/ui/components/Button";
+import { useState } from "react";
+import { getClientAuthors } from "@/app/lib/services/client/authors";
+import { TrashIcon } from "@/app/ui/components/Icons";
 
 export function NewArticleClientPage({
   author,
@@ -40,6 +43,18 @@ export function NewArticleClientPage({
     getLoading,
     router,
   } = useNewArticle(author);
+
+  const [showAddAuthorsBtn, setShowAddAuthorsBtn] = useState(true);
+
+  const [otherAuthors, setOtherAuthors] = useState<
+    {
+      id: string;
+      nick: string;
+      name: string;
+      image: string | null;
+      anonymous: boolean;
+    }[]
+  >([]);
 
   // const isCompleted =
   //   Boolean(title) &&
@@ -88,6 +103,7 @@ export function NewArticleClientPage({
         lead,
         content,
         authors,
+        authorsIds: authors.map((author) => author.id),
       }),
     });
 
@@ -107,37 +123,129 @@ export function NewArticleClientPage({
 
   return (
     <Form style={{ maxWidth: "1000px" }} onSubmit={handleSubmitNewArticle}>
-      <div>
-        {authors.map((author) => (
-          <div key={author.id} className={styles.author_container}>
+      <fieldset
+        style={{ paddingBlock: "0.35em 0.625em", paddingInline: "0.75em" }}
+      >
+        <legend style={{ paddingInline: "2px" }}>
+          <small>{authors.length > 1 ? "Autores" : "Autor"}</small>
+        </legend>
+        {authors.map((_author) => (
+          <div
+            key={_author.id}
+            className={styles.author_container}
+            style={{ marginBlock: "0.5rem" }}
+          >
             <div
               className={styles.author_img_name_container}
               style={
-                author.anonymous ? { opacity: "0.2", userSelect: "none" } : {}
+                _author.anonymous ? { opacity: "0.2", userSelect: "none" } : {}
               }
             >
-              <p>{authors.length > 1 ? "Autores:" : "Autor:"}</p>
-              <AuthorImage image={author.image} name={author.name} />
-              <p>{author.name}</p>
+              <AuthorImage image={_author.image} name={_author.name} />
+              <p>{_author.name}</p>
             </div>
             <label className={styles.author_label}>
               <input
                 onChange={() => {
-                  const updatedAuthors = authors.map((_author) =>
-                    _author.id === author.id
-                      ? { ..._author, anonymous: !_author.anonymous }
-                      : _author
+                  const updatedAuthors = authors.map((__author) =>
+                    __author.id === _author.id
+                      ? { ...__author, anonymous: !__author.anonymous }
+                      : __author
                   );
                   getAuthors(updatedAuthors);
                 }}
                 type="checkbox"
-                checked={author.anonymous}
+                checked={_author.anonymous}
               />
               Anónimo
             </label>
+            {_author.id !== author.id && (
+              <Button
+                type="button"
+                onClick={() => {
+                  const { nick } = _author;
+
+                  const clickedAuthor = authors.find(
+                    (author) => author.nick === nick
+                  );
+
+                  if (!clickedAuthor) return;
+
+                  clickedAuthor.anonymous = false;
+
+                  setOtherAuthors([...otherAuthors, clickedAuthor]);
+
+                  getAuthors(authors.filter((author) => author.nick !== nick));
+                }}
+                style={{ display: "flex", padding: "5px" }}
+              >
+                <TrashIcon />
+              </Button>
+            )}
           </div>
         ))}
-      </div>
+
+        {showAddAuthorsBtn ? (
+          <Button
+            type="button"
+            label="Agregar autor"
+            onClick={async () => {
+              const authors = await getClientAuthors();
+              const filteredAuthors = authors.filter(
+                (_author) => _author.id !== author.id
+              );
+              const mappedAuthors = filteredAuthors.map((author) => ({
+                id: author.id,
+                nick: author.nick,
+                name: author.name,
+                image: author.image,
+                anonymous: false,
+              }));
+              setOtherAuthors(mappedAuthors);
+              setShowAddAuthorsBtn(false);
+            }}
+          />
+        ) : (
+          <select
+            onChange={(e) => {
+              const nick = e.target.value;
+
+              // Encontrar el usuario seleccionado en el array de disponibles
+              const selectedAuthor = otherAuthors.find(
+                (author) => author.nick === nick
+              );
+
+              if (!selectedAuthor) return;
+
+              // Mover el usuario al array de seleccionados
+              getAuthors([...authors, selectedAuthor]);
+
+              // Eliminar el usuario del array de disponibles
+              setOtherAuthors(
+                otherAuthors.filter((author) => author.nick !== nick)
+              );
+            }}
+            style={{
+              width: "100%",
+              border: "1px solid gray",
+              padding: "5px 10px",
+              borderRadius: "2px",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {otherAuthors.length > 0 ? (
+              <option value="">-- Selecciona otro autor --</option>
+            ) : (
+              <option value="">-- No hay más autores --</option>
+            )}
+            {otherAuthors.map((otherAuthor) => (
+              <option key={otherAuthor.id} value={otherAuthor.nick}>
+                {otherAuthor.name}
+              </option>
+            ))}
+          </select>
+        )}
+      </fieldset>
       <Label label="Título" required={true}>
         <Input
           required
@@ -145,22 +253,27 @@ export function NewArticleClientPage({
           onChange={(e) => getTitle(e.currentTarget.value)}
         />
       </Label>
-      <SelectImage imageFile={imageFile} getImageFile={getImageFile} />
-      {/* <DragAndDrop
+      <fieldset
+        style={{ paddingBlock: "0.35em 0.625em", paddingInline: "0.75em" }}
+      >
+        <legend style={{ paddingInline: "2px" }}>Imagen</legend>
+        <SelectImage imageFile={imageFile} getImageFile={getImageFile} />
+        {/* <DragAndDrop
           allowedImageFileTypes={allowedImageFileTypes}
           getImageFile={getImageFile}
           externalImageFile={imageFile}
         /> */}
-      <Label
-        label="Descripción corta de la imagen &#40;para personas no videntes&#41;"
-        required={true}
-      >
-        <Input
-          required
-          value={altImage}
-          onChange={(e) => getAltImage(e.currentTarget.value)}
-        />
-      </Label>
+        <Label
+          label="Descripción corta de la imagen &#40;para personas no videntes&#41;"
+          required={true}
+        >
+          <Input
+            required
+            value={altImage}
+            onChange={(e) => getAltImage(e.currentTarget.value)}
+          />
+        </Label>
+      </fieldset>
       <Label label="Entrada" required={true}>
         <textarea
           className={styles.textarea}

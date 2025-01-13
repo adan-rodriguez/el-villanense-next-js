@@ -14,7 +14,7 @@ export const useLogout = () => {
       await signout();
       getLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       getLoading(false);
     }
   }

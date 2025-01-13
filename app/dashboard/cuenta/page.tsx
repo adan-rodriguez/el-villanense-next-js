@@ -22,7 +22,7 @@ export default async function AccountPage() {
       phone_number,
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     await deleteCookie("__session");
     redirect("/login");
   }

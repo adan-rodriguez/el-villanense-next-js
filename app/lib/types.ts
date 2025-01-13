@@ -3,6 +3,22 @@ type CreatedAt = {
   _nanoseconds: number;
 };
 
+export type ArticleBasicData = {
+  title: string;
+  lead: string;
+  image: string;
+  altImage: string;
+  content: string;
+  authorsIds: string[];
+  authors: {
+    id: string;
+    nick: string;
+    name: string;
+    image: string | null;
+    anonymous: boolean;
+  }[];
+};
+
 export type ArticleData = {
   title: string;
   lead: string;
