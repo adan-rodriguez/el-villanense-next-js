@@ -3,8 +3,6 @@ import { DOMAIN } from "../lib/utils";
 import { Article } from "../lib/types";
 import { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   description:
     "Todas las noticias de Villa Ana y las noticias más importantes de la región, de la provincia de Santa Fe, de la Argentina y del mundo.",

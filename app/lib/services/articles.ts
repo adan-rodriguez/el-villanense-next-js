@@ -102,6 +102,10 @@ export async function editArticle({
   id: string;
   article: ArticleBasicData;
 }) {
-  await db.collection("articles").doc(id).set(article, { merge: true });
-  return { id, ...article };
+  const lastModified = new Date();
+  await db
+    .collection("articles")
+    .doc(id)
+    .set({ lastModified, ...article }, { merge: true });
+  return { id, lastModified, ...article };
 }

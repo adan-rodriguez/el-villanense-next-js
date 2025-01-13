@@ -23,7 +23,7 @@ export async function generateMetadata({
 
   const article: Article = await response.json();
 
-  const { title, lead, image, altImage, createdAt } = article;
+  const { title, lead, image, altImage, createdAt, lastModified } = article;
 
   const date = new Date(
     createdAt._seconds * 1000 + createdAt._nanoseconds / 1000000
@@ -32,6 +32,19 @@ export async function generateMetadata({
   const adjustedDate = new Date(date.getTime() - 3 * 60 * 60 * 1000);
 
   const publishedTime = adjustedDate.toISOString().slice(0, -8) + "-03:00";
+
+  let modifiedTime;
+  if (lastModified) {
+    const dateModified = new Date(
+      lastModified._seconds * 1000 + lastModified._nanoseconds / 1000000
+    );
+
+    const adjustedDateModified = new Date(
+      dateModified.getTime() - 3 * 60 * 60 * 1000
+    );
+
+    modifiedTime = adjustedDateModified.toISOString().slice(0, -8) + "-03:00";
+  }
 
   return {
     title: title,
@@ -44,10 +57,8 @@ export async function generateMetadata({
       siteName: "El Villanense",
       type: "article",
       locale: "es_LA",
-      publishedTime: publishedTime,
-      // ...(lastModified && {modifiedTime: lastModified}),
-      // publisher: "https://www.facebook.com/elvillanense",
-      // section: "locales",
+      publishedTime,
+      modifiedTime,
     },
     twitter: {
       card: "summary_large_image",

@@ -34,6 +34,7 @@ export type ArticleData = {
     anonymous: boolean;
   }[];
   createdAt: CreatedAt;
+  lastModified?: CreatedAt;
 };
 
 export type Article = { id: string } & ArticleData;
