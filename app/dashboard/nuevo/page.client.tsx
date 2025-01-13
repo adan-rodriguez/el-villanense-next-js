@@ -9,7 +9,7 @@ import { Label } from "@/app/ui/components/Label";
 import { Input } from "@/app/ui/components/Input";
 import { SelectImage } from "@/app/ui/components/SelectImage";
 import { uploadImage } from "@/app/lib/server-actions";
-import { Article, Author } from "@/app/lib/types";
+import { Article, Role } from "@/app/lib/types";
 import { Button } from "@/app/ui/components/Button";
 import { useState } from "react";
 import { getClientAuthors } from "@/app/lib/services/client/authors";
@@ -17,6 +17,7 @@ import { TrashIcon } from "@/app/ui/components/Icons";
 
 export function NewArticleClientPage({
   author,
+  role,
 }: {
   author: {
     id: string;
@@ -25,6 +26,7 @@ export function NewArticleClientPage({
     image: string | null;
     anonymous: false;
   };
+  role: Role;
 }) {
   const {
     title,
@@ -159,7 +161,7 @@ export function NewArticleClientPage({
               />
               Anónimo
             </label>
-            {_author.id !== author.id && (
+            {(_author.id !== author.id || role === "superadmin") && (
               <Button
                 type="button"
                 onClick={() => {

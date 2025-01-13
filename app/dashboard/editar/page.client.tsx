@@ -10,9 +10,20 @@ import { Input } from "@/app/ui/components/Input";
 import { SelectImage } from "@/app/ui/components/SelectImage";
 import { Form } from "@/app/ui/components/Form";
 import { uploadImage } from "@/app/lib/server-actions";
-import { Article } from "@/app/lib/types";
+import { Article, Role } from "@/app/lib/types";
+import { TrashIcon } from "@/app/ui/components/Icons";
+import { useState } from "react";
+import { getClientAuthors } from "@/app/lib/services/client/authors";
 
-export function EditArticleClientPage({ article }: { article: Article }) {
+export function EditArticleClientPage({
+  article,
+  userId,
+  role,
+}: {
+  article: Article;
+  userId: string;
+  role: Role;
+}) {
   const { id, image, authorsIds } = article;
 
   const {
@@ -34,6 +45,18 @@ export function EditArticleClientPage({ article }: { article: Article }) {
     getLoading,
     router,
   } = useEditArticle(article);
+
+  const [showAddAuthorsBtn, setShowAddAuthorsBtn] = useState(true);
+
+  const [otherAuthors, setOtherAuthors] = useState<
+    {
+      id: string;
+      nick: string;
+      name: string;
+      image: string | null;
+      anonymous: boolean;
+    }[]
+  >([]);
 
   // const isNotEdited = objCompare(
   //   {
@@ -64,7 +87,7 @@ export function EditArticleClientPage({ article }: { article: Article }) {
       lead,
       content,
       authors,
-      authorsIds,
+      authorsIds: authors.map((author) => author.id),
     };
 
     if (changeImage) {
@@ -130,37 +153,130 @@ export function EditArticleClientPage({ article }: { article: Article }) {
       onSubmit={handleSubmitEditArticle}
       className={styles.form}
     >
-      <div className={styles.author_container}>
-        {authors.map((author) => (
-          <div key={author.id}>
+      <fieldset
+        style={{ paddingBlock: "0.35em 0.625em", paddingInline: "0.75em" }}
+      >
+        <legend style={{ paddingInline: "2px" }}>
+          <small>{authors.length > 1 ? "Autores" : "Autor"}</small>
+        </legend>
+        {authors.map((_author) => (
+          <div
+            key={_author.id}
+            className={styles.author_container}
+            style={{ marginBlock: "0.5rem" }}
+          >
             <div
               className={styles.author_img_name_container}
               style={
-                author.anonymous ? { opacity: "0.2", userSelect: "none" } : {}
+                _author.anonymous ? { opacity: "0.2", userSelect: "none" } : {}
               }
             >
-              <p>{authors.length > 1 ? "Autores:" : "Autor:"}</p>
-              <AuthorImage image={author.image} name={author.name} />
-              <p>{author.name}</p>
+              <AuthorImage image={_author.image} name={_author.name} />
+              <p>{_author.name}</p>
             </div>
             <label className={styles.author_label}>
               <input
                 onChange={() => {
-                  const updatedAuthors = authors.map((_author) =>
-                    _author.id === author.id
-                      ? { ..._author, anonymous: !_author.anonymous }
-                      : _author
+                  const updatedAuthors = authors.map((__author) =>
+                    __author.id === _author.id
+                      ? { ...__author, anonymous: !__author.anonymous }
+                      : __author
                   );
                   getAuthors(updatedAuthors);
                 }}
                 type="checkbox"
-                checked={author.anonymous}
+                checked={_author.anonymous}
               />
               Anónimo
             </label>
+            {(_author.id !== userId || role === "superadmin") && (
+              <Button
+                type="button"
+                onClick={() => {
+                  const { nick } = _author;
+
+                  const clickedAuthor = authors.find(
+                    (author) => author.nick === nick
+                  );
+
+                  if (!clickedAuthor) return;
+
+                  clickedAuthor.anonymous = false;
+
+                  setOtherAuthors([...otherAuthors, clickedAuthor]);
+
+                  getAuthors(authors.filter((author) => author.nick !== nick));
+                }}
+                style={{ display: "flex", padding: "5px" }}
+              >
+                <TrashIcon />
+              </Button>
+            )}
           </div>
         ))}
-      </div>
+
+        {showAddAuthorsBtn ? (
+          <Button
+            type="button"
+            label="Agregar autor"
+            onClick={async () => {
+              const _authors = await getClientAuthors();
+              const filteredAuthors = _authors.filter(
+                (_author) =>
+                  authors.findIndex((author) => author.id === _author.id) === -1
+              );
+              const mappedAuthors = filteredAuthors.map((author) => ({
+                id: author.id,
+                nick: author.nick,
+                name: author.name,
+                image: author.image,
+                anonymous: false,
+              }));
+              setOtherAuthors(mappedAuthors);
+              setShowAddAuthorsBtn(false);
+            }}
+          />
+        ) : (
+          <select
+            onChange={(e) => {
+              const nick = e.target.value;
+
+              // Encontrar el usuario seleccionado en el array de disponibles
+              const selectedAuthor = otherAuthors.find(
+                (author) => author.nick === nick
+              );
+
+              if (!selectedAuthor) return;
+
+              // Mover el usuario al array de seleccionados
+              getAuthors([...authors, selectedAuthor]);
+
+              // Eliminar el usuario del array de disponibles
+              setOtherAuthors(
+                otherAuthors.filter((author) => author.nick !== nick)
+              );
+            }}
+            style={{
+              width: "100%",
+              border: "1px solid gray",
+              padding: "5px 10px",
+              borderRadius: "2px",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {otherAuthors.length > 0 ? (
+              <option value="">-- Selecciona otro autor --</option>
+            ) : (
+              <option value="">-- No hay más autores --</option>
+            )}
+            {otherAuthors.map((otherAuthor) => (
+              <option key={otherAuthor.id} value={otherAuthor.nick}>
+                {otherAuthor.name}
+              </option>
+            ))}
+          </select>
+        )}
+      </fieldset>
       <Label label="Título" required={true}>
         <Input
           id="title"
@@ -169,34 +285,51 @@ export function EditArticleClientPage({ article }: { article: Article }) {
           onChange={(e) => getTitle(e.target.value)}
         />
       </Label>
-      {changeImage ? (
-        <>
-          <SelectImage imageFile={imageFile} getImageFile={getImageFile} />
-          <Label
-            label="Descripción corta de la imagen &#40;para personas no videntes&#41;"
-            required={true}
-          >
-            <Input
-              id="alt_image"
-              required
-              value={altImage}
-              onChange={(e) => getAltImage(e.target.value)}
+      <fieldset
+        style={{ paddingBlock: "0.35em 0.625em", paddingInline: "0.75em" }}
+      >
+        <legend style={{ paddingInline: "2px" }}>
+          <small>Imagen</small>
+        </legend>
+        {changeImage ? (
+          <>
+            <SelectImage imageFile={imageFile} getImageFile={getImageFile} />
+            <Label
+              label="Descripción corta de la imagen &#40;para personas no videntes&#41;"
+              required={true}
+            >
+              <Input
+                id="alt_image"
+                required
+                value={altImage}
+                onChange={(e) => getAltImage(e.target.value)}
+              />
+            </Label>
+          </>
+        ) : (
+          <div>
+            <img
+              src={image}
+              alt={altImage}
+              style={{
+                width: "100%",
+                maxWidth: "400px",
+                aspectRatio: "3/2",
+                objectFit: "cover",
+                borderRadius: "4px",
+              }}
             />
-          </Label>
-        </>
-      ) : (
-        <div>
-          <img src={image} alt={altImage} />
-          <Button
-            type="button"
-            label="Cambiar imagen"
-            onClick={() => {
-              getChangeImage();
-              getAltImage("");
-            }}
-          />
-        </div>
-      )}
+            <Button
+              type="button"
+              label="Cambiar imagen"
+              onClick={() => {
+                getChangeImage();
+                getAltImage("");
+              }}
+            />
+          </div>
+        )}
+      </fieldset>
       <Label label="Entrada" required={true}>
         <textarea
           className={styles.textarea}

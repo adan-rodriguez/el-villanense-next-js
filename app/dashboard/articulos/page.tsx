@@ -16,7 +16,7 @@ export default async function ArticlesDashboardPage() {
   try {
     const decodedIdToken = await auth.verifySessionCookie(sessionCookie, true);
     role = decodedIdToken.role;
-    id = decodedIdToken.id;
+    id = decodedIdToken.uid;
   } catch (error) {
     console.error(error);
     await deleteCookie("__session");

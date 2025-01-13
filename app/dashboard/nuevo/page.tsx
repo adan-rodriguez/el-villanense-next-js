@@ -38,6 +38,7 @@ export default async function NewArticlePage() {
         nick: author.nick,
         anonymous: false,
       }}
+      role={author.role}
     />
   );
 }
