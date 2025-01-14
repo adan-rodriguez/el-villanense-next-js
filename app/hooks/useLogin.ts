@@ -7,6 +7,12 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../lib/firebase/client";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email("Email inválido"),
+  password: z.string(),
+});
 
 export function useLogin() {
   const { loading, getLoading } = useLoading();
@@ -21,11 +27,18 @@ export function useLogin() {
     getLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email")?.toString();
+    const email = formData.get("email")?.toString(); // los inputs de tipo email no reflejan en su value los espacios en blanco al inicio y al final
     const password = formData.get("password")?.toString();
 
-    if (!email || !password) {
-      alert("Falta email o contraseña!");
+    const {
+      data: loginData,
+      error: validateLoginError,
+      success,
+    } = loginSchema.safeParse({ email, password });
+
+    if (validateLoginError) {
+      getErrorMessage(validateLoginError?.errors[0].message);
+      getLoading(false);
       return;
     }
 
@@ -33,10 +46,20 @@ export function useLogin() {
 
     let userCredential;
     try {
-      userCredential = await signInWithEmailAndPassword(auth, email, password);
+      userCredential = await signInWithEmailAndPassword(
+        auth,
+        loginData.email,
+        loginData.password
+      );
     } catch (error) {
       const { code } = error;
-      if (code === "auth/invalid-email" || code === "auth/wrong-password") {
+      console.log({ code });
+
+      if (
+        code === "auth/invalid-email" ||
+        code === "auth/user-not-found" ||
+        code === "auth/wrong-password"
+      ) {
         getErrorMessage("Email o contraseña incorrectos");
       } else {
         getErrorMessage("Ocurrió un error, intenta de nuevo más tarde");
