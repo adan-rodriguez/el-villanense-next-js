@@ -1,4 +1,4 @@
-import { Author, Article as TArticle } from "@/app/lib/types";
+import { Article as TArticle } from "@/app/lib/types";
 import { ArticleAuthorLink } from "./ArticleAuthorLink";
 import { ArticleContent } from "./ArticleContent";
 import { AuthorImage } from "./AuthorImage";

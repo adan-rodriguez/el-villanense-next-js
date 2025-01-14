@@ -16,8 +16,9 @@ export function ArticleAuthorLink({
   color?: string;
 }) {
   const pathname = usePathname();
+  console.log({ pathname });
 
-  if (pathname.includes("autor")) return null;
+  if (pathname.startsWith("/autor/")) return null;
 
   return (
     <p className={styles.container} style={{ fontSize }}>
