@@ -21,7 +21,7 @@ export function UpdateUserForm({
   email?: string;
   phone?: string;
   image?: string;
-  role: Role;
+  role?: Role;
 }) {
   const { loading, errorMessage, update } = useUpdateUser();
 
@@ -92,6 +92,7 @@ export function UpdateUserForm({
               value="editor"
               defaultChecked={role === "editor"}
               style={{ marginRight: "0.25rem", verticalAlign: "middle" }}
+              required // Si cualquier botón de radio en un grupo con el mismo nombre tiene el atributo required, un botón de ese grupo debe estar seleccionado, aunque no tiene que ser necesariamente el que tiene aplicado el atributo.
             />
             <small>Editor</small>
           </div>

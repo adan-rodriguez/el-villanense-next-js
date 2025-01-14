@@ -60,6 +60,7 @@ export function SignupForm() {
               value="editor"
               defaultChecked
               style={{ marginRight: "0.25rem", verticalAlign: "middle" }}
+              required
             />
             <small>Editor</small>
           </div>

@@ -166,7 +166,7 @@ export async function updateUser({
     return { error: { message: "Ocurrió un error. Inténtalo nuevamente" } };
   }
 
-  if (role !== "editor" && role !== "superadmin" && role !== null) {
+  if (role !== "editor" && role !== "superadmin") {
     return { error: { message: "Ocurrió un error. Inténtalo nuevamente" } };
   }
 
