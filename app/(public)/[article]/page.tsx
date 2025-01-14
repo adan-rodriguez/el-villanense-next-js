@@ -4,6 +4,16 @@ import ArticleComponent from "@/app/ui/components/Article";
 import { Article } from "@/app/lib/types";
 import { Metadata } from "next";
 
+// Durante next build, se generan todas las publicaciones de blog conocidas
+// Todas las solicitudes realizadas a estas páginas se almacenan en caché y son instantáneas.
+// Si se solicita utra publicacion, Next.js generará y almacenará en caché esta página a pedido
+export async function generateStaticParams() {
+  const response = await fetch(`${API_URL}/articles`);
+  const articles: Article[] = await response.json();
+
+  return articles.map((article) => ({ article: article.id }));
+}
+
 export async function generateMetadata({
   params,
 }: {

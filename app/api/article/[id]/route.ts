@@ -3,6 +3,7 @@ import {
   editArticle,
   getArticle,
 } from "@/app/lib/services/articles";
+import { revalidatePath } from "next/cache";
 import { NextRequest } from "next/server";
 
 export async function GET(
@@ -34,6 +35,9 @@ export async function DELETE(
 
   await deleteArticle(id);
 
+  revalidatePath("/");
+  revalidatePath(`/${id}`);
+
   return new Response(null, {
     status: 204,
     headers: { "Content-Type": "application/json" },
@@ -48,6 +52,9 @@ export async function PUT(
   const article = await request.json();
 
   const updatedArticle = await editArticle({ id, article });
+
+  revalidatePath("/");
+  revalidatePath(`/${id}`);
 
   return new Response(JSON.stringify(updatedArticle), {
     status: 200,

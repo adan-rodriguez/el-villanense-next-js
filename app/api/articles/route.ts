@@ -1,4 +1,6 @@
 import { addArticle, getArticles } from "@/app/lib/services/articles";
+import { ArticleBasicData } from "@/app/lib/types";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const articles = await getArticles();
@@ -10,9 +12,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const article = await request.json();
+  const article: ArticleBasicData = await request.json();
 
   const newArticle = await addArticle(article);
+
+  revalidatePath("/");
 
   return new Response(JSON.stringify(newArticle), {
     status: 201,

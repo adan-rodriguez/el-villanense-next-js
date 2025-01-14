@@ -5,15 +5,19 @@ import { API_URL, DOMAIN } from "@/app/lib/utils";
 import { getAuthorByNick /*, getAuthors*/ } from "@/app/lib/services/authors";
 import { getUser } from "@/app/lib/services/users";
 import { Article } from "@/app/lib/types";
+import { Metadata } from "next";
 
 // export async function generateStaticParams() {
 //   const authors = await getAuthors();
 //   return authors.map((author) => ({ author: author.nick }));
 // }
 
-export async function generateMetadata(props) {
-  const params = await props.params;
-  const { author: nick } = params;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ author: string }>;
+}): Promise<Metadata> {
+  const { author: nick } = await params;
 
   const author = await getAuthorByNick(nick);
 
@@ -26,12 +30,17 @@ export async function generateMetadata(props) {
   const { displayName, photoURL } = user;
 
   return {
-    title: `${displayName} - El Villanense`,
-    description: `Todas las noticias publicadas por ${displayName}`,
+    title: `${displayName ?? nick} - El Villanense`,
+    description: `Todas las noticias publicadas por ${displayName ?? nick}`,
     openGraph: {
-      title: `${displayName} - El Villanense`,
+      title: `${displayName ?? nick} - El Villanense`,
       description: `Todas las noticias publicadas por ${displayName}`,
-      images: { url: photoURL, alt: `Foto de ${displayName}` },
+      images: {
+        url: photoURL ?? `${DOMAIN}/images/logo.png`,
+        alt: photoURL
+          ? `Foto de ${displayName ?? nick}`
+          : "Logo de El Villanense",
+      },
       url: `${DOMAIN}/autor/${nick}`,
       siteName: "El Villanense",
       type: "website",
@@ -43,9 +52,12 @@ export async function generateMetadata(props) {
   };
 }
 
-export default async function ArticlesByAuthorPage(props) {
-  const params = await props.params;
-  const { author: nick } = params;
+export default async function ArticlesByAuthorPage({
+  params,
+}: {
+  params: Promise<{ author: string }>;
+}) {
+  const { author: nick } = await params;
 
   let author;
   try {
