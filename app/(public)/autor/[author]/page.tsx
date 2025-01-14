@@ -94,15 +94,12 @@ export default async function ArticlesByAuthorPage({
     // Formatear la fecha para el tag meta
     const publishedTime = adjustedDate.toISOString().slice(0, -8) + "-03:00";
 
-    // Formatear la fecha para el tag time en formato legible
-    const options = {
+    const readableTime = new Intl.DateTimeFormat("es-AR", {
       year: "numeric",
       month: "long",
       day: "numeric",
       timeZone: "America/Argentina/Buenos_Aires", // Ajustar zona horaria
-    };
-
-    const readableTime = new Intl.DateTimeFormat("es-AR", options).format(date);
+    }).format(date);
 
     return {
       ...article,

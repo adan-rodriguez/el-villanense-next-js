@@ -17,6 +17,7 @@ export async function POST(request: Request) {
   const newArticle = await addArticle(article);
 
   revalidatePath("/");
+  revalidatePath("/sitemap.xml");
 
   return new Response(JSON.stringify(newArticle), {
     status: 201,

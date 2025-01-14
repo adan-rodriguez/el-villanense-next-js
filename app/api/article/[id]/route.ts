@@ -37,6 +37,7 @@ export async function DELETE(
 
   revalidatePath("/");
   revalidatePath(`/${id}`);
+  revalidatePath("/sitemap.xml");
 
   return new Response(null, {
     status: 204,
@@ -55,6 +56,7 @@ export async function PUT(
 
   revalidatePath("/");
   revalidatePath(`/${id}`);
+  revalidatePath("/sitemap.xml");
 
   return new Response(JSON.stringify(updatedArticle), {
     status: 200,
