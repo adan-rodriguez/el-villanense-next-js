@@ -161,4 +161,50 @@ export const allowedImageFileTypes = [
   "image/png",
   "image/svg+xml",
   "image/webp",
+  "image/avif",
 ];
+
+export const slugify = (text: string) =>
+  text
+    .toString()
+    .normalize("NFD") // Normaliza a descomposición de caracteres
+    .replace(/[\u0300-\u036f]/g, "") // Elimina los acentos
+    .replace(/[^a-zA-Z0-9\s]/g, "") // Elimina caracteres especiales
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-"); // Reemplaza espacios con guiones
+
+const mimeToExtension = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/svg+xml": "svg",
+  "image/webp": "webp",
+};
+
+export async function urlToImageFile(url: string, imageName = "imagen") {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Error al descargar la imagen");
+  }
+
+  const blob = await response.blob();
+  const mimeType = blob.type;
+
+  // Verificar si el MIME es uno de los conocidos
+  if (!mimeToExtension[mimeType]) {
+    throw new Error(`Tipo de imagen no soportado: ${mimeType}`);
+  }
+
+  // Obtener la extensión correspondiente
+  const extension = mimeToExtension[mimeType];
+  const filename = `${imageName}.${extension}`;
+
+  // Crear un archivo a partir del Blob
+  return new File([blob], filename, { type: mimeType });
+}
+
+export const ROLES = {
+  editor: "Editor",
+  superadmin: "Superadministrador",
+};

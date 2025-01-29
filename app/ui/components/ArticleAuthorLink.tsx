@@ -16,7 +16,6 @@ export function ArticleAuthorLink({
   color?: string;
 }) {
   const pathname = usePathname();
-  console.log({ pathname });
 
   if (pathname.startsWith("/autor/")) return null;
 

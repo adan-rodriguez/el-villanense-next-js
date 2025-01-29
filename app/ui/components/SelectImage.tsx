@@ -4,6 +4,15 @@ import { allowedImageFileTypes } from "@/app/lib/utils";
 import { Asterisk } from "./Asterisk";
 import styles from "@/app/ui/styles/SelectImage.module.css";
 
+const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  e.preventDefault();
+  e.currentTarget.classList.add(styles.drag);
+};
+
+const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+  e.currentTarget.classList.remove(styles.drag);
+};
+
 export function SelectImage({
   imageFile,
   getImageFile,
@@ -27,15 +36,6 @@ export function SelectImage({
     }
 
     getImageFile(file);
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.currentTarget.classList.add(styles.drag);
-  };
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.currentTarget.classList.remove(styles.drag);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -81,7 +81,7 @@ export function SelectImage({
         <input
           id="image-file-input"
           type="file"
-          accept=".jpg, .jpeg, .png, .svg, .webp"
+          accept=".jpg, .jpeg, .png, .svg, .webp, .avif"
           onChange={handleImageFileChange}
           className={styles.input}
         />

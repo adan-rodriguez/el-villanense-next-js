@@ -1,21 +1,14 @@
 "use client";
 
-import { useUpdateUser } from "@/app/hooks/useUpdateUser";
 import { Role } from "@/app/lib/types";
-import { Button } from "@/app/ui/components/Button";
-import { Form } from "@/app/ui/components/Form";
-import { Input } from "@/app/ui/components/Input";
-import { Label } from "@/app/ui/components/Label";
-import styles from "@/app/ui/styles/UpdateUserForm.module.css";
+import { NameForm } from "./NameForm";
+import { EmailForm } from "./EmailForm";
+import { PasswordForm } from "./PasswordForm";
+import { PhoneForm } from "./PhoneForm";
+import { RoleForm } from "./RoleForm";
+import { ImageForm } from "./ImageForm";
 
-export function UpdateUserForm({
-  id,
-  name,
-  email,
-  phone,
-  image,
-  role,
-}: {
+export function UpdateUserForm(userData: {
   id: string;
   name?: string;
   email?: string;
@@ -23,97 +16,31 @@ export function UpdateUserForm({
   image?: string;
   role?: Role;
 }) {
-  const { loading, errorMessage, update } = useUpdateUser();
-
   return (
-    <>
-      <Form style={{ maxWidth: "400px" }} onSubmit={(e) => update({ e, id })}>
-        <Label label="Nombre completo" required={false}>
-          <Input id="name" name="name" defaultValue={name} required={true} />
-        </Label>
-        <Label label="Email" required={false}>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            defaultValue={email}
-            required={true}
-          />
-        </Label>
-        <Label label="Contraseña" required={false}>
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            minLength={6}
-            onKeyDown={(e) => {
-              if (e.key === " ") {
-                e.preventDefault(); // Bloquea la tecla espacio
-              }
-            }}
-          />
-        </Label>
-        <Label label="Repetir contraseña" required={false}>
-          <Input
-            type="password"
-            id="repeat-password"
-            name="repeat-password"
-            minLength={6}
-            onKeyDown={(e) => {
-              if (e.key === " ") {
-                e.preventDefault(); // Bloquea la tecla espacio
-              }
-            }}
-          />
-        </Label>
-        <Label label="Teléfono" required={false}>
-          <Input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="+543482524950"
-            defaultValue={phone}
-          />
-        </Label>
-        {/* formato E.164: 
-        Incluye el símbolo +. 
-        Añade el código de país (Argentina:
-        54). 
-        Asegúrate de que el resto del número no tenga prefijos adicionales
-        ni caracteres. */}
-        <Label label="Link de una foto" required={false}>
-          <Input type="url" id="photo" name="photo" defaultValue={image} />
-        </Label>
-        <Label label="Rol" required={false}>
-          <div>
-            <input
-              type="radio"
-              name="role"
-              value="editor"
-              defaultChecked={role === "editor"}
-              style={{ marginRight: "0.25rem", verticalAlign: "middle" }}
-              required // Si cualquier botón de radio en un grupo con el mismo nombre tiene el atributo required, un botón de ese grupo debe estar seleccionado, aunque no tiene que ser necesariamente el que tiene aplicado el atributo.
-            />
-            <small>Editor</small>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="role"
-              value="superadmin"
-              defaultChecked={role === "superadmin"}
-              style={{ marginRight: "0.25rem", verticalAlign: "middle" }}
-            />
-            <small>Superadministrador</small>
-          </div>
-        </Label>
-        <Button label="Actualizar usuario" type="submit" disabled={loading} />
-      </Form>
-      {errorMessage && (
-        <p className={styles.error_message} role="alert">
-          {errorMessage}
-        </p>
-      )}
-    </>
+    <div
+      style={{
+        width: "100%",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "10px",
+        padding: "1rem",
+        border: "1px solid gray",
+        borderRadius: "2px",
+        maxWidth: "400px",
+      }}
+    >
+      <ImageForm id={userData.id} initialImage={userData.image} />
+
+      <NameForm id={userData.id} initialName={userData.name} />
+
+      <EmailForm id={userData.id} initialEmail={userData.email} />
+
+      <PasswordForm id={userData.id} />
+
+      <PhoneForm id={userData.id} initialPhone={userData.phone} />
+
+      <RoleForm id={userData.id} initialRole={userData.role} />
+    </div>
   );
 }

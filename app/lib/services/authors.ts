@@ -35,9 +35,9 @@ export async function getAuthor(uid: string) {
 }
 
 export async function createAuthor(author: Author) {
-  const { id, name, nick, image, email, phone } = author;
+  const { id, name, nick, image, email, phone, role } = author;
   const authorsRef = db.collection("authors");
-  await authorsRef.doc(id).set({ name, nick, image, email, phone });
+  await authorsRef.doc(id).set({ name, nick, image, email, phone, role });
 }
 
 export async function updateAuthor({
@@ -49,12 +49,28 @@ export async function updateAuthor({
   role,
 }: {
   id: string;
-  name: string;
-  email: string;
-  image: string | null;
-  phone: string | null;
-  role: Role;
+  name?: string;
+  email?: string;
+  image?: string | null;
+  phone?: string | null;
+  role?: Role;
 }) {
   const authorsRef = db.collection("authors");
-  await authorsRef.doc(id).update({ name, image, email, phone, role });
+
+  // Filtrar solo los campos definidos
+  const fieldsToUpdate: Partial<{
+    name: string;
+    email: string;
+    image: string | null;
+    phone: string | null;
+    role: Role;
+  }> = {};
+
+  if (name !== undefined) fieldsToUpdate.name = name;
+  if (email !== undefined) fieldsToUpdate.email = email;
+  if (image !== undefined) fieldsToUpdate.image = image;
+  if (phone !== undefined) fieldsToUpdate.phone = phone;
+  if (role !== undefined) fieldsToUpdate.role = role;
+
+  await authorsRef.doc(id).update(fieldsToUpdate);
 }

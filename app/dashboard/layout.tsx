@@ -16,9 +16,9 @@ import { Role } from "../lib/types";
 
 export default async function DashboardLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("__session")?.value;
 

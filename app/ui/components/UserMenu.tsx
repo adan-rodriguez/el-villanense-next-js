@@ -56,7 +56,7 @@ export function UserMenu({
         }}
         className={styles.menuuser_container}
       >
-        <span className={styles.username}>{name}</span>
+        {name && <span className={styles.username}>{name}</span>}
         <Link
           className={styles.dashboard_link}
           onClick={() => getIsUserMenuOpen(false)}

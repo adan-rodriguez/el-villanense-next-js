@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useLoading } from "./useLoading";
 import { useErrorMessage } from "./useErrorMessage";
 import {
-  browserSessionPersistence,
+  browserLocalPersistence,
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -10,10 +10,9 @@ import { auth } from "../lib/firebase/client";
 import { z } from "zod";
 
 const loginSchema = z.object({
-  email: z.string().email("Email inválido"),
+  email: z.string().email("Ingrese un email válido"),
   password: z.string(),
 });
-
 export function useLogin() {
   const { loading, getLoading } = useLoading();
   const { errorMessage, getErrorMessage } = useErrorMessage();
@@ -36,13 +35,13 @@ export function useLogin() {
       success,
     } = loginSchema.safeParse({ email, password });
 
-    if (validateLoginError) {
-      getErrorMessage(validateLoginError?.errors[0].message);
+    if (!success) {
+      getErrorMessage(validateLoginError.errors[0].message);
       getLoading(false);
       return;
     }
 
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
 
     let userCredential;
     try {
@@ -53,10 +52,9 @@ export function useLogin() {
       );
     } catch (error) {
       const { code } = error;
-      console.log({ code });
-
-      if (
-        code === "auth/invalid-email" ||
+      if (code === "auth/invalid-email") {
+        getErrorMessage("Ingrese un email válido");
+      } else if (
         code === "auth/user-not-found" ||
         code === "auth/wrong-password"
       ) {

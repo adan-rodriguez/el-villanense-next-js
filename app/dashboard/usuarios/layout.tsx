@@ -6,9 +6,9 @@ import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const cookiesStore = await cookies();
   const sessionCookie = cookiesStore.get("__session")?.value;
 

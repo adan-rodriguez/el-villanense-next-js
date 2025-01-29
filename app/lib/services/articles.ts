@@ -1,5 +1,6 @@
 import { db } from "../firebase/server";
 import { Article, ArticleBasicData, ArticleData } from "../types";
+import { slugify } from "../utils";
 
 export async function getArticles() {
   const articlesRef = db.collection("articles");
@@ -56,17 +57,6 @@ export async function deleteArticle(id: string) {
 }
 
 export async function addArticle(article: ArticleBasicData) {
-  // Generar el slug del título quitando caracteres especiales
-  const slugify = (text: string) =>
-    text
-      .toString()
-      .normalize("NFD") // Normaliza a descomposición de caracteres
-      .replace(/[\u0300-\u036f]/g, "") // Elimina los acentos
-      .replace(/[^a-zA-Z0-9\s]/g, "") // Elimina caracteres especiales
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, "-"); // Reemplaza espacios con guiones
-
   const titleSlug = slugify(article.title);
 
   const createdAt = new Date();

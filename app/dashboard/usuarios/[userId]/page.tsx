@@ -12,9 +12,9 @@ export default async function UserPage({
   const user = await auth.getUser(userId);
 
   const { uid, displayName, email, phoneNumber, photoURL, customClaims } = user;
-  let role: Role | undefined = customClaims?.role;
+  let role = customClaims?.role;
 
-  if (role && role !== "editor" && role !== "superadmin") role = undefined;
+  if (role !== "editor" && role !== "superadmin") role = "editor";
 
   return (
     <UpdateUserForm
@@ -23,7 +23,7 @@ export default async function UserPage({
       email={email}
       phone={phoneNumber}
       image={photoURL}
-      role={role}
+      role={role as Role}
     />
   );
 }

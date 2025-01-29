@@ -11,9 +11,7 @@ export const AuthContext = createContext<{
   user: null,
 });
 
-export function AuthProvider({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<{
     name: string | null;
     image: string | null;
@@ -28,9 +26,7 @@ export function AuthProvider({
         setUser({ name: displayName, image: photoURL });
       } else {
         setUser(null);
-        if (pathname.startsWith("/dashboard")) {
-          router.push("/login");
-        }
+        if (pathname.startsWith("/dashboard")) router.push("/login");
 
         // const customToken = await getCustomToken();
 

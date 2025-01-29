@@ -10,6 +10,7 @@ export default async function UsersPage() {
     users = listUsersResult.users.map((user) => {
       const { uid, displayName, email, photoURL, phoneNumber, customClaims } =
         user;
+
       return {
         id: uid,
         name: displayName,
@@ -30,7 +31,7 @@ export default async function UsersPage() {
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <img
               src={
-                user.image ??
+                user.image ||
                 "https://res.cloudinary.com/dh4eh6jen/image/upload/v1703888334/el-villanense-redactores/person-icon_itua0j.webp"
               }
               alt={
@@ -47,7 +48,7 @@ export default async function UsersPage() {
               }}
             />
             <div>
-              <p>Nombre: {user.name ?? "No proporcionado"}</p>
+              <p>Nombre: {user.name || "No proporcionado"}</p>
               <p>Email: {user.email ?? "No proporcionado"}</p>
               <p>Teléfono: {user.phone ?? "No proporcionado"}</p>
               <p>Rol: {user.role}</p>

@@ -2,9 +2,9 @@ import { GoogleAnalytics } from "../ui/components/GoogleAnaliytics";
 
 export default function PublicLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <>
       {children}

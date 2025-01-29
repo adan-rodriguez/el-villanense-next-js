@@ -30,7 +30,7 @@ export default async function AccountPage() {
   return (
     <div className={styles.container}>
       <div className={styles.data_container}>
-        <p>{user.name && "Nombre no proporcionado"}</p>
+        <p>{user.name || "Nombre no proporcionado"}</p>
         <AuthorImage
           image={user.picture}
           name={user.name}

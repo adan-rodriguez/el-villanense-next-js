@@ -1,12 +1,14 @@
 import { Asterisk } from "./Asterisk";
 
-interface LabelProps {
+export function Label({
+  label,
+  required,
+  children,
+}: {
   label: string;
   required: boolean;
-  children: Readonly<React.ReactNode>;
-}
-
-export function Label({ label, required, children }: LabelProps) {
+  children: React.ReactNode;
+}) {
   return (
     <label>
       {label}
