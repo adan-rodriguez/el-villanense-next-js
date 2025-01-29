@@ -1,5 +1,5 @@
 import { auth } from "@/app/lib/firebase/server";
-import { Role } from "@/app/lib/types";
+import { ROLES } from "@/app/lib/utils";
 import Link from "next/link";
 import { Fragment } from "react";
 
@@ -17,7 +17,7 @@ export default async function UsersPage() {
         email,
         image: photoURL,
         phone: phoneNumber,
-        role: (customClaims?.role as Role) ?? "editor",
+        role: customClaims?.role,
       };
     });
   } catch (error) {
@@ -26,7 +26,7 @@ export default async function UsersPage() {
 
   return (
     <div>
-      {users?.map((user) => (
+      {users?.map((user, index) => (
         <Fragment key={user.id}>
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <img
@@ -51,11 +51,15 @@ export default async function UsersPage() {
               <p>Nombre: {user.name || "No proporcionado"}</p>
               <p>Email: {user.email ?? "No proporcionado"}</p>
               <p>Teléfono: {user.phone ?? "No proporcionado"}</p>
-              <p>Rol: {user.role}</p>
+              <p>
+                Rol: {user.role in ROLES ? ROLES[user.role] : "No establecido"}
+              </p>
               <Link href={`/dashboard/usuarios/${user.id}`}>Editar</Link>
             </div>
           </div>
-          <hr style={{ marginBlock: "0.5rem" }} />
+          {users.length - 1 !== index && (
+            <hr style={{ marginBlock: "0.5rem" }} />
+          )}
         </Fragment>
       ))}
     </div>
