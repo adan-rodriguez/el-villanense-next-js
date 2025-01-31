@@ -61,8 +61,6 @@ export function usePhone() {
   }
 
   async function handleDeletePhone(id: string) {
-    if (!confirm("¿Estás seguro de que deseas eliminar el número de teléfono?"))
-      return;
     getLoadingDeletePhone(true);
     getDeletePhoneErrorMessage(null);
 

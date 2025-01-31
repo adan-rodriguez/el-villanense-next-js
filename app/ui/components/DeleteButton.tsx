@@ -1,30 +1,46 @@
 "use client";
 
+import { SyntheticEvent, useRef } from "react";
+import { ConfirmModal } from "./ConfirmModal";
+
 export function DeleteButton({ id }: { id: string }) {
-  async function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
-    if (confirm("¿Estás seguro de borrar esta noticia?")) {
-      const response = await fetch(`/api/article/${id}`, {
-        method: "DELETE",
-      });
+  const deleteArticleModalRef = useRef<HTMLDialogElement>(null);
 
-      if (response.status !== 204) {
-        alert("No se ha podido eliminar la noticia");
-        return;
-      }
+  async function handleDelete(e: SyntheticEvent<HTMLDialogElement>) {
+    const response = await fetch(`/api/article/${id}`, {
+      method: "DELETE",
+    });
 
-      alert("Noticia eliminada con éxito");
-      e.currentTarget.closest("article")?.remove();
+    if (response.status !== 204) {
+      alert("No se ha podido eliminar la noticia");
+      return;
     }
+
+    alert("Noticia eliminada con éxito");
+    e.currentTarget.closest("article")?.remove();
   }
 
   return (
-    <button onClick={handleDelete} title="Borrar noticia">
-      <img
-        src="/icons/dashboard/delete.svg"
-        alt="Icono de borrar"
-        width={30}
-        height={30}
+    <>
+      <button
+        onClick={() => deleteArticleModalRef.current?.showModal()}
+        title="Borrar noticia"
+      >
+        <img
+          src="/icons/dashboard/delete.svg"
+          alt="Icono de borrar"
+          width={30}
+          height={30}
+        />
+      </button>
+      <ConfirmModal
+        ref={deleteArticleModalRef}
+        text="¿Estás seguro deseas eliminar la noticia?"
+        onClose={async (e) => {
+          if (e.currentTarget.returnValue === "cancel") return;
+          await handleDelete(e);
+        }}
       />
-    </button>
+    </>
   );
 }

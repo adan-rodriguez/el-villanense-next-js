@@ -12,8 +12,9 @@ import { Form } from "@/app/ui/components/Form";
 import { uploadImage } from "@/app/lib/server-actions";
 import { Article, Role } from "@/app/lib/types";
 import { TrashIcon } from "@/app/ui/components/Icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getClientAuthors } from "@/app/lib/services/client/authors";
+import { ConfirmModal } from "@/app/ui/components/ConfirmModal";
 
 export function EditArticleClientPage({
   article,
@@ -58,6 +59,8 @@ export function EditArticleClientPage({
     }[]
   >([]);
 
+  const deleteArticleModalRef = useRef<HTMLDialogElement>(null);
+
   // const isNotEdited = objCompare(
   //   {
   //     title: article.title,
@@ -96,11 +99,7 @@ export function EditArticleClientPage({
         return;
       }
 
-      let formData = new FormData();
-      formData.append("file", imageFile);
-      formData.append("upload_preset", "elvillanense");
-
-      const { secure_url } = await uploadImage(formData);
+      const imageUrl = await uploadImage(imageFile);
 
       // if (!response.ok) {
       //   alert("Ocurrió un error. Inténtelo nuevamente");
@@ -108,7 +107,7 @@ export function EditArticleClientPage({
       //   return;
       // }
 
-      editedArticle.image = secure_url;
+      editedArticle.image = imageUrl;
     }
 
     const response = await fetch(`/api/article/${id}`, {
@@ -132,19 +131,17 @@ export function EditArticleClientPage({
   }
 
   async function handleDelete() {
-    if (confirm("¿Estás seguro de borrar esta noticia?")) {
-      const response = await fetch(`/api/article/${id}`, {
-        method: "DELETE",
-      });
+    const response = await fetch(`/api/article/${id}`, {
+      method: "DELETE",
+    });
 
-      if (response.status !== 204) {
-        alert("No se ha podido eliminar la noticia");
-        return;
-      }
-
-      alert("Noticia eliminada con éxito");
-      router.push("/dashboard");
+    if (response.status !== 204) {
+      alert("No se ha podido eliminar la noticia");
+      return;
     }
+
+    alert("Noticia eliminada con éxito");
+    router.push("/dashboard");
   }
 
   return (
@@ -353,7 +350,15 @@ export function EditArticleClientPage({
           type="button"
           label="Borrar artículo"
           disabled={loading}
-          onClick={handleDelete}
+          onClick={() => deleteArticleModalRef.current?.showModal()}
+        />
+        <ConfirmModal
+          ref={deleteArticleModalRef}
+          text="¿Estás seguro deseas eliminar la noticia?"
+          onClose={async (e) => {
+            if (e.currentTarget.returnValue === "cancel") return;
+            await handleDelete();
+          }}
         />
       </div>
     </Form>

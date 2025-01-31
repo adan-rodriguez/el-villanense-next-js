@@ -22,7 +22,7 @@ export async function getAuthorByNick(nick: string) {
   return author;
 }
 
-export async function getAuthor(uid: string) {
+export async function getAuthor(uid: string): Promise<Author> {
   const authorsRef = db.collection("authors");
   const authorSnapshot = await authorsRef.doc(uid).get();
 
@@ -30,7 +30,7 @@ export async function getAuthor(uid: string) {
 
   const { id } = authorSnapshot;
   const data = authorSnapshot.data() as AuthorData;
-  const author: Author = { id, ...data };
+  const author = { id, ...data };
   return author;
 }
 

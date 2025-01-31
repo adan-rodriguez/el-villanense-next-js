@@ -3,6 +3,8 @@ import { TrashIcon } from "@/app/ui/components/Icons";
 import { Input } from "@/app/ui/components/Input";
 import { Label } from "@/app/ui/components/Label";
 import { usePhone } from "./usePhone";
+import { ConfirmModal } from "@/app/ui/components/ConfirmModal";
+import { useRef } from "react";
 
 export function PhoneForm({
   id,
@@ -21,6 +23,8 @@ export function PhoneForm({
     updatePhoneErrorMessage,
     deletePhoneErrorMessage,
   } = usePhone();
+
+  const deletePhoneModalRef = useRef<HTMLDialogElement>(null);
 
   return (
     <fieldset
@@ -49,7 +53,7 @@ export function PhoneForm({
             <Button
               type="button"
               title="Eliminar número de teléfono"
-              onClick={() => handleDeletePhone(id)}
+              onClick={() => deletePhoneModalRef.current?.showModal()}
               style={{
                 display: "flex",
                 padding: "0",
@@ -59,6 +63,14 @@ export function PhoneForm({
             >
               <TrashIcon />
             </Button>
+            <ConfirmModal
+              ref={deletePhoneModalRef}
+              text="¿Estás seguro deseas eliminar el número de teléfono?"
+              onClose={async (e) => {
+                if (e.currentTarget.returnValue === "cancel") return;
+                await handleDeletePhone(id);
+              }}
+            />
             {deletePhoneErrorMessage && <p>{deletePhoneErrorMessage}</p>}
           </>
         )}

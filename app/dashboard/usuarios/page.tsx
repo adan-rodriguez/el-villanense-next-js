@@ -52,7 +52,10 @@ export default async function UsersPage() {
               <p>Email: {user.email ?? "No proporcionado"}</p>
               <p>Teléfono: {user.phone ?? "No proporcionado"}</p>
               <p>
-                Rol: {user.role in ROLES ? ROLES[user.role] : "No establecido"}
+                Rol:{" "}
+                {user.role in ROLES
+                  ? ROLES[user.role as keyof typeof ROLES]
+                  : "No establecido"}
               </p>
               <Link href={`/dashboard/usuarios/${user.id}`}>Editar</Link>
             </div>

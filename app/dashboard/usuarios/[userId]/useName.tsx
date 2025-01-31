@@ -36,22 +36,21 @@ export function useName() {
     }
 
     const {
-      error: { message },
+      error: { message: errorMessage },
     } = await updateName({
       id,
       name: data.name,
     });
 
-    if (!message) {
-      alert("Usuario actualizado con exito");
+    if (!errorMessage) {
+      alert("Nombre del usuario actualizado con éxito");
       getLoading(false);
       getErrorMessage(null);
       router.refresh();
-      return;
     }
 
     getLoading(false);
-    getErrorMessage(message);
+    getErrorMessage(errorMessage);
   }
 
   return {

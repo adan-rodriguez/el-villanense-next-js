@@ -81,11 +81,7 @@ export function NewArticleClientPage({
 
     getLoading(true);
 
-    let formData = new FormData();
-    formData.append("file", imageFile);
-    formData.append("upload_preset", "elvillanense");
-
-    const { secure_url } = await uploadImage(formData);
+    const imageUrl = await uploadImage(imageFile);
 
     // if (!response.ok) {
     //   alert("Ocurrió un error. Inténtelo nuevamente");
@@ -100,8 +96,7 @@ export function NewArticleClientPage({
       },
       body: JSON.stringify({
         title,
-        image: secure_url,
-        altImage,
+        image: imageUrl,
         lead,
         content,
         authors,

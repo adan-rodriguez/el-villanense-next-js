@@ -1,6 +1,8 @@
 import { Button } from "@/app/ui/components/Button";
 import { InputImage } from "@/app/ui/components/InputImage";
 import { useImage } from "./useImage";
+import { ConfirmModal } from "@/app/ui/components/ConfirmModal";
+import { useRef } from "react";
 
 export function ImageForm({
   id,
@@ -21,6 +23,8 @@ export function ImageForm({
     updateImageErrorMessage,
     deleteImageErrorMessage,
   } = useImage();
+
+  const deleteImageModalRef = useRef<HTMLDialogElement>(null);
 
   return (
     <fieldset
@@ -91,8 +95,16 @@ export function ImageForm({
             type="button"
             label="Eliminar imagen"
             style={{ alignSelf: "stretch" }}
-            onClick={async () => await handleDeleteImage(id)}
+            onClick={() => deleteImageModalRef.current?.showModal()}
             disabled={loadingDeleteImage}
+          />
+          <ConfirmModal
+            ref={deleteImageModalRef}
+            text="¿Estás seguro deseas eliminar la imagen del usuario?"
+            onClose={async (e) => {
+              if (e.currentTarget.returnValue === "cancel") return;
+              await handleDeleteImage(id);
+            }}
           />
           {deleteImageErrorMessage && <p>{deleteImageErrorMessage}</p>}
         </div>

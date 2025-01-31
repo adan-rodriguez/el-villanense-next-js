@@ -13,6 +13,7 @@ export function LogoutButton() {
       style={{ display: "flex", padding: "5px" }}
       onClick={logout}
       disabled={loading}
+      title="Cerrar sesión"
     >
       <LogoutIcon />
     </Button>
