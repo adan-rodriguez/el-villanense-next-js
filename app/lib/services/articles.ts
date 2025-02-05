@@ -73,13 +73,20 @@ export async function addArticle(article: ArticleBasicData) {
   // Concatenar el título y la fecha para formar el ID
   const id = `${titleSlug}-${formattedDate}`;
 
+  const authorsIds = article.authors.map((author) => author.id);
+
   await db
     .collection("articles")
     .doc(id)
-    .set({ createdAt, ...article });
+    .set({
+      authorsIds,
+      createdAt,
+      ...article,
+    });
 
   return {
     id,
+    authorsIds,
     createdAt,
     ...article,
   };
@@ -90,12 +97,19 @@ export async function editArticle({
   article,
 }: {
   id: string;
-  article: ArticleBasicData;
+  article: Partial<ArticleBasicData>;
 }) {
   const lastModified = new Date();
+
+  if (article.authors) {
+    const authorsIds = article.authors.map((author) => author.id);
+    article.authorsIds = authorsIds;
+  }
+
   await db
     .collection("articles")
     .doc(id)
     .set({ lastModified, ...article }, { merge: true });
+
   return { id, lastModified, ...article };
 }

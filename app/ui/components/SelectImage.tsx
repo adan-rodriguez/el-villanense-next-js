@@ -84,6 +84,7 @@ export function SelectImage({
           accept=".jpg, .jpeg, .png, .svg, .webp, .avif"
           onChange={handleImageFileChange}
           className={styles.input}
+          required
         />
       </label>
       <div

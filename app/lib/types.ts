@@ -9,7 +9,6 @@ export type ArticleBasicData = {
   image: string;
   altImage: string;
   content: string;
-  authorsIds: string[];
   authors: {
     id: string;
     nick: string;

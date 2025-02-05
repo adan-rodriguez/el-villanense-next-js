@@ -88,3 +88,8 @@ select {
 abbr[title] {
   text-decoration: none;
 }
+
+fieldset,
+legend {
+  padding: revert;
+}

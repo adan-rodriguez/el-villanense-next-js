@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useLoading } from "./useLoading";
+import { useErrorMessage } from "./useErrorMessage";
 
 export function useNewArticle(author: {
   id: string;
@@ -24,6 +25,7 @@ export function useNewArticle(author: {
   >([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const { loading, getLoading } = useLoading();
+  const { errorMessage, getErrorMessage } = useErrorMessage();
   const router = useRouter();
 
   const getTitle = (title: string) => setTitle(title);
@@ -45,19 +47,21 @@ export function useNewArticle(author: {
 
   return {
     title,
-    altImage,
-    lead,
-    content,
-    authors,
-    imageFile,
-    loading,
     getTitle,
-    getAltImage,
+    lead,
     getLead,
+    altImage,
+    getAltImage,
+    content,
     getContent,
+    authors,
     getAuthors,
+    imageFile,
     getImageFile,
+    loading,
     getLoading,
+    errorMessage,
+    getErrorMessage,
     router,
   };
 }

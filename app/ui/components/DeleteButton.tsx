@@ -1,12 +1,12 @@
 "use client";
 
-import { SyntheticEvent, useRef } from "react";
+import { useRef } from "react";
 import { ConfirmModal } from "./ConfirmModal";
 
 export function DeleteButton({ id }: { id: string }) {
   const deleteArticleModalRef = useRef<HTMLDialogElement>(null);
 
-  async function handleDelete(e: SyntheticEvent<HTMLDialogElement>) {
+  async function handleDelete(e: React.SyntheticEvent<HTMLDialogElement>) {
     const response = await fetch(`/api/article/${id}`, {
       method: "DELETE",
     });
@@ -16,8 +16,8 @@ export function DeleteButton({ id }: { id: string }) {
       return;
     }
 
-    alert("Noticia eliminada con éxito");
     e.currentTarget.closest("article")?.remove();
+    alert("Noticia eliminada con éxito");
   }
 
   return (

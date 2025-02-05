@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Article } from "../lib/types";
 import { useLoading } from "./useLoading";
+import { useErrorMessage } from "./useErrorMessage";
 
 export function useEditArticle(article: Article) {
   const [title, setTitle] = useState("");
@@ -19,7 +20,11 @@ export function useEditArticle(article: Article) {
   >([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [changeImage, setChangeImage] = useState<boolean>(false);
-  const { loading, getLoading } = useLoading();
+  const { loading: loadingUpdateArticle, getLoading: getLoadingUpdateArticle } =
+    useLoading();
+  const { loading: loadingDeleteArticle, getLoading: getLoadingDeleteArticle } =
+    useLoading();
+  const { errorMessage, getErrorMessage } = useErrorMessage();
 
   const router = useRouter();
 
@@ -41,29 +46,33 @@ export function useEditArticle(article: Article) {
 
   useEffect(() => {
     setTitle(article.title);
-    setAltImage(article.altImage);
     setLead(article.lead);
+    setAltImage(article.altImage);
     setContent(article.content);
     setAuthors(article.authors);
   }, []);
 
   return {
     title,
-    altImage,
-    lead,
-    content,
-    authors,
-    imageFile,
-    changeImage,
-    loading,
     getTitle,
-    getAltImage,
+    lead,
     getLead,
+    altImage,
+    getAltImage,
+    content,
     getContent,
+    authors,
     getAuthors,
+    imageFile,
     getImageFile,
+    changeImage,
     getChangeImage,
-    getLoading,
+    loadingUpdateArticle,
+    getLoadingUpdateArticle,
+    loadingDeleteArticle,
+    getLoadingDeleteArticle,
+    errorMessage,
+    getErrorMessage,
     router,
   };
 }

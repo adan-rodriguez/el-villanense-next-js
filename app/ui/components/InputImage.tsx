@@ -1,6 +1,7 @@
 import { allowedImageFileTypes } from "@/app/lib/utils";
 import { CameraPlus, TrashIcon } from "@/app/ui/components/Icons";
 import styles from "@/app/ui/styles/InputImage.module.css";
+import { useEffect, useRef } from "react";
 
 const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
   e.preventDefault();
@@ -13,7 +14,11 @@ const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
 
 const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
   e.preventDefault();
-  e.currentTarget.classList.remove(styles.dragging);
+
+  const $label = e.currentTarget;
+
+  $label.classList.remove(styles.dragging);
+
   const file = e.dataTransfer.files[0];
 
   if (!file) return;
@@ -28,16 +33,16 @@ const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
   const dataTransfer = new DataTransfer();
   dataTransfer.items.add(file);
 
-  const imageFileInput = document.getElementById("image-file-input");
+  const $imageFileInput = $label.querySelector("#image-file-input");
 
-  if (imageFileInput instanceof HTMLInputElement) {
-    imageFileInput.files = dataTransfer.files;
+  if ($imageFileInput instanceof HTMLInputElement) {
+    $imageFileInput.files = dataTransfer.files;
 
     const event = new Event("change", { bubbles: true });
-    imageFileInput.dispatchEvent(event);
+    $imageFileInput.dispatchEvent(event);
   } else {
     alert(
-      imageFileInput
+      $imageFileInput
         ? "'image-file-input' no es un HTMLInputElement. Verifica el código."
         : "'image-file-input' no existe en el DOM. Verifica el código."
     );
@@ -70,10 +75,27 @@ export function InputImage({
   getImageFile: (file: File | null) => void;
   required?: boolean;
 }) {
+  const imageFileInputRef = useRef<HTMLInputElement>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = getInputImage(e);
     getImageFile(file);
   };
+
+  useEffect(() => {
+    const fileInput = imageFileInputRef.current;
+    if (!fileInput) return;
+
+    const handleCancel = () => {
+      console.log("El usuario canceló la selección de archivos");
+    };
+
+    fileInput.addEventListener("cancel", handleCancel);
+
+    return () => {
+      fileInput.removeEventListener("cancel", handleCancel);
+    };
+  }, []);
 
   return (
     <label
@@ -90,6 +112,7 @@ export function InputImage({
     >
       <input
         id="image-file-input"
+        ref={imageFileInputRef}
         type="file"
         accept="image/png, image/jpeg, image/webp, image/svg+xml, image/avif"
         required={required}
