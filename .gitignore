@@ -36,3 +36,4 @@ yarn-error.log*
 /firebase-emulator-data
 firebase-debug.log
 firestore-debug.log
+/firebase-export-*
